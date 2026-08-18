@@ -1,0 +1,20 @@
+Copyright (c) 2015 Blue Sky Spectroscopy.
+The software and supporting documentation was developed by:
+
+Blue Sky Spectroscopy Inc.
+740 4th Ave S.
+Lethbridge, Alberta
+T1J 0N9
+www.blueskyinc.ca
+
+THIS SOFTWARE IS MADE AVAILABLE AS IS, AND NO WARRANTY IS MADE
+ABOUT THE SOFTWARE, IT PERFORMANCE, ITS MERCHANTABILITY OR
+FITNESS FOR ANY PARTICULAR USE, FREEDOM FROM ANY COMPUTER DISEASE
+OR ITS CONFORMITY TO ANY SPECIFICATION. THE ENTIRE RISK
+AS TO QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH THE USER.
+
+Copyright of the software and support documentation is owned by
+Blue Sky Spectroscopy, and use of this software is strictly
+limited to controlling hardware provided by Blue Sky Spectroscopy, Inc.
+Copying of this software or preparation of derivative works based on this
+software is prohibited.
