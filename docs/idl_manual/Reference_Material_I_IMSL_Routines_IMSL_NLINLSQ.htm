@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_NLINLSQ</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_NLINLSQ</span>
+        </div>
+        <h1 class="Routine">IMSL_NLINLSQ</h1>
+        <p>The IMSL_NLINLSQ function solves a nonlinear least-squares problem using a modified Levenberg-Marquardt algorithm.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The specific algorithm used in IMSL_NLINLSQ is dependent on whether the keywords XLB and XUB are supplied. If the keywords XLB and XUB are not supplied, then the IMSL_NLINLSQ function is based on the MINPACK routine LMDER by Moré et al. (1980).</p>
+        <p>The IMSL_NLINLSQ function, based on the MINPACK routine LMDER by Moré et al. (1980), uses a modified Levenberg-Marquardt method to solve nonlinear least- squares problems. The problem is stated as follows:</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-30.jpg" />
+        </p>
+        <p>where <i>m</i> ≥ <i>n</i>,	<i>F</i> : <i>R</i><sup>n</sup> → <i>R</i><sup>m</sup>   and  <i>f</i><sub>i</sub> (<i>x</i>) is the <i>i</i>-th component function of <i>F</i>(<i>x</i>). From a current point, the algorithm uses the trust region approach:</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-31.jpg" />
+        </p>
+        <p>subject to <img src="images/IMSL_NLINLSQ-32.jpg" /></p>
+        <p>to get a new point <i>x</i><sub>n</sub>. Compute <i>x</i><sub>n</sub> as:</p>
+        <p><i>x<sub>n</sub></i> = <i>x</i><sub>c</sub> – (<i>J</i>(<i>x<sub>c</sub></i>)<sup class="cSuperscriptItalic">T</sup> <i>J</i>(<i>x</i><sub>c</sub>μ) + <span style="font-family: Symbol; font-style: oblique" class="cSymbol">m</span><sub style="font-style: italic; vertical-align: sub" class="cSubscriptItalic">c</sub><i> I </i>)<sup>–1</sup> <i>J</i>(<i>x<sub>c</sub></i>)<sup style="vertical-align: super" class="cSuperscriptItalic">T</sup><i>F</i>(<i>x<sub>c</sub></i>)</p>
+        <p>where μ<sub style="font-style: italic">c</sub> = 0 &#160; if &#160; <span style="font-family: Symbol; font-style: oblique" class="cSymbol">d</span><sub>c</sub> <span style="font-family: Symbol; font-style: oblique" class="cSymbol">³</span> || (<i>J</i>(<i>x<sub>c</sub></i>)<sup class="cSuperscriptItalic">T</sup> <i>J</i>(<i>x</i><sub>c</sub>))<sup style="vertical-align: super" class="cSuperscript">–1 </sup><i>J</i>(<i>x</i><sub>c</sub>)<sup style="vertical-align: super" class="cSuperscript">T</sup><i>F</i>(<i>x</i><sub>c</sub>) ||<sub>2 </sub>and μ<sub style="font-style: italic">c</sub> &gt; 0 otherwise.</p>
+        <p>The value  μ<sub style="font-style: italic">c</sub> is defined by the function. The vector and matrix <i>F</i>(<i>x</i><sub>c</sub>) and <i>J</i>(<i>x</i><sub>c</sub>) are the function values and the Jacobian evaluated at the current point <i>x</i><sub>c</sub>. This function is repeated until the stopping criteria are satisfied.</p>
+        <p>The first stopping criterion for IMSL_NLINLSQ occurs when the norm of the function is less than the absolute function tolerance, TOL_AFCN. The second stopping criterion occurs when the norm of the scaled gradient is less than the given gradient tolerance TOL_GRAD. The third stopping criterion for IMSL_NLINLSQ occurs when the scaled distance between the last two steps is less than the step tolerance TOL_STEP. For more details, see Levenberg (1944), Marquardt (1963), or Dennis and Schnabel (1983, Chapter 10).</p>
+        <p>If the keywords XLB and XUB are supplied, then the IMSL_NLINLSQ function uses a modified Levenberg-Marquardt method and an active set strategy to solve nonlinear least-squares problems subject to simple bounds on the variables. The problem is stated as follows:</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-33.jpg" />
+        </p>
+        <p>subject to <i>l</i> ≤ <i>x</i> ≤ <i>u</i> where <i>m</i> ≥ <i>n</i>, <i>F</i> : R<sup>n</sup> → R<sup>m</sup>, and <i>f</i><sub>i</sub>(<i>x</i>) is the <i>i</i>-th component function of <i>F</i>(<i>x</i>). From a given starting point, an active set IA, which contains the indices of the variables at their bounds, is built. A variable is called a “free variable” if it is not</p>
+        <p>in the active set. The routine then computes the search direction for the free variables according to the formula:</p>
+        <p>d = – (J<sup>T</sup>J + µI)<sup>–1</sup> J<sup>T</sup>F</p>
+        <p>where µ is the Levenberg-Marquardt parameter, <i>F</i> = <i>F</i>(<i>x</i>), and <i>J</i> is the Jacobian with respect to the free variables. The search direction for the variables in IA is set to zero. The trust region approach discussed by Dennis and Schnabel (1983) is used to find the new point. Finally, the optimality conditions are checked. The conditions are:</p>
+        <p><i>||</i>g<i>  <![CDATA[ ]]></i>(x<sub>i</sub>)<i>||</i> ≤ ε, l<sub>i</sub> &lt; x<sub style="vertical-align: sub" class="cSubscriptItalic">i</sub> &lt; u<sub>i</sub></p>
+        <p>g (x<sub>i</sub>) &lt; <i>0</i>, x<sub>i</sub> = u<sub class="cSubscriptItalic">i</sub></p>
+        <p>g (x<sub>i</sub>) &gt; <i>0</i>, x<sub>i</sub> = l<sub class="cSubscriptItalic">i</sub></p>
+        <p>where ε is a gradient tolerance. This process is repeated until the optimality criterion is achieved.</p>
+        <p>The active set is changed only when a free variable hits its bounds during an iteration or the optimality condition is met for free variables but not for all variables in IA, the active set. In the latter case, a variable that violates the optimality condition will be dropped out of IA. For more detail on the Levenberg-Marquardt method, see Levenberg (1944) or Marquardt (1963). For more detail on the active set strategy, see Gill and Murray (1976).</p>
+        <p>Since a finite-difference method is used to estimate the Jacobian for some single- precision calculations, an inaccurate estimate of the Jacobian may cause the algorithm to terminate at a noncritical point. In such cases, high-precision arithmetic is recommended. Also, whenever the exact Jacobian can be easily provided, the keyword JACOBIAN should be used.</p>
+        <h2 class="API">Example</h2>
+        <p>In this example, the nonlinear data-fitting problem found in Dennis and Schnabel (1983, p. 225):</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-34.jpg" />
+        </p>
+        <p>is solved with the data <i>t</i> = [1, 2, 3] and <i>y</i> = [2, 4, 3].</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the function that defines the least-squares problem.</p>
+        <p class="Code">FUNCTION f, m, x</p>
+        <p class="Code_Indented">y = [2, 4, 3]</p>
+        <p class="Code_Indented">t = [1, 2, 3]</p>
+        <p class="Code_Indented">RETURN, EXP(x(0) * t) - y</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">solution = IMSL_NLINLSQ('f', 3, 1)</p>
+        <p class="Code">; Call IMSL_NLINLSQ.</p>
+        <p class="Code">PM, solution, Title = 'The solution is:'</p>
+        <p>IDL prints:</p>
+        <p class="Code">The solution is:</p>
+        <p class="Code_Indented">0.440066</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PM, f(m, solution), Title = 'The function values are:'</p>
+        <p>IDL prints:</p>
+        <p class="Code">The function values are:</p>
+        <p class="Code_Indented">-0.447191</p>
+        <p class="Code_Indented">-1.58878</p>
+        <p class="Code_Indented">0.744159</p>
+        <h2 class="API">Errors</h2>
+        <h3>Informational Errors</h3>
+        <p>MATH_STEP_TOLERANCE: Scaled step tolerance satisfied. The current point may be an approximate local solution, but it is also possible that the algorithm is making very slow progress and is not near a solution or that TOL_STEP is too big.</p>
+        <h3>Warning Errors</h3>
+        <p>MATH_LITTLE_FCN_CHANGE: Both the actual and predicted relative reductions in the function are less than or equal to the relative function tolerance.</p>
+        <p>MATH_TOO_MANY_ITN: Maximum number of iterations exceeded. </p>
+        <p>MATH_TOO_MANY_FCN_EVAL: Maximum number of function evaluations exceeded. </p>
+        <p>MATH_TOO_MANY_JACOBIAN_EVAL: Maximum number of Jacobian evaluations exceeded.</p>
+        <p>MATH_UNBOUNDED: Five consecutive steps have been taken with the maximum step length.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_FALSE_CONVERGE: Iterates appear to be converging to a noncritical point.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_NLINLSQ(<i>F, M, N</i> [, <i>Xlb</i>] [, <i>Xub</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FJAC" class="selected">FJAC</a>=<i>variable</i>] [, <a href="#FSCALE" class="selected">FSCALE</a>=<i>array</i>] [, <a href="#FVEC" class="selected">FVEC</a>=<i>variable</i>] [, <a href="#INTERN_SCALE" class="selected">INTERN_SCALE</a>=<i>variable</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#JACOBIAN" class="selected">JACOBIAN</a>=<i>string</i>] [, <a href="#JTJ_INVERSE" class="selected">JTJ_INVERSE</a>=<i>variable</i>] [, <a href="#MAX_EVALS" class="selected">MAX_EVALS</a>=<i>value</i>] [, <a href="#MAX_JACOBIAN" class="selected">MAX_JACOBIAN</a>=<i>value</i>] [, <a href="#MAX_STEP" class="selected">MAX_STEP</a>=<i>value</i>] [, <a href="#N_DIGITS" class="selected">N_DIGITS</a>=<i>value</i>] [, <a href="#RANK" class="selected">RANK</a>=<i>value</i>] [, <a href="#TOL_AFCN" class="selected">TOL_AFCN</a>=<i>value</i>] [, <a href="#TOL_GRAD" class="selected">TOL_GRAD</a>=<i>value</i>] [, <a href="#TOL_RFCN" class="selected">TOL_RFCN</a>=<i>value</i>] [, <a href="#TOL_STEP" class="selected">TOL_STEP</a>=<i>value</i>] [, <a href="#TOLERANCE" class="selected">TOLERANCE</a>=<i>value</i>] [, <a href="#TRUST_REGION" class="selected">TRUST_REGION</a>=<i>value</i>] [, <a href="#XGUESS" class="selected">XGUESS</a>=<i>array</i>] [, <a href="#XSCALE" class="selected">XSCALE</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The solution <i>x</i> of the nonlinear least-squares problem. If no solution can be computed, NULL is returned.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">F</h3>
+        <p>Scalar string specifying a user-supplied function to evaluate the function that defines the least-squares problem. The argument <i>F</i> accepts the following two parameters and returns an array of length m containing the function values at <i>x</i>:</p>
+        <ul>
+            <li value="1"><i>m</i>: Number of functions.</li>
+            <li value="2"><i>x</i>: Array length n containing the point at which the function is evaluated.</li>
+        </ul>
+        <h3 class="Argument">M</h3>
+        <p>Number of functions.</p>
+        <h3 class="Argument">N</h3>
+        <p>Number of variables where <i>n</i> ≤ <i>m</i>.</p>
+        <h3 class="Argument">Xlb</h3>
+        <p>One dimensional array with n components containing the lower bounds on the variables. The <i>Xlb</i> and <i>Xub</i> arguments must be used together.</p>
+        <h3 class="Argument">Xub</h3>
+        <p>One dimensional array with n components containing the upper bounds on the variables. The <i>Xlb</i> and <i>Xub</i> arguments must be used together.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="FJAC"></a>FJAC (optional)</h3>
+        <p>Name of the variable into which an array of size <i>m</i> x <i>n</i> containing the Jacobian at the approximate solution is stored.</p>
+        <h3 class="Keyword"><a name="FSCALE"></a>FSCALE (optional)</h3>
+        <p>Array with m components containing the diagonal scaling matrix for the functions. The <i>i</i>-th component of FSCALE is a positive scalar specifying the reciprocal magnitude of the <i>i</i>-th component function of the problem. Default: FSCALE (*) = 1.</p>
+        <h3 class="Keyword"><a name="FVEC"></a>FVEC (optional)</h3>
+        <p>Name of the variable into which a real array of length <i>m</i> containing the residuals at the approximate solution is stored.</p>
+        <h3 class="Keyword"><a name="INTERN_SCALE"></a>INTERN_SCALE (optional)</h3>
+        <p>Internal variable scaling option. With this keyword, the values for XSCALE are set internally.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum number of iterations. Default: 100.</p>
+        <h3 class="Keyword"><a name="JACOBIAN"></a>JACOBIAN (optional)</h3>
+        <p>Scalar string specifying a user-supplied function to compute the Jacobian. This function accepts two parameters and returns an <i>n</i> x <i>m</i> array containing the Jacobian at the point <i>s</i> input point. Note that each derivative ∂fi/∂xj should be returned in the (<i>i, j</i>) element of the returned matrix. The parameters of the function are as follows:</p>
+        <ul>
+            <li value="1"><i>m</i>: Number of equations.</li>
+            <li value="2"><i>x</i>: Array of length <i>n</i> at which the point Jacobian is evaluated.</li>
+        </ul>
+        <h3 class="Keyword"><a name="JTJ_INVERSE"></a>JTJ_INVERSE (optional)</h3>
+        <p>Name of the variable into which an array of size <i>n</i> x <i>n</i> containing the inverse matrix of <i>J</i><sup>T</sup><i>J</i>, where J is the final Jacobian, is stored. If <i>J</i><sup>T</sup><i>J</i> is singular, the inverse is a symmetric g2 inverse of <i>J</i><sup>T</sup><i>J</i>. (See <a href="IMSL_CHNNDSOL.htm">IMSL_CHNNDSOL</a> for a discussion of generalized inverses and the definition of the <i>g</i><sup>2</sup> inverse.)</p>
+        <h3 class="Keyword"><a name="MAX_EVALS"></a>MAX_EVALS (optional)</h3>
+        <p>Maximum number of function evaluations. Default: 400.</p>
+        <h3 class="Keyword"><a name="MAX_JACOBIAN"></a>MAX_JACOBIAN (optional)</h3>
+        <p>Maximum number of Jacobian evaluations. Default: 400.</p>
+        <h3 class="Keyword"><a name="MAX_STEP"></a>MAX_STEP (optional)</h3>
+        <p>Maximum allowable step size. Default: 1000 max(ε1, ε2), where:</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-24.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-25.jpg" />
+        </p>
+        <p><i>s</i> = XSCALE, and <i>t</i> = XGUESS</p>
+        <h3 class="Keyword"><a name="N_DIGITS"></a>N_DIGITS (optional)</h3>
+        <p>Number of good digits in the function. Default: machine dependent.</p>
+        <h3 class="Keyword"><a name="RANK"></a>RANK (optional)</h3>
+        <p>Name of the variable into which the rank of the Jacobian is stored.</p>
+        <h3 class="Keyword"><a name="TOL_AFCN"></a>TOL_AFCN (optional)</h3>
+        <p>Absolute function tolerance. Default: max(10<sup>–20</sup>, ε<sup>2</sup>), [max(10<sup>–40</sup>, ε<sup>2</sup>) in double], where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="TOL_GRAD"></a>TOL_GRAD (optional)</h3>
+        <p>Scaled gradient tolerance.</p>
+        <p>The <i>i</i>-th component of the scaled gradient at <i>x</i> is calculated as:</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-26.jpg" />
+        </p>
+        <p>where g = ∇F(x) , <i>s</i> = XSCALE, and:</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-28.jpg" />
+        </p>
+        <p>Default: ε<sup>1/2</sup> (ε<sup>1/3</sup> in double), where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="TOL_RFCN"></a>TOL_RFCN (optional)</h3>
+        <p>Relative function tolerance. Default:  max(10<sup>–10</sup>, ε<sup>2/3</sup>), [max(10<sup>–40</sup>, ε<sup>2/3</sup>) in double], where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="TOL_STEP"></a>TOL_STEP (optional)</h3>
+        <p>Scaled step tolerance.</p>
+        <p>The <i>i</i>-th component of the scaled step between two points <i>x</i> and <i>y</i> is computed as:</p>
+        <p>
+            <img src="images/IMSL_NLINLSQ-29.jpg" />
+        </p>
+        <p>where <i>s</i> = XSCALE.</p>
+        <p>Default: ε<sup>2/3</sup>,  where ε is the machine precision</p>
+        <h3 class="Keyword"><a name="TOLERANCE"></a>TOLERANCE (optional)</h3>
+        <p>Tolerance used in determining linear dependence for the computation of the inverse of <i>J</i><sup>T</sup><i>J</i>. If the keyword JACOBIAN is specified, the default is 100ε, where ε is the machine precision; otherwise, the default is SQRT(ε), where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="TRUST_REGION"></a>TRUST_REGION (optional)</h3>
+        <p>Size of initial trust-region radius. Default: based on the initial scaled Cauchy step.</p>
+        <h3 class="Keyword"><a name="XGUESS"></a>XGUESS (optional)</h3>
+        <p>Array with <i>n</i> components containing an initial guess. Default: XGUESS (*) = 0.</p>
+        <h3 class="Keyword"><a name="XSCALE"></a>XSCALE (optional)</h3>
+        <p>Array with <i>n</i> components containing the scaling vector for the variables. The keyword XSCALE is used mainly in scaling the gradient and the distance between two points (see the keywords TOL_GRAD and TOL_STEP for more detail). Default: XSCALE (*) = 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_CHNNDSOL.htm">IMSL_CHNNDSOL</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

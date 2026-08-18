@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Environment|Setting Preferences">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>General User Environment Preferences</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Concepts.htm">Environment</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="Setting Preferences.htm">Setting Preferences</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">General User Environment Preferences</span>
+        </div>
+        <h1>General User Environment Preferences</h1>
+        <p>This section describes the preferences for the general user environment.</p>
+        <h2 class="API">IDL_DATAFILE_USER_COMMENTS<a name="kanchor4573"></a></h2>
+        <p>The IDL_DATAFILE_USER_COMMENTS preference is a boolean that  specifies whether or not IDL is allowed to put comments that include user and host name into generated data files, such as SAVE and JOURNAL files. Such comments are usually considered to be helpful in most environments, but can be a problem for those working in secure environments with specific rules governing the information that is allowed to leave a given security level.</p>
+        <p>Committed changes take effect immediately. The default value is True (1).</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API"><a name="preferences_2247882535_1025550"></a>IDL_DEVICE<a name="kanchor4574"></a></h2>
+        <p>IDL’s direct graphics system always operates on the current graphics device, which you can change with the SETENV  procedure. The IDL_DEVICE preference is a string that specifies the initial graphics device that starts out as current.</p>
+        <p>Committed changes take effect at the next <code>.reset_session</code> executive command or in future IDL sessions. The default value is the window system supported by IDL for the target platform: “X” for UNIX systems and “WIN” for Microsoft Windows. </p>
+        <h2 class="API"><a name="preferences_2247882535_1025553"></a>IDL_EDIT_INPUT<a name="kanchor4575"></a></h2>
+        <p>The IDL_EDIT_INPUT preference is a boolean that  sets the initial value of the <a href="IDL_Environment_System_V.htm#sysvars_272074529_1004047">!EDIT_INPUT</a> system variable, which determines whether or not the tty-based (non-IDE) command-line version of IDL does command-line editing when reading commands. For related information on the command recall buffer, see <a href="#preferences_2247882535_1025542" class="selected">IDL_RBUF_PERSIST</a> and <a href="#preferences_2247882535_1024816" class="selected">IDL_RBUF_SIZE</a>.</p>
+        <p>Committed changes take effect immediately. The default value is True (1).</p>
+        <h2 class="API">IDL_EXCEPT<a name="kanchor4576"></a></h2>
+        <p>The IDL_EXCEPT preference sets the initial value of the <a href="Error_Handling_System_Va.htm#EXCEPT">!EXCEPT</a> system variable, which controls when IDL checks for invalid mathematical computations (exceptions). Possible values are:</p>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Value</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Aliases</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Never, No</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>OnInterpreterHalt, Halt</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>AfterStmt, Stmt</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Committed changes take effect immediately. The default value is OnInterpreterHalt (1).</p>
+        <h2 class="API"><a name="preferences_2247882535_1025522"></a>IDL_MORE<a name="kanchor4577"></a></h2>
+        <p>The IDL_MORE preference is a boolean that  sets the initial value of the <a href="IDL_Environment_System_V.htm#sysvars_272074529_1025456">!MORE</a> system variable, which controls whether IDL should paginate help output sent to a TTY device. This preference has no effect on the IDL Workbench Console view.</p>
+        <p>Committed changes take effect immediately. The default value is True (1).</p>
+        <h2 class="API"><a name="preferences_2247882535_1025527"></a>IDL_MSG_PREFIX<a name="kanchor4578"></a></h2>
+        <p>The IDL_MSG_PREFIX preference sets the value of the <a href="Error_Handling_System_Va.htm#ERROR_STATE">!ERROR_STATE</a>.MSG_PREFIX system variable, which determines the prefix string used for error messages.</p>
+        <p>Committed changes take effect immediately. The default value is <code>'%&#160;'</code>. </p>
+        <h2 class="API"><a name="preferences_2247882535_1025532"></a>IDL_PROMPT<a name="kanchor4579"></a></h2>
+        <p>The IDL_PROMPT preference sets the value of the <a href="IDL_Environment_System_V.htm#!PROMPT">!PROMPT</a> system variable, which contains the text string that IDL uses to prompt for input.</p>
+        <p>Committed changes take effect immediately. The default value is <code>'IDL&gt;&#160;'</code>. </p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API"><a name="preferences_2247882535_1025537"></a>IDL_QUIET<a name="kanchor4580"></a></h2>
+        <p>The IDL_QUIET preference is a boolean that  sets the value of the <a href="IDL_Environment_System_V.htm#sysvars_272074529_997106">!QUIET</a> system variable, which controls whether informational messages are printed (value is 0) or suppressed (1).</p>
+        <p>Committed changes take effect immediately. The default value is False (0).</p>
+        <h2 class="API"><a name="preferences_2247882535_1025542"></a>IDL_RBUF_PERSIST<a name="kanchor4581"></a></h2>
+        <p>The IDL_RBUF_PERSIST preference is a boolean that determines whether the IDL command recall buffer is saved between IDL sessions. For related information on the recall buffer, see <a href="#preferences_2247882535_1025553" class="selected">IDL_EDIT_INPUT</a> and <a href="#preferences_2247882535_1024816" class="selected">IDL_RBUF_SIZE</a>.</p>
+        <p>Committed changes take effect immediately. The default value is True (1).</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API"><a name="preferences_2247882535_1024816"></a>IDL_RBUF_SIZE<a name="kanchor4582"></a></h2>
+        <p>The IDL_RBUF_SIZE preference is an integer that sets the size of the IDL command recall buffer. It must be set to a value greater than or equal to 1. For related information on the recall buffer, see <a href="#preferences_2247882535_1025553" class="selected">IDL_EDIT_INPUT</a> and <a href="#preferences_2247882535_1025542" class="selected">IDL_RBUF_PERSIST</a>.</p>
+        <p>Committed changes take effect immediately. The default value is 500.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API"><a name="IDL_UPDATE_CHECK"></a>IDL_UPDATE_CHECK<a name="kanchor4583"></a></h2>
+        <p>The IDL_UPDATE_CHECK preference is a boolean that  determines whether IDL should check for version updates when it starts up. The default is True (1).</p>
+        <p>If IDL_UPDATE_CHECK is True, then on startup, IDL will check if a new version is available and, if so, will print out a message to the output console.</p>
+        <p>The automatic update check works as follows:</p>
+        <ul>
+            <li value="1">On startup, IDL&#160;determines when the last update check was made. If it was within 7 days, then IDL prints out a cached message.</li>
+            <li value="2">If it has been 7 days or more since the last check, then IDL&#160;contacts the update web server and then prints out a message if there is an update available. IDL&#160;then caches this information.</li>
+            <li value="3">When checking for a new version, the only information sent to the server is the current IDL version and the operating system architecture (this corresponds to the RELEASE, ARCH, and OS fields of <a href="IDL_Environment_System_V.htm#!VERSION">!VERSION</a>).</li>
+        </ul>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>To disable checking for updates, set IDL_UPDATE_CHECK to False (0).</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;caption-side: top;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.6</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Added IDL_UPDATE_CHECK<br /></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

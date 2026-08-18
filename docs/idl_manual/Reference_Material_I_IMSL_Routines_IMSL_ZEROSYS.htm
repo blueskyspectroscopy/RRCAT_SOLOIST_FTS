@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_ZEROSYS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_ZEROSYS</span>
+        </div>
+        <h1 class="Routine">IMSL_ZEROSYS</h1>
+        <p>The IMSL_ZEROSYS function solves a system of <i>n</i> nonlinear equations, <i>f</i><sub>i</sub> (<i>x</i>) = 0, using a modified Powell hybrid algorithm.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_ZEROSYS function is based on the MINPACK subroutine HYBRDJ, which uses a modification of the hybrid algorithm due to M.J.D. Powell. This algorithm is a variation of Newton’s Method, which takes precautions to avoid undesirable large steps or increasing residuals. For further discussion, see Moré et al. (1980).</p>
+        <h2 class="API">Example</h2>
+        <p>The following 2 x 2 system of nonlinear equations is solved:</p>
+        <p><i>f</i>(x) = <i>x</i><sub>0</sub> + <i>x</i><sub>1</sub> – 3</p>
+        <p><i>f</i>(x) = <i>x</i><sub>0</sub><sup>2</sup> + <i>x</i><sub>1</sub><sup>2</sup> – 9</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the system through the function f. </p>
+        <p class="Code">FUNCTION f, x</p>
+        <p class="Code_Indented">RETURN, [x(0)+x(1)-3, x(0)^2+x(1)^2-9] </p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PM, IMSL_ZEROSYS('f', 2), $</p>
+        <p class="Code">Title = 'Solution of the system:', FORMAT = '(f10.5)'</p>
+        <p class="Code">; Compute the solution and output the results. Solution of the system:</p>
+        <p class="Code_Indented">0.00000</p>
+        <p class="Code_Indented">3.00000</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_TOO_MANY_FCN_EVALS: Number of function evaluations has exceeded ITMAX. A new initial guess can be tried.</p>
+        <p>MATH_NO_BETTER_POINT: Keyword ERR_REL is too small. No further improvement in the approximate solution is possible.</p>
+        <p>MATH_NO_PROGRESS: Iteration has not made good progress. A new initial guess can be tried.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_ZEROSYS(<i>F, N</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#ERR_REL" class="selected">ERR_REL</a>=<i>value</i>] [, <a href="#FNORM" class="selected">FNORM</a>=<i>value</i>] [, <a href="#JACOBIAN" class="selected">JACOBIAN</a>=<i>string</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#XGUESS" class="selected">XGUESS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>An array containing a solution of the system of equations.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">F</h3>
+        <p>Scalar string specifying a user-supplied function to evaluate the system of equations to be solved. The f function accepts one parameter containing the point at which the functions are to be evaluated and returns the computed function values at the given point.</p>
+        <h3 class="Argument">N</h3>
+        <p>Number of equations to be solved and the number of unknowns.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="ERR_REL"></a>ERR_REL (optional)</h3>
+        <p>Stopping criterion. The root is accepted if the relative error between two successive approximations to this root is less than ERR_REL. Default: ERR_REL = SQRT(ε), where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="FNORM"></a>FNORM (optional)</h3>
+        <p>Scalar with the value <i>f</i><sub> </sub><sup>2</sup><sub>0</sub> + ... + <i>f</i><sup> </sup><sup class="cSuperscriptItalic">2</sup><sub style="font-style: italic">n–</sub><sub>1</sub><sup> </sup>at the point <i>x</i>.
+		</p>
+        <h3 class="Keyword"><a name="JACOBIAN"></a>JACOBIAN (optional)</h3>
+        <p>Scalar string specifying a user-supplied function to evaluate the x <i>n</i> Jacobian. The function accepts as parameter the point at which the Jacobian is to be evaluated and returns a two-dimensional matrix defined by result (<i>i</i>, <i>j</i>) = <span style="font-family: Symbol; font-style: normal" class="cSymbol">¶</span><i>f</i><sub>i</sub><span style="font-family: Symbol; vertical-align: baseline" class="cSymbol">/</span><span style="font-family: Symbol; font-style: normal" class="cSymbol">¶</span><i>x<sub>j</sub></i></p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum allowable number of iterations. Default: 200.</p>
+        <h3 class="Keyword"><a name="XGUESS"></a>XGUESS (optional)</h3>
+        <p>Array with <i>N</i> components containing the initial estimate of the root. Default: 0.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_ZEROPOLY</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_ZEROPOLY</span>
+        </div>
+        <h1 class="Routine">IMSL_ZEROPOLY</h1>
+        <p>The IMSL_ZEROPOLY function finds the zeros of a polynomial with real or complex coefficients using the companion matrix method or, optionally, the Jenkins- Traub, three-stage algorithm.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_ZEROPOLY function computes the n zeros of the polynomial:</p>
+        <p><i>p</i> (<i>z</i>) = <i>a<sub>n</sub></i> <i>z</i><sup>n</sup> + <i>a</i><sub style="vertical-align: sub" class="cSubscriptItalic">n – 1</sub><i>z</i><sup class="cSuperscriptItalic">n – 1</sup> + ... + <i>a</i><sub>1</sub> <i>z</i> + <i>a</i><sub>0</sub></p>
+        <p>where the coefficients <i>a<sub>i</sub></i> for <i>i</i> = 0, 1, ..., <i>n </i>are real and <i>n </i>is the degree of the polynomial.</p>
+        <p>The default method used by IMSL_ZEROPOLY is the companion matrix method. The companion matrix method is based on the fact that if <i>C<sub>a</sub></i> denotes the companion matrix associated with <i>p</i>(<i>z</i>), then det (<i>zI – C</i><sub>a</sub>)<i> =&#160;a</i>(<i>z</i>), where <i>I</i> <i>&#160;</i>is an <i>n</i>&#160;x&#160;<i>n</i> identity matrix. Thus, det (<i>z</i><sub>0</sub><i>I – C<sub>a</sub></i>)<i> = </i>0 if, and only if, <i>z</i><sub>0</sub> is a zero of <i>p</i>(<i>z</i>). This implies that computing the eigenvalues of <i>C<sub>a</sub></i> will yield the zeros of <i>p</i>(<i>z</i>). This method is thought to be more robust than the Jenkins-Traub algorithm in most cases, but the companion matrix method is not as computationally efficient. Thus, if speed is a concern, the Jenkins-Traub algorithm should be considered.
+		</p>
+        <p>If the keyword JENKINS_TRAUB is set, then IMSL_ZEROPOLY function uses the Jenkins-Traub three-stage algorithm (Jenkins and Traub 1970, Jenkins 1975). The zeros are computed one-at-a-time for real zeros or two-at-a-time for a complex conjugate pair. As the zeros are found, the real zero or quadratic factor is removed by polynomial deflation.</p>
+        <h2 class="API">Example</h2>
+        <p>This example finds the zeros of the third-degree polynomial:</p>
+        <p>p (z) = <i>z</i><sup class="cSuperscriptItalic">3</sup> – 3z<sup>2</sup> + 4<i>z</i> – 2</p>
+        <p>where <i>z</i> is a complex variable.</p>
+        <p class="Code">coef = [-2, 4, -3, 1]</p>
+        <p class="Code">; Set the coefficients. zeros = IMSL_ZEROPOLY(coef)</p>
+        <p class="Code">; Compute the zeros.</p>
+        <p class="Code">PM, zeros, Title = $</p>
+        <p class="Code">'The complex zeros found are: '</p>
+        <p class="Code">; Print results.</p>
+        <p class="Code">The complex zeros found are:</p>
+        <p class="Code_Indented">(&#160;&#160;&#160;&#160;&#160;&#160;1.00000,&#160;&#160;&#160;&#160;&#160;&#160;0.00000)</p>
+        <p class="Code_Indented">(&#160;&#160;&#160;&#160;&#160;&#160;1.00000,&#160;&#160;&#160;&#160;&#160;-1.00000)</p>
+        <p class="Code_Indented">(&#160;&#160;&#160;&#160;&#160;&#160;1.00000,&#160;&#160;&#160;&#160;&#160;&#160;1.00000)</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_ZERO_COEFF: First several coefficients of the polynomial are equal to zero. Several of the last roots are set to machine infinity to compensate for this problem.</p>
+        <p>MATH_FEWER_ZEROS_FOUND: Fewer than (N_ELEMENTS (coef) – 1) zeros were found. The root vector contains the value for machine infinity in the locations that do not contain zeros.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_ZEROPOLY(<i>Coef</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#COMPANION" class="selected">COMPANION</a>=<i>value</i>] [, <a href="#JENKINS_TRAUB" class="selected">JENKINS_TRAUB</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The complex array of zeros of the polynomial.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Coef</h3>
+        <p>Array containing coefficients of the polynomial in increasing order by degree. The polynomial is <i>Coef</i> (<i>n</i>) <i>z</i><sup class="cSuperscriptItalic">n</sup> + <i>Coef</i> (<i>n</i> – 1) <i>z</i><sup>n</sup> <sup>– 1 </sup>+<i> ... + Coef</i></p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="COMPANION"></a>COMPANION (optional)</h3>
+        <p>If present and nonzero, the companion matrix method is used. Default: companion matrix method</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="JENKINS_TRAUB"></a>JENKINS_TRAUB (optional)</h3>
+        <p>If present and nonzero, the Jenkins-Traub, three-stage algorithm is used.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

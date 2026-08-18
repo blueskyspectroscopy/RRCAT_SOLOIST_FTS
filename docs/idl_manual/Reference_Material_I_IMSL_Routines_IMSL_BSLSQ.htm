@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_BSLSQ</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_BSLSQ</span>
+        </div>
+        <h1 class="Routine">IMSL_BSLSQ</h1>
+        <p>The IMSL_BSLSQ function computes a one- or two-dimensional, least-squares spline approximation.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_BSLSQ function computes a least-squares approximation to weighted data returning either a one-dimensional B-spline or a two-dimensional, tensor- product B-spline. The determination of whether to return a one- or two-dimensional spline is made based on the number of arguments passed to the function.</p>
+        <h2 class="API">One-dimensional, B-spline Least-squares Approximation</h2>
+        <p>Make the following identifications:</p>
+        <p><i>n</i> = N_ELEMENTS(xdata)</p>
+        <p><i>x</i> = Xdata</p>
+        <p><i>f</i> = Fdata</p>
+        <p><i>m</i> = xspacedim</p>
+        <p><i>k</i> = XOrder</p>
+        <p>For convenience, assume that the sequence x is increasing (although the function does not require this).</p>
+        <p>By default, <i>k</i> = 4 and the knot sequence selected equally distributes the knots through the distinct <i>x<sub>i</sub></i>'s. In particular, the <i>m + k</i> knots are generated in [<i>x<sub>0</sub></i>, <i>x<sub>n –</sub></i> <sub>1</sub> ] with <i>k</i> knots stacked at each of the extreme values. The interior knots are equally spaced in the interval.</p>
+        <p>Once knots <b>t</b> and weights <i>w</i> are determined (and assuming that keyword OPTIMIZE is not set), then the function computes the spline least-squares fit to the data by minimizing over the linear coefficients <i>a</i><sub>j</sub>, such that:</p>
+        <p>
+            <img src="images/IMSL_BSLSQ-59.jpg" />
+        </p>
+        <p>where <i>B</i><sub>j</sub>, <i>j</i> = 0, . . ., <i>m –</i> 1, is a (B-spline) basis for the spline subspace.</p>
+        <p>The XORDER keyword allows the user to choose the order of the spline fit. The XKNOTS keyword allows user specification of knots. The one-dimensional functionality of IMSL_BSLSQ is based on the routine L2APPR by de Boor (1978, p. 255).</p>
+        <p>If the keyword OPTIMIZE is used, the function attempts to find the best placement of knots that minimizes the least-squares error to the given data by a spline of order <i>k</i> with <i>m</i> coefficients. For this problem, it is necessary that <i>m &gt; k</i>. Then, to find the minimum of the functional, use the following:</p>
+        <p>
+            <img src="images/IMSL_BSLSQ-60.jpg" />
+        </p>
+        <p>The technique employed here uses the fact that for a fixed-knot sequence <b>t</b> the minimization in <i>a</i> is a linear least-squares problem that is easily solved. Thus, objective function <i>F</i> is a function of only <b>t</b><span style="font-weight: bold">  <![CDATA[ ]]></span>by setting the following:</p>
+        <p><i>G</i>(<b>t</b>) = min<i>F</i>(<i>a,</i> <b>t</b>)</p>
+        <p>A Gauss-Seidel (cyclic coordinate) method is then used to reduce the value of the new objective function <i>G</i>. In addition to this local method, there is a global heuristic built into the algorithm that is useful if the data arise from a smooth function. This heuristic is based on the routine NEWNOT of de Boor (1978, pp. 184, 258–261).</p>
+        <p>The guess, <b>t</b>g, for the knot sequence is either provided by the user or is the default. This must be a <i>valid</i> knot sequence for splines of order <i>k</i> with:</p>
+        <p>
+            <img src="images/IMSL_BSLSQ-61.jpg" />
+        </p>
+        <p>with <b>t</b>g nondecreasing and <b>t</b><i>g</i><sub>i</sub> &lt; <b>t</b><i>g</i><sub>i + k</sub> for <i>i</i> = 0, ..., <i>m </i>– 1.</p>
+        <p>In regard to execution speed, this function can be several orders of magnitude slower than a simple least-squares fit.</p>
+        <p>The return value for this function is a structure containing all the information to determine the spline (stored in B-spline form) that is computed by this function.</p>
+        <p>In the figure below, two cubic splines are fit to SQRT( |<i>x</i>| ). Both splines are cubics with the same <i>xspacedim</i> = 8. The first spline is computed with the default settings, while the second spline is computed by optimizing the knot locations using the OPTIMIZE keyword.</p>
+        <p>
+            <img src="images/interp10.gif" />
+        </p>
+        <h2 class="API">Two-dimensional, B-spline Least-squares Approximation</h2>
+        <p>If a two-dimensional, tensor-product B-spline is desired, the IMSL_BSLSQ function computes a tensor-product spline, least-squares approximation to weighted, tensor-product data. The input for this function consists of data vectors to specify the tensor-product grid for the data, two vectors with the weights (optional, the default is 1), the values of the surface on the grid, and the specification for the tensor-product spline (optional, a default is chosen). The grid is specified by the two vectors <i>x</i> = <i>Xdata</i> and <i>y</i>&#160;= <i>Ydata</i> of length <i>n = </i>N_ELEMENTS(<i>Xdata</i>) and <i>m=&#160;</i>N_ELEMENTS(<i>Ydata</i>), respectively. A two-dimensional array <i>f</i> = <i>Fdata</i> contains the data values to be fit. The two vectors <i>w<sub>x</sub></i> = XWEIGHTS and <i>w</i><sub>y</sub>&#160;=&#160;YWEIGHTS contain the weights for the weighted, least-squares problem. The information for the approximating tensor-product spline can be provided using keywords XORDER, YORDER, XKNOTS, and YKNOTS. This information is contained in <i>k<sub>x</sub></i> = XORDER, <b>t</b><sub>x</sub> = XKNOTS, and <i>n</i>&#160;= <i>Xspacedim</i> for the spline in the first variable, and in <i>k<sub>y</sub></i> = <i>YOrder</i>, <b>t</b><sub>y</sub> = <i>YKnots</i>, and <i>m</i>&#160;=&#160;<i>yspacedim</i> for the spline in the second variable.
+		</p>
+        <p>This function computes coefficients for the tensor-product spline by solving the normal equations in tensor-product form as discussed in de Boor (1978, Chapter 17). For more information, see the paper by Grosse (1980).
+		</p>
+        <p>As the computation proceeds, coefficients <i>c</i> are obtained minimizing:</p>
+        <p>
+            <img src="images/IMSL_BSLSQ-62.jpg" />
+        </p>
+        <p>where the function <i>B<sub>kl</sub></i> is the tensor-product of two B-splines of order <i>k</i><sub>x</sub> and <i>k</i><sub>y</sub>:</p>
+        <p>
+            <img src="images/IMSL_BSLSQ-63.jpg" />
+        </p>
+        <p>The spline:</p>
+        <p>
+            <img src="images/IMSL_BSLSQ-64.jpg" />
+        </p>
+        <p>and its partial derivatives can be evaluated using <a href="IMSL_SPVALUE.htm">IMSL_SPVALUE</a>.</p>
+        <p>The return value for this function is a structure containing all the information to determine the spline that is computed by this function. For example, the following code sequence evaluates this spline (stored in the structure <i>sp</i>)<i>  <![CDATA[ ]]></i>at (<i>x</i>, <i>y</i>) and returns the value in v:</p>
+        <p class="Code">v = IMSL_SPVALUE(x, y, sp)</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example fits data generated from a trigonometric polynomial:</p>
+        <p>1 + sinx + 7sin3x + ε</p>
+        <p>where ε is a random uniform deviate over the range [–1, 1]. The data is obtained by evaluating this function at 90 equally spaced points on the interval [0, 6]. This data is fit with a cubic spline with 12 degrees of freedom (eight equally spaced interior knots). The computed fit and original data are then plotted, as shown in the figure below as follows:</p>
+        <p class="Code">n = 90</p>
+        <p class="Code">x = 6 * FINDGEN(n)/(n - 1)</p>
+        <p class="Code">f = 1 + SIN(x) + 7 * SIN(3 * x) + (1 - 2 * IMSL_RANDOM(n))</p>
+        <p class="Code">; Set up the data.</p>
+        <p class="Code">sp = IMSL_BSLSQ(x, f, 8)</p>
+        <p class="Code">; Compute the spline fit.</p>
+        <p class="Code">speval = IMSL_SPVALUE(x, sp)</p>
+        <p class="Code">; Evaluate the computed spline at the original data abscissa.</p>
+        <p class="Code">PLOT, x, speval</p>
+        <p class="Code">; Plot the results.</p>
+        <p class="Code">OPLOT, x, f, Psym = 6</p>
+        <p>
+            <img src="images/interp11.gif" />
+        </p>
+        <h3>Example 2</h3>
+        <p>This example fits noisy data that arises from the function exsin (x + y) + ε, where ε is a random uniform deviate in the range (–1, 1), on the rectangle [0, 3] x [0, 5]. This function is sampled on a 50 x 25 grid and the original data and the evaluations of the computed spline are plotted as shown in the figure below.</p>
+        <p class="Code">nx = 50 ny = 25</p>
+        <p class="Code">; Generate noisy data on a 50 x 25 grid. x = 3 * FINDGEN(nx)/(nx - 1)</p>
+        <p class="Code">y = 5 * FINDGEN(ny)/(ny - 1)</p>
+        <p class="Code">f = FLTARR(nx, ny)</p>
+        <p class="Code">FOR i = 0, nx - 1 DO f(i, *) = EXP(x(i)) * $</p>
+        <p class="Code_Indented">SIN(x(i) + y) + 2 * IMSL_RANDOM(ny) - 1</p>
+        <p class="Code">sp = IMSL_BSLSQ(x, y, f, 5, 7)</p>
+        <p class="Code">; Call IMSL_BSLSQ to compute the least-squares fit. Notice that</p>
+        <p class="Code">; xspacedim = 5 and yspacedim = 7. speval = IMSL_SPVALUE(x, y, sp)</p>
+        <p class="Code">; Evaluate the fit on the original grid.</p>
+        <p class="Code">!P.Multi = [0, 1, 2]</p>
+        <p class="Code">WINDOW, XSize = 500, YSize = 800</p>
+        <p class="Code">; Plot the original data and the fit in the same window.</p>
+        <p class="Code">SURFACE, f, x, y, Ax = 45, XTitle = 'X', YTitle = 'Y'</p>
+        <p class="Code">SURFACE, speval, x, y, Ax = 45, XTitle = 'X', YTitle = 'Y'</p>
+        <p>
+            <img src="images/interp12.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_ILL_COND_LSQ_PROB: Least-squares matrix is ill-conditioned. Solution might not be accurate.</p>
+        <p>MATH_SPLINE_LOW_ACCURACY: There may be less than one digit of accuracy in the least-squares fit. Try using higher precision if possible.</p>
+        <p>MATH_OPT_KNOTS_STACKED_1: Knots found to be optimal are stacked more than Order. This indicates that fewer knots will produce the same error sum of squares. Knots have been separated slightly.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_KNOT_MULTIPLICITY: Multiplicity of the knots cannot exceed the order of the spline.</p>
+        <p>MATH_KNOT_NOT_INCREASING: Knots must be nondecreasing.</p>
+        <p>MATH_SPLINE_LRGST_ELEMNT: Data arrays <i>Xdata</i> and <i>Ydata</i> must satisfy datai ≤ tSpline_Space_Dim, for i = 1, ..., num_data.</p>
+        <p>MATH_SPLINE_SMLST_ELEMNT: Data arrays <i>Xdata</i> and <i>Ydata</i> must satisfy datai ≥ tOrder – 1, for i = 1, ..., num_data.</p>
+        <p>MATH_NEGATIVE_WEIGHTS: All weights must be greater than or equal to zero.</p>
+        <p>MATH_DATA_DECREASING: The <i>Xdata</i> values must be nondecreasing.</p>
+        <p>MATH_XDATA_TOO_LARGE: Array <i>Xdata</i> must satisfy xdatai ≤ tndata, for i = 1, ..., ndata.</p>
+        <p>MATH_XDATA_TOO_SMALL: Array <i>Xdata</i> must satisfy xdatai ≥ tOrder – 1, for i = 1, ..., ndata.</p>
+        <p>MATH_OPT_KNOTS_STACKED_2: Knots found to be optimal are stacked more than Order. This indicates fewer knots will produce the same error sum of squares.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_BSLSQ(<i>Xdata, Fdata, Xspacedim</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#OPTIMIZE" class="selected">OPTIMIZE</a>=<i>value</i>] [, <a href="#SSE" class="selected">SSE</a>=<i>variable</i>] [, <a href="#XKNOTS" class="selected">XKNOTS</a>=<i>value</i>] [, <a href="#XORDER" class="selected">XORDER</a>=<i>value</i>] [, <a href="#XWEIGHTS" class="selected">XWEIGHTS</a>=<i>value</i>] [, <a href="#YKNOTS" class="selected">YKNOTS</a>=<i>value</i>] [, <a href="#YORDER" class="selected">YORDER</a>=<i>value</i>] [, <a href="#YWEIGHTS" class="selected">YWEIGHTS</a>=<i>value</i>])
+</p>
+        <p>or</p>
+        <p><![CDATA[
+]]><i>Result</i> = IMSL_BSLSQ(<i>Xdata, Ydata, Fdata, Xspacedim, Yspacedim</i>
+[, <a href="#DOUBLE" class="selected">DOUBLE</a>=<i>value</i>] [, <a href="#OPTIMIZE" class="selected">OPTIMIZE</a>=<i>value</i>] [, <a href="#SSE" class="selected">SSE</a>=<i>variable</i>] [, <a href="#XKNOTS" class="selected">XKNOTS</a>=<i>value</i>] [, <a href="#XORDER" class="selected">XORDER</a>=<i>value</i>] [, <a href="#XWEIGHTS" class="selected">XWEIGHTS</a>=<i>value</i>] [, <a href="#YKNOTS" class="selected">YKNOTS</a>=<i>value</i>]
+[, <a href="#YORDER" class="selected">YORDER</a>=<i>value</i>] [, <a href="#YWEIGHTS" class="selected">YWEIGHTS</a>=<i>value</i>])
+</p>
+        <h2 class="API">Return Value</h2>
+        <p>A structure containing all the information to determine the spline fit.</p>
+        <h2 class="API">Arguments</h2>
+        <p>If a one-dimensional B-spline is desired, then arguments <i>Xdata</i>, <i>Fdata</i>, and <i>Xspacedim</i> are required. If a two-dimensional, tensor-product B-spline is desired, then arguments <i>Xdata</i>, <i>Ydata</i>, <i>Fdata</i>, <i>Xspacedim</i>, and <i>Yspacedim</i> are required.</p>
+        <h3 class="Argument">Xdata</h3>
+        <p>One-dimensional array containing the data points in the <i>x</i>-direction.</p>
+        <h3 class="Argument">Ydata</h3>
+        <p>One-dimensional array containing the data points in the <i>y</i>-direction.</p>
+        <h3 class="Argument">Fdata</h3>
+        <p>Array containing the values to be approximated. If a one-dimensional approximation is to be computed, then <i>Fdata</i> is a one-dimensional array. If a two-dimensional approximation is to be computed, then <i>Fdata</i> is a two-dimensional array, where <i>Fdata</i> (<i>i, j</i>) contains the value at (<i>Xdata</i> (<i>i</i>), <i>Ydata</i>(<i>j</i>)).</p>
+        <h3 class="Argument">Xspacedim</h3>
+        <p>Linear dimension of the spline subspace for the x variable. It should be smaller than the number of data points in the x-direction and greater than or equal to the order of the spline in the x-direction (whose default value is 4).</p>
+        <h3 class="Argument">Yspacedim</h3>
+        <p>Linear dimension of the spline subspace for the y variable. It should be smaller than the number of data points in the y-direction and greater than or equal to the order of the spline in the y-direction (whose default value is 4).</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="OPTIMIZE"></a>OPTIMIZE (optional)</h3>
+        <p>If present and nonzero, optimizes the knot locations by attempting to minimize the least-squares error as a function of the knots. This keyword is only active if a one-dimensional spline is being computed.</p>
+        <h3 class="Keyword"><a name="SSE"></a>SSE (optional)</h3>
+        <p>Set this keyword equal to a named variable that will contain the weighted error sum of squares is stored.</p>
+        <h3 class="Keyword"><a name="XKNOTS"></a>XKNOTS (optional)</h3>
+        <p>Specifies the array of knots in the x-direction to be used when computing the definition of the spline. Default: knots are equally spaced in the <i>x</i>-direction.</p>
+        <h3 class="Keyword"><a name="XORDER"></a>XORDER (optional)</h3>
+        <p>Specifies the order of the spline in the <i>x</i>-direction. Default: 4, i.e., cubic splines.</p>
+        <h3 class="Keyword"><a name="XWEIGHTS"></a>XWEIGHTS (optional)</h3>
+        <p>Array containing the weights to use in the <i>x</i>-direction. Default: all weights equal to 1.</p>
+        <h3 class="Keyword"><a name="YKNOTS"></a>YKNOTS (optional)</h3>
+        <p>Specifies the array of knots in the y-direction to be used when computing the definition of the spline. Default: knots are equally spaced in the <i>y</i>-direction.</p>
+        <h3 class="Keyword"><a name="YORDER"></a>YORDER (optional)</h3>
+        <p>Specifies the order of the spline in the y-direction. If a one-dimensional spline is being computed, then YORDER has no effect on the computations. Default: 4, i.e., cubic splines.</p>
+        <h3 class="Keyword"><a name="YWEIGHTS"></a>YWEIGHTS (optional)</h3>
+        <p>Array containing the weights to use in the y-direction. If a one-dimensional spline is being computed, then YWEIGHTS has no effect on the computations. Default: all weights equal to 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_SPVALUE.htm">IMSL_SPVALUE</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

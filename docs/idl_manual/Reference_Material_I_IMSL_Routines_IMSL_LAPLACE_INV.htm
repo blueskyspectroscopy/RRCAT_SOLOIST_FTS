@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_LAPLACE_INV</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_LAPLACE_INV</span>
+        </div>
+        <h1 class="Routine">IMSL_LAPLACE_INV</h1>
+        <p>The IMSL_LAPLACE_INV function computes the inverse Laplace transform of a complex function.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_LAPLACE_INV function computes the inverse Laplace transform of a complex-valued function. Recall that if <i>f</i> is a function that vanishes on the negative real axis, then the Laplace transform of <i>f</i> is defined by:</p>
+        <p>
+            <img src="images/IMSL_LAPLACE_INV-34.jpg" />
+        </p>
+        <p>It is assumed that for some value of <i>s</i> the integrand is absolutely integrable.</p>
+        <p>The computation of the inverse Laplace transform is based on a modification of Weeks’ method (see Weeks (1966)) due to Garbow et al. (1988). This method is suitable when <i>f</i> has continuous derivatives of all orders on [0, ∞). In particular, given a complex-valued function <i>F</i>(<i>s</i>) = <i>L</i>[<i>f</i>] (<i>s</i>), <i>f</i> can be expanded in a Laguerre series whose coefficients are determined by <i>F</i>. This is fully described in Garbow et al. (1988) and Lyness and Giunta (1986).</p>
+        <p>The algorithm attempts to return approximations <i>g</i>(<i>t</i>) to <i>f</i>(<i>t</i>) satisfying:</p>
+        <p>
+            <img src="images/IMSL_LAPLACE_INV-35.jpg" />
+        </p>
+        <p>where ε = PSEUDO_ACC and σ = <i>Sigma</i> &gt; <i>sigma0</i>. The expression on the left is called the pseudo error. An estimate of the pseudo error is available in ERR_EST.</p>
+        <p>The first step in the method is to transform F to φ where:</p>
+        <p>
+            <img src="images/IMSL_LAPLACE_INV-37.jpg" />
+        </p>
+        <p>Then, if <i>f</i> is smooth, it is known that φ is analytic in the unit disc of the complex plane and hence has a Taylor series expansion:</p>
+        <p>
+            <img src="images/IMSL_LAPLACE_INV-37.jpg" />
+        </p>
+        <p>which converges for all <i>z</i> whose absolute value is less than the radius of convergence <i>R</i><sub>c</sub>. This number is estimated in the output keyword R. Using the output keyword K, the smallest number K is estimated which satisfies:</p>
+        <p>
+            <img src="images/IMSL_LAPLACE_INV-38.jpg" />
+        </p>
+        <p>The coefficients of the Taylor series for φ can be used to expand <i>f</i> in a Laguerre series:</p>
+        <p>
+            <img src="images/IMSL_LAPLACE_INV-39.jpg" />
+        </p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example computes the inverse Laplace transform of the function (<i>s</i> – 1)−2, and prints the computed approximation, true transform value, and difference at five points. The correct inverse transform is xex. From Abramowitz and Stegun (1964).</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION fcn, x</p>
+        <p class="Code_Indented">; Return 1/(s - 1)**2</p>
+        <p class="Code_Indented">one	=	COMPLEX(1.0,	0.0)</p>
+        <p class="Code_Indented">f	=	one/((x - one)*(x - 1))</p>
+        <p class="Code_Indented">RETURN, f</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">n	=	5</p>
+        <p class="Code">; Initialize t and compute inverse. t	=	FINDGEN(n) + 0.5</p>
+        <p class="Code">l_inverse	=	IMSL_LAPLACE_INV('fcn',	1.5,	t)</p>
+        <p class="Code">; Compute true inverse, relative difference. true_inverse = t*EXP(t)</p>
+        <p class="Code">relative_diff = ABS((l_inverse - true_inverse) / true_inverse)</p>
+        <p class="Code">PM, [[t(0:*)],	[l_inverse(0:*)],	[true_inverse(0:*)],	$</p>
+        <p class="Code_Indented">[relative_diff(0:*)]],	$</p>
+        <p class="Code_Indented">Title	=	' t	f_inv	true	diff'</p>
+        <p class="Code">END</p>
+        <p class="Code">t	f_inv	true	diff</p>
+        <p class="Code">0.500000	0.824348	0.824361	1.48223e-05</p>
+        <p class="Code">1.50000	6.72247	6.72253	1.01432e-05</p>
+        <p class="Code">2.50000	30.4562	30.4562	2.50504e-07</p>
+        <p class="Code">3.50000	115.906	115.904	1.84310e-05</p>
+        <p class="Code">4.50000	405.053	405.077	5.90648e-05</p>
+        <h3>Example 2</h3>
+        <p>This example computes the inverse Laplace transform of e−1/s/s, and prints the computed approximation, true transform value, and difference at five points. Additionally, the inverse is returned, and a required accuracy for the inverse transform values is specified. The correct inverse transform is:</p>
+        <p class="Code">J0 (2   x)</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION fcn, x</p>
+        <p class="Code_Indented">; Return (1/s)(exp(-1/s)</p>
+        <p class="Code_Indented">one	=	COMPLEX(1.0,	0.0)</p>
+        <p class="Code_Indented">s_inverse = one / x</p>
+        <p class="Code_Indented">f	=	s_inverse*EXP(-1*(s_inverse))</p>
+        <p class="Code_Indented">RETURN, f</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">n	=	5</p>
+        <p class="Code">; Initialize t and compute inverse. t	=	FINDGEN(n) + 0.5</p>
+        <p class="Code">l_inverse	=	IMSL_LAPLACE_INV('fcn', 0.0, t, $</p>
+        <p class="Code_Indented">Pseudo_Acc = 1.0e-6, Indicator = indicator)</p>
+        <p class="Code">true_inverse = FLOAT(IMSL_BESSJ(0, 2.0*SQRT(t)))</p>
+        <p class="Code">relative_diff = ABS((l_inverse - true_inverse) / true_inverse)</p>
+        <p class="Code">FOR i	=	0, 4 DO BEGIN</p>
+        <p class="Code_Indented">IF (indicator(i) EQ 0) THEN BEGIN</p>
+        <p class="Code_Indented2">PM, t(i), l_inverse(i), true_inverse(i), $</p>
+        <p class="Code_Indented3">relative_diff(i), $</p>
+        <p class="Code_Indented3">Title = '	t	f_inv	true	diff'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code_Indented">ENDIF ELSE BEGIN</p>
+        <p class="Code_Indented2">PRINT, 'Overflow or underflow noted.'</p>
+        <p class="Code_Indented">ENDELSE</p>
+        <p class="Code">ENDFOR</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code_Indented">&#160;&#160;&#160;t&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;f_inv&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;true&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;diff</p>
+        <p class="Code_Indented">0.500000&#160;&#160;&#160;0.559134&#160;&#160;&#160;&#160;0.559134&#160;&#160;&#160;&#160;1.06602e-07</p>
+        <p class="Code_Indented">&#160;&#160;&#160;t&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;f_inv&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;true&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;diff</p>
+        <p class="Code_Indented">1.50000&#160;&#160;&#160;-0.0229669&#160;&#160;&#160;-0.0229670&#160;&#160;4.21725e-06</p>
+        <p class="Code_Indented">&#160;&#160;&#160;t&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;f_inv&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;true&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;diff</p>
+        <p class="Code_Indented">2.50000&#160;&#160;&#160;-0.310045&#160;&#160;&#160;-0.310045&#160;&#160;&#160;&#160;9.61226e-08</p>
+        <p class="Code_Indented">&#160;&#160;&#160;t&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;f_inv&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;true&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;diff</p>
+        <p class="Code_Indented">3.50000&#160;&#160;&#160;-0.401115&#160;&#160;&#160;-0.401115&#160;&#160;&#160;&#160;2.22896e-07</p>
+        <p class="Code_Indented">&#160;&#160;&#160;t&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;f_inv&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;true&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;diff</p>
+        <p class="Code_Indented">4.50000&#160;&#160;&#160;-0.370335&#160;&#160;&#160;-0.370336&#160;&#160;&#160;&#160;4.02369e-07</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_LAPLACE_INV(<i>F, Sigma0, T</i> [, <a href="#BIG_COEF_LOG" class="selected">BIG_COEF_LOG</a>=<i>variable</i>] [, <a href="#BVALUE" class="selected">BVALUE</a>=parameter] [, <a href="#COND_ERR" class="selected">COND_ERR</a>=<i>variable</i>] [, <a href="#DISC_ERR" class="selected">DISC_ERR</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#ERR_EST" class="selected">ERR_EST</a>=<i>variable</i>] [, <a href="#INDICATORS" class="selected">INDICATORS</a>=<i>variable</i>] [, <a href="#K" class="selected">K</a>=<i>variable</i>] [, <a href="#MTOP" class="selected">MTOP</a>=<i>value</i>] [, <a href="#PSEUDO_ACC" class="selected">PSEUDO_ACC</a>=<i>value</i>] [, <a href="#R" class="selected">R</a>=<i>variable</i>] [, <a href="#SIGMA" class="selected">SIGMA</a>=parameter] [, <a href="#SMALL_COEF_LOG" class="selected">SMALL_COEF_LOG</a>=<i>variable</i>] [, <a href="#TRUNC_ERR" class="selected">TRUNC_ERR</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A one-dimensional array containing the discrete convolution of <i>x</i> and <i>x</i>, or <i>x</i> and <i>x</i> if <i>x</i>
+is supplied.
+</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">F</h3>
+        <p>Scalar string specifying the user-supplied function for which the inverse Laplace transform will be computed.</p>
+        <h3 class="Argument">Sigma0</h3>
+        <p>An estimate for the maximum of the real parts of the singularities of f. If unknown, set sigma0 = 0.0.</p>
+        <h3 class="Argument">T</h3>
+        <p>One-dimensional array of size n containing the points at which the inverse Laplace transform is desired.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="BIG_COEF_LOG"></a>BIG_COEF_LOG (optional)</h3>
+        <p>Named variable into which the logarithm of the largest coefficient in the decay function is stored. See the description at the beginning of this topic for details.</p>
+        <h3 class="Keyword"><a name="BVALUE"></a>BVALUE (optional)</h3>
+        <p>The second parameter of the Laguerre expansion. If BVALUE is less than 2.0*(Sigma − sigma0), it is reset to 2.5*(Sigma − sigma0). Default: 2.5*(Sigma − sigma0)</p>
+        <h3 class="Keyword"><a name="COND_ERR"></a>COND_ERR (optional)</h3>
+        <p>Named variable into which the estimate of the pseudo condition error on the basis of minimal noise levels in the function values is stored.</p>
+        <h3 class="Keyword"><a name="DISC_ERR"></a>DISC_ERR (optional)</h3>
+        <p>Named variable into which the estimate of the pseudo discretization error is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="ERR_EST"></a>ERR_EST (optional)</h3>
+        <p>Named variable into which an overall estimate of the pseudo error, DISC_EST + TRUNC_ERR + COND_ERR is stored. See the description at the beginning of this topic for details.</p>
+        <h3 class="Keyword"><a name="INDICATORS"></a>INDICATORS (optional)</h3>
+        <p>Named variable into which an one-dimensional array of length n containing the overflow/underflow indicators for the computed approximate inverse Laplace transform is stored. Table 9-1 shows, for the <i>i</i>-th point at which the transform is computed, what INDICATORS(i) signifies.</p>
+        <table class="TableStyle_Description" style="mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Indicators(i)</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Meaning</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Normal termination.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The value of the inverse Laplace transform is too large to be representable. This component of the result is set to NaN.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>The value of the inverse Laplace transform is found to be too small to be representable. This component of the result is set to
+0.0.
+</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The value of the inverse Laplace transform is estimated to be too large, even before the series expansion, to be representable. This component of the result is set to NaN.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>The value of the inverse Laplace transform is estimated to be too small, even before the series expansion, to be representable. This component of the result is set to 0.0.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="K"></a>K (optional)</h3>
+        <p>Named variable into which the coefficient of the decay function is stored. See the description at the beginning of this topic for details.</p>
+        <h3 class="Keyword"><a name="MTOP"></a>MTOP (optional)</h3>
+        <p>An upper limit on the number of coefficients to be computed in the Laguerre expansion. The keyword MTOP must be a multiple of four. Default: 1024</p>
+        <h3 class="Keyword"><a name="PSEUDO_ACC"></a>PSEUDO_ACC (optional)</h3>
+        <p>The required absolute uniform pseudo accuracy for the coefficients and inverse Laplace transform values. Default: SQRT(ε), where ε is machine epsilon</p>
+        <h3 class="Keyword"><a name="R"></a>R (optional)</h3>
+        <p>Named variable into which the base of the decay function is stored. See the description at the beginning of this topic for details.</p>
+        <h3 class="Keyword"><a name="SIGMA"></a>SIGMA (optional)</h3>
+        <p>The first parameter of the Laguerre expansion. If SIGMA is not greater than sigma0, it is reset to sigma0+ 0.7. Default: sigma0+ 0.7</p>
+        <h3 class="Keyword"><a name="SMALL_COEF_LOG"></a>SMALL_COEF_LOG (optional)</h3>
+        <p>Named variable into which the logarithm of the smallest nonzero coefficient in the decay function is stored. See the description at the beginning of this topic for details.</p>
+        <h3 class="Keyword"><a name="TRUNC_ERR"></a>TRUNC_ERR (optional)</h3>
+        <p>Named variable into which the estimate of the pseudo truncation error is stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

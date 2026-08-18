@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CSTRENDS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CSTRENDS</span>
+        </div>
+        <h1 class="Routine">IMSL_CSTRENDS</h1>
+        <p>The IMSL_CSTRENDS function performs the Cox and Stuart sign test for trends in location and dispersion.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CSTRENDS function tests for trends in dispersion or location in a sequence of random variables depending upon the usage of Dispersion. A derivative of the sign test is used (see Cox and Stuart 1955).</p>
+        <h3>Location Test</h3>
+        <p>For the location test (Default) with two groups, the observations are first divided into two groups with the middle observation thrown out if there are an odd number of observations. Each observation in group one is then compared with the observation in group two that has the same lexicographical order. A count is made of the number of times a group-one observation is less than <a href="#NSTAT" class="selected">NSTAT</a>(0), greater than NSTAT(1), or equal to NSTAT(2), its counterpart in group two. Two observations are counted as equal if they are within the <a href="#FUZZ" class="selected">FUZZ</a> value of one another.</p>
+        <p>In the three-group test, the observations are divided into three groups, with the center group losing observations if the division is not exact. The first and third groups are then compared as in the two-group case, and the counts are stored in NSTAT(4) through NSTAT(6).</p>
+        <p>Probabilities in <i>Result</i> are computed using the binomial distribution with sample size equal to the number of observations in the first group (NSTAT(3) or NSTAT(7)), and binomial probability <i>p</i> = 0.5.</p>
+        <h3>Dispersion Test</h3>
+        <p>The dispersion tests (when the keyword <a href="#DISPERSION" class="selected">DISPERSION</a> is set) proceed exactly as with the tests for location, but using one of two derived dispersion measures. The input value <i>k</i>=DISPERSION(0) is used to define N_ELEMENTS(<i>x</i>)/<i>k</i> groups of consecutive observations starting with observation 1. The first <i>k</i> observations define the first group, the next <i>k</i> observations define the second group, etc., with the last observations omitted if N_ELEMENTS(<i>x</i>) is not evenly divisible by <i>k</i>. A dispersion score is then computed for each group as either the range (<i>ids</i> = 0), or a multiple of the variance (<i>ids</i> ≠ 0) of the observations in the group. The dispersion scores form a derived sample. The tests proceed on the derived sample as above.</p>
+        <h3>Ties</h3>
+        <p>Ties are defined as occurring when a group one observation is within the <a href="#FUZZ" class="selected">FUZZ</a> value of its last group counterpart. Ties imply that the probability distribution of <i>x</i> is not strictly continuous, which means that <i>Pr</i>(<i>x</i><sub>1</sub> &gt; <i>x</i><sub>2</sub>) ≠ 0.5 under the null hypothesis of no trend (and the assumption of independent identically distributed observations). When ties are present, the computed binomial probabilities are not exact, and the hypothesis tests will be conservative.</p>
+        <h3>Hypothesis tests</h3>
+        <p>In the following, <i>i</i> indexes an observation from group 1, while <i>j</i> indexes the corresponding observation in group 2 (two groups) or group 3 (three groups).</p>
+        <h4>Group 1</h4>
+        <p><i>H</i><sub>0</sub> : Pr(<i>X</i><sub>i</sub> &gt; <i>X</i><sub>j</sub>) = <i>Pr</i>(<i>X</i><sub>i</sub> &lt; <i>X</i><sub>j</sub>) = 0.5</p>
+        <p><i>H</i><sub>1</sub> : Pr(<i>X</i><sub>i</sub> &gt; <i>X</i><sub>j</sub>) &lt; <i>Pr</i>(<i>X</i><sub>i</sub> &lt; <i>X</i><sub>j</sub>)</p>
+        <p>Hypothesis of upward trend. Reject if <i>Result</i>(2) or <i>Result</i>(6) is less than the significance level.</p>
+        <h4>Group 2</h4>
+        <p><i>H</i><sub>0</sub> : Pr(<i>X</i><sub>i</sub> &gt; <i>X</i><sub>j</sub>) = <i>Pr</i>(<i>X</i><sub>i</sub> &lt; <i>X</i><sub>j</sub>) = 0.5</p>
+        <p><i>H</i><sub>1</sub> : Pr(<i>X</i><sub>i</sub> &gt; <i>X</i><sub>j</sub>) &gt; <i>Pr</i>(<i>X</i><sub>i</sub> &lt; <i>X</i><sub>j</sub>)</p>
+        <p>Hypothesis of downward trend. Reject if <i>Result</i>(1) or <i>Result</i>(5) is less than the significance level.</p>
+        <p><i>H</i><sub>0</sub> : Pr(<i>X</i><sub>i</sub> &gt; <i>X</i><sub>j</sub>) = <i>Pr</i>(<i>X</i><sub>i</sub> &lt; <i>X</i><sub>j</sub>) = 0.5</p>
+        <p><i>H</i><sub>1</sub> : Pr(<i>X</i><sub>i</sub> &gt; <i>X</i><sub>j</sub>) ≠ <i>Pr</i>(<i>X</i><sub>i</sub> &lt; <i>X</i><sub>j</sub>)</p>
+        <p>Two tailed test. Reject if:</p>
+        <ul>
+            <li value="1"> 2*<i>max</i>(<i>Result</i>(1), <i>Result</i>(2)), or:</li>
+            <li value="2">2*<i>max</i>(<i>Result</i>(5), <i>Result</i>(6))</li>
+        </ul>
+        <p> is less than the significance level.</p>
+        <h3>Assumptions</h3>
+        <ol>
+            <li value="1">The observations are a random sample; i.e., the observations are independently and identically distributed.</li>
+            <li value="2">The distribution is continuous.</li>
+        </ol>
+        <h2 class="API">Example</h2>
+        <p>This example illustrates both the location and dispersion tests. The data, which are taken from Bradley (1968), page 176, give the closing price of AT&amp;T on the New York stock exchange for 36 days in 1965. Tests for trends in location (Default), and for trends in dispersion (Dispersion) are performed. Trends in location are found.</p>
+        <p class="Code">x	=	[9.5, 9.875, 9.25, 9.5, 9.375, 9.0, 8.75, 8.625, 8.0, $</p>
+        <p class="Code">&#160;&#160;8.25, 8.25, 8.375, 8.125, 7.875, 7.5, 7.875, 7.875, $</p>
+        <p class="Code">&#160;&#160;7.75,7.75, 7.75, 8.0, 7.5,7.5, 7.125, 7.25, 7.25, 7.125, $</p>
+        <p class="Code">&#160;&#160;6.75,6.5, 7.0, 7.0, 6.75, 6.625, 6.625,7.125, 7.75]</p>
+        <p class="Code">k	=		2 </p>
+        <p class="Code">ids	=	0</p>
+        <p class="Code">pstat = IMSL_CSTRENDS(x, Nstat = nstat)</p>
+        <p class="Code">PM, nstat, Title = '	NSTAT'</p>
+        <p class="Code">PM, pstat, Title = '	PSTAT'</p>
+        <p class="Code">pstat = IMSL_CSTRENDS(x, Nstat = nstat, Dispersion = [k, ids])</p>
+        <p class="Code">PM, nstat, Title = '	NSTAT'</p>
+        <p class="Code">PM, pstat, Title = '	PSTAT'</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_CSTRENDS1.jpg" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CSTRENDS(<i>X</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DISPERSION" class="selected">DISPERSION</a>=<i>array</i>] [, <a href="#FUZZ" class="selected">FUZZ</a>=<i>value</i>] [, <a href="#NMISSING" class="selected">NMISSING</a>=<i>variable</i>] [, <a href="#NSTAT" class="selected">NSTAT</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length 8 containing the probabilities.</p>
+        <p>The first four elements of <i>Result</i> are computed from two groups of observations:</p>
+        <ul>
+            <li value="1">0: Probability of NSTAT(0) + NSTAT(2) or more negative signs (ties are considered negative).</li>
+            <li value="2">1: Probability of obtainingNSTAT(1) or more positive signs (ties are considered negative).</li>
+            <li value="3">2: Probability of NSTAT(0) + NSTAT(2) or more negative signs (ties are considered positive).</li>
+            <li value="4">3: Probability of obtaining NSTAT(1) or more positive signs (ties are considered positive).</li>
+        </ul>
+        <p>The last four elements of <i>Result</i> are computed from three groups of observations:</p>
+        <ul>
+            <li value="1">4: Probability of NSTAT(0) + NSTAT(2) or more negative signs (ties are considered negative).</li>
+            <li value="2">5: Probability of obtainingNSTAT(1) or more positive signs (ties are considered negative).</li>
+            <li value="3">6: Probability of NSTAT(0) + NSTAT(2) or more negative signs (ties are considered positive).</li>
+            <li value="4">7: Probability of obtaining NSTAT(1) or more positive signs (ties are considered positive).</li>
+        </ul>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the data in chronological order.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="DISPERSION"></a>DISPERSION (optional)</h3>
+        <p>A one-dimensional array of length 2. If DISPERSION is set, the Cox and Stuart tests for trends in dispersion are computed. Otherwise, as default, the Cox and Stuart tests for trends in location are computed. <i>k</i> = DISPERSION(0) is the number of consecutive <i>x</i> elements to be used to measure dispersion. If <i>ids</i> = DISPERSION(1) is zero, the range is used as a measure of dispersion. Otherwise, the centered sum of squares is used.</p>
+        <h3 class="Keyword"><a name="FUZZ"></a>FUZZ (optional)</h3>
+        <p>A nonnegative constant used to determine when elements in <i>x</i> are tied. If |<i>x</i>(<i>i</i>) – <i>x</i>(<i>j</i>)| is less than or equal to the value of FUZZ, <i>x</i>(<i>i</i>) and <i>x</i>(<i>j</i>) are said to be tied.&#160;FUZZ must be nonnegative. The default value is 0.0.</p>
+        <h3 class="Keyword"><a name="NMISSING"></a>NMISSING (optional)</h3>
+        <p>Named variable that contains the number of missing values in <i>x</i>.</p>
+        <h3 class="Keyword"><a name="NSTAT"></a>NSTAT (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length 8 that contains the statistics below:</p>
+        <ul>
+            <li value="1">0: Number of negative differences (two groups)</li>
+            <li value="2">1: Number of positive differences (two groups)</li>
+            <li value="3">2: Number of zero differences (two groups)</li>
+            <li value="4">3: Number of differences used to calculate <i>Result</i>(0) through <i>Result</i>(3) (two groups).</li>
+            <li value="5">4: Number of negative differences (three groups)</li>
+            <li value="6">5: Number of positive differences (three groups)</li>
+            <li value="7">6: Number of zero differences (three groups)</li>
+            <li value="8">7: Number of differences used to calculate <i>Result</i>(4) through <i>Result</i>(7) (three groups).</li>
+        </ul>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

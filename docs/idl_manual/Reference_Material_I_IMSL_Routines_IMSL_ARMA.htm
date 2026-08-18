@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_ARMA</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_ARMA</span>
+        </div>
+        <h1 class="Routine">IMSL_ARMA</h1>
+        <p>The IMSL_ARMA function computes method-of-moments or least-squares estimates of parameters for a nonseasonal IMSL_ARMA model.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_ARMA function computes estimates of parameters for a nonseasonal IMSL_ARMA model given a sample of observations, {<i>Z</i><sub>t</sub>}, for <i>t</i> = 1, 2, ..., <i>n</i>, where <i>n</i> = N_ELEMENTS(<i>Z</i>). You may choose either method of moments or least squares. The default is method of moments.</p>
+        <p>Choose the method-of-moments algorithm with the keyword <i>MOMENTS</i>. The least-squares algorithm is used if LSQ is specified. If you wish to use the least-squares algorithm, the preliminary estimates are the method-of-moments estimates by default; otherwise, you can input initial estimates by specifying keywords INIT_EST_AR and INIT_EST_MA. The table below lists the appropriate keywords for both the method-of-moments and least-squares algorithm:</p>
+        <table class="TableStyle_Description" style="mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Method of Moments only</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Least Squares only</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Both Method of Moments and Least Squares</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>MOMENTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>LSQ</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>	ERR_REL</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>	CONSTANT (or NO_CONSTANT)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p> ITMAX</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p> AR_LAGS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>MEAN_ESTIMATE</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>MA_LAGS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>AUTOCOV</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>LGTH_BACKCAST</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>FORECAST </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>TOL_BACKCAST </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>N_PREDICT </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>INIT_EST_AR </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>CONFIDENCE </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>RESIDUAL </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>BACKWARD_ORIGIN</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>INIT_EST_MA </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>PARAM_EST_COV</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>SS_RESIDUAL	</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Method-of-moments Estimation</h2>
+        <p>Suppose the time series {Z<sub>t</sub>} is generated by an IMSL_ARMA(<i>p, q</i>) model of the form:</p>
+        <p>φ(B )Z<sub>t</sub> = θ<sub>0</sub> + θ(<i>B</i> )A<sub>t</sub></p>
+        <p>for</p>
+        <p>t ∈ {0, ±1, ±2, ... }</p>
+        <p>let</p>
+        <p>µˆ  = <i>Mean_Est</i></p>
+        <p>be the estimate of the mean µ of the time series {Z<sub>t</sub>}, where:</p>
+        <p>µˆ</p>
+        <p>equals the following:</p>
+        <p>
+            <img src="images/IMSL_ARMA-014.jpg" />
+        </p>
+        <p>The autocovariance function is estimated by:</p>
+        <p>
+            <img src="images/IMSL_ARMA-015.jpg" />
+        </p>
+        <p>for <i>k</i> = 0, 1, ..., <i>K</i>, where <i>K</i> = <i>p + q</i> + 1. Note that:</p>
+        <p>
+            <img src="images/IMSL_ARMA-016.jpg" />
+        </p>
+        <p>is an estimate of the sample variance.</p>
+        <p>Given the sample autocovariances, the function computes the method-of-moments estimates of the autoregressive parameters using the extended Yule-Walker equations as follows:</p>
+        <p>
+            <img src="images/IMSL_ARMA-017.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_ARMA-018.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-019.jpg" />
+        </p>
+        <p>The overall constant θ<sub>0</sub> is estimated by the following:</p>
+        <p>
+            <img src="images/IMSL_ARMA-020.jpg" />
+        </p>
+        <p>The moving average parameters are estimated based on a system of nonlinear equations given K = p + q + 1 autocovariances, σ(k) for k = 1, ..., K, and p autoregressive parameters φi for i = 1, ..., p.</p>
+        <p>Let Z't = φ(B)Zt. The autocovariances of the derived moving average process Z't = θ(B)At are estimated by the following relation:</p>
+        <p>
+            <img src="images/IMSL_ARMA-021.jpg" />
+        </p>
+        <p>The iterative procedure for determining the moving average parameters is based on the relation:</p>
+        <p>
+            <img src="images/IMSL_ARMA-022.jpg" />
+        </p>
+        <p>where σ(k) denotes the autocovariance function of the original Zt process.</p>
+        <p>Let τ = (τ0, τ1, ..., τq)T, f = (f0, f1, ..., fq)T, and T be a (q + 1) x (q + 1) matrix, where τj, fj , and T are as follows:</p>
+        <p>
+            <img src="images/IMSL_ARMA-023.jpg" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_ARMA-024.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-025.jpg" />
+        </p>
+        <p>Then, the value of τ at the (i + 1)-th iteration is determined by:</p>
+        <p>τ <i>i</i> <sup>+ 1</sup> = τ <i>i</i> – (<i>T</i> <i>i</i>)<sup>–1</sup> <i>f</i> <sup>i</sup></p>
+        <p>The estimation procedure begins with the initial value:</p>
+        <p>
+            <img src="images/IMSL_ARMA-026.jpg" />
+        </p>
+        <p>and terminates at iteration i when either |f i| is less than Err_Rel or i equals Itmax. The moving average parameter estimates are obtained from the final estimate of τ by setting:</p>
+        <p>
+            <img src="images/IMSL_ARMA-027.jpg" />
+        </p>
+        <p>for j = 1, ..., q. The random error variance is estimated by the following:</p>
+        <p>
+            <img src="images/IMSL_ARMA-028.jpg" />
+        </p>
+        <p>See Box and Jenkins (1976, pp. 498–500) for a description of a function that performs similar computations.</p>
+        <h2 class="API">Least-squares Estimation</h2>
+        <p>Suppose the time series {Zt} is generated by a nonseasonal IMSL_ARMA model of the form:</p>
+        <p>φ(<i>B</i> )(Z<sub>t</sub> – µ ) =  θ(<i>B</i>)A<sub>t</sub> ,&#160;&#160;&#160;&#160;for&#160;&#160;&#160;&#160;t ∈ {0, ±1, ±2, …}</p>
+        <p>where <i>B</i> is the backward-shift operator, µ is the mean of Z<sub>t</sub> , and:</p>
+        <p>
+            <img src="images/IMSL_ARMA-030.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-031.jpg" />
+        </p>
+        <p>with <i>p</i> autoregressive and <i>q</i> moving average parameters. Without loss of generality, the following is assumed:</p>
+        <p>
+            <img src="images/IMSL_ARMA-032.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-033.jpg" />
+        </p>
+        <p>so that the nonseasonal IMSL_ARMA model is of order (<i>p', q'</i>), where:</p>
+        <p>p′ = lφ(p ) and  q′ = l<sub>θ</sub>(q)</p>
+        <p>Note that the usual hierarchical model assumes the following:</p>
+        <p>
+            <img src="images/IMSL_ARMA-036.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-037.jpg" />
+        </p>
+        <p>Consider the sum-of-squares function:</p>
+        <p>
+            <img src="images/IMSL_ARMA-038.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_ARMA-039.jpg" />
+        </p>
+        <p>and T = Lgth_Backcast is the length of backcasting from the beginning of the series. The random errors {At } are assumed to be independent and identical distributed N(0, σA2) random variables. Hence, the log-likelihood function is given by:</p>
+        <p>
+            <img src="images/IMSL_ARMA-040.jpg" />
+        </p>
+        <p>where <i>f</i> (µ, φ, θ) is a function of µ, φ, and θ.</p>
+        <p>For T = 0, the log-likelihood function is conditional on the past values of both Zt and At required to initialize the model. The method of selecting these initial values usually introduces transient bias into the model (Box and Jenkins 1976, pp. 210–211). For T = infinity, this dependency vanishes, and the estimation problem concerns maximization of the unconditional log-likelihood function. Box and Jenkins (1976, p. 213) argue that:</p>
+        <p>S  (µ, φ, θ) (⁄ 2σ2 )</p>
+        <p>
+            <img src="images/IMSL_ARMA-041.jpg" /> dominates <img src="images/IMSL_ARMA-042.jpg" /></p>
+        <p>The parameter estimates that minimize the sum-of-squares function are called least- squares estimates. For large n, the unconditional least-squares estimates are approximately equal to the maximum likelihood-estimates.</p>
+        <p>In practice, a finite value of T enables sufficient approximation of the unconditional sum-of-squares function. The values of [At] needed to compute the unconditional sum of squares are computed iteratively with initial values of Zt obtained by backcasting. The residuals (including backcasts), estimate of random error variance, and covariance matrix of the final parameter estimates also are computed. ARIMA parameters can be computed using the <a href="IMSL_DIFFERENCE.htm">IMSL_DIFFERENCE</a>, together with IMSL_ARMA.</p>
+        <h2 class="API">Forecasting Option</h2>
+        <p>The Box-Jenkins forecasts and their associated confidence intervals for a nonseasonal IMSL_ARMA model are computed given a sample of <i>n</i> = N_ELEMENTS(<i>z</i>) {Z<sub>t</sub>} for <i>t</i> = 1, 2, ..., <i>n</i>.</p>
+        <p>Suppose the time series {Zt} is generated by a nonseasonal IMSL_ARMA model of the form:</p>
+        <p>φ (<i>B</i>) Z<sub>t</sub> = θ0 + θ (<i>B</i>) <i>A</i><sub>t</sub></p>
+        <p>for t ∈ { 0, ±1, ±2, … }</p>
+        <p>where <i>B</i> is the backward-shift operator, θ<sub>0</sub> is the constant, and:</p>
+        <p>
+            <img src="images/IMSL_ARMA-044.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-045.jpg" />
+        </p>
+        <p>with <i>p</i> autoregressive and q moving average parameters. Without loss of generality, the following is assumed:</p>
+        <p>
+            <img src="images/IMSL_ARMA-046.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-047.jpg" />
+        </p>
+        <p>so that the nonseasonal IMSL_ARMA model is of order (p', q'), where:</p>
+        <p>
+            <img src="images/IMSL_ARMA-048.jpg" /> and <img src="images/IMSL_ARMA-049.jpg" /></p>
+        <p>Note that the usual hierarchal model assumes the following:</p>
+        <p>
+            <img src="images/IMSL_ARMA-051.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-050.jpg" />
+        </p>
+        <p>The Box-Jenkins forecast at origin t for lead time l of Zt + l is defined in terms of the difference equation:</p>
+        <p>
+            <img src="images/IMSL_ARMA-052.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-053.jpg" />
+        </p>
+        <p>where the following is true:</p>
+        <p>
+            <img src="images/IMSL_ARMA-054.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_ARMA-055.jpg" />
+        </p>
+        <p>The 100(1 – α)-percent confidence interval for Zt + l is given by:</p>
+        <p>
+            <img src="images/IMSL_ARMA-056.jpg" />
+        </p>
+        <p>where <sup>z</sup>(1 – α ⁄                                                                                  2 ) is the 100 (1 – α / 2)-percentile of the standard normal distribution, σA is the standard deviation of the random error, and ψj is defined as follows:</p>
+        <p>
+            <img src="images/IMSL_ARMA-058.jpg" />
+        </p>
+        <p>In this equation, φi = 0 for i &gt; p and θj = 0 for j &gt; q. Note that the forecasts are computed for lead times l = 1, 2, ..., L at origins t = (n – b), (n – b + 1), ..., n, where L = N_Predict and b = Backward_Origin.</p>
+        <p>The Box-Jenkins forecasts minimize the mean-square error:</p>
+        <p>
+            <img src="images/IMSL_ARMA-059.jpg" />
+        </p>
+        <p>Also, the forecasts are easily updated according to the following equation:</p>
+        <p>
+            <img src="images/IMSL_ARMA-060.jpg" />
+        </p>
+        <p>This approach and others are discussed in Chapter 5 of Box and Jenkins (1976).</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>Consider the Wolfer Sunspot Data (Anderson 1971, p. 660) consisting of the number of sunspots observed each year from 1749 through 1924. The data set for this example consists of the number of sunspots observed from 1770 through 1869 and is shown in the figure that follows. The method-of-moments estimates:</p>
+        <p>
+            <img src="images/IMSL_ARMA-062.jpg" /> and <img src="images/IMSL_ARMA-063.jpg" /></p>
+        <p>for the IMSL_ARMA(2,1) model are:</p>
+        <p>
+            <img src="images/IMSL_ARMA-064.jpg" />
+        </p>
+        <p>where Zt is “raw” data and the errors At are independently and identical normally distributed with mean zero and variance σ2A.</p>
+        <p class="Code">temp = IMSL_STATDATA(2)</p>
+        <p class="Code">; Get the Wolfer Sunspot Data. z = TEMP(21:120, 1)</p>
+        <p class="Code">; Use only 100 observations, 1770-1869. years = FINDGEN(100) + 1770</p>
+        <p class="Code">PLOT, years, z, XStyle = 1, Psym	= -6, $</p>
+        <p class="Code_Indented">Title	= 'Wolfer Sunspot Data', XTitle = 'Year', $</p>
+        <p class="Code_Indented">YTitle = 'Number of Sunspots'</p>
+        <p class="Code">; Plot the data. p = 2</p>
+        <p class="Code">q = 1</p>
+        <p class="Code">parameters = IMSL_ARMA(z, p, q)</p>
+        <p class="Code">; Perform time-series analysis.</p>
+        <p class="Code">PRINT, 'AR estimates:', parameters(1), parameters(2) PRINT, 'MA estimate :', parameters(3)</p>
+        <p>IDL prints:</p>
+        <p class="Code">AR estimates:&#160;&#160;&#160;1.24426&#160;&#160;&#160;-0.575149</p>
+        <p class="Code">MA estimate :&#160;-0.124094</p>
+        <p>The following is the Wolfer Sunspot Data Plot:</p>
+        <p>
+            <img src="images/timeseries01.gif" />
+        </p>
+        <h3>Example 2</h3>
+        <p>The data for this example are the same as that for the initial example. Preliminary method-of-moments estimates are computed by default, and the method of least squares is used to find the final estimates.</p>
+        <p class="Code">temp = IMSL_STATDATA(2)</p>
+        <p class="Code">; Get the Wolfer Sunspot Data.</p>
+        <p class="Code">z = TEMP(21:120, 1)</p>
+        <p class="Code">; Use only 100 observations, 1770-1869.</p>
+        <p class="Code">parameters = IMSL_ARMA(z, 2, 1, /Lsq)</p>
+        <p class="Code">; Perform time-series analysis using method of moments. The</p>
+        <p class="Code">; warning error can be ignored in this case.</p>
+        <p class="Code">PRINT, 'AR estimates:', parameters(1), parameters(2) PRINT, 'MA estimate :', parameters(3)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">AR estimates: 1.39257 -0.732948</p>
+        <p class="Code">MA estimate : -0.137512</p>
+        <h3>Example 3</h3>
+        <p>Consider the Wolfer Sunspot Data (Anderson 1971, p. 660) consisting of the number of sunspots observed each year from 1749 through 1924. The data set for this example consists of the number of sunspots observed from 1770 through 1869. IMSL_ARMA computes forecasts and 95-percent confidence limits for the forecasts for an IMSL_ARMA(2, 1) model fit using IMSL_ARMA with the</p>
+        <p>method-of-moments option. With Backward_Origin = 3, columns zero through three</p>
+        <p>of Forecast provide forecasts given the data through 1866, 1867, 1868, and 1869. Column five gives the deviations from the forecast for computing confidence limits, and column six gives the psi weights, which can be used to update forecasts when more data is available. For example, the forecast for the 102-nd observation (year</p>
+        <p>1871) given the data through the 100-th observation (year 1869) is 77.21; 95-percent confidence limits are given by:</p>
+        <p>
+            <img src="images/IMSL_ARMA-065.jpg" />
+        </p>
+        <p>After observation 101 (Z101 for year 1870) is available, the forecast can be updated by using:</p>
+        <p>
+            <img src="images/IMSL_ARMA-066.jpg" />
+        </p>
+        <p>with the psi weight (ψ1 = 1.37) and the one-step-ahead forecast error for observation 101 (Z101 – 83.72) to give the following:</p>
+        <p>77.21 + 1.37 x (Z<sub>101</sub> – 83.72)</p>
+        <p>Since this updated forecast is one step ahead, the 95-percent confidence limits are now given by the forecast:</p>
+        <p>
+            <img src="images/IMSL_ARMA-067.jpg" />
+        </p>
+        <p>First, define a procedure to output the results:</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, parameters, forecast</p>
+        <p class="Code_Indented">PRINT, 'Method-of-moments initial estimates:'</p>
+        <p class="Code_Indented">PRINT, 'AR estimates:', parameters(1), parameters(2)</p>
+        <p class="Code_Indented">PRINT, 'MA estimate :', parameters(3) </p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">lead_time = INDGEN(12) + 1</p>
+        <p class="Code_Indented">forecast = [[lead_time], [forecast]] PRINT, 'Forecasts from ...'</p>
+        <p class="Code_Indented">PRINT, 'lead time', ' 1866', ' 1867', $</p>
+        <p class="Code_Indented2">' 1868', ' 1869', ' Deviat.', ' Psi' </p>
+        <p class="Code_Indented">PM, forecast, FORMAT = '(i6, 3x, 6f9.4)'</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">temp = IMSL_STATDATA(2)</p>
+        <p class="Code">; Get the Wolfer Sunspot Data. z = TEMP(21:120, 1)</p>
+        <p class="Code">; Use only 100 observations, 1770-1869.</p>
+        <p class="Code">parameters = IMSL_ARMA(z, 2, 1, Itmax = 0, Err_Rel = 0.0, $ </p>
+        <p class="Code_Indented">Forecast = forecast, N_Predict = 12, Backward_Origin = 3)</p>
+        <p class="Code">; Perform time-series analysis using method-of-moments. print_results, parameters, forecast</p>
+        <p class="Code">years = INDGEN(100) + 1770</p>
+        <p class="Code">PLOT, years, z, $</p>
+        <p class="Code_Indented">Psym	= -6, Symsize = .5, XStyle = 1, XRange = [1770, 1885], $ </p>
+        <p class="Code_Indented">YRange = [-50, 175], Title	= 'Wolfer Sunspot Data', $</p>
+        <p class="Code_Indented">XTitle = 'Year', YTitle = 'Number of Sunspots'</p>
+        <p class="Code">; Plot the data along with the forecasted values with confidence</p>
+        <p class="Code">; intervals.</p>
+        <p class="Code">OPLOT, INDGEN(10) + 1870, forecast(*, 3), Psym	= 4, Symsize = .5</p>
+        <p class="Code">ERRPLOT, indgen(10) + 1870, forecast(*, 3) - forecast(*, 4), $</p>
+        <p class="Code_Indented">forecast(*, 3) + forecast(*, 4), Width	= .005</p>
+        <p>IDL prints:</p>
+        <p class="Code">Method-of-moments initial estimates:</p>
+        <p class="Code_Indented">AR estimates:&#160;&#160;&#160;1.24426&#160;&#160;&#160;-0.575149</p>
+        <p class="Code_Indented">MA estimate :	-0.124094</p>
+        <p class="Code">Forecasts from ...</p>
+        <p class="Code_Indented">lead time	&#160;&#160;&#160;&#160;&#160;1866&#160;&#160;&#160;&#160;&#160;&#160;&#160;1867&#160;&#160;&#160;&#160;&#160;&#160;&#160;1868&#160;&#160;&#160;&#160;&#160;&#160;&#160;1869&#160;&#160;&#160;&#160;Deviat.&#160;&#160;&#160;&#160;&#160;Psi</p>
+        <p class="Code_Indented">&#160;&#160;1	&#160;&#160;&#160;&#160;&#160;&#160;18.283317&#160;&#160;16.615039&#160;&#160;55.189412&#160;&#160;83.719757&#160;&#160;33.217915&#160;&#160;&#160;1.3683475</p>
+        <p class="Code_Indented">&#160;&#160;2&#160;&#160;&#160;&#160;&#160;&#160;&#160;28.918200&#160;&#160;32.018780&#160;&#160;62.760752&#160;&#160;77.209372&#160;&#160;56.297996&#160;&#160;&#160;1.1274273</p>
+        <p class="Code_Indented">&#160;&#160;3&#160;&#160;&#160;&#160;&#160;&#160;&#160;41.010032&#160;&#160;45.827463&#160;&#160;61.892359&#160;&#160;63.460946&#160;&#160;67.616755&#160;&#160;&#160;0.61580541</p>
+        <p class="Code_Indented">&#160;&#160;4&#160;&#160;&#160;&#160;&#160;&#160;&#160;49.938738&#160;&#160;54.149566&#160;&#160;56.457199&#160;&#160;50.098805&#160;&#160;70.643218&#160;&#160;&#160;0.11778113</p>
+        <p class="Code_Indented">&#160;&#160;5&#160;&#160;&#160;&#160;&#160;&#160;&#160;54.093735&#160;&#160;56.562346&#160;&#160;50.193916&#160;&#160;41.380262&#160;&#160;70.751476&#160;&#160;-0.20763025</p>
+        <p class="Code_Indented">&#160;&#160;6&#160;&#160;&#160;&#160;&#160;&#160;&#160;54.128279&#160;&#160;54.778011&#160;&#160;45.526807&#160;&#160;38.217379&#160;&#160;71.086853&#160;&#160;-0.32608735</p>
+        <p class="Code_Indented">&#160;&#160;7&#160;&#160;&#160;&#160;&#160;&#160;&#160;51.781516&#160;&#160;51.170129&#160;&#160;43.322048&#160;&#160;39.296405&#160;&#160;71.907382&#160;&#160;-0.28631823</p>
+        <p class="Code_Indented">&#160;&#160;8&#160;&#160;&#160;&#160;&#160;&#160;&#160;48.841669&#160;&#160;47.707253&#160;&#160;43.263044&#160;&#160;42.458123&#160;&#160;72.533638&#160;&#160;-0.16870463</p>
+        <p class="Code_Indented">&#160;&#160;9&#160;&#160;&#160;&#160;&#160;&#160;&#160;46.533482&#160;&#160;45.473615&#160;&#160;44.457696&#160;&#160;45.771514&#160;&#160;72.7498028&#160;-0.045236178</p>
+        <p class="Code_Indented">&#160;10&#160;&#160;&#160;&#160;&#160;&#160;&#160;45.352355&#160;&#160;44.686066&#160;&#160;45.978087&#160;&#160;48.075765&#160;&#160;72.765319&#160;&#160;&#160;0.040744961</p>
+        <p class="Code_Indented">&#160;11&#160;&#160;&#160;&#160;&#160;&#160;&#160;45.210281&#160;&#160;44.990828&#160;&#160;47.182741&#160;&#160;49.037151&#160;&#160;72.777905&#160;&#160;&#160;0.076714812</p>
+        <p class="Code_Indented">&#160;12&#160;&#160;&#160;&#160;&#160;&#160;&#160;45.712830&#160;&#160;45.822990&#160;&#160;47.807189&#160;&#160;48.908074&#160;&#160;72.822506&#160;&#160;&#160;0.072018548</p>
+        <p>The plot of the forecasts and the confidence limits from year 1869 are shown below.</p>
+        <p>
+            <img src="images/timeseries02.gif" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_ARMA(<i>Z, P, Q</i> [, <a href="#AR_LAGS" class="selected">AR_LAGS</a>=<i>array</i>] [, <a href="#AUTOCOV" class="selected">AUTOCOV</a>=<i>variable</i>] [, <a href="#BACKWARD_ORIGIN" class="selected">BACKWARD_ORIGIN</a>=<i>value</i>] [, <a href="#CONFIDENCE" class="selected">CONFIDENCE</a>=<i>value</i>] [, <a href="#CONSTANT" class="selected">CONSTANT</a>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#ERR_REL" class="selected">ERR_REL</a>=<i>value</i>] [, <a href="#FORECAST" class="selected">FORECAST</a>=<i>variable</i>] [, <a href="#INIT_EST_AR" class="selected">INIT_EST_AR</a>=<i>array</i>] [, <a href="#INIT_EST_MA" class="selected">INIT_EST_MA</a>=<i>array</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, /<a href="#LSQ" class="selected">LSQ</a>] [, <a href="#LGTH_BACKCAST" class="selected">LGTH_BACKCAST</a>=<i>value</i>] [, <a href="#MA_LAGS" class="selected">MA_LAGS</a>=<i>array</i>] [, <a href="#MEAN_EST" class="selected">MEAN_EST</a>=<i>value</i>] [, /<a href="#MOMENTS" class="selected">MOMENTS</a>] [, <a href="#N_PREDICT" class="selected">N_PREDICT</a>=<i>value</i>] [, <a href="#NO_CONSTANT" class="selected">/NO_CONSTANT</a>] [, <a href="#PARAM_EST_COV" class="selected">PARAM_EST_COV</a>=<i>variable</i>] [, <a href="#RESIDUAL" class="selected">RESIDUAL</a>=<i>variable</i>] [, <a href="#SS_RESIDUAL" class="selected">SS_RESIDUAL</a>=<i>variable</i>] [, <a href="#TOL_BACKCAST" class="selected">TOL_BACKCAST</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>An array of length 1 + <i>P</i> + <i>Q</i> with the estimated constant, AR, and MA parameters. If NO_CONSTANT is specified, the <i style="text-decoration: underline;">0</i>-th element of this array is 0.0.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">P</h3>
+        <p>Number of autoregressive parameters.</p>
+        <h3 class="Argument">Q</h3>
+        <p>Number of moving average parameters.</p>
+        <h3 class="Argument">Z</h3>
+        <p>One-dimensional array containing the observations.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="AR_LAGS"></a>AR_LAGS (optional)</h3>
+        <p>One-dimensional array of length <i>P</i> containing the order of the nonzero autoregressive parameters. The elements of AR_LAGS must be greater than or equal to 1. Default: [1, 2, ..., <i>P</i>]</p>
+        <h3 class="Keyword"><a name="AUTOCOV"></a>AUTOCOV (optional)</h3>
+        <p>Named variable into which an array of length <i>P</i> + <i>Q</i> + 2 containing the variance and autocovariances of the time series <i>Z</i> is stored. They keyword AUTOCOV(0) contains the variance of the series <i>Z</i>. The keyword AUTOCOV(k) contains the autocovariance of lag <i>k</i>, where I = 1, ..., <i>P</i> + <i>Q</i> + 1.</p>
+        <h3 class="Keyword"><a name="BACKWARD_ORIGIN"></a>BACKWARD_ORIGIN (optional)</h3>
+        <p>Maximum backward origin. BACKWARD_ORIGIN must be greater than or equal to zero and less than or equal to N_ELEMENTS(z) – (max(maxar, maxma)), where maxar = max(AR_LAGS) and maxma = max(MA_LAGS).</p>
+        <p>Forecasts at origins N_ELEMENTS(<i>Z</i>) – BACKWARD_ORIGIN through N_ELEMENTS(z) are generated. Default: 0</p>
+        <h3 class="Keyword"><a name="CONFIDENCE"></a>CONFIDENCE (optional)</h3>
+        <p>Value in the exclusive interval (0, 100) used to specify the confidence level of the forecasts. Typical choices are 90.0, 95.0, and 99.0. Default: 95.0</p>
+        <h3 class="Keyword"><a name="CONSTANT"></a>CONSTANT (optional)</h3>
+        <p>If present and nonzero, the time series is centered about its mean. The keywords CONSTANT and NO_CONSTANT cannot be used together.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="ERR_REL"></a>ERR_REL (optional)</h3>
+        <p>Stopping criterion for use in the nonlinear equation solver used in both the method- of-moments and least-squares algorithms. Default: 100 x ε, where ε is machine precision.</p>
+        <h3 class="Keyword"><a name="FORECAST"></a>FORECAST (optional)</h3>
+        <p>Named variable into which an array of length N_PREDICT x (BACKWARD_ORIGIN + 3) containing the forecasts up to N_PREDICT steps ahead and the information necessary to obtain confidence intervals is stored. The keywords FORECAST and N_PREDICT must be used together.</p>
+        <h3 class="Keyword"><a name="INIT_EST_AR"></a>INIT_EST_AR (optional)</h3>
+        <p>Array of length <i>P</i> containing preliminary estimates of the autoregressive parameters, internally. The keywords INIT_EST_MA  and NIT_EST_AR must be used together and are only applicable if LSQ is also present and nonzero.</p>
+        <h3 class="Keyword"><a name="INIT_EST_MA"></a>INIT_EST_MA (optional)</h3>
+        <p>Array of length q containing preliminary estimates of the moving average parameters. The keywords INIT_EST_MA  and NIT_EST_AR must be used together and are only applicable if LSQ is also present and nonzero.</p>
+        <p style="font-style: italic;">The following keywords are used to forecast up to N_PREDICT steps ahead and the information necessary to obtain confidence intervals:</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum number of iterations allowed in the nonlinear equation solver used in both the method-of-moments and least-squares algorithms. Default: 200</p>
+        <h3 class="Keyword"><a name="LSQ"></a>LSQ (optional)</h3>
+        <p>If present and nonzero, the autoregressive and moving average parameters are estimated by a least-squares procedure. The keywords MOMENTS and LSQ cannot be used together.</p>
+        <h3 class="Keyword"><a name="LGTH_BACKCAST"></a>LGTH_BACKCAST (optional)</h3>
+        <p>Specifies the maximum length of backcasting. Must be greater than or equal to zero. The keywords LGTH_BACKCAST and TOL_BACKCAST must be used together. Default: 10</p>
+        <h3 class="Keyword"><a name="MA_LAGS"></a>MA_LAGS (optional)</h3>
+        <p>One-dimensional array of length <i>Q</i> containing the order of the nonzero moving average parameters. The elements of MA_LAGS must be greater than or equal to 1. Default: [1, 2, ..., q]</p>
+        <h3 class="Keyword"><a name="MEAN_EST"></a>MEAN_EST (optional)</h3>
+        <p>Initial estimate of the mean of the time series <i>Z</i>. Default:</p>
+        <p>
+            <img src="images/IMSL_ARMA-009.jpg" />
+        </p>
+        <h3 class="Keyword"><a name="MOMENTS"></a>MOMENTS</h3>
+        <p>If present and nonzero, the autoregressive and moving average parameters are estimated by a method-of-moments procedure. The keywords MOMENTS and LSQ cannot be used together. (Default)</p>
+        <h3 class="Keyword"><a name="N_PREDICT"></a>N_PREDICT (optional)</h3>
+        <p>Maximum lead time for forecasts. The value must be greater than zero. The keywords FORECAST and N_PREDICT must be used together.</p>
+        <h3 class="Keyword"><a name="NO_CONSTANT"></a>NO_CONSTANT (optional)</h3>
+        <p>If present and nonzero, the time series is not centered about its mean. The keywords NO_CONSTANT and CONSTANT cannot be used together</p>
+        <h3 class="Keyword"><a name="PARAM_EST_COV"></a>PARAM_EST_COV (optional)</h3>
+        <p>Named variable into which an array, containing the covariance matrix of the final parameter estimates, is stored. The array is of size <i>np</i> x <i>np</i>, where <i>np</i> = <i>p</i> + <i>q + 1</i> if <i>z</i> is centered about its mean and <i>np</i> = <i>p</i> + <i>q</i> if <i>z</i> is not centered. The ordering of variables in PARAM_EST_COV is MEAN_EST, AR_LAGS, and MA_LAGS.</p>
+        <h3 class="Keyword"><a name="RESIDUAL"></a>RESIDUAL (optional)</h3>
+        <p>Named variable into which an array of length N_ELEMENTS(z) – (max(AR_LAGS)) + LGTH_BACKCAST containing the residuals (including backcasts) at the final parameter estimate point in the first N_ELEMENTS(<i>Z</i>) – (max(AR_LAGS)) + <i>nb</i>, where <i>nb</i> is the number of values backcast is stored.</p>
+        <h3 class="Keyword"><a name="SS_RESIDUAL"></a>SS_RESIDUAL (optional)</h3>
+        <p>Named variable into which the sum of squares of the random error is stored.</p>
+        <h3 class="Keyword"><a name="TOL_BACKCAST"></a>TOL_BACKCAST (optional)</h3>
+        <p>Specifies the tolerance level used to determine convergence of the backcast algorithm. Typically, this value is set to a fraction of an estimate of the standard deviation of the time series. The keywords LGTH_BACKCAST and TOL_BACKCAST must be used together. Default: 0.01 x standard deviation of <i>l</i>.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Removed the TOL_CONVERGENCE keyword</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

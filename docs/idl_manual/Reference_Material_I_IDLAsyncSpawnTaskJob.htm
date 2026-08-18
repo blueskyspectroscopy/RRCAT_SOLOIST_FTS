@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLAsyncSpawnTaskJob</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLAsyncSpawnTaskJob</span>
+        </div>
+        <h1 class="ObjClass">IDLAsyncSpawnTaskJob</h1>
+        <p>The IDLAsyncSpawnTaskJob class encapsulates the combined behaviors of its base classes <a href="IDLAsyncSpawnJob.htm">IDLAsyncSpawnJob</a> and <a href="IDLTaskJob.htm">IDLTaskJob</a>. It allows the user to specify a single IDLTask that will executed by the TaskEngine when there are available resources. The IDLTask must have all of its input parameters specified before creating this job, as it will be cloned and dehydrated for passage to IDLTaskEngine via STDIN. Any subsequent changes to the task's parameter values will not be reflected when this job executes the task in the <a href="../../IDLTask/TaskEngine/RunIDLAnalyticsCommandLine.htm">IDLTaskEngine</a>. When the IDLTaskEngine is spawned, STDERR&#160;will be redirected to a temporary file that is read on completion and stored in the <a href="#STDERR" class="selected">STDERR</a> property, allowing access to the task error messages when the job fails.</p>
+        <h2 class="API">Superclasses</h2>
+        <ul>
+            <li value="1"><a href="IDLAsyncSpawnJob.htm">IDLAsyncSpawnJob</a>
+            </li>
+            <li value="2"><a href="IDLTaskJob.htm">IDLTaskJob</a>
+            </li>
+        </ul>
+        <h2 class="API">Examples</h2>
+        <p class="Code">; Use S3 folder for a dataset covering Boulder, CO, taken April 4, 2017</p>
+        <p class="Code">folderUrl = 'https://s3-us-west-2.amazonaws.com/landsat-pds/L8/033/032/LC80330322017104LGN00'</p>
+        <p class="Code">; Dataset name is same as folder name, and is root of all files</p>
+        <p class="Code">datasetName = File_BaseName(folderUrl)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; List of suffixes to apply to dataset name for all files needed to</p>
+        <p class="Code">; comprise a full Landsat 8 dataset.  Band 8 is the panchromatic band,</p>
+        <p class="Code">; which is the largest, so start downloading it first.</p>
+        <p class="Code">suffixes = [ '_B8.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B1.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B2.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B3.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B4.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B5.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B6.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B7.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B9.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B10.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B11.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_BQA.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_MTL.txt' ]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; create a folder in the temp folder for the local files</p>
+        <p class="Code">localFolder = FilePath(datasetName, /TMP)</p>
+        <p class="Code">if (~File_Test(localFolder)) then File_MkDir, localFolder</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct IDLAsyncJoin object to use for waiting on all jobs to complete</p>
+        <p class="Code">oJoin = IDLAsyncJoin()</p>
+        <p class="Code">; construct IDLAsyncQueue to manage parallel execution of jobs</p>
+        <p class="Code">oQueue = IDLAsyncQueue(CONCURRENCY=6)</p>
+        <p class="Code">; create object array to hold all jobs</p>
+        <p class="Code">jobs = ObjArr(N_Elements(suffixes))</p>
+        <p class="Code">; create task to be used by the jobs</p>
+        <p class="Code">task = IDLTask('Download_S3_URL')</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct a unique job for each remote file to download</p>
+        <p class="Code">foreach suf, suffixes, i do begin</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; update task parameters to current file suffix</p>
+        <p class="Code">&#160;&#160;&#160;&#160;file = datasetName + suf</p>
+        <p class="Code">&#160;&#160;&#160;&#160;task.S3_URL = folderUrl + '/' + file</p>
+        <p class="Code">&#160;&#160;&#160;&#160;task.LOCAL_FILE = FilePath(file, ROOT=localFolder)</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; Construct IDLAsyncSpawnTaskJob that clones the task, passing in the join object.</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; Set the COMPILE keyword since the task uses PRO code not a save file.</p>
+        <p class="Code">&#160;&#160;&#160;&#160;jobs[i] = IDLAsyncSpawnTaskJob(task, JOIN=oJoin, /COMPILE)</p>
+        <p class="Code">endforeach</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">tic</p>
+        <p class="Code">; submit all the jobs to the queue for execution</p>
+        <p class="Code">oQueue.SubmitJob, jobs</p>
+        <p class="Code">; wait for all jobs to be done</p>
+        <p class="Code">oJoin.WaitForJoin</p>
+        <p class="Code">toc</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncSpawnTaskJob(<i>Task</i> [, /COMPILE] [, JOIN=<i>IDLAsyncJoin</i>] [, WAIT=<i>Float</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Task</h3>
+        <p>A scalar IDLTask object owned by this job, which will be executed inside IDLTaskEngine when Start is called.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">COMPILE (optional)</h3>
+        <p>Specify an optional Boolean flag that indicates whether the "--compile" flag should be added to the IDLTaskEngine invocation. Use this if your task uses PRO code instead of save files.</p>
+        <h3 class="Keyword">JOIN (optional)</h3>
+        <p>Specify an <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a> object that is passed to the <a href="IDLAsyncJob.htm">IDLAsyncJob</a> base class Init() method for handling.</p>
+        <h3 class="Keyword">WAIT (optional)</h3>
+        <p>Specify a value in seconds to pass to IDLAsyncSpanJob::Init for handling.</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1">IDLAsyncBridgeTaskJob inherits all methods from <a href="IDLAsyncSpawnJob.htm#Methods">IDLAsyncSpawnJob</a> and <a href="IDLTaskJob.htm#Methods">IDLTaskJob</a>.</li>
+            <li value="2">IDLAsyncSpawnTaskJob()</li>
+            <li value="3"><a href="#GetReturnValue" class="selected">IDLAsyncSpawnTaskJob::GetReturnValue</a>
+            </li>
+            <li value="4"><a href="#OnDone" class="selected">IDLAsyncSpawnTaskJob::OnDone</a>
+            </li>
+            <li value="5"><a href="#OnStart" class="selected">IDLAsyncSpawnTaskJob::OnStart</a>
+            </li>
+        </ul>
+        <h2 class="API">Properties</h2>
+        <p>IDLAsyncBridgeTaskJob inherits all properties from <a href="IDLAsyncSpawnJob.htm#Properties">IDLAsyncSpawnJob</a> and <a href="IDLTaskJob.htm#Properties">IDLTaskJob</a>.</p>
+        <h3 class="Property"><a name="STDERR"></a>STDERR</h3>
+        <p>A <a href="../L/LIST.htm">List</a> containing all the lines of text the spawned external process wrote to STDERR.</p>
+        <h1 class="ObjMethod"><a name="GetReturnValue"></a>IDLAsyncSpawnTaskJob::GetReturnValue</h1>
+        <p>The IDLAsyncSpawnTaskJob::GetReturnValue method is an override of the IDLAsyncSpawnJob method. This override adds access to STDERR, which is a List of the strings read from a temporary file that STDERR&#160;was redirected into when the IDLTaskEngine was spawned.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncSpawnJob.GetReturnValue, STDERR=<i>list</i>  [, Variables=<i>Value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">STDERR</h3>
+        <p>The contents read from STDERR from the external application. This is stored as a list of strings, to allow users to insert carriage returns between lines as needed.</p>
+        <h3 class="Keyword">Variables</h3>
+        <p>Named variables accessible from the base class <a href="IDLAsyncSpawnJob.htm#GetReturnValue">IDLAsyncSpawnJob</a>.</p>
+        <h1 class="ObjMethod"><a name="OnDone"></a>IDLAsyncSpawnTaskJob::OnDone</h1>
+        <p>The IDLAsyncBridgeTaskJob::OnDone method is an implementation override of the <a href="IDLAsyncJob.htm">IDLAsyncJob</a> callback invoked on this job by the Done event handler. The basic sequence of operations follows: </p>
+        <ul>
+            <li value="1">Call <a href="IDLAsyncSpawnJob.htm#OnDone">IDLAsyncSpawnJob::OnDone</a> to make sure the pipe is closed, exit status retrieved.</li>
+            <li value="2">Check if the temporary file into which STDERR&#160;was redirected exists and has any text.</li>
+            <li value="3">Read that text into STDERR&#160;property if it exists and delete the temporary file.</li>
+            <li value="4">Call GetReturnValue to get serialized output parameters.</li>
+            <li value="5">Rehydrate the output parameter values and update the TASK property.</li>
+        </ul>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncSpawnTaskJob.OnDone</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="OnStart"></a>IDLAsyncSpawnTaskJob::OnStart</h1>
+        <p>The IDLAsyncSpawnTaskJob::OnStart method is an implementation override of the IDLAsyncSpawnJob callback invoked on this job by the Start event handler.  This override ensures that the IDL_PATH    environment variable is set, so that the Task Engine process uses the    same preference value as the main IDL session. The basic sequence of operations is:</p>
+        <ul>
+            <li value="1">Cache current IDL_PATH environment variable.</li>
+            <li value="2">Set IDL_PATH environment variable to value of IDL_PATH preference.</li>
+            <li value="3">Call IDLAsyncSpawnJob::OnStart to spawn the Task Engine.</li>
+            <li value="4">Restore the IDL_PATH environment variable to original value</li>
+        </ul>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If you need to update the <a href="../../Creating IDL Programs/Managing IDL Paths.htm">IDL path</a> to include your code, use <a href="../P/PREF_SET.htm">PREF_SET</a> for IDL_PATH instead of modifying <code>!PATH</code>&#160;directly, otherwise the Task Engine will not inherit those changes.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncSpawnJob.OnStart</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLAsyncSpawnJob.htm">IDLAsyncSpawnJob</a>, <a href="IDLAsyncJob.htm">IDLAsyncJob</a>, <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a>, <a href="IDLTaskJob.htm">IDLTaskJob</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

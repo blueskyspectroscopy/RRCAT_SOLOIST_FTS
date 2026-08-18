@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_ALLBEST</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_ALLBEST</span>
+        </div>
+        <h1>IMSL_ALLBEST</h1>
+        <p>The IMSL_ALLBEST procedure selects the best multiple linear regression models.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>
+The IMSL_ALLBEST procedure finds the best subset regressions for a regression problem with
+</p>
+        <p class="indent"><i>n_candidate</i> = (N_ELEMENTS (<i>x</i> (0, *)))</p>
+        <p>independent variables. Typically, the intercept is forced into all models and is not a candidate variable. In this case, a sum-of-squares and crossproducts matrix for the independent and dependent variables corrected for the mean is computed internally. There may be cases when it is convenient for you to calculate the matrix; see the description of the COV_INPUT optional keyword.
+</p>
+        <p>
+"Best" is defined, on option, by one of the following three criteria:
+</p>
+        <ul>
+            <li value="1">
+                <p><i>R</i><sup>2</sup> (in percent):</p>
+                <p>
+                    <img src="images/IMSL_ALLBEST-062.gif" />
+                </p>
+            </li>
+            <li value="2">
+                <p><i>R</i><sup>2</sup><sub>a </sub>(adjusted <i>R</i><sup>2</sup> in percent):</p>
+                <p>
+                    <img src="images/IMSL_ALLBEST-063.gif" />
+                </p>
+            </li>
+            <p>Note that maximizing the criterion is equivalent to minimizing the residual mean square:</p>
+            <p>
+                <img src="images/IMSL_ALLBEST-064.gif" />
+            </p>
+            <li value="3">
+                <p>Mallows' <i>C</i><sub>p </sub>statistic:</p>
+                <p>
+                    <img src="images/IMSL_ALLBEST-065.gif" />
+                </p>
+            </li>
+        </ul>
+        <p>Here, <i>n</i> is equal to the sum of the frequencies (or N_ELEMENTS(<i>x</i> (*, 0)) if FREQUENCIES is not specified) and SST is the total sum of squares. SSE<sub>p </sub>is the error sum of squares in a model containing <i>p</i> regression parameters including β<sub>0 </sub>(or <i>p</i> – 1 of the <i>n_candidate</i> candidate variables). Variable is the <i>s</i><sup>2</sup><sub>n_candidate </sub>error mean square from the model with all <i>n_candidate</i> variables in the model. Hocking (1972) and Draper and Smith (1981, pp.&#160;296–302) discuss these criteria.
+</p>
+        <p>
+The IMSL_ALLBEST procedure is based on the algorithm of Furnival and Wilson (1974). This algorithm finds MAX_N_BEST candidate regressions for each possible subset size. These regressions are used to identify a set of best regressions. In large problems, many regressions are not computed. They may be rejected without computation based on results for other subsets; this yields an efficient technique for considering all possible regressions.
+</p>
+        <p>
+There are cases when you may wish to input the variance-covariance matrix rather than allow the IMSL_ALLBEST procedure to calculate it. This can be accomplished using keyword COV_INPUT. Three situations in which you may want to do this are as follows:
+</p>
+        <ol>
+            <li value="1">The intercept is not in the model. A raw (uncorrected) sum-of-squares and crossproducts matrix for the independent and dependent variables is required. Keyword COV_NOBS  must be set to 1 greater than the number of observations. Form <i>A<sup>T</sup>A</i>, where <i>A</i> = [<i>A</i>, <i>Y</i>], to compute the raw sum-of-squares and crossproducts matrix.</li>
+            <li value="2">An intercept is to be a candidate variable. A raw (uncorrected) sum-of-squares and crossproducts matrix for the constant regressor (= 1.0), independent variables, and dependent variables is required for COV_INPUT. In this case, COV_INPUT contains one additional row and column corresponding to the constant regressor. This row/column contains the sum of squares and crossproducts of the constant regressor with the independent and dependent variables. The remaining elements in COV_INPUT are the same as in the previous case. Keyword COV_NOBS must be set to 1 greater than the number of observations.</li>
+            <li value="3">There are <i>m</i> variables to be forced into the models. A sum-of-squares and crossproducts matrix adjusted for the <i>m</i> variables is required (calculated by regressing the candidate variables on the variables to be forced into the model). Keyword COV_NOBS  must be set to <i>m</i> less than the number of observations. </li>
+        </ol>
+        <p>
+The IMSL_ALLBEST procedure saves considerable CPU time over explicitly computing all possible regressions. However, the procedure has some limitations that can cause unexpected results for users who are unaware of the limitations of the software.
+</p>
+        <ol>
+            <li value="1">For <i>n_candidate</i> + 1 &gt; –log<sub>2</sub>(<span style="font-family: Symbol" class="cSymbol">e</span>), where <span style="font-family: Symbol" class="cSymbol">e </span>is machine precision, some results may be incorrect. This limitation arises because the possible models indicated (the model numbers 1, 2, ..., 2<sup style="font-style: italic" class="cSuperscriptItalic">n_candidate</sup>) are stored as floating-point values; for sufficiently large <i>n_candidate</i>, the model numbers cannot be stored exactly. On many computers, this means IMSL_ALLBEST (for <i>n_candidate</i> &gt; 24; single precision) and IMSL_ALLBEST (for <i>n_candidate</i> &gt; 49; double precision) can produce incorrect results.</li>
+            <li value="2">The IMSL_ALLBEST procedure eliminates some subsets of candidate variables by obtaining lower bounds on the error sum of squares from fitting larger models. First, the full model containing all <i>n_candidate</i> is fit sequentially using a forward stepwise procedure in which one variable enters the model at a time, and criterion values and model numbers for all the candidate variables that can enter at each step are stored. If linearly dependent variables are removed from the full model, error STAT_VARIABLES_DELETED is issued. If this error is issued, some submodels that contain variables removed from the full model because of linear dependency can be overlooked if they have not already been identified during the initial forward stepwise procedure. If error STAT_VARIABLES_DELETED is issued and you want the variables that were removed from the full model to be considered in smaller models, rerun the program with a set of linearly independent variables.</li>
+        </ol>
+        <h2 class="API">Example</h2>
+        <p>
+This example uses a data set from Draper and Smith (1981, pp.&#160;629-630). The IMSL_ALLBEST procedure is used to find the best regression for each subset size using the Mallow's <i>C</i><sub>p</sub> statistic as the criterion. Note that when Mallow's <i>C</i><sub>p</sub> statistic (or adjusted <i>R</i><sup>2</sup>) is specified, the variable MAX_N_BEST indicates the <i>total</i> number of "best" regressions (rather than indicating the number of best regressions <i>per subset size</i>, as in the case of the <i>R</i><sup>2</sup> criterion). In this example, the three best regressions are found to be (1, 2), (1,&#160;2,&#160;4), and (1, 2, 3). </p>
+        <p class="Code">PRO IMSL_ALLBEST_ex1</p>
+        <p class="Code_Indented">; Define the data set.</p>
+        <p class="Code_Indented">x = transpose( [ [7., 26., 6., 60.], [1., 29., 15., 52.], $</p>
+        <p class="Code_Indented2">[11., 56., 8., 20.], [11., 31., 8., 47.], $</p>
+        <p class="Code_Indented2">[7., 52., 6., 33.], [11., 55., 9., 22.], $</p>
+        <p class="Code_Indented2">[3., 71., 17., 6.], [1., 31., 22., 44.], $</p>
+        <p class="Code_Indented2">[2., 54., 18., 22.], [21., 47., 4., 26.], $</p>
+        <p class="Code_Indented2">[1., 40., 23., 34.], [11., 66., 9., 12.], $</p>
+        <p class="Code_Indented2">[10., 68., 8., 12.]])</p>
+        <p class="Code_Indented">y = [78.5, 74.3, 104.3, 87.6, 95.9, 109.2, 102.7, 72.5, $</p>
+        <p class="Code_Indented2">93.1, 115.9, 83.8, 113.3, 109.4]</p>
+        <p class="Code_Indented">Max_N_Best = 3</p>
+        <p class="Code_Indented">IMSL_ALLBEST, x, y, Max_N_Best = max_n_best, /Mallows_Cp, $</p>
+        <p class="Code_Indented2">Idx_Coefs = idx_coefs, $</p>
+        <p class="Code_Indented">Coefs = coefs</p>
+        <p class="Code_Indented">PRINT, ';          * * * Idx_Coefs and Coefs in raw form * * *'</p>
+        <p class="Code_Indented">; First, the two important matrices, Idx_Coefs and Coefs,</p>
+        <p class="Code_Indented">; are printed to display how they appear as output from</p>
+        <p class="Code_Indented">; IMSL_ALLBEST.</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PM, idx_coefs, Title = ';Idx_Coefs:'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PM, Coefs, Title = ';Coefs'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">ntbest = max_n_best</p>
+        <p class="Code_Indented">; Next, describe how to break apart Coefs by regressions</p>
+        <p class="Code_Indented">; based on values of Idx_Coefs. Note: NTBEST is defined under</p>
+        <p class="Code_Indented">; description of keyword Idx_Coefs.</p>
+        <p class="Code_Indented">PRINT, ';             * * * How Idx_Coefs describes Coefs * * *'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">FOR i = 0, ntbest - 1 DO $</p>
+        <p class="Code_Indented2">PRINT, ';regression', i+1, 'begins at row', Idx_Coefs(i),$</p>
+        <p class="Code_Indented3">'; of Coefs.', FORMAT = '(a, i2, a, i2, a)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, ';* * * Coefs separated by ', 'regressions * * *'</p>
+        <p class="Code_Indented">; Next, Coefs is broken apart by regressions, using Idx_Coefs.</p>
+        <p class="Code_Indented">; Note: The final element of Idx_Coefs is not a row number but</p>
+        <p class="Code_Indented">; instead is equal to the total number of rows in Coefs.</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">FOR i = 0, ntbest - 1 DO begin</p>
+        <p class="Code_Indented2">start = idx_coefs(i)</p>
+        <p class="Code_Indented2">stop = idx_coefs(i + 1) - 1</p>
+        <p class="Code_Indented">FOR j = start, stop DO begin</p>
+        <p class="Code_Indented2">PRINT, coefs(j, *), FORMAT = ';(5f9.4)'</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">END</p>
+        <p class="Code">PRINT, ';    * * * Best Regressions* * *'</p>
+        <p class="Code_Indented2">; Finally, regression labels, column labels, etc., are added.</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code">FOR i = 0, ntbest - 1 DO begin</p>
+        <p class="Code_Indented">start = idx_coefs(i)</p>
+        <p class="Code_Indented">stop = idx_coefs(i + 1) - 1</p>
+        <p class="Code_Indented">count = stop - start + 1</p>
+        <p class="Code_Indented">PRINT, ';Best Regression with', count, $</p>
+        <p class="Code_Indented2">';variables(s) (Mallows CP)', FORMAT = '(a, i2, a)'</p>
+        <p class="Code">PRINT, ';variable   coefficient std error    t       p-value'</p>
+        <p class="Code_Indented">FOR j = start, stop DO $</p>
+        <p class="Code_Indented2">PRINT, coefs(j, *), FORMAT = ';(i5, 2x, 4f11.4)'</p>
+        <p class="Code_Indented2">PRINT</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code">END</p>
+        <p class="Code">* * * Idx_Coefs and Coefs in raw form * * *</p>
+        <p class="Code">PM, Idx_Coefs</p>
+        <p class="Code_Indented">0</p>
+        <p class="Code_Indented">2</p>
+        <p class="Code_Indented">5</p>
+        <p class="Code_Indented">8</p>
+        <p class="Code">PM, Coefs</p>
+        <p class="Code_Indented">1.00000      1.46831     0.121301      12.1046  2.38419e-07</p>
+        <p class="Code_Indented">2.00000     0.662251    0.0458547      14.4424      0.00000</p>
+        <p class="Code_Indented">1.00000      1.45194     0.116998      12.4099  5.96046e-07</p>
+        <p class="Code_Indented">2.00000     0.416112     0.185611      2.24185    0.0516866</p>
+        <p class="Code_Indented">4.00000    -0.236538     0.173288     -1.36500     0.205401</p>
+        <p class="Code_Indented">1.00000      1.69589     0.204582      8.28953  1.66893e-05</p>
+        <p class="Code_Indented">2.00000     0.656915    0.0442343      14.8508  1.19209e-07</p>
+        <p class="Code_Indented">3.00000     0.250018     0.184711      1.35356     0.208889</p>
+        <p class="Code">* * * How Idx_Coefs describes Coefs * * *</p>
+        <p class="Code">regression 1 begins at row  0 of Coefs.</p>
+        <p class="Code">regression 2 begins at row  2 of Coefs.</p>
+        <p class="Code">regression 3 begins at row  5 of Coefs.</p>
+        <p class="Code">* * * Coefs separated by regressions * * *</p>
+        <p class="Code_Indented">1.0000   1.4683   0.1213  12.1046   0.0000</p>
+        <p class="Code_Indented">2.0000   0.6623   0.0459  14.4424   0.0000</p>
+        <p class="Code_Indented">1.0000   1.4519   0.1170  12.4099   0.0000</p>
+        <p class="Code_Indented">2.0000   0.4161   0.1856   2.2419   0.0517</p>
+        <p class="Code_Indented">4.0000  -0.2365   0.1733  -1.3650   0.2054</p>
+        <p class="Code_Indented">1.0000   1.6959   0.2046   8.2895   0.0000</p>
+        <p class="Code_Indented">2.0000   0.6569   0.0442  14.8508   0.0000</p>
+        <p class="Code_Indented">3.0000   0.2500   0.1847   1.3536   0.2089</p>
+        <p class="Code">* * * Best Regressions* * *</p>
+        <p class="Code">Best Regression with 2 variable(s)  (Mallows CP)</p>
+        <p class="Code">variable coefficient   std error    t       p-value</p>
+        <p class="Code_Indented">1       1.4683     0.1213    12.1046    0.0000</p>
+        <p class="Code_Indented">2       0.6623     0.0459    14.4424    0.0000</p>
+        <p class="Code">Best Regression with 3 variable(s)  (Mallows CP)</p>
+        <p class="Code">variable coefficient   std error    t       p-value</p>
+        <p class="Code_Indented">1       1.4519     0.1170    12.4099    0.0000</p>
+        <p class="Code_Indented">2       0.4161     0.1856     2.2419    0.0517</p>
+        <p class="Code_Indented">4      -0.2365     0.1733    -1.3650    0.2054</p>
+        <p class="Code">Best Regression with 3 variable(s) Mallows CP)</p>
+        <p class="Code">variable coefficient std error    t     p-value</p>
+        <p class="Code_Indented">1       1.6959    0.2046    8.2895   0.0000</p>
+        <p class="Code_Indented">2       0.6569    0.0442   14.8508   0.0000</p>
+        <p class="Code_Indented">3       0.2500    0.1847    1.3536   0.2089</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_VARIABLES_DELETED: At least one variable is deleted from the full model because the variance-covariance matrix <i>Cov</i> is singular.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_NO_VARIABLES: No variables can enter any model.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IMSL_ALLBEST, <i>X, Y</i> [, <a href="#ADJ_R_SQUARED" class="selected">ADJ_R_SQUARED</a>=<i>value</i>] [, <a href="#COEFS" class="selected">COEFS</a>=<i>variable</i>] [, <a href="#COV_INPUT" class="selected">COV_INPUT</a>=<i>array</i>] [, <a href="#COV_NOBS" class="selected">COV_NOBS</a>=<i>value</i>] [, <a href="#CRITERIONS" class="selected">CRITERIONS</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FREQUENCIES" class="selected">FREQUENCIES</a>=<i>array</i>] [, <a href="#IDX_COEFS" class="selected">IDX_COEFS</a>=<i>variable</i>] [, <a href="#IDX_CRITERIONS" class="selected">IDX_CRITERIONS</a>=<i>variable</i>] [, <a href="#IDX_VARS" class="selected">IDX_VARS</a>=<i>variable</i>] [, <a href="#INDEP_VARS" class="selected">INDEP_VARS</a>=<i>variable</i>] [, <a href="#MALLOWS_CP" class="selected">MALLOWS_CP</a>=<i>value</i>] [, <a href="#MAX_N_BEST" class="selected">MAX_N_BEST</a>=] [, <a href="#MAX_N_GOOD" class="selected">MAX_N_GOOD</a>=<i>value</i>] [, <a href="#MAX_SUBSET" class="selected">MAX_SUBSET</a>=<i>value</i>])  [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>array</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>Two-dimensional array containing the data for the candidate variables. </p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array of length N_ELEMENTS (<i>x</i>(*, 0)) containing the responses for the dependent variable.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ADJ_R_SQUARED"></a>ADJ_R_SQUARED (optional)</h3>
+        <p>
+The adjusted <i>R</i><sup>2</sup> criterion is used, where subset sizes 1, 2, ..., N_ELEMENTS (<i>x</i>(*, 0)) are examined. Keywords MAX_SUBSET, ADJ_R_SQUARED, and MALLOWS_CP cannot be used together. 
+</p>
+        <h3 class="Keyword"><a name="COEFS"></a>COEFS (optional)</h3>
+        <p>Named variable into which the two-dimensional array of size (IDX_COEFS (NTBEST)) x 5 containing statistics relating to the regression coefficients of the best models is stored. Each row corresponds to a coefficient for a particular regression. The regressions are in order of increasing subset size. Within each subset size, the regressions are ordered so that the better regressions appear first. The statistic in the columns are as follows (inferences are conditional on the selected model):
+</p>
+        <ul>
+            <li value="1">0: variable number</li>
+            <li value="2">1: coefficient estimate</li>
+            <li value="3">2: estimated standard error of the estimate</li>
+            <li value="4">3: <i>t</i>-statistic for the test that the coefficient is 0</li>
+            <li value="5">4: <i>p</i>-value for the two-sided<i> t </i>test</li>
+        </ul>
+        <p>Keywords COEFS and IDX_COEFS must be used together. </p>
+        <h3 class="Keyword"><a name="COV_INPUT"></a>COV_INPUT (optional)</h3>
+        <p>
+Two-dimensional square array of size (N_ELEMENTS (<i>x</i>(0,&#160;*)) + 1) by (N_ELEMENTS (<i>x</i>(0, *)) + 1) containing a variance-covariance or sum-of-squares and crossproducts matrix, in which the last column must correspond to the dependent variable. 
+</p>
+        <p>
+Array COV_INPUT can be computed using <a href="IMSL_COVARIANCES.htm">IMSL_COVARIANCES</a>. The arguments <i>X</i> and <i>Y</i>, and keywords FREQUENCIES and WEIGHTS are not accessed when this option is specified. Normally, IMSL_ALLBEST computes COV_INPUT from the input data matrices <i>x</i> and <i>y</i>. However, there may be cases when you will want to calculate the covariance matrix and manipulate it before calling IMSL_ALLBEST. See the description at the beginning of this topic for a discussion of such cases.
+The keywords COV_INPUT and COV_NOBS must be used together.
+</p>
+        <h3 class="Keyword"><a name="COV_NOBS"></a>COV_NOBS (optional)</h3>
+        <p>
+Number of observations associated with array COV_INPUT. The keywords COV_INPUT and COV_NOBS must be used together.
+</p>
+        <h3 class="Keyword"><a name="CRITERIONS"></a>CRITERIONS (optional)</h3>
+        <p>
+Named variable into which the one-dimensional array of length max(IDX_CRITERIONS (NSIZE – 1), N_ELEMENTS (<i>x</i>(0, *)) containing in its first IDX_CRITERIONS  (NSIZE – 1) elements the criterion values for each subset considered, in increasing subset size order, is stored. The keywords CRITERIONS  and IDX_CRITERIONS  must be used together. 
+</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>
+If present and nonzero, double precision is used. </p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>
+One-dimensional array of length N_ELEMENTS (<i>x</i>(*, 0)) containing the frequency for each row of <i>x</i>. Default: (*) = 1
+</p>
+        <h3 class="Keyword"><a name="IDX_COEFS"></a>IDX_COEFS (optional)</h3>
+        <p>
+Named variable into which the one-dimensional array of length NBEST + 1 containing the locations of COEFS the first row of each of the best regressions is stored. Here, NTBEST is the total number of best regression found and is MAX_SUBSET * MAX_N_BEST if MAX_SUBSET  is specified, MAX_N_BEST if either MALLOWS_CP or ADJ_R_SQUARED is specified, and MAX_N_BEST * (N_ELEMENTS (<i>x</i>(0, *))) otherwise. For <i>i</i> = 0, 1, ..., NTBEST, rows IDX_COEFS (<i>i</i>), IDX_COEFS(<i>i</i>) + 1, ..., IDX_COEFS (<i>i</i> + 1) – 1 of COEFS correspond to the (<i>i</i> + 1)-st regression. Keywords COEFS and IDX_COEFS must be used together.
+</p>
+        <h3 class="Keyword"><a name="IDX_CRITERIONS"></a>IDX_CRITERIONS (optional)</h3>
+        <p>
+Named variable into which the one-dimensional array of length NSIZE containing the locations in CRITERIONS of the first element for each subset size is stored. NSIZE is calculated as follows: NSIZE = (<i>Max_Subset</i> + 1) if MAX_SUBSET is set. NSIZE = (N_ELEMENTS (<i>x</i>(0, *)) + 1) otherwise. For <i>i</i> = 0, 1, ..., NSIZE – 2, element numbers IDX_CRITERIONS(<i>i</i>), IDX_CRITERIONS (<i>i</i>) + 1, ..., IDX_CRITERIONS(<i>i</i> + 1) – 1 of CRITERIONS correspond to the (<i>i</i> + 1)-st subset size. Keywords CRITERIONS and IDX_CRITERIONS must be used together.
+</p>
+        <h3 class="Keyword"><a name="IDX_VARS"></a>IDX_VARS (optional)</h3>
+        <p>
+Named variable into which the one-dimensional array of length NSIZE containing the locations in INDEP_VARS  of the first element for each subset size. NSIZE is calculated as follows: NSIZE = (MAX_SUBSET &#160;+ 1) if MAX_SUBSET is set. NSIZE = (N_ELEMENTS(<i>x</i>(0, *)) + 1) otherwise. For<i> i</i> = 0, 1, ..., NSIZE – 2, element numbers IDX_VARS(<i>i</i>), IDX_VARS (<i>i</i>) + 1, ..., IDX_VARS (<i>i + 1) </i>– 1) of INDEP_VARS correspond to the (<i>i</i> + 1)-st subset size. The keywords INDEP_VARS and IDX_VARS must be used together.
+</p>
+        <h3 class="Keyword"><a name="INDEP_VARS"></a>INDEP_VARS (optional)</h3>
+        <p>
+Named variable into which the one-dimensional array of length IDX_VARS (NSIZE – 1) containing the variable numbers for each subset considered and in the same order as in CRITERIONS is stored. Keywords INDEP_VARS and IDX_VARS must be used together.
+</p>
+        <h3 class="Keyword"><a name="MALLOWS_CP"></a>MALLOWS_CP (optional)</h3>
+        <p>
+Mallows <i>C</i><sub>p</sub> criterion is used, where subset sizes 1, 2, ..., N_ELEMENTS (<i>x</i>(*, 0)) are examined. The keywords MAX_SUBSET, ADJ_R_SQUARED, and MALLOWS_CP cannot be used together. 
+</p>
+        <h3 class="Keyword"><a name="MAX_N_BEST"></a>MAX_N_BEST (optional)</h3>
+        <p>
+Number of best regressions to be found. If the <i>R</i><sup>2</sup> criterion is selected, the MAX_N_BEST best regressions for each subset size examined are found. If the adjusted <i>R</i><sup>2</sup> or Mallows <i>C</i><sub>p</sub> criterion is selected, the MAX_N_BEST overall regressions are found. Default: 1
+</p>
+        <h3 class="Keyword"><a name="MAX_N_GOOD"></a>MAX_N_GOOD (optional)</h3>
+        <p>
+Maximum number of good regressions of each subset size to be saved in finding the best regressions. Keyword MAX_N_BEST must be greater than or equal to MAX_N_BEST. Normally, MAX_N_BEST should be less than or equal to 10. It need not ever be larger than the maximum number of subsets for any subset size. Computing time required is inversely related to MAX_N_BEST. Default:  10
+</p>
+        <h3 class="Keyword"><a name="MAX_SUBSET"></a>MAX_SUBSET (optional)</h3>
+        <p>
+The <i>R</i><sup>2</sup> criterion is used, where subset sizes 1, 2, ..., MAX_SUBSET are examined. This option is the default with MAX_SUBSET = N_ELEMENTS (<i>x</i>(0, *)). Keywords MAX_SUBSET, ADJ_R_SQUARED, and MALLOWS_CP cannot be used together. </p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>
+One-dimensional array of length N_ELEMENTS (<i>x</i>(*, 0)) containing the weight for each row of <i>x</i>. Default: (*) = 1
+</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

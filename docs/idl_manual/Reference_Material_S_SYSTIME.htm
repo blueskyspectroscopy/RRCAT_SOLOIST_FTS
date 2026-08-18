@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: S">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SYSTIME </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="S_list.htm">Routines: S</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">SYSTIME</span>
+        </div>
+        <h1 class="Routine">SYSTIME </h1>
+        <p><a name="kanchor2712"></a>The SYSTIME function returns the current time as either a date/time string, or as the number of seconds since 1 January 1970, or as a Julian date/time value. Additionally, given an arbitrary number of seconds since 1 January 1970, SYSTIME can also return the corresponding date/time string.</p>
+        <h2 class="API">Examples</h2>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">Desired Result</th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">Command</th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">Sample Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Today's date as a string</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">SYSTIME()</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">"Mon Jan 18 20:14:07 2038"</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">Today's date in UTC</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>SYSTIME(/UTC)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>"Tue Jan 19 03:14:07 2038"</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Number of seconds since 1970</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>SYSTIME(/SECONDS)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>1455291115.8670001</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Julian date/time value</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>SYSTIME(/JULIAN,&#160;/UTC)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>2465442.6348032</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>A date string given a specified number of seconds</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>SYSTIME(ELAPSED=2000000000)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>"Tue May 17 20:33:20 2033"</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>A Julian date given a specified number of seconds</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>SYSTIME(ELAPSED=2000000000, /JULIAN)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">2463735.3564814</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = SYSTIME( [<a href="#ELAPSED" class="selected">ELAPSED</a>=<i>value</i>] [, /<a href="#S_820040301_1015505" class="selected">JULIAN</a>] [, /<a href="#S_820040301_1015507" class="selected">SECONDS</a>] [,&#160;/<a href="#S_820040301_1083080" class="selected">UTC</a>] )</p>
+        <p>or</p>
+        <p><i>Result</i> = SYSTIME( [<i>SecondsFlag</i>] [, <i>ElapsedSeconds</i>]  [, /<a href="#S_820040301_1015505" class="selected">JULIAN</a>] [,&#160;/<a href="#S_820040301_1083080" class="selected">UTC</a>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>Returns the specified time as either a string or a double-precision value. If SECONDS or JULIAN is set then the result will be a double-precision value. Otherwise, the result will be a string in the format:</p>
+        <p class="Code">DOW MON DD HH:MM:SS YEAR</p>
+        <p>where DOW is the day of the week, MON is the month, DD is the day of the month, HH is the hour, MM is the minute, SS is the second, and YEAR is the year. By default, the date/time string is adjusted for the local time zone; use the UTC keyword to override this default.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The precision of the returned value depends on your platform: Windows will have a precision in milliseconds while other platforms will have a precision in microseconds.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">SecondsFlag (Obsolete)</h3>
+        <p>Set this argument to 0 to return a date/time string; set to 1 to return a double-precision value. If the JULIAN or SECONDS keyword is set, this argument is ignored.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>This argument is obsolete but will continue to work as expected. In new code, use the SECONDS keyword instead.</p>
+        <h3 class="Argument">ElapsedSeconds (Obsolete)</h3>
+        <p>Set this argument to the number of seconds past 1 January 1970 UTC. If the ELAPSED keyword is set, this argument is ignored.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>This argument is obsolete but will continue to work as expected. In new code, use the ELAPSED keyword instead.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ELAPSED"></a>ELAPSED</h3>
+        <p>Set this keyword to a double-precision value giving the number of seconds since 1 January 1970 00:00:00 UTC. In this case, SYSTIME uses this value for its computations instead of the current time.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The returned date/time string is adjusted for the local time zone, unless the UTC keyword is set.</p>
+        <h3 class="Keyword"><a name="S_820040301_1015505"></a>JULIAN</h3>
+        <p>Set this keyword to specify that the current time is to be returned as a a double precision floating value containing the current Julian date/time. By default, the current time is adjusted for the local time zone; use the UTC keyword to override this default. This keyword is not allowed if the <i>ElapsedSeconds</i> argument is present.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If the JULIAN keyword is set, SYSTIME will add a small offset to the returned date to eliminate roundoff errors. This offset is given by the larger of EPS and EPS*Julian, where Julian is the integer portion of the Julian date, and EPS is the EPS field from MACHAR. For typical Julian dates, this offset is approximately 6x10<sup>–10</sup> (which corresponds to 5x10<sup>–5</sup> seconds). This offset ensures that if the Julian date is converted back using <a href="../C/CALDAT.htm">CALDAT</a>, then the hour, minute, and second will have the correct integer values.</p>
+        <h3 class="Keyword"><a name="S_820040301_1015507"></a>SECONDS</h3>
+        <p>Set this keyword to specify that the current time is to be returned as the number of seconds elapsed since 1 January 1970 UTC. This option is equivalent to setting the <i>SecondsFlag</i> argument to a non-zero value.</p>
+        <h3 class="Keyword"><a name="S_820040301_1083080"></a>UTC</h3>
+        <p>Set this keyword to specify that the value returned by SYSTIME is to be returned in Universal Time Coordinated (UTC) rather than being adjusted for the current time zone. UTC time is defined as Greenwich Mean Time updated with leap seconds.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Original</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">8.5.2</td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Added ELAPSED keyword, obsolete <i>SecondsFlag</i> and <i>ElapsedSeconds</i> arguments</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../C/CALDAT.htm">CALDAT</a>, <a href="../C/CALENDAR_Procedure.htm">CALENDAR Procedure</a>, <a href="../J/JULDAY.htm">JULDAY</a>, <a href="../T/TIMEGEN.htm#T_809226861_1077128">TIMEGEN</a>, <a href="../T/TIC.htm">TIC</a>, <a href="../T/TOC.htm">TOC</a>, <a href="../T/TIMESTAMP.htm">TIMESTAMP</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

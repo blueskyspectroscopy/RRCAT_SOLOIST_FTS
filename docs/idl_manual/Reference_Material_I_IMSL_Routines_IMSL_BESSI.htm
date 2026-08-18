@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_BESSI</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_BESSI</span>
+        </div>
+        <h1 class="Routine">IMSL_BESSI</h1>
+        <p>The IMSL_BESSI function evaluates a modified Bessel function of the first kind with real order and real or complex parameters.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_BESSI function evaluates a modified Bessel function of the first kind with real order and real or complex parameters. The data type of the returned value is always complex.</p>
+        <p>The Bessel function, <i>I<sub>v</sub></i>(<i>z</i>), is defined as follows:</p>
+        <p>
+            <img src="images/IMSL_BESSI-18.jpg" />
+        </p>
+        <p>For large parameters, <i>z</i>, Temme's (1975) algorithm is used to find <i>I<sub>v</sub></i>(<i>z</i>). The <i>I</i><sub>v</sub>(<i>z</i>) values are recurred upward (if stable). This involves evaluating a continued fraction. If this evaluation fails to converge, the answer may not be accurate. For moderate and small parameters, Miller's method is used.</p>
+        <h2 class="API">Example</h2>
+        <p>In this example, J<sub>0.3 + </sub><sub style="font-style: italic">v</sub><sub>–1</sub>(1.2 + 0.5<i>i</i>), <i>v</i> = 1, ... 4 is computed and printed first by calling IMSL_BESSI four times in a row, then by using the keyword SEQUENCE.
+		</p>
+        <p class="Code">z = COMPLEX(1.2, .5)</p>
+        <p class="Code">FOR i = 0, 3 DO PM, IMSL_BESSI(i + .3, z)</p>
+        <p class="Code">(    &#160;&#160;&#160;1.16339,&#160;  0.396301)</p>
+        <p class="Code">( &#160;  0.447264,&#160;  0.332142)</p>
+        <p class="Code">(  &#160;0.0821799,&#160;  0.127165)</p>
+        <p class="Code">( 0.00577678, 0.0286277)</p>
+        <p class="Code">PM, IMSL_BESSI(.3, z, Sequence = 4), Title = ';With SEQUENCE:'</p>
+        <p class="Code">With SEQUENCE:</p>
+        <p class="Code">(&#160;&#160;&#160;    1.16339,  &#160;0.396301)</p>
+        <p class="Code">(&#160;&#160;   0.447264, &#160; 0.332142)</p>
+        <p class="Code">(&#160;  0.0821799, &#160;0.127165)</p>
+        <p class="Code">( 0.00577678, &#160;0.0286277)</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_BESSI(<i>Order, Z</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#SEQUENCE" class="selected">SEQUENCE</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The desired value of the modified Bessel function.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Order</h3>
+        <p>Real parameter specifying the desired order. The argument order must be greater than –1/2.</p>
+        <h3 class="Argument">Z</h3>
+        <p>Real or complex parameter for which the Bessel function is to be evaluated.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="SEQUENCE"></a>SEQUENCE</h3>
+        <p>If present and nonzero, a one-dimensional array of length n containing the values of the Bessel function through the series is returned by IMSL_BESSI, where n = N_ELEMENTS(SEQUENCE). The <i>i</i>-th element of this array is the Bessel function of order (<i>Order + i</i>) at Z for i = 0, ... (<i>n</i> – 1).</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_AIRY_BI.htm">IMSL_AIRY_BI</a>, <a href="IMSL_BESSI_EXP.htm">IMSL_BESSI_EXP</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

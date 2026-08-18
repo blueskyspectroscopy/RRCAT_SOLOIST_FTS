@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_KOLMOGOROV2</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_KOLMOGOROV2</span>
+        </div>
+        <h1 class="Routine">IMSL_KOLMOGOROV2</h1>
+        <p>The IMSL_KOLMOGOROV2 function performs a Kolmogorov-Smirnov two- sample test.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_KOLMOGOROV2 function computes Kolmogorov-Smirnov two-sample test statistics for testing that two continuous cumulative distribution functions (CDF's) are identical based upon two random samples. One- or two-sided alternatives are allowed. If <i>n_observations_x</i> = N_ELEMENTS(<i>x</i>) and <i>n_observations_y</i> = N_ELEMENTS(<i>y</i>), then the exact <i>p</i>-values are computed for the two-sided test when <i>n_observations_x</i> * <i>n_observations_y</i> is less than 104.</p>
+        <p>Let <i>F</i><sub>n</sub>(<i>x</i>) denote the empirical CDF in the <i>X</i> sample, let <i>G</i><sub>m</sub><i>(y</i>) denote the empirical CDF in the <i>Y</i> sample, where <i>n</i> = <i>n_observations_x</i>- NMISSINGX and <i>m</i> = n_observations_y <span style="font-family: Symbol" class="cSymbol">–</span> NMISSINGY, and let the corresponding population distribution functions be denoted by <i>F</i>(<i>x</i>) and <i>G</i>(<i>y</i>), respectively. Then, the hypotheses tested by IMSL_KOLMOGOROV2 are as follows:</p>
+        <ul>
+            <li value="1"><i>H</i><sub>0</sub> : <i>F</i> (<i>x</i>) = <i>G</i> (<i>x</i>)&#160;&#160;&#160;&#160;&#160;<i>H</i><sub>1</sub> :<i>F</i> (<i>x</i>) ≠ <i>G</i> (<i>x</i>)</li>
+            <li value="2"><i>H</i><sub>0</sub> : <i>F</i> (<i>x</i>) ≥ <i>G</i> (<i>x</i>)&#160;&#160;&#160;&#160;&#160;<i>H</i><sub>1</sub> : <i>F</i> (<i>x</i>) &lt; <i>G</i> (<i>x</i>)</li>
+            <li value="3"><i>H</i><sub>0</sub> : <i>F</i> (<i>x</i>) ≤ <i>G</i> (<i>x</i>)&#160;&#160;&#160;&#160;&#160;<i>H</i><sub>1</sub> : <i>F</i> (<i>x</i>) &gt; <i>G</i> (<i>x</i>)</li>
+        </ul>
+        <p>The test statistics are given as follows:</p>
+        <p>
+            <img src="images/IMSL_KOLMOGOROV2-10.jpg" />
+        </p>
+        <p>Asymptotically, the distribution of the statistic</p>
+        <p>
+            <img src="images/IMSL_KOLMOGOROV2-11.jpg" />
+        </p>
+        <p>(returned in <i>Result</i> (0)) converges to a distribution given by Smirnov (1939).</p>
+        <p>Exact probabilities for the two-sided test are computed when <i>m</i> * <i>n</i> is less than or equal to 10<sup>4</sup>, according to an algorithm given by Kim and Jennrich (1973;). When <i>m</i> * <i>n</i> is greater than 10<sup>4</sup>, the very good approximations given by Kim and Jennrich are used to obtain the two-sided <i>p</i>-values. The one-sided probability is taken as one half the two-sided probability. This is a very good approximation when the <i>p</i>-value is small (say, less than 0.10) and not very good for large <i>p</i>-values.
+		</p>
+        <h2 class="API">Example</h2>
+        <p>The following example illustrates the IMSL_KOLMOGOROV2 routine with two randomly generated samples from a uniform(0,1) distribution. Since the two theoretical distributions are identical, we would not expect to reject the null hypothesis.</p>
+        <p class="Code">IMSL_RANDOMOPT, set	=	123457</p>
+        <p class="Code">x	=	IMSL_RANDOM(100, /Uniform)</p>
+        <p class="Code">y	=	IMSL_RANDOM(60, /Uniform)</p>
+        <p class="Code">stats	=	IMSL_KOLMOGOROV2(x, y, DIFFERENCES = d, $</p>
+        <p class="Code_Indented">NMISSINGX = nmx, NMISSINGY = nmy)</p>
+        <p class="Code">PRINT, 'D	=', d(0)</p>
+        <p class="Code">PRINT, 'D+ =', d(1) PRINT, 'D- =', d(2)</p>
+        <p class="Code">PRINT, 'Z	=', stats(0)</p>
+        <p class="Code">PRINT, 'Prob greater D one sided =', stats(1)</p>
+        <p class="Code">PRINT, 'Prob greater D two sided =', stats(2)</p>
+        <p class="Code">PRINT, 'Missing X =', nmx</p>
+        <p class="Code">PRINT, 'Missing Y =', nmy</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">D	=&#160;&#160;&#160;&#160;0.180000</p>
+        <p class="Code">D+	=&#160;&#160;&#160;0.180000</p>
+        <p class="Code">D-	=&#160;&#160;&#160;0.0100001</p>
+        <p class="Code">Z	=&#160;&#160;&#160;&#160;1.10227</p>
+        <p class="Code">Prob greater D one sided =&#160;&#160;&#160;&#160;0.0720105</p>
+        <p class="Code">Prob greater D two sided =&#160;&#160;&#160;&#160;0.144021</p>
+        <p class="Code">Missing X =&#160;&#160;&#160;&#160;0</p>
+        <p class="Code">Missing Y =&#160;&#160;&#160;&#160;0</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = KOLMORGOROV2(<i>X, Y</i> [, <a href="#DIFFERENCES" class="selected">DIFFERENCES</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#NMISSINGX" class="selected">NMISSINGX</a>=<i>variable</i>] [, <a href="#NMISSINGY" class="selected">NMISSINGY</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length 3 containing <i>Z</i>, p<sub>1</sub>, and p<sub>2</sub>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the observations from sample one.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array containing the observations from sample two.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DIFFERENCES"></a>DIFFERENCES (optional)</h3>
+        <p>Named variable into which a one-dimensional array containing D<sub>n</sub>, D<sub>n</sub>, D<sub>n</sub> is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="NMISSINGX"></a>NMISSINGX (optional)</h3>
+        <p>Named variable into which the number of missing values in the <i>x</i> sample is stored.</p>
+        <h3 class="Keyword"><a name="NMISSINGY"></a>NMISSINGY (optional)</h3>
+        <p>Named variable into which the number of missing values in the <i>y</i> sample is stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_KOLMOGOROV1.htm">IMSL_KOLMOGOROV1</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

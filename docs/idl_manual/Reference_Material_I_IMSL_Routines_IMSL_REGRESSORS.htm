@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_REGRESSORS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_REGRESSORS</span>
+        </div>
+        <h1 class="Routine">IMSL_REGRESSORS</h1>
+        <p>The IMSL_REGRESSORS function generates regressors for a general linear model.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_REGRESSORS function generates regressors for a general linear model from a data matrix. The data matrix can contain classification variables as well as continuous variables. Regressors for effects composed solely of continuous variables are generated as powers and crossproducts. Consider a data matrix containing continuous variables as Columns 3 and 4. The effect indices (3, 3) generate a regressor whose <i>i</i>-th value is the square of the <i>i</i>-th value in Column 3. The effect indices (3, 4) generates a regressor whose <i>i</i>-th value is the product of the <i>i</i>-th value in Column 3 with the <i>i</i>-th value in Column 4.</p>
+        <p>Regressors for an effect (source of variation) composed of a single classification variable are generated using indicator variables. Let the classification variable A take on values <i>a</i><sub>1</sub>, <i>a</i><sub>2</sub>, ..., <i>a</i><sub>n</sub>. From this classification variable, IMSL_REGRESSORS creates n indicator variables. For <i>k</i> = 1, 2, ..., <i>n</i>:</p>
+        <p>
+            <img src="images/IMSL_REGRESSORS-028.jpg" />
+        </p>
+        <p>For each classification variable, another set of variables is created from the indicator variables. These new variables are called dummy variables. Dummy variables are generated from the indicator variables in one of three manners:</p>
+        <ol>
+            <li value="1">The dummies are the n indicator variables. (Default method)</li>
+            <li value="2">The dummies are the first n – 1 indicator variables. (DUMMY_METHOD = 1)</li>
+            <li value="3">The <i>n</i> – 1 dummies are defined in terms of the indicator variables so that for balanced data, the usual summation restrictions are imposed on the regression coefficients. (DUMMY_METHOD = 2)</li>
+        </ol>
+        <p>In particular, for the default case, the dummy variables are <i>A</i><sub>k</sub> = <i>I</i><sub>k</sub> (<i>k</i> = 1, 2, ..., <i>n</i>). For DUMMY_METHOD = 1, the dummy variables are <i>A</i><sub>k</sub> = <i>I</i><sub>k</sub> (<i>k</i> = 1, 2, ..., 1). For DUMMY_METHOD = 2, the dummy variables are <i>A</i><sub>k</sub> = <i>I</i><sub>k</sub> (<i>k</i> = 1, 2, ..., n – 1). The regressors generated for an effect composed of a single-classification variable are the associated dummy variables.</p>
+        <p>Let <i>m</i><sub>j</sub> be the number of dummies generated for the <i>j</i>-th classification variable. Suppose there are two classification variables <i>A</i> and <i>B</i> with dummies:</p>
+        <p>
+            <img src="images/IMSL_REGRESSORS-029.jpg" />and <img src="images/IMSL_REGRESSORS-030.jpg" /></p>
+        <p>The regressors generated for an effect composed of two classification variables <i>A</i> and <i>B</i> are:</p>
+        <p>
+            <img src="images/IMSL_REGRESSORS-031.jpg" />
+        </p>
+        <p>=<img src="images/IMSL_REGRESSORS-032.jpg" /></p>
+        <p>
+            <img src="images/IMSL_REGRESSORS-033.jpg" />
+        </p>
+        <p>More generally, the regressors generated for an effect composed of several classification variables and several continuous variables are given by the Kronecker products of variables, where the order of the variables is specified in INDICES_EFFECTS. Consider a data matrix containing classification variables in Columns 0 and 1 and continuous variables in Columns 2 and 3. Label these four columns A, B, X1, and X2.</p>
+        <p>The regressors generated by the effect indices (0, 1, 2, 2, 3) are:</p>
+        <p>
+            <img src="images/IMSL_REGRESSORS-034.jpg" />
+        </p>
+        <h2 class="API">Remarks</h2>
+        <p>Let the data matrix <i>x</i> = (<i>A</i>, <i>B</i>, <i>X</i><sub>1</sub>), where <i>A</i> and <i>B </i>are classification variables and <i>X</i><sub>1</sub> is a continuous variable. The model containing the effects <i>A</i>, <i>B</i>, <i>AB</i>, <i>X</i><sub>1</sub>, <i>AX</i><sub>1</sub>, <i>BX</i><sub>1</sub>, and <i>ABX</i><sub>1</sub> is specified as follows (use optional keyword <i>Indices_Effects</i>):
+		</p>
+        <p><i>N_Class</i> = 2</p>
+        <p><i>N_Continuous</i> = 1</p>
+        <p>VAR_EFFECTS = [1, 1, 2, 1, 2, 2, 3]</p>
+        <p>INDICES_EFFECTS = [0, 1, 0, 1, 2, 0, 2, 1, 2, 0, 1, 2]</p>
+        <p>For this model, suppose that variable A has two levels, A1 and A2, and that variable B has three levels, B1, B2, and B3. For each DUMMY_METHOD option, the regressors in their order of appearance in IMSL_REGRESSORS are given below</p>
+        <ul>
+            <li value="1">(Default): <i>A</i><sub>1</sub>, <i>A</i><sub>2</sub>, <i>B</i><sub>1</sub>, <i>B</i><sub>2</sub>, <i>B</i><sub>3</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>1</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>2</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>3</sub>, <i>A</i><sub>2</sub> <i>B</i><sub>1</sub>, <i>A</i><sub>2</sub> <i>B</i><sub>2</sub>, <br /><i>A</i><sub>2</sub> <i>B</i><sub>3</sub>, <i>X</i><sub>1</sub>, <i>A</i><sub>1</sub> <i>X</i><sub>1</sub>, <i>A</i><sub>2</sub> <i>X</i><sub>1</sub>, <i>B</i><sub>1</sub> <i>X</i><sub>1</sub>, <i>B</i><sub>2</sub> <i>X</i><sub>1</sub>, <i>B</i><sub>3</sub> <i>X</i><sub>1</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>1</sub> <i>X</i><sub>1</sub>, <br /><i>A</i><sub>1</sub> <i>B</i><sub>2</sub> <i>X</i><sub>1</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>3</sub> <i>X</i><sub>1</sub>, <i>A</i><sub>2</sub> <i>B</i><sub>1</sub> <i>X</i><sub>1</sub>, <i>A</i><sub>2</sub> <i>B</i><sub>2</sub> <i>X</i><sub>1</sub>, <i>A</i><sub>2</sub> <i>B</i><sub>3</sub> <i>X</i><sub>1</sub></li>
+            <li value="2"><sub>1—</sub><i>A</i><sub>1</sub>, <i>B</i><sub>1</sub>, <i>B</i><sub>2</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>1</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>2</sub>, <i>X</i><sub>1</sub>, <i>A</i><sub>1</sub> <i>X</i><sub>1</sub>, <i>B</i><sub>1</sub> <i>X</i><sub>1</sub>, <i>B</i><sub>2</sub> <i>X</i><sub>1</sub>, —<i>A</i><sub>1</sub> <i>B</i><sub>1</sub> <i>X</i><sub>1</sub>, <i>A</i><sub>1</sub> <i>B</i><sub>2</sub> <i>X</i><sub>1</sub></li>
+            <li value="3"><sub>2—</sub><i>A</i><sub>1</sub> – <i>A</i><sub>2</sub>, <i>B</i><sub>1</sub> – <i>B</i><sub>3</sub>, <i>B</i><sub>2</sub> – <i>B</i><sub>3</sub>, (<i>A</i><sub>1</sub> – <i>A</i><sub>2</sub>) (<i>B</i><sub>1</sub> – <i>B</i><sub>2</sub>), (<i>A</i><sub>1</sub> – <i>A</i><sub>2</sub>) (<i>B</i><sub>2</sub> – <i>B</i><sub>3</sub>), <i>X</i><sub>1</sub>, (<i>A</i><sub>1</sub> – <i>A</i><sub>2</sub>) <i>X</i><sub>1</sub>, (<i>B</i><sub>1</sub> – <i>B</i><sub>3</sub>) <i>X</i><sub>1</sub>, (<i>B</i><sub>2</sub> – <i>B</i><sub>3</sub>) <i>X</i><sub>1</sub>, (<i>A</i><sub>1</sub> – <i>A</i><sub>2</sub>) (<i>B</i><sub>1</sub> – <i>B</i><sub>2</sub>) <i>X</i><sub>1</sub>, (<i>A</i><sub>1</sub> – <i>A</i><sub>2</sub>) (<i>B</i><sub>2</sub> – <i>B</i><sub>3</sub>) <i>X</i><sub>1</sub></li>
+        </ul>
+        <p>Within a group of regressors corresponding to an interaction effect, the indicator variables composing the regressors vary most rapidly for the last classification variable, next most rapidly for the next to last classification variable, etc.</p>
+        <p>By default, IMSL_REGRESSORS internally generates values for VAR_EFFECTS and INDICES_EFFECTS, which correspond to a first order model with NEF = <i>N_Continuous</i> + <i>N_Class</i>. The variables then are used to create the regressor variables. The effects are ordered such that the first effect corresponds to the first column of <i>x</i>, the second effect corresponds to the second column of <i>x</i>, etc. A second order model corresponding to the columns (variables) of <i>x</i> is generated if ORDER with ORDER = 2 is specified.</p>
+        <p>There are:</p>
+        <p>
+            <img src="images/IMSL_REGRESSORS-035.jpg" />
+        </p>
+        <p>effects, where NVAR = <i>N_Continuous</i> + <i>N_Class</i>. The first NVAR effects correspond to the columns of <i>x</i>, such that the first effect corresponds to the first column of <i>x</i>, the second effect corresponds to the second column of <i>x</i>, ..., the NVAR-th effect corresponds to the NVAR-th column of <i>x</i> (i.e., <i>x</i> (NVAR – 1)). The next <i>N_Continuous</i> effects correspond to squares of the continuous variables. The last:</p>
+        <p>
+            <img src="images/IMSL_REGRESSORS-036.jpg" />
+        </p>
+        <p>effects correspond to the two-variable interactions.</p>
+        <ul>
+            <li value="1">Let the data matrix <i>x</i> = (<i>A</i>, <i>B</i>, <i>X</i><sub>1</sub>), where <i>A</i> and <i>B</i> are classification variables and <i>X</i><sub>1</sub> is a continuous variable. The effects generated and order of appearance is <i>A</i>, <i>B</i>, <i>X</i><sub>1</sub>, <i>X</i><sub>2</sub>  , <i>AB</i>, <i>AX</i><sub>1</sub>, <i>BX</i><sub>1</sub>.</li>
+            <li value="2">Let the data matrix <i>x</i> = (A, <i>X</i><sub>1</sub>, <i>X</i><sub>2</sub>), where <i>A</i> is a classification variable and <i>X</i><sub>1</sub> and <i>X</i><sub>2</sub> are continuous variables. The effects generated and order of appearance is <i>A</i>, <i>X</i><sub>1</sub>, <i>X</i><sub>2</sub>, <i>X</i><sup>2</sup><sub>1</sub>, <i>X</i><sup>2</sup><sub>2</sub>, <i>AX</i><sub>1</sub>, <i>AX</i><sub>2</sub>, <i>X</i><sub>1</sub><i>X</i><sub>2</sub>.</li>
+            <li value="3">Let the data matrix <i>x</i> = (<i>X</i><sub>1</sub>, <i>A</i>, <i>X</i><sub>2</sub>) (see CLASS_COLUMNS), where <i>A</i> is a classification variable and <i>X</i><sub>1</sub> and <i>X</i><sub>2</sub> are continuous variables. The effects generated and order of appearance is <i>X</i><sub>1</sub>, <i>A</i>, <i>X</i><sub>2</sub>, <i>X</i><sup>2</sup><sub>1</sub>, <i>X</i><sup>2</sup><sub>2</sub>, <i>X</i><sub>1</sub><i>A</i>, <i>X</i><sub>1</sub><i>X</i><sub>2</sub>, <i>AX</i><sub>2</sub>.</li>
+        </ul>
+        <p>Higher-order and more complicated models can be specified using INDICES_EFFECTS.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>In the following example, there are two classification variables, <i>A</i> and <i>B</i>, with two and three values, respectively. Regressors for a one-way model (the default model order) are generated using the ALL dummy method (the default dummy method). The five regressors generated are <i>A</i><sub>1</sub>, <i>A</i><sub>2</sub>, <i>B</i><sub>1</sub>, <i>B</i><sub>2</sub>, <i>B</i><sub>3</sub>.</p>
+        <p class="Code">labels = ['A1', 'A2', 'B1', 'B2', 'B3']</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define some labels for printing later.</p>
+        <p class="Code">RM, x, 6, 2</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Enter the data. row 0: 10	5</p>
+        <p class="Code">row 1: 20 15</p>
+        <p class="Code">row 2: 20 10</p>
+        <p class="Code">row 3: 10 10</p>
+        <p class="Code">row 4: 10 15</p>
+        <p class="Code">row 5: 20 5</p>
+        <p class="Code">reg = IMSL_REGRESSORS(x, 2, 0)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_REGRESSORS.</p>
+        <p class="Code">PM, labels, reg, FORMAT = '(5a8, /, 6(5f8.1, /))'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Print the results.</p>
+        <p class="Code_Indented">&#160;A1&#160;&#160;&#160;&#160;&#160;A2&#160;&#160;&#160;&#160;&#160;B1&#160;&#160;&#160;&#160;&#160;B2&#160;&#160;&#160;&#160;&#160;B3</p>
+        <p class="Code_Indented">1.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;0.0</p>
+        <p class="Code_Indented">0.0&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;1.0</p>
+        <p class="Code_Indented">0.0&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;0.0</p>
+        <p class="Code_Indented">1.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;0.0</p>
+        <p class="Code_Indented">1.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;1.0</p>
+        <p class="Code_Indented">1.0&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;0.0</p>
+        <h3>Example 2</h3>
+        <p>In this example, a two-way analysis of covariance model containing all the interaction terms is fit. First, IMSL_REGRESSORS is called to produce a matrix of regressors, reg, from the data <i>x</i>. The regressors, generated using DUMMY_METHOD = 1, are the model whose mean function is:</p>
+        <p>µ + αi + βj + γ ij + δ xij + ζixij + η j xij + θ ijxij    i = 1, 2; j = 1, 2, 3</p>
+        <p>where α2 = β3 = γ21 = γ22 = γ23 = ζ2 = η3 = θ21 = θ22 = θ23 = 0.</p>
+        <p class="Code">labels = ['Alpha1', 'Beta1', 'Beta2', 'Gamma11', 'Gamma12', $</p>
+        <p class="Code">'Delta', 'Zeta1', 'Eta1', 'Eta2', 'Theta11', 'Theta12']</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define some labels to use in printing the results.</p>
+        <p class="Code">x = transpose([ [1.0, 1.0, 1.11], [1.0, 1.0, 2.22], $</p>
+        <p class="Code">[1.0, 1.0, 3.33], [1.0, 2.0, 1.11], [1.0, 2.0, 2.22], $</p>
+        <p class="Code">[1.0, 2.0, 3.33], [1.0, 3.0, 1.11], [1.0, 3.0, 2.22]</p>
+        <p class="Code">$ [1.0, 3.0, 3.33], [2.0, 1.0, 1.11], [2.0, 1.0, 2.22],</p>
+        <p class="Code">$ [2.0, 1.0, 3.33], [2.0, 2.0, 1.11], [2.0, 2.0, 2.22],</p>
+        <p class="Code">$ [2.0, 2.0, 3.33], [2.0, 3.0, 1.11], [2.0, 3.0, 2.22],</p>
+        <p class="Code">$ [2.0, 3.0, 3.33]])</p>
+        <p class="Code">Var_Effects = [1, 1, 2, 1, 2, 2, 3]</p>
+        <p class="Code">Indices_Effects = [0, 1, 0, 1, 2, 0, 2, 1, 2, 0, 1, 2]</p>
+        <p class="Code">reg = IMSL_REGRESSORS(x, 2, 1, Dummy_Method = 1, $</p>
+        <p class="Code">Var_Effects = var_effects, Indices_Effects = indices_effects)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_REGRESSORS.</p>
+        <p class="Code">PM, labels(0:5), reg(*, 0:5), FORMAT = '(6a9, /, 18(6f9.2, /))'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Output the results.</p>
+        <p class="Code_Indented">Alpha1&#160;&#160;Beta1&#160;&#160;Beta2&#160;&#160;Gamma11&#160;&#160;Gamma12&#160;&#160;Delta</p>
+        <p class="Code_Indented">&#160;1.0&#160;&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;&#160;1.0&#160;&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;&#160;1.1</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;1.11</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;2.22</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;3.33</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.11</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22</p>
+        <p class="Code_Indented">1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.11</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.11</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.11</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33</p>
+        <p class="Code">PM, labels(6:10), reg(*, 6:10), FORMAT = '(5a9, /, 18(5f9.2, /))'</p>
+        <p class="Code_Indented">Zeta1&#160;&#160;&#160;Eta1&#160;&#160;&#160;&#160;Eta2&#160;&#160;Theta11&#160;&#160;Theta12</p>
+        <p class="Code_Indented">&#160;1.1&#160;&#160;&#160;&#160;&#160;1.1&#160;&#160;&#160;&#160;&#160;0.0&#160;&#160;&#160;&#160;&#160;1.1&#160;&#160;&#160;&#160;&#160;0.0</p>
+        <p class="Code_Indented">2.22&#160;&#160;&#160;&#160;2.22&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">3.33&#160;&#160;&#160;&#160;3.33&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">1.11&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.11&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.11</p>
+        <p class="Code_Indented">2.22&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22</p>
+        <p class="Code_Indented">3.33&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33</p>
+        <p class="Code_Indented">1.11&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">2.22&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">3.33&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;1.11&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;2.22&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;3.33&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;1.11&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;2.22&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;3.33&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code_Indented">0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00&#160;&#160;&#160;&#160;0.00</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_REGRESSORS(<i>X, N_Class, N_Continuous</i> [, <a href="#CLASS_COLUMNS" class="selected">CLASS_COLUMNS</a>=<i>array</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DUMMY_METHOD" class="selected">DUMMY_METHOD</a>=<i>variable</i>] [, <a href="#INDICES_EFFECTS" class="selected">INDICES_EFFECTS</a>=<i>array</i>] [, <a href="#ORDER" class="selected">ORDER</a>=<i>value</i>] [, <a href="#VAR_EFFECTS" class="selected">VAR_EFFECTS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A two-dimensional array containing the regressor variables generated from <i>X</i>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>Two-dimensional array containing the data. The columns must be ordered such that the first <i>N_Class</i> columns contain the class variables and the next <i>N_Continuous</i> columns contain the continuous variables. (Exception: See they keyword CLASS_COLUMNS.)</p>
+        <h3 class="Argument">N_Class</h3>
+        <p>Number of classification variables.</p>
+        <h3 class="Argument">N_Continuous</h3>
+        <p>Number of continuous variables.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CLASS_COLUMNS"></a>CLASS_COLUMNS (optional)</h3>
+        <p>One-dimensional array of length <i>N_Class</i> containing the column numbers of x that are the classification variables. The remaining n_continuous variables are assumed to correspond to the columns of x in the range 0, ..., <i>N_Class</i> – 1 that are not listed in CLASS_COLUMNS. Default: [0, 1, ..., <i>N_Class</i> – 1].</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="DUMMY_METHOD"></a>DUMMY_METHOD (optional)</h3>
+        <p>Dummy variable option. Indicator variables are defined for each class variable as described in the Discussion section. Dummy variables are then generated from the <i>n</i> indicator variables in one of the following three ways:</p>
+        <ul>
+            <li value="1">(Default): The <i>n</i> indicator variables are the dummy variables.</li>
+            <li value="2">1: Dummies are the first <i>n</i> – 1 indicator variables.</li>
+            <li value="3">2: The <i>n</i> – 1 dummies are defined in terms of the indicator variables so that for balanced data, the usual summation restrictions are imposed on the regression coefficients.</li>
+        </ul>
+        <h3 class="Keyword"><a name="INDICES_EFFECTS"></a>INDICES_EFFECTS (optional)</h3>
+        <p>One-dimensional array of length VAR_EFFECTS (0) + VAR_EFFECTS (1) + ... VAR_EFFECTS (N_ELEMENTS (VAR_EFFECTS ) – 1). The first VAR_EFFECTS (0) elements give the column numbers of <i>x</i> for each variable in the first effect. The next VAR_EFFECTS (1) elements give the column numbers for each variable in the second effect. The last VAR_EFFECTS (N_ELEMENTS (VAR_EFFECTS ) – 1) elements give the column numbers for each variable in the last effect. The keywords VAR_EFFECTS and INDICES_EFFECTS must be used together.</p>
+        <h3 class="Keyword"><a name="ORDER"></a>ORDER (optional)</h3>
+        <p>Order of the model. Model order can be specified as 1 or 2. Use the keyword INDICES_EFFECTS to specify more complicated models.  The keywords VAR_EFFECTS and INDICES_EFFECTS must be used together. Default: 1</p>
+        <h3 class="Keyword"><a name="VAR_EFFECTS"></a>VAR_EFFECTS (optional)</h3>
+        <p>One-dimensional array containing the number of variables associated with each effect in the model. The keywords VAR_EFFECTS and INDICES_EFFECTS must be used together.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

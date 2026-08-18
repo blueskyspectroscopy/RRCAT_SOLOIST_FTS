@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_FRIEDMANS_TEST</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_FRIEDMANS_TEST</span>
+        </div>
+        <h1 class="Routine">IMSL_FRIEDMANS_TEST</h1>
+        <p>The IMSL_FRIEDMANS_TEST function performs Friedman’s test for a randomized complete block design.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_FRIEDMANS_TEST function may be used to test the hypothesis of equality of treatment effects within each block in a randomized block design. No missing values are allowed. Ties are handled by using the average ranks. The test statistic is the nonparametric analogue of an analysis of variance <i>F</i> test statistic.</p>
+        <p>The test proceeds by first ranking the observations within each block. Let <i>A</i> denote the sum of the squared ranks, i.e., let:</p>
+        <p>
+            <img src="images/IMSL_FRIEDMANS_TEST-03.jpg" />
+        </p>
+        <p>where Rank(<i>Y</i><sub>ij</sub>) is the rank of the <i>i</i>-th observation within the <i>j</i>-th block, <i>b</i> is the number of blocks, and <i>k</i> is the number of treatments. Let:</p>
+        <p>
+            <img src="images/IMSL_FRIEDMANS_TEST-04.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_FRIEDMANS_TEST-05.jpg" />
+        </p>
+        <p>The Friedman test statistic (Stats(0)) is given by:</p>
+        <p>
+            <img src="images/IMSL_FRIEDMANS_TEST-06.jpg" />
+        </p>
+        <p>that, under the null hypothesis, has an approximate chi-squared distribution with <i>k</i> – 1 degrees of freedom. The asymptotic probability of obtaining a larger chi-squared random variable is returned in <a href="#STATS" class="selected">STATS</a>(3).</p>
+        <p>If the <i>F</i> distribution is used in place of the chi-squared distribution, then the usual one way analysis of variance <i>F</i>-statistic computed on the ranks is used. This statistic, reported in STATS(1), is given by:</p>
+        <p>
+            <img src="images/IMSL_FRIEDMANS_TEST-07.jpg" />
+        </p>
+        <p>and asymptotically follows an <i>F</i> distribution with (<i>k</i> – 1) and (<i>b</i> –1)(<i>k</i> – 1) degrees of freedom under the null hypothesis. STATS(4) is the asymptotic probability of obtaining a larger <i>F</i> random variable. (If <i>A</i> = <i>B</i>, then STATS(0) and STATS(1) are set to machine infinity, and the significance levels are reported as <i>k</i>!/(<i>k</i>!)<i>b</i>, unless this computation would cause underflow, in which case the significance levels are reported as zero.) Iman and Davenport (1980) discuss the relative advantages of the chi-squared and <i>F</i> approximations. In general, the <i>F</i> approximation is considered best.</p>
+        <p>The Friedman <i>T</i> statistic is related both to the Kendall coefficient of concordance and to the Spearman rank correlation coefficient. See Conover (1980) for a discussion of the relationships.</p>
+        <p>If, at the α = <a href="#ALPHA" class="selected">ALPHA</a> level of significance, the Friedman test results in rejection of the null hypothesis, then an asymptotic test that treatments i and j are different is given by: reject <i>H</i><sub>0</sub> if |<i>R</i><sub>i</sub> − <i>R</i><sub>j</sub>| &gt; <i>D</i>, where:</p>
+        <p>
+            <img src="images/IMSL_FRIEDMANS_TEST-08.jpg" />
+        </p>
+        <p>where <i>t</i> has (<i>b</i> – 1)(<i>k</i> – 1) degrees of freedom. Page’s statistic, STATS(2), is used to test the same null hypothesis as the Friedman test but is sensitive to a monotonic increasing alternative. The Page test statistic is given by:</p>
+        <p>
+            <img src="images/IMSL_FRIEDMANS_TEST-09.jpg" />
+        </p>
+        <p>It is largest (and thus most likely to reject) when the <i>R</i><sub>i</sub> are monotonically increasing.</p>
+        <h3>Assumptions</h3>
+        <p>The assumptions in the Friedman test are as follows:</p>
+        <ol>
+            <li value="1">  The <i>k</i>-vectors of responses within each of the <i>b</i> blocks are mutually independent (i.e., the results within one block have no effect on the results within another block).</li>
+            <li value="2">   Within each block, the observations may be ranked.</li>
+        </ol>
+        <p>The hypothesis tested is that each ranking of random variables within each block is equally likely. The alternative is that at least one treatment tends to have larger values than one or more of the other treatments. The Friedman test is a test for the equality of treatment means or medians.</p>
+        <h2 class="API">Example</h2>
+        <p>The following example is taken from Bradley (1968), page 127, and tests the hypothesis that four drugs have the same effects upon a person’s visual acuity. Five subjects were used.</p>
+        <p class="Code">y = TRANSPOSE([[0.39, 0.55, 0.33, 0.41], $</p>
+        <p class="Code">&#160;&#160;[0.21, 0.28, 0.19, 0.16], [0.73, 0.69, 0.64, 0.62], $ </p>
+        <p class="Code">&#160;&#160;[0.41, 0.57, 0.28, 0.35], [0.65, 0.57, 0.53, 0.60]])</p>
+        <p class="Code">fuzz = 0.001</p>
+        <p class="Code">p = IMSL_FRIEDMANS_TEST(y, Fuzz = fuzz, Diff = diff, $ </p>
+        <p class="Code">&#160;&#160;Sum_Rank = sr, Stats = stat)</p>
+        <p class="Code">PM, stat, Title = 'STATS'</p>
+        <p class="Code">PM, diff, Title = 'DIFF'</p>
+        <p class="Code">PM, sr, Title = 'Sum_Rank'</p>
+        <p>IDL prints:</p>
+        <p class="Code">STATS</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">8.28000</p>
+        <p class="Code">4.92857</p>
+        <p class="Code">111.000</p>
+        <p class="Code">0.0405658</p>
+        <p class="Code">0.0185906</p>
+        <p class="Code">0.984954</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">DIFF</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">6.65638</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Sum_Rank</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">16.0000</p>
+        <p class="Code">17.0000</p>
+        <p class="Code">7.00000</p>
+        <p class="Code">10.0000</p>
+        <p>The Friedman null hypothesis is rejected at the α = 0.05 while the Page null hypothesis is not. (A Page test with a monotonic decreasing alternative would be rejected, however.) Using <a href="#SUM_RANK" class="selected">SUM_RANK</a> and <a href="#DIFF" class="selected">DIFF</a>, one can conclude that treatment 3 is different from treatments 1 and 2, and that treatment 4 is different from treatment 2, all at the α= 0.05 level of significance.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_FRIEDMANS_TEST(<i>y</i> [, <a href="#ALPHA" class="selected">ALPHA</a>=<i>value</i>] [, <a href="#DIFF" class="selected">DIFF</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FUZZ" class="selected">FUZZ</a>=<i>value</i>] [, <a href="#STATS" class="selected">STATS</a>=<i>variable</i>] [, <a href="#SUM_RANK" class="selected">SUM_RANK</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The Chi-squared approximation of the asymptotic <i>p</i>-value for Friedman’s two-sided test statistic.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">y</h3>
+        <p>Two-dimensional array containing the observations. The first row of <i>y</i> contains the observations on treatments 1, 2, ..., N_ELEMENTS(<i>y</i>(0, *)) in the first block. The second row of <i>y</i> contain the observations in the second block, etc., and so on.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ALPHA"></a>ALPHA (optional)</h3>
+        <p>Critical level for multiple comparisons. ALPHA should be between 0 and 1 exclusive. The default value is 0.05.</p>
+        <h3 class="Keyword"><a name="DIFF"></a>DIFF (optional)</h3>
+        <p>Named variable into which the minimum absolute difference in two elements of SUM_RANK to infer at the ALPHA level of significance that the medians of the corresponding treatments are different is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="FUZZ"></a>FUZZ (optional)</h3>
+        <p>Nonnegative constant used to determine ties. In the ordered observations, if |<i>y</i>(<i>i</i>) –<i>y</i>(<i>i</i> + 1)| is less than or equal to FUZZ, then <i>y</i>(<i>i</i>) and <i>y</i>(<i>i</i> + 1) are said to be tied. The default value is  0.0.</p>
+        <h3 class="Keyword"><a name="STATS"></a>STATS (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length 6 containing the Friedman statistics below. Probabilities reported are computed under the appropriate null hypothesis.</p>
+        <ul>
+            <li value="1">0: Friedman two-sided test statistic.</li>
+            <li value="2">1: Approximate <i>F</i> value for STATS(0).</li>
+            <li value="3">2: Page test statistic for testing the ordered alternative that the median of treatment i is less than or equal to the median of treatment <i>i</i> + 1, with strict inequality holding for some <i>i</i>.</li>
+            <li value="4">3: Asymptotic <i>p</i>-value for STATS(0). Chi-squared approximation.</li>
+            <li value="5">4: Asymptotic <i>p</i>-value for STATS(1). F approximation.</li>
+            <li value="6">5: Asymptotic <i>p</i>-value for STATS(2). Normal approximation.</li>
+        </ul>
+        <h3 class="Keyword"><a name="SUM_RANK"></a>SUM_RANK</h3>
+        <p>Named variable in the form of a a one-dimensional array of length N_ELEMENTS(<i>x</i>(0, *)) containing the sum of the ranks of each treatment.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

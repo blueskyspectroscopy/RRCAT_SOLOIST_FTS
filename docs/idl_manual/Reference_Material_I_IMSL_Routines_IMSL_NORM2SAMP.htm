@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_NORM2SAMP</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_NORM2SAMP</span>
+        </div>
+        <h1 class="Routine">IMSL_NORM2SAMP</h1>
+        <p>The IMSL_NORM2SAMP function computes statistics for mean and variance inferences using samples from two independently normal populations.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_NORM2SAMP function computes statistics for making inferences about the means and variances of two normal populations, using independent samples in <i>x1</i> and <i>x2</i>. For inferences concerning parameters of a single normal population, see <a href="IMSL_NORM1SAMP.htm">IMSL_NORM1SAMP</a>.</p>
+        <p>Let µ<sup>1</sup> and σ<sup>2</sup><sub>1</sub> be the mean and variance of the first population, and let µ<sup>2</sup> and σ<sup>2</sup><sub>2</sub> be the corresponding quantities of the second population. The function contains test statistics and confidence intervals for difference in means, equality of variances, and the pooled variance.</p>
+        <p>The means and variances for the two samples are as follows:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-15.jpg" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-16.jpg" />
+        </p>
+        <h2 class="API">Inferences About the Means</h2>
+        <p>The test that the difference in means equals a certain value, for example, µ0, depends on whether or not the variances of the two populations can be considered equal. If the variances are equal and T_TEST_NULL_HYP equals zero, the test is the two-sample <i>t</i> test, which is equivalent to an analysis-of-variance test. The pooled variance for the difference-in-means test is as follows:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-17.jpg" />
+        </p>
+        <p>The <i>t</i> statistic is as follows:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-18.jpg" />
+        </p>
+        <p>Also, the confidence interval for the difference in means can be obtained by specifying CI_DIFF_EQ_VAR.</p>
+        <p>If the population variances are not equal, the ordinary t statistic does not have a t distribution and several approximate tests for the equality of means have been proposed. (For example, see Anderson and Bancroft 1952, and Kendall and Stuart 1979.) One of the earliest tests devised for this situation is the Fisher-Behrens test, based on Fisher’s concept of fiducial probability. A procedure used if T_TEST_NE_VAR and/or CI_DIFF_NE_VAR are specified is the Satterthwaite’s procedure, as suggested by H.F. Smith and modified by F.E. Satterthwaite (Anderson and Bancroft 1952, p. 83).</p>
+        <p>The test statistic is:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-19.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-20.jpg" />
+        </p>
+        <p>Under the null hypothesis of µ<sub>1</sub> – µ<sub>2</sub> = d, this quantity has an approximate t distribution with degrees of freedom given by the following equation:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-21.jpg" />
+        </p>
+        <h2 class="API">Inferences about the Variances</h2>
+        <p>The <i>F</i> statistic for testing the equality of variances is given by:</p>
+        <p><i>F</i> = <i>s</i><sup>2</sup><sub>max</sub> / <i>s</i><sup>2</sup><sub>min</sub>,</p>
+        <p>where s2max is the maximum of <i>s</i><sup>2</sup><sub>1</sub> and <i>s</i><sup>2</sup><sub>2</sub>  . If the variances are equal, this quantity has an <i>F</i> distribution with <sub><i>n</i>1</sub> – 1 and <i>n</i><sub>2</sub> – 1 degrees of freedom, where <sub><i>n</i>1</sub> is the sample size corresponding to <i>s</i><sup>2</sup><sub>max</sub>.</p>
+        <p>Generally, it is not recommended that the results of the <i>F</i> test be used to decide whether to use the regular <i>t</i> test or the modified t′ on a single set of data. The modified t′ (Satterthwaite’s procedure) is the more conservative approach to use if there is doubt about the equality of the variances.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example, taken from Conover and Iman (1983, p. 294), involves scores on arithmetic tests of two grade-school classes. The question is whether a group taught by an experimental method has a higher mean score. Only the difference in means is output. The data are shown below.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 16px;" />
+            <col style="width: 14px;" />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Scores for Standard Group</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Scores for Experimental Group</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>72</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>111</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>75</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>118</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>77</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>128</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>80</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>138</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>104</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>140</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>110</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>150</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>125</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>163</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>164</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>169</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Code">x1 = [72, 75, 77, 80, 104, 110, 125]</p>
+        <p class="Code">x2 = [111, 118, 128, 138, 140, 150, 163, 164, 169]</p>
+        <p class="Code">PRINT, 'difference of means = ', IMSL_NORM2SAMP(x1, x2)</p>
+        <p>IDL prints:</p>
+        <p class="Code">difference of means =	-50.4762</p>
+        <h3>Example 2</h3>
+        <p>The same data is used for this example as for the initial example. Here, the results of the t test are output. The variances of the two populations are assumed to be equal. It is seen from the output that there is strong reason to believe that the two means are different (t value of –4.804). Since the lower 97.5-percent confidence limit does not include zero, the null hypothesis is that µ1 ≤ µ2 would be rejected at the 0.05 significance level. (The closeness of the values of the sample variances provides some qualitative substantiation of the assumption of equal variances.) First, define a procedure to print the results.</p>
+        <p class="Code">PRO print_results, diff, sp, ci, t</p>
+        <p class="Code_Indented">PM, diff, Title = 'Difference of Means: '</p>
+        <p class="Code_Indented">PM, sp, Title = 'Pooled Variance: '</p>
+        <p class="Code_Indented">PM, 'CI for Difference of Means is (', ci(0), ',', ci(1), ')'</p>
+        <p class="Code_Indented">PM, ' '</p>
+        <p class="Code_Indented">PM, 't-test for Equal Variances:'</p>
+        <p class="Code_Indented">PM, t(0), Title = 'Degrees of Freedom:'</p>
+        <p class="Code_Indented">PM, t(1), Title = 't statistic: '</p>
+        <p class="Code_Indented">PM, t(2), Title = 'P-Value:'</p>
+        <p class="Code">END</p>
+        <p class="Code">x1 = [72, 75, 77, 80, 104, 110, 125]</p>
+        <p class="Code">x2 = [111, 118, 128, 138, 140, 150, 163, 164, 169]</p>
+        <p class="Code">diff = IMSL_NORM2SAMP(x1, x2, Pooled_Var = sp, $</p>
+        <p class="Code_Indented2">Ci_Diff_Eq_Var = ci, T_Test_Eq_Var = t)</p>
+        <p class="Code">print_results, diff, sp, ci, t</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_NORM2SAMP-Print1.png" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_NORM2SAMP(<i>X1, X2</i> [, <a href="#CI_DIFF_EQ_VAR" class="selected">CI_DIFF_EQ_VAR</a>=<i>variable</i>] [, <a href="#CI_DIFF_NE_VAR" class="selected">CI_DIFF_NE_VAR</a>=<i>variable</i>] [, <a href="#CONF_MEAN" class="selected">CONF_MEAN</a>=<i>value</i>] [, <a href="#CONF_VAR" class="selected">CONF_VAR</a>=<i>value</i>] [, <a href="#CI_COMM_VAR" class="selected">CI_COMM_VAR</a>=<i>variable</i>] [, <a href="#CI_RATIO_VAR" class="selected">CI_RATIO_VAR</a>=<i>variable</i>] [, <a href="#CHI_SQ_NULL_HYP" class="selected">CHI_SQ_NULL_HYP</a>=<i>value</i>] [, <a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#F_TEST" class="selected">F_TEST</a>=<i>variable</i>] [, <a href="#MEAN_X1" class="selected">MEAN_X1</a>=<i>value</i>] [, <a href="#MEAN_X2" class="selected">MEAN_X2</a>=<i>value</i>] [, <a href="#POOLED_VAR" class="selected">POOLED_VAR</a>=<i>variable</i>] [, <a href="#STDEV_X1" class="selected">STDEV_X1</a>=<i>variable</i>] [, <a href="#STDEV_X2" class="selected">STDEV_X2</a>=<i>variable</i>] [, <a href="#T_TEST_EQ_VAR" class="selected">T_TEST_EQ_VAR</a>=<i>variable</i>] [, <a href="#T_TEST_NE_VAR" class="selected">T_TEST_NE_VAR</a>=<i>variable</i>] [, <a href="#T_TEST_NULL_HYP" class="selected">T_TEST_NULL_HYP</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>Difference in means of the mean of the second sample from the first sample.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X1</h3>
+        <p>One-dimensional array containing the first sample.</p>
+        <h3 class="Argument">X2</h3>
+        <p>One-dimensional array containing the second sample.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CI_DIFF_EQ_VAR"></a>CI_DIFF_EQ_VAR (optional)</h3>
+        <p>Named variable into which the two-element array containing the lower confidence limit and the upper limit for the mean of the first population minus the mean of the second, assuming equal variances is stored.</p>
+        <h3 class="Keyword"><a name="CI_DIFF_NE_VAR"></a>CI_DIFF_NE_VAR (optional)</h3>
+        <p>Named variable into which the two-element array containing the lower confidence limit and the upper limit for the mean of the first population minus the mean of the second, assuming unequal variances, is stored.</p>
+        <h3 class="Keyword"><a name="CONF_MEAN"></a>CONF_MEAN (optional)</h3>
+        <p>Confidence level for two-sided interval estimate of the mean of x<sub>1</sub> minus the mean of x<sub>2</sub>, in percent. The keyword CONF_MEAN must be between 0.0 and 100.0 and is often 90.0, 95.0, or 99.0. For a one-sided confidence interval with confidence level <i>c</i> (at least 50 percent), set CONF_MEAN = 100.0 – 2.0 x (100.0 – <i>c</i>). Default: 95.0</p>
+        <h3 class="Keyword"><a name="CONF_VAR"></a>CONF_VAR (optional)</h3>
+        <p>Confidence level for inference on variances. Under the assumption of equal variances, the pooled variance is used to obtain a two-sided CONF_VAR percent confidence interval for the common variance if CI_COMM_VAR is specified. Without making the assumption of equal variances, the ratio of the variances is of interest. A two-sided CONF_VAR percent confidence interval for the ratio of the variance of the first sample to that of the second sample is computed and is returned if CI_RATIO_VAR is specified. The confidence intervals are symmetric in probability. Default: 95.0</p>
+        <h3 class="Keyword"><a name="CI_COMM_VAR"></a>CI_COMM_VAR (optional)</h3>
+        <p>Named variable into which the two-element array containing the lower confidence limit and the upper confidence limit for the common (or pooled) variance is stored.</p>
+        <h3 class="Keyword"><a name="CI_RATIO_VAR"></a>CI_RATIO_VAR (optional)</h3>
+        <p>Named variable into which the two-element array containing the approximate lower confidence limit and the approximate upper confidence limit for the ratio of the variance of the first population to the second is stored.</p>
+        <h3 class="Keyword"><a name="CHI_SQ_NULL_HYP"></a>CHI_SQ_NULL_HYP (optional)</h3>
+        <p>Null hypothesis value for the chi-squared test. Default: 1.0</p>
+        <h3 class="Keyword"><a name="CHI_SQ_TEST"></a>CHI_SQ_TEST (optional)</h3>
+        <p>Named variable into which the three-element array containing statistics associated with the chi-squared test for σ<sup>2</sup> = σ<sup>2</sup> , where σ<sup>2</sup> is the common (or pooled) variance and σ<sup>2</sup><sub>0</sub> is the null hypothesis value, is stored. (See the description for the CHI_SQ_NULL_HYP keyword.) The first element contains the degrees of freedom, the second element contains the chi-squared value, and the third element contains the probability of a larger chi-squared value, p-value. This test assumes equal variances.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="F_TEST"></a>F_TEST (optional)</h3>
+        <p>Named variable into which the four-element array containing statistics associated with the F test for equality of variances is stored. The first element contains the degrees of freedom for the numerator, the second element contains the degrees of freedom for the denominator, the third element contains the F test value, and the fourth element contains the probability of a larger <i>F</i> value, <i>p</i>-value, assuming the null hypothesis (H0: σ<sup>2</sup> = σ<sup>2</sup> ) is true.</p>
+        <h3 class="Keyword"><a name="MEAN_X1"></a>MEAN_X1 (optional)</h3>
+        <p>Means of the first sample.</p>
+        <h3 class="Keyword"><a name="MEAN_X2"></a>MEAN_X2 (optional)</h3>
+        <p>Means of the second sample.</p>
+        <h3 class="Keyword"><a name="POOLED_VAR"></a>POOLED_VAR (optional)</h3>
+        <p>Named variable into which the pooled variance for the two samples is stored.</p>
+        <h3 class="Keyword"><a name="STDEV_X1"></a>STDEV_X1 (optional)</h3>
+        <p>Named variable into which the standard deviation of the first sample is stored.</p>
+        <h3 class="Keyword"><a name="STDEV_X2"></a>STDEV_X2 (optional)</h3>
+        <p>Named variable into which the standard deviation of the second sample is stored.</p>
+        <h3 class="Keyword"><a name="T_TEST_EQ_VAR"></a>T_TEST_EQ_VAR (optional)</h3>
+        <p>Variable into which the three-element array containing statistics associated with a t test for µ<sub>1</sub> – µ<sub>2</sub> = <i>d</i>, where d is the null hypothesis value, is stored. (See the description of T_TEST_NULL_HYP.) The first element contains degrees of freedom, second element contains the <i>t</i> value, and third element contains the probability of a larger <i>t</i> in absolute value, assuming the null hypothesis is true. This test assumes equal variances.</p>
+        <h3 class="Keyword"><a name="T_TEST_NE_VAR"></a>T_TEST_NE_VAR (optional)</h3>
+        <p>Named variable into which the three-element array containing statistics associated with a t test for µ<sub>1</sub> – µ<sub>2</sub> = <i>d</i>, where d is the null hypothesis value, is stored. (See the description for the T_TEST_NULL_HYP keyword.) The first element contains the degrees of freedom for Satterthwaite’s approximation, the second element contains the <i>t</i> value, and the third element contains the probability of a larger <i>t</i> in absolute value, assuming the null hypothesis is true. This test does not assume equal variances.</p>
+        <h3 class="Keyword"><a name="T_TEST_NULL_HYP"></a>T_TEST_NULL_HYP (optional)</h3>
+        <p>Null hypothesis value for the t test. Default: 0.0</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_NORM1SAMP.htm">IMSL_NORM1SAMP</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

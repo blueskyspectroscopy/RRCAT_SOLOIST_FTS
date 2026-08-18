@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Language|Widgets|Widget Application Techniques">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Accelerators in Widget Applications</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Programming.htm">Language</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="Widget Application Techniques.htm">Widgets</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="Widget Application Techniques.htm">Widget Application Techniques</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Accelerators in Widget Applications</span>
+        </div>
+        <h1><a name="kanchor5212"></a><a name="widget_techniques_4218446668_142916"></a>Accelerators in Widget Applications</h1>
+        <p><a name="kanchor5213"></a>Keyboard accelerators allow the user to activate menu items or buttons using keyboard key combinations instead of the mouse.</p>
+        <h4>Notes</h4>
+        <ul>
+            <li value="1">On Windows platforms, accelerators can be defined for menu items and other types of <a name="kanchor5214"></a>buttons.</li>
+            <li value="2">On UNIX and Macintosh, accelrators can only be defined for menu items.</li>
+            <li value="3">Context menu items do not support accelerators on any platform.</li>
+            <li value="4">
+                <p>Menu item accelerators are only operational when the menu is closed.</p>
+            </li>
+            <li value="5">When an accelerator is implemented, it intercepts keyboard events before they are passed to the widgets. Widgets will never see keyboard events that are mapped to accelerators unless the accelerator is disabled as described in <a href="#widget_techniques_4218446668_150796" class="selected">Disabling Button Widget Accelerators</a>. </li>
+            <li value="6">Be mindful of the inherent operating system accelerators. For example, avoid <b>Ctrl</b>+<b>Alt</b>+<b>Del</b> on the Windows platform. </li>
+        </ul>
+        <h3>Specifying Accelerators</h3>
+        <p>The ACCELERATOR keyword assigns a key combination that activates a menu item or button event. The value of the keyword is a case-insensitive string that specifies zero or more modifier keys (<b>Ctrl</b>, <b>Shift</b>, or <b>Alt</b>) and one other key. (For Mac users, special steps must be taken to enable <b>Alt</b> key accelerators—See the section below for details.)</p>
+        <p>When an accelerator is defined for a menu item, the ACCELERATOR keyword string is automatically displayed next to the menu item value. When an accelerator is defined for a button, the ACCELERATOR keyword string is not displayed. Therefore, for a button, we recommend that you include the accelerator shortcut within the button value or tooltip  so that your users are aware of the option.</p>
+        <p>The following table gives the allowed accelerator key names, and also indicates whether that key requires using one of the <b>Ctrl</b>, <b>Shift</b>, or <b>Alt</b> modifiers:</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: bottom;mc-table-style: url('../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 611px;" />
+            <col style="width: 262px;" />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Accelerator Key String</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Requires a Modifier</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>A–Z</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>yes</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">0–9</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd" style="text-align: center;">yes</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">Backspace, Space, Tab</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd" style="text-align: center;">yes</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">Del <i>or</i> Delete, Down, End, Escape, Home, Insert, Left, Next <i>or</i> PageDown, Prior <i>or</i> PageUp, Return <i>or</i> Enter, Right, Up</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd" style="text-align: center;">no</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd" style="text-align: center;">no</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>NumPadMultiply, NumPadAdd, NumPadSubtract, NumPadDecimal, NumPadDivide, NumPad0, NumPad1, NumPad2, NumPad3, NumPad4, NumPad5, NumPad6, NumPad7, NumPad8, NumPad9</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd" style="text-align: center;">yes</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>For the number pad accelerators the user must have the <b>NumLock</b> key activated.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>On Windows, <b>Shift</b> plus a number key  will not work as an accelerator.</p>
+        <h3><a name="kanchor5215"></a>Enabling Alt Key Accelerators on Macintosh</h3>
+        <p>Two steps are required to enable accelerators that use the <b>Alt</b> key to work with the <a name="kanchor5216"></a><a name="kanchor5217"></a>Macintosh <b>Command</b> <img src="../../images/meta_mac.gif" style="margin-left: 0.37224px;margin-top: 0.93528px;" /> (<b>open-Apple</b>) key: </p>
+        <ol>
+            <li value="1">
+                <p>Create a <code>.Xmodmap</code> file in your <code>home</code> folder and add the following three lines to it:</p>
+                <p class="Code">clear mod1</p>
+                <p class="Code">clear mod2</p>
+                <p class="Code">add mod1 = Meta_L</p>
+                <p>When Apple’s X11 program starts, this file will automatically be read, and the Apple key will be mapped to the left <b>Command</b> <img src="../../images/meta_mac.gif" style="margin-left: 0.37224px;margin-top: 0.93528px;" /> key, which for IDL’s purposes is the <b>Alt</b> key. (Windows <b>Alt</b> key accelerators are mapped to the Macintosh <b>Command</b> key, not the <b>Option (alt)</b> key.) </p>
+            </li>
+            <li value="2">Run your system’s X11 program and change its preferences. Under <b>Input</b> in the X11 Preferences dialog, make sure that the following two items are <i>unchecked</i>:</li>
+            <ul>
+                <li value="1">Follow system keyboard layout</li>
+                <li value="2">Enable key equivalents under X11</li>
+            </ul>
+        </ol>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>You must relaunch the X11 program for these changes to take effect. </p>
+        <p>If you distribute your application to other Macintosh users, they too will need to have an appropriate <code>.Xmodmap</code> and correct X11 Preferences settings in order for <b>Alt</b> key accelerators to work.</p>
+        <h3>Example</h3>
+        <p>The following simple example creates a variety of WIDGET_BUTTON types with accelerators.</p>
+        <p class="Code">; AcceleratorExample.pro</p>
+        <p class="Code">; Example of using keyboard accelerators.</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">pro acceleratorexample_event, event</p>
+        <p class="Code_Indented">WIDGET_CONTROL, event.ID, GET_VALUE = value</p>
+        <p class="Code_Indented">PRINT, 'Event on: ', value</p>
+        <p class="Code_Indented">IF ( uvalue EQ 'Quit' ) THEN BEGIN</p>
+        <p class="Code_Indented2">WIDGET_CONTROL, event.TOP, /DESTROY</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code">end</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">pro AcceleratorExample</p>
+        <p class="Code">&#160;</p>
+        <p class="Code_Indented">tlb = WIDGET_BASE( /ROW, $</p>
+        <p class="Code_Indented2">MBAR = mbar, TITLE = "Accelerator Example", $</p>
+        <p class="Code_Indented2">XPAD = 10, YPAD = 10, XOFFSET = 25, YOFFSET = 25 )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Create a menu with accelerators. The accelerator string is </p>
+        <p class="Code_Indented">; automatically displayed along with the menu item text.</p>
+        <p class="Code_Indented">file = WIDGET_BUTTON( mbar, /MENU, VALUE = "File" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">one = WIDGET_BUTTON( file, $</p>
+        <p class="Code_Indented2">VALUE = "One", ACCELERATOR = "Ctrl+1" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">two = WIDGET_BUTTON( file, $</p>
+        <p class="Code_Indented2">VALUE = "Two", ACCELERATOR = "Ctrl+2" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">three = WIDGET_BUTTON( file, $</p>
+        <p class="Code_Indented2">VALUE = "Three", ACCELERATOR = "Ctrl+3" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">quit = WIDGET_BUTTON( file, $</p>
+        <p class="Code_Indented2">VALUE = "Quit", ACCELERATOR = "Ctrl+Q" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Create a base with push buttons. Include the accelerator</p>
+        <p class="Code_Indented">; text in the button value so users are aware of it. </p>
+        <p class="Code_Indented">base = WIDGET_BASE( tlb, /COLUMN, /FRAME )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">b1 = WIDGET_BUTTON( base, $</p>
+        <p class="Code_Indented2">VALUE = "Affirmative (Ctrl+Y)",  ACCELERATOR = "Ctrl+Y" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">b2 = WIDGET_BUTTON( base, $</p>
+        <p class="Code_Indented2">VALUE = "Negative (Ctrl+N)", ACCELERATOR = "Ctrl+N" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Create a base with radio buttons. </p>
+        <p class="Code_Indented">base = WIDGET_BASE( tlb, /COLUMN, /FRAME, /EXCLUSIVE )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">b1 = WIDGET_BUTTON( base, $</p>
+        <p class="Code_Indented2">VALUE = "Owl (Ctrl+O)", ACCELERATOR = "Ctrl+O" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">b2 = WIDGET_BUTTON( base, $</p>
+        <p class="Code_Indented2">VALUE = "Emu (Shift+E)", ACCELERATOR = "Shift+E" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">b3 = WIDGET_BUTTON( base, $</p>
+        <p class="Code_Indented2">VALUE = "Bat (Alt+B)", ACCELERATOR = "Alt+B" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Create a base with check boxes.</p>
+        <p class="Code_Indented">base = WIDGET_BASE( tlb, /COLUMN, /FRAME, /NONEXCLUSIVE )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">b1 = WIDGET_BUTTON( base, $</p>
+        <p class="Code_Indented2">VALUE = "Hello (F3)", ACCELERATOR = "F3" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">b2 = WIDGET_BUTTON( base, $</p>
+        <p class="Code_Indented2">VALUE = "Goodbye (F4)", ACCELERATOR = "F4" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Create the widgets and accept events.</p>
+        <p class="Code_Indented">WIDGET_CONTROL, tlb, /REALIZE</p>
+        <p class="Code_Indented">XMANAGER, 'acceleratorexample', tlb, /NO_BLOCK</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">IF !VERSION.OS_FAMILY NE 'Windows' THEN BEGIN</p>
+        <p class="Code_Indented2">text = ['Accelerators on non-menu items are not supported', $</p>
+        <p class="Code_Indented3">'on this platform.', ' ', $</p>
+        <p class="Code_Indented3">'Accelerators on menu items work on all platforms.']</p>
+        <p class="Code_Indented2">void = DIALOG_MESSAGE(text, /INFO)</p>
+        <p class="Code_Indented">ENDIF</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">END</p>
+        <p>Save and run the example. The Output Log window reports which button has been activated using the accelerator. </p>
+        <h2 class="API"><a name="widget_techniques_4218446668_150796"></a>Disabling Button Widget <a name="kanchor5218"></a>Accelerators</h2>
+        <p>Keyboard events are intercepted by the accelerators before they are passed along to widgets. This means that a widget will never see a keyboard event that maps to an accelerator. This can be resolved using one of the following methods:</p>
+        <ul>
+            <li value="1">Use the IGNORE_ACCELERATORS keyword on those widgets that you want to receive keyboard input regardless of defined accelerators. This is the recommended method. See below for details.</li>
+            <li value="2">Disable the accelerated item by programmatically desensitizing the item when the widget that you want to receive events gains focus, and re-sensitize the item when the widget loses focus. This allows the keystrokes that would ordinarily map to the accelerator to reach the desired widget when it has focus. </li>
+        </ul>
+        <h3><a name="widget_techniques_4218446668_154497"></a>Using IGNORE_ACCELERATORS</h3>
+        <p>The IGNORE_ACCELERATORS keyword is available on the following widgets:</p>
+        <ul>
+            <li value="1">WIDGET_COMBOBOX</li>
+            <li value="2">WIDGET_DRAW</li>
+            <li value="3">WIDGET_PROPERTYSHEET</li>
+            <li value="4">WIDGET_TABLE</li>
+            <li value="5">WIDGET_TEXT</li>
+        </ul>
+        <p>For widgets with a text area, accelerator overrides are active only when focus is on an editable text portion. For the dra widget, accelerator overrides are active when the drawing area has focus. For example, when the focus is on a table cell that cannot be edited, accelerators are still enabled. </p>
+        <p>Set the IGNORE_ACCELERATORS equal to the text string of a single accelerator, an array containing multiple accelerator strings, or 1 (to ignore all accelerators). </p>
+        <h4>Managing Accelerators Example </h4>
+        <p>The following example shows various ways accelerators can be managed. This example creates several menu items with accelerators. Three text boxes either allow all accelerators, some accelerators or no accelerators to receive keyboard events. Additionally you can select a checkbox to desensitize the Delete menu item. When the menu item is desensitized, the accelerator never receives keyboard events. </p>
+        <p class="Code">PRO manage_accel_event, event</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO quit_event, event</p>
+        <p class="Code_Indented">  WIDGET_CONTROL, event.top, /DESTROY</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO menu_event, event</p>
+        <p class="Code_Indented">  PRINT, WIDGET_INFO( event.id, /UNAME )</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO menu_sense_event, event</p>
+        <p class="Code_Indented">   deleteItem = WIDGET_INFO( event.top, FIND_BY_UNAME ="MenuDel" )</p>
+        <p class="Code_Indented">   WIDGET_CONTROL, deleteItem, SENSITIVE = event.select</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">pro manage_accel</p>
+        <p class="Code">&#160;</p>
+        <p class="Code_Indented">; Create the top level base. </p>
+        <p class="Code_Indented">tlb = WIDGET_BASE( /COLUMN, MBAR = mbar, XSIZE = 250, /TAB_MODE)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Build the menu bar. </p>
+        <p class="Code_Indented">edit= WIDGET_BUTTON( mbar, /MENU, VALUE = "Edit" )</p>
+        <p class="Code_Indented">menuDel = WIDGET_BUTTON( edit, VALUE = "Delete", $</p>
+        <p class="Code_Indented2">   UNAME = "MenuDel", ACCELERATOR = "Del", $</p>
+        <p class="Code_Indented2">   EVENT_PRO = "menu_event" )</p>
+        <p class="Code_Indented">menuCut = WIDGET_BUTTON( edit, VALUE = "Cut", $</p>
+        <p class="Code_Indented2">   UNAME = "MenuCut", ACCELERATOR = "Ctrl+X", $</p>
+        <p class="Code_Indented2">   EVENT_PRO = "menu_event" )</p>
+        <p class="Code_Indented">menuCopy = WIDGET_BUTTON( edit, VALUE = "Copy", $</p>
+        <p class="Code_Indented2">   UNAME = "MenuCopy", ACCELERATOR = "Ctrl+C", $</p>
+        <p class="Code_Indented2">   EVENT_PRO = "menu_event" )</p>
+        <p class="Code_Indented">menuPaste = WIDGET_BUTTON( edit, VALUE = "Paste", $</p>
+        <p class="Code_Indented2">   UNAME = "MenuPaste", ACCELERATOR = "Ctrl+V", $</p>
+        <p class="Code_Indented2">   EVENT_PRO = "menu_event" )</p>
+        <p class="Code_Indented">menuUndo = WIDGET_BUTTON( edit, VALUE = "Undo", $</p>
+        <p class="Code_Indented2">   UNAME = "MenuUndo", ACCELERATOR = "Ctrl+Z",$</p>
+        <p class="Code_Indented2">   EVENT_PRO = "menu_event" )</p>
+        <p class="Code_Indented">quit = WIDGET_BUTTON( edit, VALUE = "Quit", $</p>
+        <p class="Code_Indented2">   ACCELERATOR = "Ctrl+Q", EVENT_PRO = "quit_event" )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Add text boxes with various levels of disabled accelerators. </p>
+        <p class="Code_Indented">text1 = WIDGET_TEXT( tlb, /EDITABLE, $</p>
+        <p class="Code_Indented2">   VALUE = "Doesn't use IGNORE_ACCELERATORS." )</p>
+        <p class="Code_Indented">text2 = WIDGET_TEXT( tlb, /EDITABLE, $</p>
+        <p class="Code_Indented2">   VALUE = "Receives Delete key and Ctrl+C combinations.", $</p>
+        <p class="Code_Indented2">   IGNORE_ACCELERATORS = [ "Del", "Ctrl+C" ] )</p>
+        <p class="Code_Indented">text3 = WIDGET_TEXT( tlb, /EDITABLE, $</p>
+        <p class="Code_Indented2">   VALUE = "Receives all accelerator key combinations.", $</p>
+        <p class="Code_Indented2">   IGNORE_ACCELERATORS = 1)  </p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Add a check box to desensitize the Delete menu item.</p>
+        <p class="Code_Indented">base2 = WIDGET_BASE( tlb, /FRAME, /NONEXCLUSIVE )</p>
+        <p class="Code_Indented">check1 = WIDGET_BUTTON( base2, VALUE = "Menu DEL sensitive", $</p>
+        <p class="Code_Indented2">   EVENT_PRO = "menu_sense_event" )</p>
+        <p class="Code_Indented">WIDGET_CONTROL, check1, SET_BUTTON = WIDGET_INFO ( menuDel, $</p>
+        <p class="Code_Indented2">   /SENSITIVE )</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Draw the widget.</p>
+        <p class="Code_Indented">WIDGET_CONTROL, tlb, /REALIZE</p>
+        <p class="Code_Indented">XMANAGER, "manage_accel_event", tlb, /NO_BLOCK</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">END</p>
+        <p>Compile and run the example. Try highlighting and deleting, or copying and pasting text in each textbox using accelerators defined in the <b>Edit</b> menu. All keyboard events are ineffective (stolen by the accelerators) when the first textbox has focus. The second textbox receives only copy and delete keyboard combinations. The third textbox receives all accelerators. When the delete menu item is desensitized, the <b>Delete</b> key can delete text from all textboxes. The IDL Output Log window prints the name of any menu item that is activated using an accelerator. </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

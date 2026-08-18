@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_HYPOTH_TEST</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_HYPOTH_TEST</span>
+        </div>
+        <h1 class="Routine">IMSL_HYPOTH_TEST</h1>
+        <p>The IMSL_HYPOTH_TEST function performs tests for a multivariate general linear hypothesis <i>H</i>β<i>U</i> = <i>G</i> given the hypothesis sums of squares and crossproducts matrix <i>S</i><sub>H</sub>.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>IMSL_HYPOTH_TEST computes test statistics and <i>p</i>-values for the general linear hypothesis <i>H</i>β<i>U</i> = <i>G</i> for the multivariate general linear model.</p>
+        <p>The hypothesis sum of squares and crossproducts matrix input in <i>scph</i> is:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-123.jpg" />
+        </p>
+        <p>where <i>C</i> is a solution to <i>R</i><sup>T</sup><i>C</i> = <i>H</i> and where <i>D</i> is a diagonal matrix with diagonal elements:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-124.jpg" />
+        </p>
+        <p>Error sum of squares and crossproducts matrix for model <i>Y</i> = <i>X</i>β + ε is:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-125.jpg" />
+        </p>
+        <p>which is input in IMSL_MULTIREGRESS. The error sum of squares and crossproducts matrix for the hypothesis HβU = G computed by IMSL_HYPOTH_TEST is:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-126.jpg" />
+        </p>
+        <p>Let <i>p</i> equal the order of the matrices <i>S</i><sub>E</sub> and <i>S</i><sub>H</sub>, i.e.:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-127.jpg" />
+        </p>
+        <p>Let <i>q</i> (stored in <i>dfh</i>) be the degrees of freedom for the hypothesis. Let <i>v</i> (input in <i>info_v</i>) be the degrees of freedom for error. The IMSL_HYPOTH_TEST function computed three test statistics based on eigenvalues λ<sub>i</sub> (<i>i</i> =1 , 2, ... p) of the</p>
+        <p>generalized eigenvalue problem <i>S</i><sub>H</sub><i>x</i> = λ<i>S</i><sub>E</sub><i>x</i>. These test statistics are as follows:</p>
+        <p>Wilk’s lambda:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-128.jpg" />
+        </p>
+        <p>The associated <i>p</i>-value is based on an approximation discussed by Rao (1973, p. 556). The statistic:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-129.jpg" />
+        </p>
+        <p>has an approximate <i>F</i> distribution with <i>pq</i> and <i>ms</i> – <i>pq</i>/2 + 1 numerator and denominator degrees of freedom, respectively, where:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-130.jpg" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-131.jpg" />
+        </p>
+        <p>The <i>F</i> test is exact if min(<i>p</i>, <i>q</i>) ≤ 2 (Kshirsagar, 1972, Theorem 4, p. 2994300).</p>
+        <p>Roy’s maximum root:</p>
+        <p class="indent"><i>c</i> = max λ<sub>i</sub> over all <i>i</i></p>
+        <p>where <i>c</i> is output as <i>value</i> = <a href="#ROY_MAX_ROOT" class="selected">ROY_MAX_ROOT</a>(0). The <i>p</i>-value is based on the approximation:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-132.jpg" />
+        </p>
+        <p>where <i>s</i> = <i>max</i>(<i>p</i>, <i>q</i>) has an approximate <i>F</i> distribution with <i>s</i> and <i>υ</i> + <i>q</i> − <i>s</i> numerator and denominator degrees of freedom, respectively. The <i>F</i> test is exact if <i>s</i> = 1; the <i>p</i>-value is also exact. In general, the value output in <i>p_value</i> = ROY_MAX_ROOT(1) is lower bound on the actual <i>p</i>-value.</p>
+        <p>Hotelling’s trace:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-133.jpg" />
+        </p>
+        <p><i>U</i> is output as <i>value</i> = <a href="#HOTELLING_TRACE" class="selected">HOTELLING_TRACE</a>(0). The <i>p</i>-value is based on the approximation of McKeon (1974) that supersedes the approximation of Hughes and Saw (1972). McKeon’s approximation is also discussed by Seber (1984, p. 39). For:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-134.jpg" />
+        </p>
+        <p>the <i>p</i>-value is based on the result that:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-135.jpg" />
+        </p>
+        <p>has an approximate <i>F</i> distribution with <i>pq</i> and <i>b</i> degrees of freedom. The test is exact if min(<i>p</i>, <i>q</i>) = 1. For <i>υ</i> ≤ <i>p</i> + 1, the approximation is not valid, and <i>p</i>-value = HOTELLING_TRACE(1) is set to NaN.</p>
+        <p>These three test statistics are valid when <i>S</i><sub>E</sub> is positive definite. A necessary condition for <i>S</i><sub>E</sub> to be positive definite is <i>υ</i> ≥ <i>p</i>. If <i>S</i><sub>E</sub> is not positive definite, a warning error message is issued, and both value and the <i>p</i>-value are set to NaN.</p>
+        <p>Because the requirement <i>υ</i> ≥ <i>p</i> can be a serious drawback, IMSL_HYPOTH_TEST computes a fourth test statistic based on eigenvalues θ<sub>i</sub> (<sub>i</sub> = 1, 2, ..., <i>p</i>) of the generalized eigenvalue problem <i>S</i><sub>H</sub><i>w</i> = θ(<i>S</i><sub>H</sub> + <i>S</i><sub>E</sub>) <i>w</i>. This test statistic requires a less restrictive assumption; <i>S</i><sub>H</sub> + <i>S</i><sub>E</sub> is positive definite. A necessary condition for <i>S</i><sub>H</sub> + <i>S</i><sub>E</sub> to be positive definite is <i>υ</i> + <i>q</i> ≥ <i>p</i>. If <i>S</i><sub>E</sub> is positive definite, IMSL_HYPOTH_TEST avoids the computation of the generalized eigenvalue problem from scratch. In this case, the eigenvalues θ<i>i</i> are obtained from λ<sub>i</sub> by:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-136.jpg" />
+        </p>
+        <p>The fourth test statistic is as follows: </p>
+        <p>Pillai’s trace:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-137.jpg" />
+        </p>
+        <p><i>V</i> is output as <i>value</i> = <a href="#PILLAI_TRACE" class="selected">PILLAI_TRACE</a>(0). The <i>p</i>-value is based on an approximation discussed by Pillai (1985). The statistic:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_TEST-138.jpg" />
+        </p>
+        <p>has an approximate <i>F</i> distribution with <i>s</i>(2<i>m</i> + <i>s</i> + 1) and <i>s</i>(2<i>n</i> + <i>s</i> + 1) numerator and denominator degrees of freedom, respectively, where:</p>
+        <p class="indent"><i>s</i> = min(<i>p</i>, <i>q</i>)</p>
+        <p class="indent"><i>m</i> = 1/2(|<i>p</i> - <i>q</i>| – 1)</p>
+        <p class="indent"><i>n</i> = 1/2(υ - <i>p</i> – 1)</p>
+        <p>The <i>F</i> test is exact if min(<i>p</i>, <i>q</i>) = 1.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The data for this example are from Maindonald (1984, p. 20310204). A multivariate regression model containing two dependent variables and three independent variables is fit using IMSL_MULTIREGRESS and the results stored in <i>Info_v</i>. The sum of squares and crossproducts matrix, <i>scph</i>, is then computed using HYPOYH_SCPH for the test that the third independent variable is in the model (determined by specification of <i>h</i>). Finally, IMSL_HYPOTH_TEST is used to compute the <i>p</i>-value for the test statistic (Wilk’s lambda).</p>
+        <p class="Code">x	=	TRANSPOSE([[7.0, 5.0, 6.0], [2.0, -1.0, 6.0], $</p>
+        <p class="Code">&#160;&#160;[7.0, 3.0, 5.0], [-3.0, 1.0, 4.0], [2.0, -1.0, 0.0], $</p>
+        <p class="Code">&#160;&#160;[2.0, 1.0, 7.0], [-3.0, -1.0, 3.0], [2.0, 1.0, 1.0], $</p>
+        <p class="Code">&#160;&#160;[2.0, 1.0, 4.0]])</p>
+        <p class="Code">y	=	TRANSPOSE([[7.0, 1.0], [-5.0, 4.0], [6.0, 10.0], $</p>
+        <p class="Code">&#160;&#160;[5.0, 5.0], [5.0, -2.0], [-2.0, 4.0], [0.0, -6.0], $</p>
+        <p class="Code">&#160;&#160;[8.0, 2.0], [3.0, 0.0]])</p>
+        <p class="Code">h	=	FLTARR(1, 4)</p>
+        <p class="Code">h(*)	=	0</p>
+        <p class="Code">h(0, 3)	=	1.0</p>
+        <p class="Code">coefs	=	IMSL_MULTIREGRESS(x, y, Predict_Info = p)</p>
+        <p class="Code">scph	=	IMSL_HYPOTH_SCPH(p, h, Dfh = dfh)</p>
+        <p class="Code">pvalue = IMSL_HYPOTH_TEST(p, dfh, scph)</p>
+        <p class="Code">PM, pvalue, format	=	'(F10.6)', Title = 'P-value' </p>
+        <p>IDL prints:</p>
+        <p class="Code">P-value</p>
+        <p class="Code">0.000010</p>
+        <h3>Example 2</h3>
+        <p>This example is the same as the first example, but more statistics are computed. Also, the <i>U</i> matrix, <i>U</i>, is explicitly specified as the identity matrix (which is the same default configuration of <i>U</i>).</p>
+        <p class="Code">x	=	TRANSPOSE([[7.0, 5.0, 6.0], [2.0, -1.0, 6.0], $</p>
+        <p class="Code">&#160;&#160;[7.0, 3.0, 5.0], [-3.0, 1.0, 4.0], [2.0, -1.0, 0.0], $</p>
+        <p class="Code">&#160;&#160;[2.0, 1.0, 7.0], [-3.0, -1.0, 3.0], [2.0, 1.0, 1.0], $</p>
+        <p class="Code">&#160;&#160;[2.0, 1.0, 4.0]])</p>
+        <p class="Code">y	=	TRANSPOSE([[7.0, 1.0], [-5.0, 4.0], [6.0, 10.0], $</p>
+        <p class="Code">&#160;&#160;[5.0, 5.0], [5.0, -2.0], [-2.0, 4.0], [0.0, -6.0], $</p>
+        <p class="Code">&#160;&#160;[8.0, 2.0], [3.0, 0.0]])</p>
+        <p class="Code">h	=	FLTARR(1, 4)</p>
+        <p class="Code">h(*)	=	0</p>
+        <p class="Code">h(0, 3)	=	1.0</p>
+        <p class="Code">u	=	[[1, 0], [0, 1]]</p>
+        <p class="Code">coefs	=	IMSL_MULTIREGRESS(x, y, Predict_Info = p)</p>
+        <p class="Code">scph	=	IMSL_HYPOTH_SCPH(p, h, Dfh = dfh)</p>
+        <p class="Code">pvalue	=	IMSL_HYPOTH_TEST(p, dfh, scph, U = u, $ </p>
+        <p class="Code">&#160;&#160;Wilk_Lambda = wilk_lambda, Roy_Max_Root = roy_max_root, $ </p>
+        <p class="Code">&#160;&#160;Hotelling_Trace = hotelling_trace, $</p>
+        <p class="Code">&#160;&#160;Pillai_Trace = pillai_trace)</p>
+        <p class="Code">PRINT, 'Wilk value = ', wilk_lambda(0), '	p-value =', $</p>
+        <p class="Code">&#160;&#160;wilk_lambda(1)</p>
+        <p>IDL prints:</p>
+        <p class="Code">Wilk value = 0.00314861</p>
+        <p class="Code">p-value =	9.89437e-06</p>
+        <p>Continue:</p>
+        <p class="Code">PRINT, 'Roy value = ', roy_max_root(0), '	p-value =', $</p>
+        <p class="Code">&#160;&#160;roy_max_root(1)</p>
+        <p>IDL prints:</p>
+        <p class="Code">Roy value = 316.601	</p>
+        <p class="Code">p-value =	9.89437e-06</p>
+        <p>Continue:</p>
+        <p class="Code">PRINT, 'Hotelling value = ', hotelling_trace(0), '	p-value =', $</p>
+        <p class="Code">&#160;&#160;hotelling_trace(1)</p>
+        <p>IDL prints:</p>
+        <p class="Code">Hotelling value = 316.601</p>
+        <p class="Code">&#160;&#160;p-value =	9.89437e-06</p>
+        <p>Continue:</p>
+        <p class="Code">PRINT, 'Pillai value = ', pillai_trace(0), '	p-value =', $</p>
+        <p class="Code">&#160;&#160;pillai_trace(1)</p>
+        <p>IDL prints:</p>
+        <p class="Code">Pillai value = 0.996851	</p>
+        <p class="Code">p-value =	9.89437e-06</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_SINGULAR_1: "u "* "scpe "* "u " is singular. Only Pillai’s trace can be computed. Other statistics are set to NaN.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_NO_STAT_1:  "scpe " +  "scph " is singular. No tests can be computed.</p>
+        <p>STAT_NO_STAT_2: No statistics can be computed. Iterations for eigenvalues for the generalized eigenvalue problem  "scph "*x = (lambda)*( "scph "+ "scpe ")*x failed to converge.</p>
+        <p>STAT_NO_STAT_3: No statistics can be computed. Iterations for eigenvalues for the generalized eigenvalue problem  "scph "*x = (lambda)*( "scph "+ "u "* "scpe "* "u ")*x failed to converge.</p>
+        <p>STAT_SINGULAR_2:  "u "* "scpe "* "u " + "scph " is singular. No tests can be computed.</p>
+        <p>STAT_SINGULAR_TRI_MATRIX: The input triangular matrix is singular. The index of the first zero diagonal element is equal to #.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_HYPOTH_TEST(<i>Info_v</i>, <i>dfh</i>, <i>scph</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#HOTELLING_TRACE" class="selected">HOTELLING_TRACE</a>=<i>variable</i>] [, <a href="#PILLAI_TRACE" class="selected">PILLAI_TRACE</a>=<i>variable</i>] [, <a href="#ROY_MAX_ROOT" class="selected">ROY_MAX_ROOT</a>=<i>variable</i>] [, <a href="#U" class="selected">U</a>=<i>array</i>] [, <a href="#WILK_LAMBDA" class="selected">WILK_LAMBDA</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The <i>p</i>-value corresponding to Wilks’ lambda test.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">dfh</h3>
+        <p>Degrees of freedom for the sums of squares and crossproducts matrix.</p>
+        <h3 class="Argument">Info_v</h3>
+        <p>One-dimensional array of type BYTE containing information about the regression fit. See <a href="IMSL_MULTIREGRESS.htm">IMSL_MULTIREGRESS</a>.</p>
+        <h3 class="Argument">scph</h3>
+        <p>Two-dimensional array of size <i>nu</i> by <i>nu</i> containing <i>S</i><sub>H</sub>, the sums of squares and crossproducts attributable to the hypothesis.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DFH"></a>DFH (optional)</h3>
+        <p>Named variable containing the degrees of freedom for the sums of squares and crossproducts matrix. This is equal to the rank of input matrix <i>h</i>.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="HOTELLING_TRACE"></a>HOTELLING_TRACE (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array containing the Hotelling’s trace and <i>p</i>-value .</p>
+        <h3 class="Keyword"><a name="PILLAI_TRACE"></a>PILLAI_TRACE (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array containing the Pillai’s trace and <i>p</i>-value.</p>
+        <h3 class="Keyword"><a name="ROY_MAX_ROOT"></a>ROY_MAX_ROOT (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array containing the Roy’s maximum root criterion and <i>p</i>-value.</p>
+        <h3 class="Keyword"><a name="U"></a>U (optional)</h3>
+        <p>Two-dimensional array of size <i>n_dependent</i> by <i>nu</i> containing the <i>U</i> matrix for the test <i>H</i><sub>p</sub>β<i>U</i> = <i>G</i><sub>p</sub> where <i>nu</i> is the number of linear combinations of the dependent variables to be considered. The value <i>nu</i> must be greater than 0 and less than or equal to <i>n_dependent</i>. Default: <i>nu</i> = <i>n_dependent</i> and <i>U</i> is the identity matrix.</p>
+        <h3 class="Keyword"><a name="WILK_LAMBDA"></a>WILK_LAMBDA (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array containing the Wilk’s lamda and <i>p</i>-value.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

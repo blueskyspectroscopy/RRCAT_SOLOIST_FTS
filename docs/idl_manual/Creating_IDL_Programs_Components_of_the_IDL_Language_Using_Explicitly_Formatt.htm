@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Language|Miscellaneous Topics">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Formatted Input and Output</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Programming.htm">Language</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../MiscellaneousLanguageTopics.htm">Miscellaneous Topics</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Formatted Input and Output</span>
+        </div>
+        <h1><a name="kanchor4974"></a>Using Formatted Input and Output</h1>
+        <p>The FORMAT keyword can be used with the formatted input/output routines to specify the appearance of the data. IDL supports two different syntaxes for format strings: a <a href="Format_Codes_Fortran.htm">FORTRAN style</a> and a <a href="Format_Codes_CPrintf.htm">C printf-style</a>.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>IDL uses the standard I/O function <code>snprintf</code> to do its formatting. Different operating systems implement this function in different ways, which may lead to slight inconsistencies in the appearance of the output. </p>
+        <h2 class="API">Example</h2>
+        <p>Use the FORTRAN style to print out six numbers surrounded by curly braces:</p>
+        <p class="Code">PRINT, INDGEN(3), FORMAT = '("The values are: ", 3("{", I1, "} "))'</p>
+        <p>IDL prints:</p>
+        <p class="Code">The values are: {0} {1} {2}</p>
+        <p>Now using the C printf-style:</p>
+        <p class="Code">PRINT, INDGEN(3), FORMAT = 'The values are: {%d} {%d} {%d}'</p>
+        <p>IDL prints:</p>
+        <p class="Code">The values are: {0} {1} {2}</p>
+        <p>You can see that the FORTRAN style is less readable but is better for outputting multiple values, while the C printf style is easier to read but is more verbose for multiple values.</p>
+        <p>See the bottom for <a href="#Examples" class="selected">more examples</a>.</p>
+        <h2>FORTRAN-Style Format Strings</h2>
+        <h2 class="API">Syntax</h2>
+        <p>Format strings using the FORTRAN style have the form:</p>
+        <p class="Code">FORMAT = '(q<sub>1</sub>f<sub>1</sub>s<sub>1</sub>f<sub>2</sub>s<sub>2</sub> ... f<sub class="italic">n</sub>q<sub class="italic">n</sub>)'</p>
+        <p>where <i>q</i>, <i>f</i>, and <i>s</i> are described below.</p>
+        <p>The FORTRAN-style format string <i>must</i> begin and end with parentheses.</p>
+        <h3>Record Terminators</h3>
+        <p>The <i>q</i> is zero or more slash (/) record terminators. On output, each record terminator causes the output to move to a new line. On input, each record terminator causes the next line of input to be read.</p>
+        <h3>Format Codes</h3>
+        <p>The <i>f</i> is a format code that specifies how data should be transferred. The code <i>f</i> can also be a nested format specification enclosed in parentheses, called a <i>group specification</i>:</p>
+        <p class="Code">...n(q<sub>1</sub>f<sub>1</sub>s<sub>1</sub>f<sub>2</sub>s<sub>2</sub> ... f<sub class="italic">n</sub>q<sub class="italic">n</sub>)...</p>
+        <p>A group specification consists of an optional repeat count <code>n</code> followed by a format specification enclosed in parentheses. For example, the format specification:</p>
+        <p class="Code">FORMAT = '("Result: ", "&lt;",I5,"&gt;", "&lt;",I5,"&gt;")'</p>
+        <p>can be written more concisely using a group specification:</p>
+        <p class="Code">FORMAT = '("Result: ", 2("&lt;",I5,"&gt;"))'</p>
+        <p>If the repeat count is 1 or is not given, the parentheses serve only to group format codes for use in format reversion (discussed in the next section).</p>
+        <p>See <a href="Format_Codes_Fortran.htm">FORTRAN-Style Format Codes</a> for a list of available format codes.</p>
+        <h3>Field Separators</h3>
+        <p><i>s</i> is a field separator. A field separator consists of one or more commas (,) and/or slash record terminators (/). The only restriction is that two commas cannot occur side-by-side.</p>
+        <p>The arguments provided in a call to a formatted input/output routine are called the <i>argument list</i>. The argument list specifies the data to be moved between memory and the file. Note that arrays are considered to be a collection of scalar data elements, and IDL structures are processed in terms of their individual tag values. Complex scalar values are treated as two floating-point values.</p>
+        <h3>Processing Rules for FORTRAN-Style Format Strings</h3>
+        <p>IDL uses the following rules to process FORTRAN-style format strings:</p>
+        <ol>
+            <li value="1">Traverse the format string from left to right, processing each record terminator and format code until an error occurs or no data is left in the argument list. The comma field separator serves no purpose except to delimit the format codes.</li>
+            <li value="2">When a slash record terminator (/) is encountered, the current record is completed, and a new one is started. For output, this means that a new line is started. For input, it means that the rest of the current input record is ignored, and the next input record is read.</li>
+            <li value="3">
+                <p>When a format code that does <i>not</i> transfer data  is encountered, process it according to its meaning.</p>
+            </li>
+            <li value="4">
+                <p>When a format code that transfers data to or from the argument list is encountered, it is matched up with the next datum in the argument list.</p>
+                <ol style="list-style-type: lower-alpha;">
+                    <li value="1">On input, read data from the file and format it according to the format code. If the data type of the input data does not agree with the data type of the input variable, do type conversion to match the variable if possible; otherwise, issue a type conversion error and stop.</li>
+                    <li value="2">On output, write the data according to the format code. If the data type does not agree with the format code, do the type conversion prior to doing the output if possible. If the type conversion is not possible, issue a type conversion error and stop.</li>
+                </ol>
+            </li>
+            <li value="5">If the last closing parenthesis of the format string is reached and there are no data left on the argument list, then terminate. If, however, there are still data to be processed on the argument list, then part or all of the format specification is reused. This process is called <i>format reversion</i>.</li>
+        </ol>
+        <h3><a name="kanchor4975"></a>Format Reversion</h3>
+        <p>In format reversion, the current record is terminated, a new one is initiated, and format control reverts to the group repeat specification whose opening parenthesis matches the next-to-last closing parenthesis of the format string. If the format does not contain a group repeat specification, format control returns to the initial opening parenthesis of the format string. For example, the IDL command:</p>
+        <p class="Code">PRINT, FORMAT = '("The values are: ", 2("&lt;", I1, "&gt;"))', $</p>
+        <p class="Code">&#160;&#160;&#160;INDGEN(6)</p>
+        <p>results in the output</p>
+        <p class="Code">The values are: &lt;0&gt;&lt;1&gt;</p>
+        <p class="Code">&lt;2&gt;&lt;3&gt;</p>
+        <p class="Code">&lt;4&gt;&lt;5&gt;</p>
+        <p>The process involved in generating this output is as follows:</p>
+        <ol>
+            <li value="1">Output the string “The values are: ”.</li>
+            <li value="2">Process the group specification and output the first two values. The end of the format specification is encountered, so end the output record. Data are remaining, so move back to the group specification <code>2("&lt;", I1, "&gt;")</code>.</li>
+            <li value="3">Repeat step 2 until no data remain.</li>
+            <li value="4">End the output record.</li>
+        </ol>
+        <h2>C printf-Style Format Strings</h2>
+        <h2 class="API">Syntax</h2>
+        <p>Format strings using the C printf-style have the form:</p>
+        <p class="Code">FORMAT = 'Some text %f more text %f etc'</p>
+        <p>where  <i>f</i>  is the format code, described below.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>IDL distinguishes between the two different formats (FORTRAN or C printf) by whether the format string begins with a parenthesis or not. If there is no parenthesis then IDL assumes it is a C printf-style format.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>To use a C printf-style format but you need a parenthesis at the beginning, you should escape the parenthesis with a backslash character (\).</p>
+        <h3>Format Codes</h3>
+        <p>The <i>f</i> is a format code that specifies how data should be transferred. The code <i>f</i> can also be a nested format specification enclosed in parentheses, called a <i>group specification</i>:</p>
+        <p class="Code">...n(q<sub>1</sub>f<sub>1</sub>s<sub>1</sub>f<sub>2</sub>s<sub>2</sub> ... f<sub class="italic">n</sub>q<sub class="italic">n</sub>)...</p>
+        <p>A group specification consists of an optional repeat count <code>n</code> followed by a format specification enclosed in parentheses. For example, the format specification:</p>
+        <p class="Code">FORMAT = '("Result: ", "&lt;",I5,"&gt;", "&lt;",I5,"&gt;")'</p>
+        <p>can be written more concisely using a group specification:</p>
+        <p class="Code">FORMAT = '("Result: ", 2("&lt;",I5,"&gt;"))'</p>
+        <p>If the repeat count is 1 or is not given, the parentheses serve only to group format codes for use in format reversion (discussed in the next section).</p>
+        <p>See <a href="Format_Codes_CPrintf.htm">C printf-Style Format Codes</a> for a list of available format codes.</p>
+        <h3>Processing Rules for C printf-Style Format Strings</h3>
+        <p>IDL uses the following rules to process C printf-style format strings:</p>
+        <ol>
+            <li value="1">Traverse the format string from left to right, processing each  format code until an error occurs or no data is left in the argument list.</li>
+            <li value="2">
+                <p>Process any ordinary characters that are encountered. For output, print out the characters.</p>
+            </li>
+            <li value="3">
+                <p>When a format code that transfers data to or from the argument list is encountered, it is matched up with the next datum in the argument list.</p>
+                <ol style="list-style-type: lower-alpha;">
+                    <li value="1">On input, read data from the file and format it according to the format code. If the data type of the input data does not agree with the data type of the input variable, do type conversion to match the variable if possible; otherwise, issue a type conversion error and stop.</li>
+                    <li value="2">On output, write the data according to the format code. If the data type does not agree with the format code, do the type conversion prior to doing the output if possible. If the type conversion is not possible, issue a type conversion error and stop.</li>
+                </ol>
+            </li>
+        </ol>
+        <h2><a name="Examples"></a>Examples</h2>
+        <h2 class="API">Reading Formatted Table Data</h2>
+        <p>IDL explicitly formatted input/output has the power and flexibility to handle almost any kind of formatted data. A common use of explicitly formatted input/output involves reading and writing tables of data. Consider a data file containing employee data records. Each employee has a name (String, 32 columns) and the number of years they have been employed (Integer, 3 columns) on the first line. The next two lines contain each employee’s monthly salary for the last twelve months. A sample file named <i>employee.dat</i> with this format might look like the following:</p>
+        <p class="Code">Bullwinkle                       10</p>
+        <p class="Code">1000.0    9000.97   1100.0                        2000.0</p>
+        <p class="Code">5000.0    3000.0    1000.12   3500.0    6000.0     900.0</p>
+        <p class="Code">Boris                           11</p>
+        <p class="Code">400.0     500.0    1300.10    350.0     745.0    3000.0</p>
+        <p class="Code">200.0     100.0     100.0      50.0      60.0       0.25</p>
+        <p class="Code">Natasha                          10</p>
+        <p class="Code">950.0    1050.0    1350.0     410.0     797.0     200.36</p>
+        <p class="Code">2600.0    2000.0    1500.0    2000.0    1000.0     400.0</p>
+        <p class="Code">Rocky                            11</p>
+        <p class="Code">1000.0    9000.0    1100.0       0.0       0.0    2000.37</p>
+        <p class="Code">5000.0    3000.0    1000.01   3500.0    6000.0     900.12</p>
+        <p>The following IDL statements read data with the above format and produce a summary of the contents of the file:</p>
+        <p class="Code">;Open data file for input.</p>
+        <p class="Code">OPENR, 1, 'employee.dat'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Create variables to hold the name, number of years, and monthly </p>
+        <p class="Code">;salary. </p>
+        <p class="Code">name = '' &amp; years = 0 &amp; salary = FLTARR(12)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Output a heading for the summary. </p>
+        <p class="Code">PRINT, FORMAT='("Name", 28X, "Years", 4X, "Yearly Salary")'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Note: The actual dashed line is longer than is shown here.</p>
+        <p class="Code">PRINT, '========'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Loop over each employee. </p>
+        <p class="Code">WHILE (~ EOF(1)) DO BEGIN</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;;Read the data on the next employee.</p>
+        <p class="Code">&#160;&#160;&#160;READF, 1, $</p>
+        <p class="Code">&#160;&#160;&#160;FORMAT = '(A32,I3,2(/,6F10.2))', name, years, salary</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Output the employee information. Use TOTAL to sum the monthly </p>
+        <p class="Code">;salaries to get the yearly salary.</p>
+        <p class="Code">&#160;&#160;&#160;PRINT, FORMAT='(A32,I5,5X,F10.2)', name, years, TOTAL(salary)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">ENDWHILE</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">CLOSE, 1</p>
+        <p>The output from executing these statements on <i>employee.dat</i> is as follows:</p>
+        <p class="Code">Name&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Years&#160;&#160;&#160;&#160;Yearly Salary</p>
+        <p class="Code">======================================================</p>
+        <p class="Code">Bullwinkle&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;10&#160;&#160;&#160;&#160;&#160;&#160;&#160;32501.09</p>
+        <p class="Code">Boris &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;11&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;6805.35</p>
+        <p class="Code">Natasha&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;10&#160;&#160;&#160;&#160;&#160;&#160;&#160;14257.36</p>
+        <p class="Code">Rocky&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;11&#160;&#160;&#160;&#160;&#160;&#160;&#160;32500.50</p>
+        <h2 class="API">Reading Records With Multiple Array Elements</h2>
+        <p>Frequently, data are written to files with each record containing single elements of more than one array. One example might be a file consisting of observations of altitude, pressure, temperature, and velocity with each line or record containing a value for each of the four variables. Because IDL has no equivalent of the FORTRAN implied DO list, special procedures must be used to read or write this type of file. </p>
+        <p>The first approach, which is the simplest, may be used only if all of the variables have the same data type. An array is created with as many columns as there are variables and as many rows as there are elements. The data are read into this array, the array is transposed storing each variable as a row, and each row is extracted and stored into a variable which becomes a vector. For example, the FORTRAN program which writes the data and the IDL program which reads the data are as follows:</p>
+        <h3>FORTRAN Write:</h3>
+        <p class="Code">DIMENSION ALT(100),PRES(100),TEMP(100),VELO(100)</p>
+        <p class="Code">OPEN (UNIT = 1, STATUS='NEW', FILE='TEST')</p>
+        <p class="Code">WRITE(1,'(4(1x,g15.5))')</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;(ALT(I),PRES(I),TEMP(I),VELO(I),I=1,100)</p>
+        <h3>IDL Read:</h3>
+        <p class="Code">;Open file for input.</p>
+        <p class="Code">OPENR, 1, 'test'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Define variable (NVARS by NOBS).</p>
+        <p class="Code">A = FLTARR(4,100)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Read the data.</p>
+        <p class="Code">READF, 1, A </p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Transpose so that columns become rows.</p>
+        <p class="Code">A = TRANSPOSE(A)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Extract the variables.</p>
+        <p class="Code">ALT = A[*, 0]</p>
+        <p class="Code">PRES = A[*, 1]</p>
+        <p class="Code">TEMP = A[*, 2]</p>
+        <p class="Code">VELO = A[*, 3]</p>
+        <p>Note that this same example may be written without the implied DO list, writing all elements for each variable contiguously and simplifying matters considerably:</p>
+        <h3>FORTRAN Write:</h3>
+        <p class="Code">DIMENSION ALT(100),PRES(100),TEMP(100),VELO(100)</p>
+        <p class="Code">OPEN (UNIT = 1, STATUS='NEW', FILE='TEST')</p>
+        <p class="Code">WRITE (1,'(4(1x,G15.5))') ALT,PRES,TEMP,VELO</p>
+        <h3>IDL Read:</h3>
+        <p class="Code">;Define variables.</p>
+        <p class="Code">ALT = FLTARR(100)</p>
+        <p class="Code">PRES = ALT &amp; TEMP = ALT &amp; VELO = ALT</p>
+        <p class="Code">OPENR, 1, 'test'</p>
+        <p class="Code">READF, 1, ALT, PRES, TEMP, VELO</p>
+        <p>A different approach must be taken when the columns contain different data types or the number of lines or records are not known. This method involves defining the arrays, defining a scalar variable to contain each datum in one record, then writing a loop to read each line into the scalars, and then storing the scalar values into each array. For example, assume that a fifth variable, the name of an observer which is of string type, is added to the variable list. The FORTRAN output routine and IDL input routine are as follows:</p>
+        <h3>FORTRAN Write:</h3>
+        <p class="Code">DIMENSION ALT(100),PRES(100),TEMP(100),VELO(100)</p>
+        <p class="Code">CHARACTER * 10 OBS(100)</p>
+        <p class="Code">OPEN (UNIT = 1, STATUS = 'NEW', FILE = 'TEST')</p>
+        <p class="Code">WRITE (1,'(4(1X,G15.5),2X,A)')</p>
+        <p class="Code">&#160;&#160;(ALT(I),PRES(I),TEMP(I),VELO(I),OBS(I),I=1,100)</p>
+        <h3>IDL Read:</h3>
+        <p class="Code">;Access file. Read files containing from 1 to 200 records.</p>
+        <p class="Code">OPENR, 1, 'test'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Define vector, make it large enough for the biggest case.</p>
+        <p class="Code">ALT = FLTARR(200)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Define other vectors using the first. </p>
+        <p class="Code">PRES = ALT &amp; TEMP = ALT &amp; VELO = ALT</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Define string array. </p>
+        <p class="Code">OBS = STRARR(200)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Define scalar string.</p>
+        <p class="Code">OBSS = ''</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Initialize counter.</p>
+        <p class="Code">I = 0</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">WHILE ~ EOF(1) DO BEGIN</p>
+        <p class="Code">&#160;&#160;&#160;;Read scalars.</p>
+        <p class="Code">&#160;&#160;&#160;READF, 1, $</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;FORMAT = '(4(1X, G15.5), 2X, A10)', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;ALTS, PRESS, TEMPS, VELOS, OBSS</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Store in each vector.</p>
+        <p class="Code">&#160;&#160;&#160;ALT[I] = ALTS &amp; PRES[I] = PRESS &amp; TEMP[I] = TEMPS</p>
+        <p class="Code">&#160;&#160;&#160;VELO[I] = VELOS &amp; OBS[I] = OBSS</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;;Increment counter and check for too many records. </p>
+        <p class="Code">&#160;&#160;&#160;IF I LT 199 THEN I = I + 1 ELSE STOP, 'Too many records'</p>
+        <p class="Code">ENDWHILE</p>
+        <p>If desired, after the file has been read and the number of observations is known, the arrays may be truncated to the correct length using a series of statements similar to the following:</p>
+        <p class="Code">ALT = ALT[0:I-1]</p>
+        <p>The above statement represents a worst case example. Reading is greatly simplified by writing data of the same type contiguously and by knowing the size of the file. One frequently used technique is to write the number of observations into the first record so that when reading the data the size is known.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span> It might be tempting to implement a loop in IDL which reads the data values directly into array elements, using a statement such as the following:</p>
+        <p class="Code">FOR I = 0, 99 DO READF, 1, ALT[I], PRES[I], TEMP[I], VELO[I]</p>
+        <p>This statement is <i>incorrect</i>. Subscripted elements (including ranges) are temporary expressions passed as values to procedures and functions (READF in this example). Parameters passed by value do not pass results back to the caller. The proper approach is to read the data into scalars and assign the values to the individual array elements as follows:</p>
+        <p class="Code">A = 0. &amp; P = 0. &amp; T = 0. &amp; V = 0.<br />FOR I = 0, 99 DO BEGIN</p>
+        <p class="Code">&#160;&#160;&#160;READF, 1, A, P, T, V</p>
+        <p class="Code">&#160;&#160;&#160;   ALT[I] = A &amp; PRES[I] = P &amp; TEMP[I] = T &amp;<br /> &#160;&#160;&#160;VELO[I] = V
+</p>
+        <p class="Code">ENDFOR</p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

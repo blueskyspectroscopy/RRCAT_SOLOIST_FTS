@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: N|NCDF Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>NCDF_PARSE</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../N_list.htm">Routines: N</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../NCDF_Routines.htm">NCDF Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">NCDF_PARSE</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor2142"></a>NCDF_PARSE</h1>
+        <p>The NCDF_PARSE function recursively descends through a NetCDF-3 or NetCDF-4 file and creates an ordered hash containing object information and data.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>The NetCDF-4 format is similar to the HDF5 format, so technically this routine can also parse HDF5 files. However, we recommend using <a href="../../H/HDF5 Routines/H5_PARSE.htm">H5_PARSE</a> with HDF5 files.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>For an example of reading GOES-16 data using NCDF_PARSE, see <a href="../../../GuideMe/ImageGuideMe/image_goes16.htm">GOES-16 on a Map</a> in the images gallery.</p>
+        <h2 class="API">Example</h2>
+        <p>The following example shows how to parse a file and to use implied print to view the tags of the ordered hash:</p>
+        <p class="Code">IDL&gt; file = FILEPATH('sample.nc', SUBDIR=['examples','data'])</p>
+        <p class="Code">IDL&gt; result = NCDF_PARSE(file)</p>
+        <p class="Code">IDL&gt; result</p>
+        <p>IDL prints:</p>
+        <p class="Code">{</p>
+        <p class="Code">&#160;&#160;&#160;"_NAME": "/usr/local/idl/examples/data/sample.nc",</p>
+        <p class="Code">&#160;&#160;&#160;"_TYPE": "GROUP",</p>
+        <p class="Code">&#160;&#160;&#160;"_FILE": "/usr/local/idl/examples/data/sample.nc",</p>
+        <p class="Code">&#160;&#160;&#160;"_PATH": "/",</p>
+        <p class="Code">&#160;&#160;&#160;"image": {</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_NAME": "image",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_TYPE": "VARIABLE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_PATH": "/",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_NDIMENSIONS": 2,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_DIMENSION_NAMES": ["y", "x"],</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_DIMENSIONS": [768, 512],</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_DATATYPE": "BYTE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_DATA": "&lt;unread&gt;",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;"TITLE": {</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_NAME": "TITLE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_TYPE": "ATTRIBUTE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_PATH": "/image",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_DATATYPE": "CHAR",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_LENGTH": 14,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"_DATA": "New York City"</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="Code">},</p>
+        <p class="Code">"_NDIMENSIONS": 3,</p>
+        <p class="Code">"_DIMENSION_NAMES": ["x", "y", "z"],</p>
+        <p class="Code">"_DIMENSIONS": [512, 768, 0],</p>
+        <p class="Code">"_N_UNLIM_DIMS": 1,</p>
+        <p class="Code">"_UNLIM_DIM_NAMES": ["z"],</p>
+        <p class="Code">"_UNLIM_DIMS": [0],</p>
+        <p class="Code">"TITLE": {</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_NAME": "TITLE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_TYPE": "ATTRIBUTE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_PATH": "/",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_DATATYPE": "CHAR",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_LENGTH": 26,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_DATA": "Incredibly Important Data"</p>
+        <p class="Code">},</p>
+        <p class="Code">"GALAXY": {</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_NAME": "GALAXY",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_TYPE": "ATTRIBUTE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_PATH": "/",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_DATATYPE": "CHAR",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_LENGTH": 10,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_DATA": "Milky Way"</p>
+        <p class="Code">},</p>
+        <p class="Code">"PLANET": {</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_NAME": "PLANET",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_TYPE": "ATTRIBUTE",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_PATH": "/",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_DATATYPE": "CHAR",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_LENGTH": 6,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"_DATA": "Earth"</p>
+        <p class="Code">&#160;&#160;&#160;}</p>
+        <p class="Code">}</p>
+        <p>Here is an example of accessing the data within an ordered hash:</p>
+        <p class="Code">IDL&gt; print, result['GALAXY', '_DATA'] ; use array indexing to retrieve this element</p>
+        <p>IDL prints:</p>
+        <p class="Code_Indented2">Milky Way</p>
+        <h2 class="API">Syntax</h2>
+        <p><i>Result</i> = NCDF_PARSE(<i>File</i>, [/ READ_DATA])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The <i>Result </i>is an ordered hash containing the parsed file. The tags in the hash depend upon the object type, as outlined in the tables below.</p>
+        <h4>Tags associated with the top-level hash</h4>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 68px;" />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Tag</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>_FILE</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>The filename to which the object belongs</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Tags common to all object types</h4>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 68px;" />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Tag</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>_NAME</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Object name (filename for the top level)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>_TYPE</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Object type. The possible values are GROUP, VARIABLE, or ATTRIBUTE.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>_PATH</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>The full path within the file to the object. If the object is at the top level, then this field is set to '<code>/</code>'.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Tags associated with groups</h4>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 165px;" />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Tag</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>_NDIMENSIONS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Number of dimensions within the group</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>_DIMENSION_NAMES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Names of dimensions within the group. If the number of dimensions in the group is zero, then this field is set to an empty string.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">_DIMENSIONS</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">Size of all dimensions in the group. If the number of dimensions in the group is zero, then this field is set to -1.</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>_N_UNLIM_DIMS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Number of unlimited dimensions in the group</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>_UNLIM_DIM_NAMES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Names of unlimited dimensions in the group. If there are no unlimited dimensions in the group, then this field is set to an empty string.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>_UNLIM_DIMS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Size of the unlimited dimension(s) in the group. If there are no unlimited dimensions in the group, then this field is set to -1.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Tags Associated with variables</h4>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 178px;" />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Tag</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>_NDIMENSIONS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Number of dimensions associated with the variable</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>_DIMENSION_NAMES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Names of the variable's dimensions</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>_DIMENSIONS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Size of the variable's dimensions</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>_DATATYPE</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The variable data type. Possible data types are BYTE, CHAR, INT, LONG, FLOAT, or DOUBLE.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>_DATA</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>If the READ_DATA&#160;keyword is set, this field will contain the data from the variable. Otherwise, it contains the string <code>&lt;unread&gt;</code>.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Tags associated with attributes</h4>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 114px;" />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Tag</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>_DATATYPE</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Data type of the attribute. Possible values are BYTE, CHAR, INT, LONG, FLOAT, or DOUBLE.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>_LENGTH</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The number of values stored in the attribute. If the attribute is a string, the number of values indicates one more character than the string length to include the terminating null character. This is the NetCDF&#160;convention.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>_DATA</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>The value of the attribute. The attribute value is always read regardless of whether the READ_DATA&#160;keyword is set.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">File</h3>
+        <p>A string that specifies the file to be parsed.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">READ_DATA</h3>
+        <p>If you set this keyword, all data from NetCDF variables will be read from the file. If you do not set this keyword, the _DATA field for variables will be set to the string <code>'&lt;unread&gt;'</code>.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col style="width: 222px;" />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.5.2</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">Introduced</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="NCDF_IS_NCDF.htm">NCDF_IS_NCDF</a>, <a href="NCDF Overview.htm">NetCDF Overview</a>, <a href="../../H/HDF Routines/HDF_PARSE.htm">HDF_PARSE</a>, <a href="../../H/HDF5 Routines/H5_PARSE.htm">H5_PARSE</a><![CDATA[         ]]></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

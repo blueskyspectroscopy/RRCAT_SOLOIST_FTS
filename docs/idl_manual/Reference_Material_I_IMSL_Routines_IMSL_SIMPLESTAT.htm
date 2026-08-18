@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_SIMPLESTAT</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_SIMPLESTAT</span>
+        </div>
+        <h1 class="Routine">IMSL_SIMPLESTAT</h1>
+        <p>The IMSL_SIMPLESTAT function computes basic univariate statistics.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_SIMPLESTAT function computes the sample mean, variance, minimum, maximum, and other basic statistics for the data in x. It also computes confidence intervals for the mean and variance (under the hypothesis that the sample is from a normal population).</p>
+        <p>Frequencies, fi’s, are interpreted as multiple occurrences of the other values in the observations. In other words, a row of <i>x</i> with a frequency variable having a value of 2 has the same effect as two rows with frequencies of 1. The total of the frequencies is used in computing all the statistics based on moments (mean, variance, skewness, and kurtosis). Weights, wi’s, are not viewed as replication factors. The sum of the weights central moments). Both weights and frequencies can be zero, but neither can be negative. In general, a zero frequency means that the row is to be eliminated from the analysis; no further processing or error checking is done on the row. A weight of zero results in the row being counted, and updates are made of the statistics.</p>
+        <p>The definitions of some of the statistics are given below in terms of a single variable <i>x</i> of which the <i>i</i>-th datum is <i>x</i><sub>i</sub>.</p>
+        <h4>Mean</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-01.jpg" />
+        </p>
+        <h4>Variance</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-02.jpg" />
+        </p>
+        <h4>Skewness</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-03.jpg" />
+        </p>
+        <h4>Excess or Kurtosis</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-04.jpg" />
+        </p>
+        <h4>Minimum</h4>
+        <p>x<sub>min</sub> = min(x<sub>i</sub>)</p>
+        <h4>Maximum</h4>
+        <p>x<sub>max</sub> = max(x<sub>i</sub>)</p>
+        <h4>Range</h4>
+        <p>x<sub>max</sub> – x<sub>min</sub></p>
+        <h4>Coefficient of Variation</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-05.jpg" />
+        </p>
+        <h4>Median</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-06.jpg" />
+        </p>
+        <h4>Median Absolute Deviation</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-07.jpg" />
+        </p>
+        <h4>Simple Robust Estimate of Scale</h4>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-08.jpg" />
+        </p>
+        <p>where</p>
+        <p>
+            <img src="images/IMSL_SIMPLESTAT-09.jpg" />
+        </p>
+        <p>is the inverse of the standard normal distribution function evaluated at 3/4. This standardizes MAD in order to make the scale estimate consistent at the normal distribution for estimating the standard deviation (Huber 1981, pp. 107–108).</p>
+        <h2 class="API">Example</h2>
+        <p>This example uses data from Draper and Smith (1981). There are five variables and 13 observations.</p>
+        <p class="Code">x = IMSL_STATDATA(5)</p>
+        <p class="Code">stats = IMSL_SIMPLESTAT(x)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_SIMPLESTAT.</p>
+        <p class="Code">labels = ['means', 'variances', 'std. dev', $</p>
+        <p class="Code_Indented">'skewness', 'kurtosis', 'minima', $</p>
+        <p class="Code_Indented">'maxima', 'ranges', 'C.V.', 'counts', $</p>
+        <p class="Code_Indented">'lower mean', 'upper mean', 'lower var', 'upper var']</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the character strings that will be used as labels for the</p>
+        <p class="Code">; rows of the output.</p>
+        <p class="Code">FOR i = 0, 13 DO PM, labels(i), stats(i, *), $</p>
+        <p class="Code_Indented">FORMAT = '(a10, 5f9.3)'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Output the results.</p>
+        <p class="Code">means&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;7.462&#160;&#160;&#160;&#160;&#160;48.154&#160;&#160;&#160;&#160;&#160;11.769&#160;&#160;&#160;&#160;&#160;30.000&#160;&#160;&#160;&#160;&#160;95.423</p>
+        <p class="Code">variances&#160;&#160;&#160;&#160;34.603&#160;&#160;&#160;&#160;242.141&#160;&#160;&#160;&#160;&#160;41.026&#160;&#160;&#160;&#160;280.167&#160;&#160;&#160;&#160;226.314</p>
+        <p class="Code">std. dev&#160;&#160;&#160;&#160;&#160;&#160;5.882&#160;&#160;&#160;&#160;&#160;15.561&#160;&#160;&#160;&#160;&#160;&#160;6.405&#160;&#160;&#160;&#160;&#160;16.738&#160;&#160;&#160;&#160;&#160;15.044</p>
+        <p class="Code">skewness&#160;&#160;&#160;&#160;&#160;&#160;0.688&#160;&#160;&#160;&#160;&#160;-0.047&#160;&#160;&#160;&#160;&#160;&#160;0.611&#160;&#160;&#160;&#160;&#160;&#160;0.330&#160;&#160;&#160;&#160;&#160;-0.195</p>
+        <p class="Code">kurtosis&#160;&#160;&#160;&#160;&#160;&#160;0.075&#160;&#160;&#160;&#160;&#160;-1.323&#160;&#160;&#160;&#160;&#160;-1.079&#160;&#160;&#160;&#160;&#160;-1.014&#160;&#160;&#160;&#160;&#160;-1.342</p>
+        <p class="Code">maxima&#160;&#160;&#160;&#160;&#160;&#160;&#160;21.000&#160;&#160;&#160;&#160;&#160;71.000&#160;&#160;&#160;&#160;&#160;23.000&#160;&#160;&#160;&#160;&#160;60.000&#160;&#160;&#160;&#160;115.900</p>
+        <p class="Code">ranges&#160;&#160;&#160;&#160;&#160;&#160;&#160;20.000&#160;&#160;&#160;&#160;&#160;45.000&#160;&#160;&#160;&#160;&#160;19.000&#160;&#160;&#160;&#160;&#160;54.000&#160;&#160;&#160;&#160;&#160;43.400</p>
+        <p class="Code">C.V.&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0.788&#160;&#160;&#160;&#160;&#160;&#160;0.323&#160;&#160;&#160;&#160;&#160;&#160;0.544&#160;&#160;&#160;&#160;&#160;&#160;0.558&#160;&#160;&#160;&#160;&#160;&#160;0.158</p>
+        <p class="Code">counts&#160;&#160;&#160;&#160;&#160;&#160;&#160;13.000&#160;&#160;&#160;&#160;&#160;13.000&#160;&#160;&#160;&#160;&#160;13.000&#160;&#160;&#160;&#160;&#160;&#160;3.000&#160;&#160;&#160;&#160;&#160;13.000</p>
+        <p class="Code">lower mean&#160;&#160;&#160;&#160;3.907&#160;&#160;&#160;&#160;&#160;38.750&#160;&#160;&#160;&#160;&#160;&#160;7.899&#160;&#160;&#160;&#160;&#160;19.885&#160;&#160;&#160;&#160;&#160;86.332</p>
+        <p class="Code">upper mean&#160;&#160;&#160;11.016&#160;&#160;&#160;&#160;&#160;57.557&#160;&#160;&#160;&#160;&#160;15.640&#160;&#160;&#160;&#160;&#160;40.115&#160;&#160;&#160;&#160;104.514</p>
+        <p class="Code">lower var&#160;&#160;&#160;&#160;17.793&#160;&#160;&#160;&#160;124.512&#160;&#160;&#160;&#160;&#160;21.096&#160;&#160;&#160;&#160;144.065&#160;&#160;&#160;&#160;116.373</p>
+        <p class="Code">upper var&#160;&#160;&#160;&#160;94.289&#160;&#160;&#160;&#160;659.817&#160;&#160;&#160;&#160;111.792&#160;&#160;&#160;&#160;763.434&#160;&#160;&#160;&#160;616.688</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_SIMPLESTAT(<i>X</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>A two-dimensional matrix containing some simple statistics for each variable <i>X</i>. If Median and Median_And_Scale are not used as keywords, then element (<i>i, j</i>) of the returned matrix contains the <i>i</i>-th statistic of the <i>j</i>-th variable. Refer to the table below for a list of results.
+</p>
+        <table class="TableStyle_Description" style="mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p><i>i</i>
+                        </p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Statistic Returned in Element (<i>i</i>, *)</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Mean</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Variance</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Standard deviation</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Coefficient of skewness</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Coefficient of excess (kurtosis)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Minimum value</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>6</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Maximum value</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>7</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Range</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>8</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Coefficient of variation (when defined). If the coefficient of variation is not defined, zero is returned.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>9</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Number of observations (the counts)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>10</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Lower confidence limit for the mean (assuming normality). The default is a 95-percent confidence interval.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>11</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Upper confidence limit for the mean (assuming normality)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>12</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Lower confidence limit for the variance (assuming normality). The default is a 95-percent confidence interval.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>13</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Upper confidence limit for the variance (assuming normality)</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>Data matrix. The data value for the <i>i</i>-th observation of the <i>j</i>-th variable should be in the matrix element (<i>i, j</i>).</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CONF_MEANS"></a>CONF_MEANS (optional)</h3>
+        <p>Scalar specifying the confidence level for a two-sided interval estimate of the means (assuming normality) in percent. The CONF_MEANS keyword must be between 0.0 and 100.0 and is often 90.0, 95.0, or 99.0. For a one-sided confidence interval with confidence level <i>c</i>, set CONF_MEANS = 100.0 – 2.0(100.0 – <i>c</i>) (at least 50 percent). Default: 95-percent confidence interval is computed</p>
+        <h3 class="Keyword"><a name="CONF_VARIANCES"></a>CONF_VARIANCES (optional)</h3>
+        <p>Confidence level for a two-sided interval estimate of the variances (assuming normality) in percent. The confidence intervals are symmetric in probability (rather than in length). For one-sided confidence interval with confidence level <i>c</i>, set CONF_MEANS = 100.0 – 2.0(100.0 – <i>c</i>) (at least 50 percent). Default: 95-percent confidence interval is computed.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="ELEMENTWISE"></a>ELEMENTWISE (optional)</h3>
+        <p>If present and nonzero, all nonmissing data for any variable is used in computing the statistics for that variable. Default action: if an observation (row of <i>x</i>) contains a missing value, the observation is excluded from computations for all variables. In either case, if weights and/or frequencies are specified and the value of the weight and/or frequency is missing, the observation is excluded from computations for all variables.</p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>One-dimensional array containing the frequency for each observation. Default: each observation has a frequency of 1.</p>
+        <h3 class="Keyword"><a name="MEDIAN_ONLY"></a>MEDIAN_ONLY (optional)</h3>
+        <p>If present and nonzero, medians are computed and stored in elements (14, *) of the returned matrix of simple statistics. The MEDIAN_ONLY and MEDIAN_AND_SCALE keywords cannot be used together.</p>
+        <h3 class="Keyword"><a name="MEDIAN_AND_SCALE"></a>MEDIAN_AND_SCALE (optional)</h3>
+        <p>If present and nonzero, specified, the medians, the medians of the absolute deviations from the medians, and a simple robust estimate of scale are computed and stored in elements (14, *), (15, *), and (16, *) of the returned matrix of simple statistics. The MEDIAN_ONLY and MEDIAN_AND_SCALE keywords cannot be used together.</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>One-dimensional array containing the weight for each observation. Default: each observation has a weight of 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

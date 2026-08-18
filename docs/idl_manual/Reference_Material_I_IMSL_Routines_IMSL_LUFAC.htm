@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_LUFAC</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_LUFAC</span>
+        </div>
+        <h1>IMSL_LUFAC</h1>
+        <p>The IMSL_LUFAC procedure computes the <i>LU</i> factorization of a real or complex matrix.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Any of several related computations can be performed by using keywords. These extra tasks include computing the <i>LU</i> factorization of <i>A<sup>T</sup></i>, computing an estimate of the <i>L1</i> condition number, and returning <i>L</i> or <i>U</i> separately.</p>
+        <p>The IMSL_LUFAC procedure computes the <i>LU</i> factorization of <i>A</i> with partial pivoting such that <i>L</i><sup style="font-style: italic;">–1</sup><i>PA = U</i>. The matrix <i>U</i> is upper-triangular, while <i>L</i><sup style="font-style: italic;">–1</sup><i>A ≡ P</i><sub style="font-style: italic;">n – 1</sub><i> L</i><sub style="font-style: italic;">n – 2</sub><i>P</i><sub style="font-style: italic;">n – 2</sub><i>...L</i><sub style="font-style: italic;">0</sub><i> P</i><sub style="font-style: italic;">0</sub><i> A ≡ U</i>. The factors <i>P</i><sub style="font-style: italic;">i</sub> and<i> L</i><sub style="font-style: italic;">i</sub> are defined by the partial pivoting. Each <i>P</i><sub style="font-style: italic;">i</sub> is an interchange of row <i>i</i> with row <i>i ≥ j</i>. Thus, <i>P</i><sub style="font-style: italic;">i</sub> is defined by that value of <i>j</i>. Every <i>L</i><sub style="font-style: italic;">i</sub><i> = m</i><sub style="font-style: italic;">i</sub><i>e</i><sub style="font-style: italic;">i</sub><sup style="font-style: italic;">T</sup> is an elementary elimination matrix. The vector mi is zero in entries 0, ..., <i>i – 1</i>. This vector is stored as column i in the strictly lower-triangular part of the working array containing the decomposition information.</p>
+        <p>The factorization efficiency is based on a technique of “loop unrolling and jamming” due to Dr. Leonard J. Harding of the University of Michigan, Ann Arbor, Michigan. When the inverse of the matrix is sought, an estimate of the <i>L</i><sub style="font-style: italic;">1</sub> condition number of <i>A</i> is computed using the same algorithm as in Dongarra et al. (1979). If the estimated condition number is greater than 1/ε (where ε is the machine precision), a warning message is issued. This indicates that very small changes in <i>A</i> may produce large changes in the solution <i>x</i>. The IMSL_LUFAC procedure fails if <i>U</i>, the upper triangular part of the factorization, has a zero diagonal element.</p>
+        <h2 class="API">Examples</h2>
+        <h3><a name="I_833016429_53575_Keywords_IBETA__"></a>Example 1</h3>
+        <p>This example computes the LU factorization of a matrix and prints it out in the default form with the information needed to construct L and U combined in one array.</p>
+        <p class="Code">RM, a, 3, 3</p>
+        <p class="Code">; Input the matrix to be factored.</p>
+        <p class="Code">row 0: 1 3 3</p>
+        <p class="Code">row 1: 1 3 4</p>
+        <p class="Code">row 2: 1 4 3</p>
+        <p class="Code">IMSL_LUFAC, a, pvt, fac</p>
+        <p class="Code">; Factor the matrix by calling IMSL_LUFAC.</p>
+        <p class="Code">PM, fac, Title = 'LU factors of A'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Print the results.</p>
+        <p class="Code">LU factors of A</p>
+        <p class="Code_Indented">1.00000 3.00000 3.00000</p>
+        <p class="Code_Indented">-1.00000 1.00000 0.00000</p>
+        <p class="Code_Indented">-1.00000 -0.00000 1.00000</p>
+        <p class="Code">PM, pvt, Title = 'Pivot sequence'</p>
+        <p class="Code">Pivot sequence</p>
+        <p class="Code_Indented">1</p>
+        <p class="Code_Indented">3</p>
+        <p class="Code_Indented">3</p>
+        <h3>Example 2</h3>
+        <p>This example computes the factorization, uses keywords to return the factorization in separate named variables, and returns the original matrix after the pivot permutation is applied.</p>
+        <p class="Code">RM, a, 3, 3</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Input the matrix to be factored.</p>
+        <p class="Code">row 0: 1 3 3</p>
+        <p class="Code_Indented">row 1: 1 3 4</p>
+        <p class="Code_Indented">row 2: 1 4 3</p>
+        <p class="Code">IMSL_LUFAC, a, L = l, U = u, PA = pa</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_LUFAC with the keywords L and U.</p>
+        <p class="Code">PM, l, Title = 'L'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Print the results.</p>
+        <p class="Code">L</p>
+        <p class="Code_Indented">1.00000 0.00000 0.00000</p>
+        <p class="Code_Indented">1.00000 1.00000 0.00000</p>
+        <p class="Code_Indented">1.00000 0.00000 1.00000</p>
+        <p class="Code">PM, u, Title = 'U'</p>
+        <p class="Code">U</p>
+        <p class="Code_Indented">1.00000 3.00000 3.00000</p>
+        <p class="Code_Indented">0.00000 1.00000 0.00000</p>
+        <p class="Code_Indented">0.00000 0.00000 1.00000</p>
+        <p class="Code">PM, l # u - pa, $</p>
+        <p class="Code">Title = 'Residual: L # U - PA'</p>
+        <p class="Code">Residual: L # U - PA</p>
+        <p class="Code_Indented">0.00000 0.00000 0.00000</p>
+        <p class="Code_Indented">0.00000 0.00000 0.00000</p>
+        <p class="Code_Indented">0.00000 0.00000 0.00000</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_LUFAC, <i>A</i>, [Pivot[,Fac] [, <a href="#CONDITION" class="selected">CONDITION</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#INVERSE" class="selected">INVERSE</a>=<i>variable</i>] [, <a href="#L" class="selected">L</a>=<i>variable</i>] [, <a href="#PA" class="selected">PA</a>=<i>variable</i>] [TRANSPOSE=<i>value</i>] [, <a href="#U" class="selected">U</a>=<i>variable</i>]]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">A</h3>
+        <p>Two-dimensional matrix containing the coefficient matrix. Element A (<i>i, j</i>) contains the <i>j</i>-th coefficient of the <i>i</i>-th equation.</p>
+        <h3 class="Argument">Fac</h3>
+        <p>A named variable that will contain a two-dimensional matrix containing the <i>LU</i> factorization of <i>A</i>. The strictly lower-triangular part of this matrix contains information necessary to construct <i>L</i>, and the upper-triangular part contains <i>U</i>.</p>
+        <h3 class="Argument">Pivot</h3>
+        <p>A named variable that will contain a one-dimensional matrix containing the pivot sequence of the factorization.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CONDITION"></a>CONDITION (optional)</h3>
+        <p>Named variable into which an estimate of the <i>L</i><sub style="font-style: italic;">1</sub> condition number is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="INVERSE"></a>INVERSE (optional)</h3>
+        <p>Named variable into which the inverse of the matrix <i>A</i> is stored.</p>
+        <h3 class="Keyword"><a name="L"></a>L (optional)</h3>
+        <p>Named variable into which the strictly lower-triangular matrix <i>L</i> of the <i>LU</i> factorization is stored.</p>
+        <h3 class="Keyword"><a name="PA"></a>PA (optional)</h3>
+        <p>Named variable into which the matrix resulting from applying the pivot permutation to <i>A</i> is stored.</p>
+        <h3 class="Keyword"><a name="TRANSPOSE"></a>TRANSPOSE (optional)</h3>
+        <p>If present and nonzero, <i>A</i><sup style="font-style: italic;">T</sup><i>X=b</i> is solved.</p>
+        <h3 class="Keyword"><a name="U"></a>U (optional)</h3>
+        <p>Named variable into which the upper-triangular matrix <i>U</i> of the <i>LU</i> factorization is stored.</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_ILL_CONDITIONED: Input matrix is too ill-conditioned. An estimate of the reciprocal of its<i> L</i><sub style="font-style: italic;">1</sub> condition number is #. The solution might not be accurate.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_SINGULAR_MATRIX: Input matrix is singular</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_SP_BDPDFAC.htm">IMSL_SP_BDPDFAC</a>, <a href="IMSL_SP_BDPDSOL.htm">IMSL_SP_BDPDSOL</a>, <a href="IMSL_SP_BDSOL.htm">IMSL_SP_BDSOL</a>, <a href="IMSL_SP_CG.htm">IMSL_SP_CG</a>, <a href="IMSL_SP_GMRES.htm">IMSL_SP_GMRES</a>, <a href="IMSL_SP_LUSOL.htm">IMSL_SP_LUSOL</a>, <a href="IMSL_SP_MVMUL.htm">IMSL_SP_MVMUL</a>, <a href="IMSL_SP_PDFAC.htm">IMSL_SP_PDFAC</a>, <a href="IMSL_SP_PDSOL.htm">IMSL_SP_PDSOL</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

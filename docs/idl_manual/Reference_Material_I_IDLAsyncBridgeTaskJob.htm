@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLAsyncBridgeTaskJob</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLAsyncBridgeTaskJob</span>
+        </div>
+        <h1 class="ObjClass">IDLAsyncBridgeTaskJob</h1>
+        <p>The IDLAsyncBridgeTaskJob class encapsulates the combined behaviors of its  base classes <a href="IDLAsyncBridgeJob.htm">IDLAsyncBridgeJob</a> and <a href="IDLTaskJob.htm">IDLTaskJob</a>. It allows the user to specify a single <a href="../../IDLTask/IDLTask.htm">IDLTask</a> that will be executed inside an <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge.htm">IDL_IDLBridge</a> when there are available resources. The IDLTask must have all of its input parameters specified before creating this job, as it will be cloned and dehydrated for passage to the bridge via <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__SetVar.htm">IDL_IDLBridge::SetVar</a>.</p>
+        <h2 class="API">Superclasses</h2>
+        <ul>
+            <li value="1"><a href="IDLAsyncBridgeJob.htm">IDLAsyncBridgeJob</a>
+            </li>
+            <li value="2"><a href="IDLTaskJob.htm">IDLTaskJob</a>
+            </li>
+        </ul>
+        <h2 class="API">Examples</h2>
+        <p class="Code">; Use S3 folder for a dataset covering Boulder, CO, taken April 4, 2017</p>
+        <p class="Code">folderUrl = 'https://s3-us-west-2.amazonaws.com/landsat-pds/L8/033/032/LC80330322017104LGN00'</p>
+        <p class="Code">; Dataset name is same as folder name, and is root of all files</p>
+        <p class="Code">datasetName = File_BaseName(folderUrl)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; List of suffixes to apply to dataset name for all files needed to</p>
+        <p class="Code">; comprise a full Landsat 8 dataset.  Band 8 is the panchromatic band,</p>
+        <p class="Code">; which is the largest, so start downloading it first.</p>
+        <p class="Code">suffixes = [ '_B8.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B1.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B2.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B3.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B4.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B5.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B6.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B7.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B9.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B10.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B11.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_BQA.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_MTL.txt' ]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; create a folder in the temp folder for the local files</p>
+        <p class="Code">localFolder = FilePath(datasetName, /TMP)</p>
+        <p class="Code">if (~File_Test(localFolder)) then File_MkDir, localFolder</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct IDLAsyncJoin object to use for waiting on all jobs to complete</p>
+        <p class="Code">oJoin = IDLAsyncJoin()</p>
+        <p class="Code">; construct IDLAsyncQueue to manage parallel execution of jobs</p>
+        <p class="Code">oQueue = IDLAsyncQueue(CONCURRENCY=6)</p>
+        <p class="Code">; create object array to hold all jobs</p>
+        <p class="Code">jobs = ObjArr(N_Elements(suffixes))</p>
+        <p class="Code">; create task to be used by the jobs</p>
+        <p class="Code">task = IDLTask('Download_S3_URL')</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct a unique job for each remote file to download</p>
+        <p class="Code">foreach suf, suffixes, i do begin</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; update task parameters to current file suffix</p>
+        <p class="Code">&#160;&#160;&#160;&#160;file = datasetName + suf</p>
+        <p class="Code">&#160;&#160;&#160;&#160;task.S3_URL = folderUrl + '/' + file</p>
+        <p class="Code">&#160;&#160;&#160;&#160;task.LOCAL_FILE = FilePath(file, ROOT=localFolder)</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; construct IDLAsyncBridgeTaskJob that clones the task,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; passing in the join object</p>
+        <p class="Code">&#160;&#160;&#160;&#160;jobs[i] = IDLAsyncBridgeTaskJob(task, JOIN=oJoin)</p>
+        <p class="Code">endforeach</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">tic</p>
+        <p class="Code">; submit all the jobs to the queue for execution</p>
+        <p class="Code">oQueue.SubmitJob, jobs</p>
+        <p class="Code">; wait for all jobs to be done</p>
+        <p class="Code">oJoin.WaitForJoin</p>
+        <p class="Code">toc</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncBridgeTaskJob(<i>Task</i> [, INIT_COMMAND=<i>String</i>] [, JOIN=<i>IDLAsyncJoin</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Task</h3>
+        <p>A scalar IDLTask object owned by this job, which will be executed inside an IDL_IDLBridge when Start is called.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">INIT_COMMAND (optional)</h3>
+        <p>A scalar string of IDL code to be executed inside the bridge when it is initialized.</p>
+        <h3 class="Keyword">JOIN (optional)</h3>
+        <p>An <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a> object that is passed to <a href="IDLAsyncJob.htm">IDLAsyncJob</a> base class Init() method for handling.</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1">IDLAsyncBridgeTaskJob inherits all methods from <a href="IDLAsyncBridgeJob.htm">IDLAsyncBridgeJob</a> and <a href="IDLTaskJob.htm">IDLTaskJob</a>.</li>
+            <li value="2">IDLAsyncBridgeTaskJob()</li>
+            <li value="3"><a href="#OnDone" class="selected">IDLAsyncBridgeTaskJob::OnDone</a>
+            </li>
+        </ul>
+        <h2 class="API">Properties</h2>
+        <p>IDLAsyncBridgeTaskJob inherits all properties from <a href="IDLAsyncBridgeJob.htm#Properties">IDLAsyncBridgeJob</a> and <a href="IDLTaskJob.htm#Properties">IDLTaskJob</a>.</p>
+        <h1 class="ObjMethod"><a name="OnDone"></a>IDLAsyncBridgeTaskJob::OnDone</h1>
+        <p>The IDLAsyncBridgeTaskJob::OnDone method is an implementation override of <a href="IDLAsyncJob.htm">IDLAsyncJob</a> callback invoked on this job by the Done event handler. The basic sequence of operations follows: </p>
+        <ul>
+            <li value="1">Call GetReturnValue to get the dehydrated form of the executed task.</li>
+            <li value="2">Rehydrate the task.</li>
+            <li value="3">Call UpdateTask to store updated task.</li>
+            <li value="4">Call <a href="IDLAsyncJob.htm#OnDone">IDLAsyncJob::OnDone</a>.</li>
+        </ul>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncBridgeTaskJob.OnDone</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLAsyncBridgeJob.htm">IDLAsyncBridgeJob</a>, <a href="IDLAsyncJob.htm">IDLAsyncJob</a>, <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a>, <a href="IDLTaskJob.htm">IDLTaskJob</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

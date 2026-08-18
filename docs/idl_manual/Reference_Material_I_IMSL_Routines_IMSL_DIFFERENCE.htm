@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_DIFFERENCE</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_DIFFERENCE</span>
+        </div>
+        <h1 class="Routine">IMSL_DIFFERENCE</h1>
+        <p>The IMSL_DIFFERENCE function differences a seasonal or nonseasonal time series.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_DIFFERENCE function performs <i>m</i> = N_ELEMENTS(<i>Periods</i>) successive backward differences of period <i>s</i><sub>i</sub> = <i>Periods</i>(<i>i</i> – 1) and <i>d</i><sub>i</sub> = <i>Orders</i>(<i>i</i> – 1) for <i>i</i> = 1, ..., <i>m</i> on the <i>n</i> = N_ELEMENTS(<i>x</i>) observations {<i>Z</i><sub>t</sub>} for <i>t</i> = 1, 2, ..., <i>n</i>.</p>
+        <p>Consider the backward shift operator <i>B</i> given by:</p>
+        <p><i>B</i><sup>k</sup><i>Z</i><sub>t</sub> = <i>Z</i><sub>t</sub> – <i>k</i></p>
+        <p>for all <i>k</i>. Then, the backward difference operator with period s is defined by the following:</p>
+        <p>
+            <img src="images/IMSL_DIFFERENCE-068.jpg" />
+        </p>
+        <p>Note that <i>B</i><sub>s</sub><i>Z</i><sub>t</sub> and ∆<sub>s</sub><i>Z</i><sub>t</sub> are defined only for <i>t</i> = (<i>s</i> + 1), ..., <i>n</i>. Repeated differencing with period <i>s</i> is simply:</p>
+        <p>
+            <img src="images/IMSL_DIFFERENCE-069.jpg" />
+        </p>
+        <p>where <i>d</i> ≥ 0 is the order of differencing. Note that ∆<sup>d</sup><sub>s</sub> <i>Z</i><sub>t</sub> is defined only for <i>t</i> = (<i>sd</i> + 1), ..., <i>n</i>.</p>
+        <p>The general difference formula used in IMSL_DIFFERENCE is given by:</p>
+        <p>
+            <img src="images/IMSL_DIFFERENCE-070.jpg" />
+        </p>
+        <p>where n<sub>L</sub> represents the number of observations “lost” because of differencing and NaN represents the missing value code. See IMSL_MACHINE to retrieve missing values. Note that:</p>
+        <p>
+            <img src="images/IMSL_DIFFERENCE-071.jpg" />
+        </p>
+        <p>A homogeneous, stationary time series can be arrived at by appropriately differencing a homogeneous, nonstationary time series (Box and Jenkins 1976, p. 85). Preliminary application of an appropriate transformation followed by differencing of a series enables model identification and parameter estimation in the class of homogeneous stationary <a href="IMSL_ARMA.htm">IMSL_ARMA</a>.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>Consider the Airline Data (Box and Jenkins 1976, p. 531) consisting of the monthly total number of international airline passengers from January 1949 through December 1960. The entire data, after taking a natural logarithm, are shown in the plot below. The plot shows a linear trend and a seasonal pattern with a period of 12 months. This suggests that the data needs a nonseasonal difference operator, ∆<sub>1</sub>, and a seasonal difference operator, ∆<sub>12</sub>, to make the series stationary. The IMSL_DIFFERENCE function is used to compute:</p>
+        <p><i>W</i><sub>t</sub> = ∆<sub>1</sub>∆<sub>12</sub><i>Z</i><sub>t</sub> = (<i>Z</i><sub>t</sub> – <i>Z</i><sub>t</sub> – 12) – (<i>Z</i><sub>t</sub> – 1 – <i>Z</i><sub>t</sub> – 13)</p>
+        <p>for <i>t</i> = 14, 15, ..., 24.</p>
+        <p class="Code">ztemp = ALOG(IMSL_STATDATA(4))</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Get the data set.</p>
+        <p class="Code">PLOT, INDGEN(144), ztemp, Psym = -6, Symsize = .5, $ </p>
+        <p class="Code">&#160;&#160;YStyle = 1, Title	= 'Complete Airline Data', $</p>
+        <p class="Code">&#160;&#160;XTitle = 'Month (beginning 1949)', $</p>
+        <p class="Code">&#160;&#160;YTitle = '!8ln!3(thousands of Passengers)'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Plot the complete data set. z = ztemp(0:23)</p>
+        <p class="Code">periods = [1, 12]</p>
+        <p class="Code">difference = IMSL_DIFFERENCE(z, periods)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_DIFFERENCE.</p>
+        <p class="Code">matrix = [[INDGEN(24)], [z], [difference]]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Create a matrix of the data to make the output easier. </p>
+        <p class="Code">PM, matrix, FORMAT = '(i4, x, 2f7.1)', $</p>
+        <p class="Code">&#160;&#160;Title = '	I	z(i)	difference(i)'</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_DIFFERENCE-073.jpg" />
+        </p>
+        <p>
+            <img src="images/timeseries03.gif" />
+        </p>
+        <h3>Example 2</h3>
+        <p>The data for this example is the same as that for the initial example. The first <a href="#NUM_LOST" class="selected">NUM_LOST</a> observations are excluded from <i>W</i> due to differencing, and NUM_LOST also is output.</p>
+        <p class="Code">ztemp = ALOG(IMSL_STATDATA(4))</p>
+        <p class="Code">z = ztemp(0:23)</p>
+        <p class="Code">periods = [1, 12]</p>
+        <p class="Code">diff = IMSL_DIFFERENCE(z, periods, $</p>
+        <p class="Code">&#160;&#160;/EXCLUDE_FIRST, NUM_LOST = num_lost)</p>
+        <p class="Code">num_valid = N_ELEMENTS(z) - num_lost</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Use Num_Lost to compute the number of rows in the result</p>
+        <p class="Code">; that have valid values.</p>
+        <p class="Code">matrix = [[INDGEN(num_valid)], [z(0:num_valid-1)], $ </p>
+        <p class="Code">&#160;&#160;[DIFF(0:num_valid-1)]]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Put the data in one matrix to make printing easier. </p>
+        <p class="Code">PM, matrix, FORMAT = '(i4, x, 2f7.1)', $</p>
+        <p class="Code">&#160;&#160;TITLE = '	i	z(i)	IMSL_DIFFERENCE(i)'</p>
+        <p>Result:</p>
+        <p>
+            <img src="images/IMSL_DIFFERENCE-072.jpg" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Fatal Errors</h3>
+        <p>STAT_PERIODS_LT_ZERO: Parameter periods (#) = #. All elements of <i>Periods</i> must be greater than zero.</p>
+        <p>STAT_ORDER_NEGATIVE: Parameter order (#) = #. All elements of order must be nonnegative.</p>
+        <p>STAT_Z_CONTAINS_NAN: Parameter z (#) = NaN; <i>Z</i> cannot contain missing values. Other elements of <i>Z</i> may be equal to NaN.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_DIFFERENCE(<i>Z</i>, <i>Periods</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, /<a href="#EXCLUDE_FIRST" class="selected">EXCLUDE_FIRST</a>] [, /<a href="#FIRST_TO_NAN" class="selected">FIRST_TO_NAN</a>] [, <a href="#NUM_LOST" class="selected">NUM_LOST</a>=<i>variable</i>] [, <a href="#ORDERS" class="selected">ORDERS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length N_ELEMENTS (<i>Z</i>) containing the differenced series.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Z</h3>
+        <p>One-dimensional array containing the time series.</p>
+        <h3 class="Argument">Periods</h3>
+        <p>One-dimensional array containing the periods at which <i>Z</i> is to be differenced.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="EXCLUDE_FIRST"></a>EXCLUDE_FIRST (optional)</h3>
+        <p>If EXCLUDE_FIRST is set to a nonzero value, the first NUM_LOST observations are excluded from the solution due to differencing. The differenced series is of length N_ELEMENTS(<i>Periods</i>) – NUM_LOST. If FIRST_TO_NAN is specified, the first NUM_LOST observations are set to NaN (Not a Number). This is the default if neither EXCLUDE_FIRST nor FIRST_TO_NAN is specified.</p>
+        <h3 class="Keyword"><a name="FIRST_TO_NAN"></a>FIRST_TO_NAN (optional)</h3>
+        <p>If EXCLUDE_FIRST is present and nonzero, the first NUM_LOST observations are excluded from the solution due to differencing. The differenced series is of length N_ELEMENTS(<i>Periods</i>) – NUM_LOST. If FIRST_TO_NAN is specified, the first NUM_LOST observations are set to NaN (Not a Number). This is the default if neither EXCLUDE_FIRST nor FIRST_TO_NAN is specified.</p>
+        <h3 class="Keyword"><a name="NUM_LOST"></a>NUM_LOST (optional)</h3>
+        <p>Named variable into which the number of observations "lost" because of differencing the time series <i>Z</i> is stored.</p>
+        <h3 class="Keyword"><a name="ORDERS"></a>ORDERS (optional)</h3>
+        <p>One-dimensional array of length N_ELEMENTS(<i>Periods</i>) containing the order of each difference given in periods. The elements of ORDERS must be greater than or equal to 0. The default behavior is that all elements equal 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

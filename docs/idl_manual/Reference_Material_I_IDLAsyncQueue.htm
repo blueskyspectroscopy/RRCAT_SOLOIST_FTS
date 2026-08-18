@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLAsyncQueue</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLAsyncQueue</span>
+        </div>
+        <h1 class="ObjClass">IDLAsyncQueue</h1>
+        <p>The IDLAsyncQueue class manages a collection of <a href="IDLAsyncJob.htm">IDLAsyncJob</a> objects that are to be executed at some point in the future. It holds the jobs in a list to guarantee order of execution, but it implies no other constraints on which jobs can or cannot be executed concurrently. This class will keep the job objects from being garbage collected by holding ObjRefs to them, at least until they are complete. Once a job is completed, this object forgets about it, so an external ObjRef to the job is needed to prevent it from being garbage collected.</p>
+        <h2 class="API">Superclasses</h2>
+        <ul>
+            <li value="1"><a href="../../Object Classes/Miscellaneous/IDL_Object.htm">IDL_OBJECT</a>
+            </li>
+        </ul>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncQueue( [CONCURRENCY=<i>Value</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">CONCURRENCY (optional)</h3>
+        <p>Specify the initial value of the CONCURRENCY property. The default value is 1 if not set.</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1">IDLAsyncQueue()</li>
+            <li value="2"><a href="#OnJobDone" class="selected">IDLAsyncQueue::OnJobDone</a>
+            </li>
+            <li value="3"><a href="#RunningCount" class="selected">IDLAsyncQueue::RunningCount</a>
+            </li>
+            <li value="4"><a href="#SubmitJob" class="selected">IDLAsyncQueue::SubmitJob</a>
+            </li>
+            <li value="5"><a href="#WaitingCount" class="selected">IDLAsyncQueue::WaitingCount</a>
+            </li>
+        </ul>
+        <h2 class="API">Properties</h2>
+        <h3 class="Property">CONCURRENCY (Init, Get, Set)</h3>
+        <p>The number of queued jobs that are allowed to run concurrently at any point in time. Note that if this property value is changed to a smaller value, the number of concurrent jobs at that point in time may exceed the new value for this property. However, no new jobs will be executed until this concurrency constraint is satisfied.</p>
+        <h1 class="ObjMethod"><a name="OnJobDone"></a>IDLAsyncQueue::OnJobDone</h1>
+        <p>The IDLAsyncQueue::OnJobDone method is a callback invoked by any job executed by this queue when it finishes its execution. After this job has been removed, the IDLAsyncQueue will check if there are any available concurrency slots in which to execute any queued jobs.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncQueue.OnJobDone, <i>Job</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Job</h3>
+        <p>An IDLAsyncJob object that has completed execution and can be removed from the list of running jobs. If the job is unknown to this queue, it will be ignored.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="RunningCount"></a>IDLAsyncQueue::RunningCount</h1>
+        <p>The IDLAsyncQueue::RunningCount method returns the number of jobs that have been queued and are currently executing.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncQueue.RunningCount()</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="SubmitJob"></a>IDLAsyncQueue::SubmitJob</h1>
+        <p>The IDLAsyncQueue::SubmitJob method adds one or more IDLAsyncJob objects to the internal queue to be executed when resources are ready in the future. After the job(s) are queued, the IDLAsyncQueue will check if there are any available concurrency slots in which to execute any jobs.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncQueue.SubmitJob, <i>Job</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Job</h3>
+        <p>One or more IDLAsyncJob objects to be queued for future execution. If any of these jobs has already been queued for execution, an error will be issued.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="WaitingCount"></a>IDLAsyncQueue::WaitingCount</h1>
+        <p>The IDLAsyncQueue::WaitingCount method returns the number of jobs in the queue awaiting execution.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncQueue.WaitingCount()</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p> None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLAsyncJob.htm">IDLAsyncJob</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

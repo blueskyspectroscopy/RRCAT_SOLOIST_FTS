@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_STEPWISE</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_STEPWISE</span>
+        </div>
+        <h1 class="Routine">IMSL_STEPWISE</h1>
+        <p>The IMSL_STEPWISE procedure builds multiple linear regression models using forward, backward, or stepwise selection.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_STEPWISE procedure builds a multiple linear regression model using forward, backward, or forward stepwise (with a backward glance) selection. The IMSL_STEPWISE procedure is designed so you can monitor, and perhaps change, the variables added (deleted) to (from) the model after each step. In this case, multiple calls to IMSL_STEPWISE (using keywords FIRST_STEP, INTER_STEP, or LAST_STEP) are made. Alternatively, IMSL_STEPWISE can be invoked once (default, or specify keyword ALL_STEPS) in order to perform the stepping until a final model is selected.</p>
+        <p>Levels of priority can be assigned to the candidate independent variables (use keyword LEVEL). All variables with a priority level of 1 must enter the model before variables with a priority level of 2. Similarly, variables with a level of 2 must enter before variables with a level of 3, etc. Variables also can be forced into the model (see keyword FORCE). Note that specifying keyword Force without also specifying keyword LEVEL results in all variables being forced into the model.</p>
+        <p>Typically, the intercept is forced into all models and is not a candidate variable. In this case, a sum-of-squares and crossproducts matrix for the independent and dependent variables corrected for the mean is used. Other possibilities are as follows:</p>
+        <ul>
+            <li value="1">The intercept is not in the model. A raw (uncorrected) sum-of-squares and crossproducts matrix for the independent and dependent variables is required as input in COV_INPUT. Keyword COV_NOBS must be set to 1 greater than the number of observations.</li>
+            <li value="2">An intercept is to be a candidate variable. A raw (uncorrected) sum-of-squares and crossproducts matrix for the constant regressor (=1), independent and dependent variables are required for COV_INPUT. In this case, COV_INPUT contains one additional row and column corresponding to the constant regressor. This row/column contains the sum-of-squares and crossproducts of the constant regressor with the independent and dependent variables. The remaining elements in COV_INPUT are the same as in the previous case. Keyword COV_NOBS must be set to 1 greater than the number of observations.</li>
+        </ul>
+        <p>The stepwise regression algorithm is due to Efroymson (1960). The IMSL_STEPWISE procedure uses sweeps of the covariance matrix (input using keyword COV_INPUT, if specified, or generated internally by default) to move variables in and out of the model (Hemmerle 1967, Chapter 3). The SWEEP operator discussed in Goodnight (1979) is used. A description of the stepwise algorithm also is given by Kennedy and Gentle (1980, pp. 335–340). The advantage of stepwise model building over all possible regression (see <a href="IMSL_ALLBEST.htm">IMSL_ALLBEST</a>) is that it is less demanding computationally when the number of candidate independent variables is very large. However, there is no guarantee that the model selected will be the best model (highest R<sup>2</sup>) for any subset size of independent variables.</p>
+        <h2 class="API">Example</h2>
+        <p>This example uses a data set from Draper and Smith (1981, pp. 629-630). Backwards stepping is performed by default. First, a procedure to output the results is defined.</p>
+        <p class="Code">PRO print_results, anova_table, t, s</p>
+        <p class="Code">labels = ['df for regression	', $</p>
+        <p class="Code_Indented">'df for error                  ', $</p>
+        <p class="Code_Indented">'total df                      ', $</p>
+        <p class="Code_Indented">'ss for regression             ', $</p>
+        <p class="Code_Indented">'ss for error                  ', $</p>
+        <p class="Code_Indented">'total ss                      ', $</p>
+        <p class="Code_Indented">'mean square for regression     ', $</p>
+        <p class="Code_Indented">'mean square error             ', $</p>
+        <p class="Code_Indented">'F-statistic                   ', $</p>
+        <p class="Code_Indented">'p-value                       ', $</p>
+        <p class="Code_Indented">'R-squared (in percent)         ', $</p>
+        <p class="Code_Indented">'adjusted R-squared (in percent)'] </p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code">PRINT, '	* * Analysis of Variance * *'</p>
+        <p class="Code">; Print the table.</p>
+        <p class="Code">FOR i = 0, 11 DO PRINT, labels(i), $</p>
+        <p class="Code_Indented">anova_table(i), FORMAT = '(a32,f8.2)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, '* * Inference on Coefficients * *'</p>
+        <p class="Code_Indented">PRINT, '           Estimate    s.e.       t' + $</p>
+        <p class="Code_Indented2">'	prob&gt;t	swept'</p>
+        <p class="Code_Indented">PRINT,'$(a, 4f10.4)','variable 1',t(0,*),s(0)</p>
+        <p class="Code_Indented">PRINT,'$(a, 4f10.4)','variable 2',t(1,*),s(1)</p>
+        <p class="Code_Indented">PRINT,'$(a, 4f10.4)','variable 3',t(2,*),s(2)</p>
+        <p class="Code_Indented">PRINT,'$(a, 4f10.4)','variable 4',t(3,*),s(3)</p>
+        <p class="Code">END</p>
+        <p class="Code">x = MAKE_ARRAY(13, 4)</p>
+        <p class="Code">; Define the data.</p>
+        <p class="Code">x(0, *) = [7., 26., 6., 60.]</p>
+        <p class="Code">x(1, *) = [1., 29., 15., 52.]</p>
+        <p class="Code">x(2, *) = [11., 56., 8., 20.]</p>
+        <p class="Code">x(3, *) = [11., 31., 8., 47.]</p>
+        <p class="Code">x(4, *) = [7., 52., 6., 33.]</p>
+        <p class="Code">x(5, *) = [11., 55., 9., 22.] </p>
+        <p class="Code">x(6, *) = [3., 71., 17., 6.]</p>
+        <p class="Code">x(7, *) = [1., 31., 22., 44.]</p>
+        <p class="Code">x(8, *) = [2., 54., 18., 22.]</p>
+        <p class="Code">x(9, *) = [21., 47., 4., 26.]</p>
+        <p class="Code">x(10, *) = [1., 40., 23., 34.]</p>
+        <p class="Code">x(11, *) = [11., 66., 9., 12.]</p>
+        <p class="Code">x(12, *) = [10., 68., 8., 12.]</p>
+        <p class="Code">y = [78.5, 74.3, 104.3, 87.6, 95.9, $</p>
+        <p class="Code_Indented">109.2, 102.7, 72.5, 93.1, 115.9, 83.8, 113.3, 109.4]</p>
+        <p class="Code">IMSL_STEPWISE, x, y, Anova_Table = anova_table, $</p>
+        <p class="Code_Indented">Coef_T_Tests = t, swept = s</p>
+        <p class="Code_Indented">; Backward stepwise regression.</p>
+        <p class="Code">print_results, anova_table, t, s</p>
+        <p class="Code">END</p>
+        <p>IDL prints:</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;* * Analysis of Variance * *</p>
+        <p class="Code">df for regression&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;2.00</p>
+        <p class="Code">df for error&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;10.00</p>
+        <p class="Code">total df&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;12.00</p>
+        <p class="Code">ss for regression&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;2657.86</p>
+        <p class="Code">ss for error&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;57.90</p>
+        <p class="Code">total ss&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;2715.76</p>
+        <p class="Code">mean square for regression&#160;&#160;&#160;&#160;&#160;&#160;1328.93</p>
+        <p class="Code">mean square error&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;5.79</p>
+        <p class="Code">F-statistic&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;229.50</p>
+        <p class="Code">P-value&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0.00</p>
+        <p class="Code">R-squared (in percent)&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;97.87</p>
+        <p class="Code">adjusted R-squared (in percent)&#160;&#160;&#160;97.44</p>
+        <p class="Code">* * Inference on Coefficients *	*</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Estimate&#160;&#160;&#160;s.e.&#160;&#160;&#160;&#160;&#160;&#160;&#160;t&#160;&#160;&#160;&#160;&#160;&#160;&#160;prob&gt;t&#160;&#160;&#160;swept</p>
+        <p class="Code">variable 1&#160;&#160;&#160;&#160;1.4683&#160;&#160;&#160;0.1213&#160;&#160;&#160;12.1046&#160;&#160;   0.0000&#160;&#160;&#160;&#160;&#160;&#160;1.</p>
+        <p class="Code">variable 2&#160;&#160;&#160;&#160;0.6623&#160;&#160;&#160;0.0459&#160;&#160;&#160;14.4423&#160;&#160;&#160;   0.0000&#160;&#160;&#160;&#160;&#160;&#160;1.</p>
+        <p class="Code">variable 3&#160;&#160;&#160;&#160;0.2500&#160;&#160;&#160;0.1847&#160;&#160;&#160;&#160;1.3536&#160;&#160;&#160;0.2089&#160;&#160;&#160;&#160;&#160;-1.</p>
+        <p class="Code">variable 4&#160;&#160;&#160;-0.2365&#160;&#160;&#160;0.1733&#160;&#160;&#160;-1.3650&#160;&#160;   0.2054&#160;&#160;&#160;&#160;&#160;-1.</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_LINEAR_DEPENDENCE_1: Based on Tolerance = #, there are linear dependencies among the variables to be forced.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_NO_VARIABLES_ENTERED: No variables entered the model. All elements of Anova_Table are set to NaN.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IMSL_STEPWISE, x, y [, /ALL_STEPS] [, ANOVA_TABLE=<i>variable</i>] [, /<a href="#BACKWARD" class="selected">BACKWARD</a>] [, <a href="#COV_NOBS" class="selected">COV_NOBS</a>=<i>value</i>] [, <a href="#COV_INPUT" class="selected">COV_INPUT</a>=<i>array</i>] [, <a href="#COEF_T_TESTS" class="selected">COEF_T_TESTS</a>=<i>variable</i>] [, <a href="#COEF_VIF" class="selected">COEF_VIF</a>=<i>variable</i>] [, <a href="#COV_SWEPT" class="selected">COV_SWEPT</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, /<a href="#FIRST_STEP" class="selected">FIRST_STEP</a>] [, <a href="#FORCE" class="selected">FORCE</a>=<i>value</i>] [, <a href="#FORWARD" class="selected">FORWARD</a>] [, <a href="#FREQUENCIES" class="selected">FREQUENCIES</a>=<i>array</i>] [, <a href="#HISTORY" class="selected">HISTORY</a>=<i>variable</i>] [, /<a href="#INTER_STEP" class="selected">INTER_STEP</a>] [, /<a href="#LAST_STEP" class="selected">LAST_STEP</a>] [, <a href="#IEND" class="selected">IEND</a>=<i>variable</i>] [, <a href="#LEVEL" class="selected">LEVEL</a>=<i>array</i>] [, <a href="#N_STEPS" class="selected">N_STEPS</a>=<i>value</i>] [, <a href="#P_IN" class="selected">P_IN</a>=<i>value</i>] [, <a href="#P_OUT" class="selected">P_OUT</a>=<i>value</i>] [, /<a href="#STEPWISE" class="selected">STEPWISE</a>] [, <a href="#SWEPT" class="selected">SWEPT</a>=<i>value</i>] [, /<a href="#TOLERANCE" class="selected">TOLERANCE</a>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>array</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>Two-dimensional array containing the data for the candidate variables.</p>
+        <h3 class="Argument">Y</h3>
+        <p>Array of length N_ELEMENTS(<i>x</i>(*, 0)) containing the responses for the dependent variable.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ANOVA_TABLE"></a>ANOVA_TABLE (optional)</h3>
+        <p>Named variable into which the one-dimensional array containing the analysis of variance table is stored. The analysis of variance statistics are as follows:</p>
+        <ul>
+            <li value="1">0: Degrees of freedom for regression</li>
+            <li value="2">1: Degrees of freedom for error</li>
+            <li value="3">2: Total degrees of freedom</li>
+            <li value="4">3: Sum of squares for regression</li>
+            <li value="5">4: Sum of squares for error</li>
+            <li value="6">5: Total sum of squares</li>
+            <li value="7">6: Regression mean square</li>
+            <li value="8">7: Error mean square</li>
+            <li value="9">8: <i>F</i>-statistic</li>
+            <li value="10">9: <i>p</i>-value</li>
+            <li value="11">10: R<sup>2</sup> (in percent)</li>
+            <li value="12">11: Adjusted R<sup>2</sup> (in percent)</li>
+            <li value="13">12: Estimate of the standard deviation</li>
+        </ul>
+        <h3 class="Keyword"><a name="BACKWARD"></a>BACKWARD (optional)</h3>
+        <p>An attempt is made to remove a variable from the model. A variable is removed if its <i>p</i>-value exceeds P_OUT. During initialization, all candidate independent variables enter the model. One or none of these options can be specified: BACKWARD, FORWARD, STEPWISE. If none are specified, the default is BACKWARD.</p>
+        <h3 class="Keyword"><a name="COV_NOBS"></a>COV_NOBS (optional)</h3>
+        <p>The number of observations associated with array COC_INPUT. COV_INPUT and COV_NOBS must be used together.</p>
+        <h3 class="Keyword"><a name="COV_INPUT"></a>COV_INPUT (optional)</h3>
+        <p>Two-dimensional square array of size (N_ELEMENTS(x(0,*)) + 1) x (N_ELEMENTS(x(0,*)) + 1) containing a variance-covariance or sum-of-squares and crossproducts matrix, in which the last column must correspond to the dependent variable.</p>
+        <p>Array COV_INPUT can be computed using IMSL_COVARIANCES. Arguments <i>X</i> and <i>Y</i>, and keywords FREQUENCIES and WEIGHTS are not accessed when this option is specified. Normally, <a href="IMSL_ALLBEST.htm">IMSL_ALLBEST</a> computes COV_INPUT from the input data matrices <i>x</i> and <i>y</i>. However, there may be cases when you want to calculate the covariance matrix and manipulate it before calling IMSL_ALLBEST. See the description at the beginning of this topic  for a discussion of such cases. COV_INPUT and COV_NOBS must be used together.</p>
+        <h3 class="Keyword"><a name="COEF_T_TESTS"></a>COEF_T_TESTS (optional)</h3>
+        <p>Named variable into which the two-dimensional array containing statistics relating to the regression coefficient for the final model in this invocationing is stored. The rows correspond to the N_ELEMENTS(<i>x</i>(0, *)) in dependent variables. The rows are in the same order as the variables in x (or, if COV_INPUT is specified, the rows are in the same order as the variables in COV_INPUT ). Each row corresponding to a variable not in the model contains statistics for a model which includes the variables of the final model and the variable corresponding to the row in question.</p>
+        <ul>
+            <li value="1">0: Coefficient estimate</li>
+            <li value="2">1: Estimated standard error of the coefficient estimate</li>
+            <li value="3">2: <i>t</i>-statistic for the test that the coefficient is zero</li>
+            <li value="4">3: <i>p</i>-value for the two-sided <i>t</i> test</li>
+        </ul>
+        <h3 class="Keyword"><a name="COEF_VIF"></a>COEF_VIF (optional)</h3>
+        <p>Named variable into which the two-dimensional array containing variance inflation factors for the final model in this invocation is stored. The elements correspond to the N_ELEMENTS (x(0, *)) in dependent variables. The elements are in the same order as the variables in <i style="text-decoration: underline;">x</i> (or, if COV_INPUT is specified, the elements are in the same order as the variables in COV_INPUT). Each element corresponding to a variable not in the model contains statistics for a model which includes the variables of the final model and the variables corresponding to the element in question.</p>
+        <p>The square of the multiple correlation coefficient for the <i>i</i>-th regressor after all others have been obtained from VIF = COEF_VIF (<i>i</i>) by the following formula:</p>
+        <p>1.0 – (1.0/VIF)</p>
+        <h3 class="Keyword"><a name="COV_SWEPT"></a>COV_SWEPT (optional)</h3>
+        <p>Named variable into which the two-dimensional array of size N_ELEMENTS (<i>x</i>(0, *)) + 1) x (N_ELEMENTS (<i>x</i>(0, *)) + 1) that results after COV_SWEPT has been swept on the columns corresponding to the variables in the model. The estimated variance- covariance matrix of the estimated regression coefficients in the final model can be obtained by extracting the rows and columns of COV_SWEPT corresponding to the independent variables in the final model and multiplying the elements of this matrix by ANOVA_TABLE.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="FIRST_STEP"></a>FIRST_STEP</h3>
+        <p>This is the first invocation; additional calls will be made. Initialization and stepping is performed. One or none of the following options can be specified: FIRST_STEP INTER_STEP, LAST_STEP, and ALL_STEPS. If none are specified, the default is ALL_STEPS.</p>
+        <h3 class="Keyword"><a name="FORCE"></a>FORCE (optional)</h3>
+        <p>Scalar integer specifying how variables are forced into the model as independent variables. Variable with levels 1, 2, ..., FORCE are forced into the model as independent variables. See the keyword LEVEL.</p>
+        <h3 class="Keyword"><a name="FORWARD"></a>FORWARD (optional)</h3>
+        <p>An attempt is made to add a variable to the model. A variable is added if its <i>p</i>-value is less than P_IN. During initialization, only the forced variables enter the model. One or none of these options can be specified: BACKWARD, FORWARD, STEPWISE. If none are specified, the default is BACKWARD.</p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>One-dimensional array containing the frequency for each row of <i>x</i>. Default: (*) = 1</p>
+        <h3 class="Keyword"><a name="HISTORY"></a>HISTORY (optional)</h3>
+        <p>Named variable into which the one-dimensional array of length N_ELEMENTS (<i>x</i>(0, *)) + 1 containing the recent history of the independent variables is stored.</p>
+        <p>Element History(N_ELEMENTS (<i>x</i>(0, *))) usually corresponds to the dependent variable (see Level) as shown in the following:</p>
+        <table class="TableStyle_Description" style="mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>History (i)</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>	Status of <i>i</i>-th Variable</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0.0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Variable has never been added to model.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>0.5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Variable was added into the model during initialization.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p><i>k</i> &gt; 0.0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Variable was added to the model during the <i>k</i>-th step.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p><i>k</i> &lt; 0.0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Variable was deleted from model during the <i>k</i>-th step.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="INTER_STEP"></a>INTER_STEP (optional)</h3>
+        <p>This is an intermediate invocation. Stepping is performed. One or none of the following options can be specified: FIRST_STEP INTER_STEP, LAST_STEP, and ALL_STEPS. If none are specified, the default is ALL_STEPS.</p>
+        <h3 class="Keyword"><a name="LAST_STEP"></a>LAST_STEP (optional)</h3>
+        <p>This is the final invocation. Stepping and wrap-up computations are performed. One or none of the following options can be specified: FIRST_STEP INTER_STEP, LAST_STEP, and ALL_STEPS. If none are specified, the default is ALL_STEPS.</p>
+        <h3 class="Keyword"><a name="IEND"></a>IEND (optional)</h3>
+        <p>Named variable into which an integer which indicates whether additional steps are possible is stored.</p>
+        <ul>
+            <li value="1">0: Additional steps may be possible</li>
+            <li value="2">1: No additional steps are possible</li>
+        </ul>
+        <h3 class="Keyword"><a name="LEVEL"></a>LEVEL (optional)</h3>
+        <p>Array of length N_ELEMENTS(<i>x</i>(0, *)) + 1 containing levels of priority for variables entering and leaving the regression. Each variable is assigned a positive value that indicates its level of entry into the model. A variable can enter the model only after all variables with smaller nonzero levels of entry have entered. Similarly, a variable can only leave the model after all variables with higher levels of entry have left. Variables with the same level of entry compete for entry (deletion) at each step. LEVEL(<i>i</i>) = 0 means the <i>i</i>-th variable is never to enter the model. LEVEL(<i>i</i>) = –1 means the <i>i</i>-th variable is the dependent variable. LEVEL (N_ELEMENTS(<i>x</i>(0, *))) must correspond to the dependent variable, except when COV_INPUT is specified. Default: 1, 1, ..., 1, –1, where –1 corresponds to LEVEL (N_ELEMENTS(<i>x</i>(0, *))).</p>
+        <h3 class="Keyword"><a name="N_STEPS"></a>N_STEPS (optional)</h3>
+        <p>For nonnegative N_STEPS, N_STEPS steps are taken. If  N_STEPS = –1, stepping continues until completion. N_STEPS is not referenced if ALL_STEPS is used. Default: 1</p>
+        <h3 class="Keyword"><a name="P_IN"></a>P_IN (optional)</h3>
+        <p>Largest p-value for variable entering the model. Variables with <i>p</i>-values less than P_IN may enter the model. Default: 0.05</p>
+        <h3 class="Keyword"><a name="P_OUT"></a>P_OUT (optional)</h3>
+        <p>Smallest <i>p</i>-value for removing variables with <i>p</i>-values greater than P_OUT may leave the model. Keyword P_OUT must be greater than or equal to P_IN. A common choice for P_OUT is 2*P_IN. Default: 0.10</p>
+        <h3 class="Keyword"><a name="STEPWISE"></a>STEPWISE (optional)</h3>
+        <p>A backward step is attempted. If a variable is not removed, a forward step is attempted. This is a stepwise step. Only the forced variables enter the model during initialization. One or none of these options can be specified: BACKWARD, FORWARD, STEPWISE. If none are specified, the default is BACKWARD.</p>
+        <h3 class="Keyword"><a name="SWEPT"></a>SWEPT (optional)</h3>
+        <p>Named variable into which the one-dimensional array of length (N_ELEMENTS(<i>x</i>(0, *)) + 1) with information to indicate the independent variables in the model is stored. Keyword SWEPT (N_ELEMENTS (<i>x</i>(0, *))) usually corresponds to the dependent variable (see LEVEL).</p>
+        <ul>
+            <li value="1">–1: Variable i is not in model.</li>
+            <li value="2">1: Variable i is in model.</li>
+        </ul>
+        <h3 class="Keyword"><a name="TOLERANCE"></a>TOLERANCE (optional)</h3>
+        <p>Tolerance used in determining linear dependence. Default: 100*ε, where ε is machine precision.</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>One-dimensional array containing the weight for each row of <i>x</i>. Default: (*) = 1</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_ALLBEST.htm">IMSL_ALLBEST</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

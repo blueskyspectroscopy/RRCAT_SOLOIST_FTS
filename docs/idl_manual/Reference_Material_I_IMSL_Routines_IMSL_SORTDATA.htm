@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_SORTDATA</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_SORTDATA</span>
+        </div>
+        <h1 class="Routine">IMSL_SORTDATA</h1>
+        <p>The IMSL_SORTDATA function sorts observations by specified keys, with option to tally cases into a multiway frequency table.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_SORTDATA function can perform both a key sort and/or tabulation of frequencies into a multiway frequency table.</p>
+        <h3>Sorting</h3>
+        <p>The IMSL_SORTDATA function sorts the rows of real matrix x using particular columns in x as the keys. The sort is algebraic with the first key as the most significant, the second key as the next most significant, etc. When x is sorted in ascending order, the resulting sorted array is such that the following is true:</p>
+        <ul>
+            <li value="1">For i = 0, 1, ..., N_ELEMENTS (x(*, 0)) – 2, x(1, INDICES_KEYS(0)) ≤ x(i + 1, INDICES_KEYS(0))</li>
+            <li value="2">For k = 1, ..., n_keys – 1, if x(1, INDICES_KEYS(j)) = x(i + 1, INDICES_KEYS(j)) for j = 0, 1, ..., k – 1, then x(1, INDICES_KEYS(j)) = x(i + 1, INDICES_KEYS(k)) The observations also can be sorted in descending order</li>
+        </ul>
+        <p>The rows of x containing the missing value code NaN in at least one of the specified columns are considered as an additional group. These rows are moved to the end of the sorted x.</p>
+        <p>The sorting algorithm is based on a quicksort method given by Singleton (1969) with modifications by Griffin and Redish (1970) and Petro (1970).</p>
+        <h3>Frequency Tabulation</h3>
+        <p>The IMSL_SORTDATA function determines the distinct values in multivariate data and computes frequencies for the data. This function accepts the data in the matrix x but performs computations only for the variables (columns) in the first n_keys columns of x (Exception: see optional the keyword INDICES_KEYS). In general, the variables for which frequencies should be computed are discrete; they should take on a relatively small number of different values. Variables that are continuous can be grouped first. The IMSL_FREQTABLE function can be used to group variables and determine the frequencies of groups.</p>
+        <p>When the TABLE_N, TABLE_VALUES, and TABLE_BAL keywords are specified, IMSL_SORTDATA fills the vector TABLE_VALUES with the unique values of the variables and tallies the number of unique values of each variable in the vector TABLE_BAL. Each combination of one value from each variable forms a cell in a multiway table. The frequencies of these cells are entered in TABLE_BAL so that the first variable cycles through its values exactly once and the last variable cycles through its values most rapidly. Some cells cannot correspond to any observations in the data; in other words, “missing cells” are included in the TABLE_BAL table and have a value of zero.</p>
+        <p>When N_LIST_CELLS, LIST_CELLS, and TABLE_UNBAL are specified, the frequency of each cell is entered in TABLE_UNBAL so that the first variable cycles through its values exactly once and the last variable cycles through its values most rapidly. All cells have a frequency of at least 1, i.e., there is no “missing cell.” The array LIST_CELLS can be considered “parallel” to TABLE_UNBAL because row i of LIST_CELLS is the set of n_keys values that describes the cell for which row i of TABLE_UNBAL contains the corresponding frequency.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The rows of a 10 x 3 matrix x are sorted in ascending order using Columns 0 and 1 as the keys. There are two missing values (NaNs) in the keys. The observations containing these values are moved to the end of the sorted array.</p>
+        <p class="Code">f = IMSL_MACHINE(/Float)</p>
+        <p class="Code">c0 =[1.0, 2.0, 1.0, 1.0, 2.0, 1.0, f.NaN, 1.0, 2.0, 1.0]</p>
+        <p class="Code">c1 =[1.0, 1.0, 1.0, 1.0, f.NaN, 2.0, 2.0, 1.0, 2.0, 1.0]</p>
+        <p class="Code">c2 =[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 9.0]</p>
+        <p class="Code">x = [ [c0], [c1], [c2] ]</p>
+        <p class="Code">PM, x, Title = 'Unsorted Matrix'</p>
+        <p class="Code">Unsorted Matrix</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;1.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;2.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;3.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;4.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;5.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;6.00000</p>
+        <p class="Code">&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;7.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;8.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">PM, IMSL_SORTDATA(x, 2), Title = 'Sorted Matrix'</p>
+        <p class="Code">Sorted Matrix:</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;1.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;3.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;4.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;8.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;6.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;2.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;7.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;5.00000</p>
+        <h3>Example 2</h3>
+        <p>This example uses the same data as the previous example. The permutation of the rows is output using the keyword Permutation.</p>
+        <p class="Code">f = IMSL_MACHINE(/Float)</p>
+        <p class="Code">c0 =[1.0, 2.0, 1.0, 1.0, 2.0, 1.0, f.NaN, 1.0, 2.0, 1.0]</p>
+        <p class="Code">c1 =[1.0, 1.0, 1.0, 1.0, f.NaN, 2.0, 2.0, 1.0, 2.0, 1.0]</p>
+        <p class="Code">c2 =[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 9.0]</p>
+        <p class="Code">; Fill up a matrix, including some missing values.</p>
+        <p class="Code">x = [ [c0], [c1], [c2] ]</p>
+        <p class="Code">PM, x, Title = 'Unsorted Matrix'</p>
+        <p class="Code">; Output the unsorted matrix.</p>
+        <p class="Code">Unsorted Matrix</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;1.0000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;2.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;3.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;4.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;5.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;6.00000</p>
+        <p class="Code">&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;7.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;8.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">y = IMSL_SORTDATA(x, 2, Permutation = permutation)</p>
+        <p class="Code">; Use IMSL_SORTDATA to sort x.</p>
+        <p class="Code">PM, y, Title = 'Sorted Matrix:'</p>
+        <p class="Code">Sorted Matrix:</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;1.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;3.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;4.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;8.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;6.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;2.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;7.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;5.00000</p>
+        <p class="Code">PM, permutation, Title = 'Permutation Matrix:'</p>
+        <p class="Code">; Print the permutation vector.</p>
+        <p class="Code">Permutation Matrix:</p>
+        <p class="Code">0</p>
+        <p class="Code">9</p>
+        <p class="Code">2</p>
+        <p class="Code">3</p>
+        <p class="Code">7</p>
+        <p class="Code">5</p>
+        <p class="Code">1</p>
+        <p class="Code">8</p>
+        <p class="Code">6</p>
+        <p class="Code">4</p>
+        <p class="Code">z = x(permutation, *)</p>
+        <p class="Code">PM, z, Title = 'Sorted Matrix'</p>
+        <p class="Code">; Use the permutation vector to sort the data.</p>
+        <p class="Code">Sorted Matrix</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;1.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;3.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;4.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;8.00000</p>
+        <p class="Code">1.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;6.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;1.00000&#160;&#160;&#160;&#160;2.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;9.00000</p>
+        <p class="Code">&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;2.00000&#160;&#160;&#160;&#160;7.00000</p>
+        <p class="Code">2.00000&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;NaN&#160;&#160;&#160;&#160;5.00000</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_SORTDATA(<i>X, N_Keys</i> [, <a href="#ASCENDING" class="selected">ASCENDING</a>=<i>value</i>] [, <a href="#DESCENDING" class="selected">DESCENDING</a>=<i>value</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FREQUENCIES" class="selected">FREQUENCIES</a>=<i>array</i>] [, <a href="#INDICES_KEYS" class="selected">INDICES_KEYS</a>=<i>array</i>] [, <a href="#LIST_CELLS" class="selected">LIST_CELLS</a>=<i>variable</i>] [, <a href="#N_CELLS" class="selected">N_CELLS</a>=<i>variable</i>] [, <a href="#N_LIST_CELLS" class="selected">N_LIST_CELLS</a>=<i>variable</i>] [, <a href="#PERMUTATION" class="selected">PERMUTATION</a>=<i>variable</i>] [, <a href="#TABLE_BAL" class="selected">TABLE_BAL</a>=<i>variable</i>] [, <a href="#TABLE_N" class="selected">TABLE_N</a>=<i>variable</i>] [, <a href="#TABLE_VALUES" class="selected">TABLE_VALUES</a>=<i>variable</i>] [, <a href="#TABLE_UNBAL" class="selected">TABLE_UNBAL</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The sorted array.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N_Keys</h3>
+        <p>Number of columns of x on which to sort. The first <i>N_Keys</i> columns of <i>X</i> are used as the sorting keys. (Exception: See INDICES_KEYS).</p>
+        <h3 class="Argument">X</h3>
+        <p>One- or two-dimensional array containing the observations to be sorted.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ASCENDING"></a>ASCENDING (optional)</h3>
+        <p>If present and nonzero, the sort is in ascending order. (Default) The keywords ASCENDING and DESCENDING cannot be used together.</p>
+        <h3 class="Keyword"><a name="DESCENDING"></a>DESCENDING (optional)</h3>
+        <p>If present and nonzero, the sort is in descending order. The keywords ASCENDING and DESCENDING cannot be used together.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>One-dimensional array containing the frequency for each observation in x. Default: (*) = 1</p>
+        <h3 class="Keyword"><a name="INDICES_KEYS"></a>INDICES_KEYS (optional)</h3>
+        <p>One-dimensional array of length n_keys giving the column numbers of x which are to be used in the sort. Default: (*) = 0, 1, ..., n_keys – 1</p>
+        <h3 class="Keyword"><a name="LIST_CELLS"></a>LIST_CELLS (optional)</h3>
+        <p>Named variable into which the two-dimensional array of length N_LIST_CELLS x n_keys containing, for each row, a list of the levels of n_keys corresponding classification variables that describe a cell, is stored. The keywords N_LIST_CELLS, LIST_CELLS, and TABLE_UNBAL must be used together.</p>
+        <h3 class="Keyword"><a name="N_CELLS"></a>N_CELLS (optional)</h3>
+        <p>Named variable into which the a one-dimensional array containing the number of observations per group is stored. A group contains observations (rows) in x that are equal with respect to the method of comparison. The first N_CELLS (0) rows of the sorted x are in group number 1. The next N_CELLS (1) rows of the sorted x are in group number 2, etc. The last N_Cells(N_ELEMENTS(N_Cells) – 1) rows of the sorted x are in group number N_ELEMENTS(N_Cells).</p>
+        <h3 class="Keyword"><a name="N_LIST_CELLS"></a>N_LIST_CELLS (optional)</h3>
+        <p>Named variable into which the number of nonempty cells is stored. The keywords N_LIST_CELLS, LIST_CELLS, and TABLE_UNBAL must be used together.</p>
+        <h3 class="Keyword"><a name="PERMUTATION"></a>PERMUTATION (optional)</h3>
+        <p>Named variable into which a one-dimensional array containing the rearrangement (permutation) of the observations (rows) is stored.</p>
+        <h3 class="Keyword"><a name="TABLE_BAL"></a>TABLE_BAL (optional)</h3>
+        <p>Named variable into which an array of length</p>
+        <p>Table_N(0) + Table_N(1) + ... + Table_N(<i>N_Keys</i> – 1), containing the frequencies in the cells of the table to be fit, is stored. Empty cells are included in TABLE_BAL, and each element of TABLE_BAL is nonnegative. The cells of TABLE_BAL are sequenced so that the first variable cycles through its Table_N(0) categories one time, the second variable cycles through its Table_N(1) categories Table_N(0) times, the third variable cycles through its Table_N(2) categories Table_N(0) x Table_N(1) times, etc., up to the <i>N_Keys</i>-th variable, which cycles through its Table_N(<i>N_Keys</i> – 1) categories:</p>
+        <p>Table_N(0) + Table_N(1) + Table_N(<i>N_Keys</i> – 2) times. The keywords TABLE_N, TABLE_VALUES, and TABLE_BAL must be used together.</p>
+        <h3 class="Keyword"><a name="TABLE_N"></a>TABLE_N (optional)</h3>
+        <p>Named variable into which a one-dimensional array of length n_keys, containing in its <i>i</i>-th element (i = 0, 1, ..., (n_keys – 1)) the number of levels or categories of the <i>i</i>-th classification variable (column), is stored. The keywords TABLE_N, TABLE_VALUES, and TABLE_BAL must be used together.</p>
+        <h3 class="Keyword"><a name="TABLE_VALUES"></a>TABLE_VALUES (optional)</h3>
+        <p>Named variable into which an array of length</p>
+        <p>Table_N(0) + Table_N(1) + ... + Table_N(n_keys – 1), containing the values of the classification variables, is stored. The first Table_N(0) elements of TABLE_VALUES contain the values for the first classification variable. The next Table_N(1) contain the values for the second variable. The last Table_N(<i>N_Keys</i> – 1) positions contain the values for the last classification variable. The keywords TABLE_N, TABLE_VALUES, and TABLE_BAL must be used together.</p>
+        <h3 class="Keyword"><a name="TABLE_UNBAL"></a>TABLE_UNBAL (optional)</h3>
+        <p>Named variable into which the one-dimensional array of length N_LIST_CELLS containing the frequency for each cell is stored. The keywords N_LIST_CELLS, LIST_CELLS, and TABLE_UNBAL must be used together.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Environment|Setting Preferences">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>!CPU Settings Preferences</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Concepts.htm">Environment</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="Setting Preferences.htm">Setting Preferences</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">!CPU Settings Preferences</span>
+        </div>
+        <h1><a name="preferences_2247882535_1024551"></a>!CPU Settings Preferences</h1>
+        <p>The preferences with names starting with the IDL_CPU_ prefix supply default values for the related fields of the <a href="IDL_Environment_System_V.htm#!CPU">!CPU</a> system variable.</p>
+        <h2 class="API">IDL_CPU_TPOOL_MAX_ELTS<a name="kanchor4558"></a></h2>
+        <p>The IDL_CPU_TPOOL_MAX_ELTS preference sets the default value of the !CPU.<a href="IDL_Environment_System_V.htm#sysvars_272074529_1014576">TPOOL_MAX_ELTS</a> system variable, which sets the maximum number of elements in a computation for which IDL uses the thread pool.</p>
+        <p>Committed changes take effect immediately. The default value is 0, meaning that no maximum limit is imposed, and any computation with at least !CPU.TPOOL_MIN_ELTS is a candidate for the thread pool.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API">IDL_CPU_TPOOL_MIN_ELTS<a name="kanchor4559"></a></h2>
+        <p>The IDL_CPU_TPOOL_MIN_ELTS preference provides the value of the !CPU.<a href="IDL_Environment_System_V.htm#sysvars_272074529_1014580">TPOOL_MIN_ELTS</a> system variable, which sets the number of elements in a computation that are necessary before IDL uses the thread pool to perform the work.</p>
+        <p>Committed changes take effect immediately. The default value is 100000.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API">IDL_CPU_TPOOL_NTHREADS<a name="kanchor4560"></a></h2>
+        <p>The IDL_CPU_TPOOL_NTHREADS preference specifies the initial value of the !CPU.<a href="IDL_Environment_System_V.htm#sysvars_272074529_1014498">TPOOL_NTHREADS</a> system variable, which sets the number of threads that IDL uses in thread-pool computations.</p>
+        <p>Committed changes take effect immediately. The default value is 0, which causes IDL to use a thread for every CPU contained in the system on which IDL is currently running.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>This preference can be set in the IDL Workbench <b>Preferences</b> dialog.</p>
+        <h2 class="API">IDL_CPU_VECTOR_ENABLE<a name="kanchor4561"></a></h2>
+        <p>The IDL_CPU_VECTOR_ENABLE preference is a boolean that  provides the initial value of the !CPU.<a href="IDL_Environment_System_V.htm#sysvars_272074529_1014490">VECTOR_ENABLE</a> system variable if the system supports a vector unit (!CPU.HW_VECTOR is True). It is ignored if the system lacks a vector unit (!CPU.HW_VECTOR is False).</p>
+        <p>Committed changes take effect immediately. The default value is True (1).</p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

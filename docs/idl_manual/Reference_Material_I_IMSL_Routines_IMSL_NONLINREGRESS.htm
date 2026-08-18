@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_NONLINREGRESS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_NONLINREGRESS</span>
+        </div>
+        <h1 class="Routine">IMSL_NONLINREGRESS</h1>
+        <p>The IMSL_NONLINREGRESS function fits a nonlinear regression model.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_NONLINREGRESS function fits a nonlinear regression model using least squares. The nonlinear regression model is</p>
+        <p><i>y</i><sub>i</sub> = <i>f</i>(<i>x</i><sub>i</sub>;θ) + ε<sub style="font-style: italic;">i</sub>&#160;&#160;&#160;&#160;&#160;	i = 1, 2, ..., n</p>
+        <p>where the observed values of the <i>y</i><sub>i</sub>’s constitute the responses or values of the dependent variable, the known <i>x</i><sub>i</sub>’s are the vectors of the values of the independent (explanatory) variables, θ is the vector of <i>p</i> regression parameters, and the ε<sub style="font-style: italic;">i</sub>’s are independently distributed normal errors with mean zero and variance σ<sup>2</sup>. For this model, a least-squares estimate of θ is also a maximum likelihood estimate of θ.</p>
+        <p>The residuals for the model are as follows:</p>
+        <p><i>e</i><sub>i</sub>(θ) = <i>y</i><sub>i</sub> – <i>f</i>(<i>x</i><sub>i</sub>; θ)&#160;&#160;&#160;&#160;&#160;i = 1, 2, ..., n</p>
+        <p>A value of θ that minimizes:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-081.jpg" />
+        </p>
+        <p>is a least-squares estimate of θ. IMSL_NONLINREGRESS is designed so that the values of the function f(xi ; θ) are computed one at a time by a user-supplied function.</p>
+        <p>The IMSL_NONLINREGRESS function is based on MINPACK routines LMDIF and LMDER by Moré et al. (1980) that use a modified Levenberg-Marquardt method to generate a sequence of approximations to a minimum point. Let:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-082.jpg" />
+        </p>
+        <p>be the current estimate of θ. A new estimate is given by:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-083.jpg" />
+        </p>
+        <p>where sc is a solution to the following:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-084.jpg" />
+        </p>
+        <p>Here:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-085.jpg" />
+        </p>
+        <p>is the Jacobian evaluated at:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-082.jpg" />
+        </p>
+        <p>The algorithm uses a “trust region” approach with a step bound of δ<sub>c</sub>. A solution is first obtained for µ<sub>c</sub> = 0. If:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-087.jpg" />
+        </p>
+        <p>this update is accepted; otherwise, µ<sub>c</sub> is set to a positive value and another solution is obtained. The method is discussed by Levenberg (1944), Marquardt (1963), and Dennis and Schnabel (1983, pp. 129 –147, 218 –338).</p>
+        <p>If a user-supplied function is specified in Jacobian, the Jacobian is computed analytically; otherwise, forward finite differences are used to estimate the Jacobian numerically. In the latter case, especially if single precision is used, the estimate of the Jacobian may be so poor that the algorithm terminates at a noncritical point. In such instances, you should either supply a Jacobian function, use the Double keyword, or do both.</p>
+        <h2 class="API">Programming Notes</h2>
+        <p>Nonlinear regression allows substantial flexibility over linear regression because you can specify the functional form of the model. This added flexibility can cause unexpected convergence problems for users who are unaware of the limitations of the software. Also, in many cases, there are possible remedies that may not be immediately obvious. The following is a list of possible convergence problems and some remedies. There is no one-to-one correspondence between the problems and the remedies. Remedies for some problems also may be relevant for other problems.</p>
+        <ul>
+            <li value="1">
+                <p>A local minimum is found. Try a different starting value. Good starting values often can be obtained by fitting simpler models. For example, for a nonlinear function:</p>
+                <p>
+                    <img src="images/IMSL_NONLINREGRESS-088.jpg" />
+                </p>
+            </li>
+            <li value="2">
+                <p>Good starting values can be obtained from the estimated linear regression coefficients:</p>
+                <p>
+                    <img src="images/IMSL_NONLINREGRESS-089.jpg" /> and <img src="images/IMSL_NONLINREGRESS-090.jpg" /></p>
+            </li>
+            <li value="3">
+                <p>From a simple linear regression of ln y on x. The starting values for the nonlinear regression in this case would be:</p>
+                <p>
+                    <img src="images/IMSL_NONLINREGRESS-091.jpg" /> and <img src="images/IMSL_NONLINREGRESS-092.jpg" /></p>
+            </li>
+            <li value="4">If an approximate linear model is not clear, then simplify the model by reducing the number of nonlinear regression parameters. For example, some nonlinear parameters for which good starting values are known could be set to these values in order to simplify the model for computing starting values for the remaining parameters.</li>
+            <li value="5">The estimate of θ is incorrectly returned as the same or very close to the initial estimate. This occurs often because of poor scaling of the problem, which might result in the residual sum of squares being either very large or very small relative to the precision of the computer. The keywords allow control of the scaling.</li>
+            <li value="6">The model is discontinuous as a function of θ. (The function <i>f</i>(<i>x</i>;θ) can be a discontinuous function of <i>x</i>.)</li>
+            <li value="7">Overflow occurs during the computations. Make sure the supplied functions do not overflow at some value of θ.</li>
+            <li value="8">The estimate of θ is going to infinity. A parameterization of the problem in terms of reciprocals may help.</li>
+            <li value="9">Some components of θ are outside known bounds. This can sometimes be handled by making a function that produces artificially large residuals outside of the bounds (even though this introduces a discontinuity in the model function).</li>
+        </ul>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>In this example (Draper and Smith 1981, p. 518), the following nonlinear model is fit:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-093.jpg" />
+        </p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION fcn, x, theta</p>
+        <p class="Code_Indented">RETURN, theta(0) + (0.49 - theta(0)) $</p>
+        <p class="Code_Indented2">*EXP(theta(1)*(x(0) - 8))</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">x = [10, 20, 30, 40]</p>
+        <p class="Code">y = [0.48, 0.42, 0.40, 0.39]</p>
+        <p class="Code">n_parameters = 2</p>
+        <p class="Code">theta_hat = IMSL_NONLINREGRESS('fcn', n_parameters, x, y)</p>
+        <p class="Code">PRINT, 'Estimated Coefficients:', theta_hat</p>
+        <h3>Example 2</h3>
+        <p>Consider the nonlinear regression model and data set discussed by Neter et al. (1983, pp. 475–478):</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-094.jpg" />
+        </p>
+        <p>There are two parameters and one independent variable. The data set considered consists of 15 observations. The results are shown in the figure that follows.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION fcn, x, theta</p>
+        <p class="Code_Indented">; Define function that defines nonlinear regression problem.</p>
+        <p class="Code_Indented">RETURN, theta(0) * EXP(x(0) * theta(1))</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION jac, x, theta</p>
+        <p class="Code_Indented">; Define the Jacobian function. fjac = theta</p>
+        <p class="Code_Indented">; The following assignment produces array of correct size to</p>
+        <p class="Code_Indented">; use as the return value of the Jacobian.</p>
+        <p class="Code_Indented">fjac[0] = exp(theta[1] * x[0])</p>
+        <p class="Code_Indented">fjac[1] = theta[0] * x[0] * EXP(theta[1] * x[0])</p>
+        <p class="Code_Indented">RETURN, fjac</p>
+        <p class="Code_Indented">; Compute the Jacobian.</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO nlnreg_ex</p>
+        <p class="Code_Indented">; Define x and y.</p>
+        <p class="Code_Indented">x = [2, 5, 7, 10, 14, 19, 26, 31, 34, 38, 45, 52, 53, 60, 65]</p>
+        <p class="Code_Indented">y = [54, 50, 45, 37, 35, 25, 20, 16, 18, 13, 8, 11, 8, 4, 6]</p>
+        <p class="Code_Indented">theta_hat = IMSL_NONLINREGRESS('fcn', 2, x, y, $</p>
+        <p class="Code_Indented2">Theta_Guess = [60, -0.03], $</p>
+        <p class="Code_Indented2">Grad_Eps = 0.001, Jacobian = 'jac')</p>
+        <p class="Code_Indented">PLOT, x, y, Psym = 4, Title = 'Nonlinear Regression'</p>
+        <p class="Code_Indented">; Plot original data.</p>
+        <p class="Code_Indented">xtmp = 80 * FINDGEN(200)/199</p>
+        <p class="Code_Indented">OPLOT, xtmp, theta_hat(0) * EXP(xtmp * theta_hat(1))</p>
+        <p class="Code_Indented">; Plot regression.</p>
+        <p class="Code">END</p>
+        <p>
+            <img src="images/regress06.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Informational Errors</h3>
+        <p>STAT_STEP_TOLERANCE: Scaled step tolerance satisfied. The current point may be an approximate local solution, but it is also possible that the algorithm is making very slow progress and is not near a solution or that Step_Eps is too big.</p>
+        <h3>Warning Errors</h3>
+        <p>STAT_LITTLE_FCN_CHANGE: Both actual and predicted relative reductions in the function are less than or equal to the relative function tolerance.</p>
+        <p>STAT_TOO_MANY_ITN: Maximum number of iterations exceeded.</p>
+        <p>STAT_TOO_MANY_FCN_EVAL: Maximum number of function evaluations exceeded.</p>
+        <p>STAT_TOO_MANY_JACOBIAN_EVAL: Maximum number of Jacobian evaluations exceeded.</p>
+        <p>STAT_UNBOUNDED: Five consecutive steps have been taken with the maximum step length.</p>
+        <p>STAT_FALSE_CONVERGENCE: Iterates appear to be converging to noncritical point.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_NONLINREGRESS(<i>Fcn, N_Parameters, X, Y</i> [, <a href="#ABS_EPS_SSE" class="selected">ABS_EPS_SSE</a>=<i>value</i>] [, <a href="#DF" class="selected">DF</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#JACOBIAN" class="selected">JACOBIAN</a>=<i>string</i>] [, <a href="#GRAD_EPS" class="selected">GRAD_EPS</a>=<i>value</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#MAX_JAC_EVALS" class="selected">MAX_JAC_EVALS</a>=<i>value</i>] [, <a href="#MAX_SSE_EVALS" class="selected">MAX_SSE_EVALS</a>=<i>value</i>] [, <a href="#MAX_STEP" class="selected">MAX_STEP</a>=<i>value</i>] [, <a href="#N_DIGIT" class="selected">N_DIGIT</a>=<i>value</i>] [, <a href="#PREDICTED" class="selected">PREDICTED</a>=<i>variable</i>] [, <a href="#R_MATRIX" class="selected">R_MATRIX</a>=<i>variable</i>] [, <a href="#R_RANK" class="selected">R_RANK</a>=<i>variable</i>] [, <a href="#REL_EPS_SSE" class="selected">REL_EPS_SSE</a>=<i>value</i>] [, <a href="#RESIDUAL" class="selected">RESIDUAL</a>=<i>variable</i>] [, <a href="#STEP_EPS" class="selected">STEP_EPS</a>=<i>value</i>] [, <a href="#SSE" class="selected">SSE</a>=<i>variable</i>] [, <a href="#THETA_GUESS" class="selected">THETA_GUESS</a>=<i>array</i>] [, <a href="#THETA_SCALE" class="selected">THETA_SCALE</a>=<i>array</i>] [, <a href="#TOLERANCE" class="selected">TOLERANCE</a>=<i>value</i>] [, <a href="#TRUST_REGION" class="selected">TRUST_REGION</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length <i>N_Parameters</i> containing solution:
+θˆ
+for the nonlinear regression coefficients.
+</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Fcn</h3>
+        <p>Scalar string specifying the name of a user-supplied function to evaluate the function that defines the nonlinear regression problem. Function fcn accepts the following input parameters and returns a scalar float:</p>
+        <ul>
+            <li value="1"><i>x</i>: One-dimensional array containing the point at which point the function is evaluated.</li>
+            <li value="2"><i>theta</i>: One-dimensional array containing the current values of the regression coefficients. Function fcn returns a predicted value at the point x. In the following, f(xi; θ), or just fi, denotes the value of this function at the point xi, for a given value of θ. (Both xi and θ are arrays.)</li>
+        </ul>
+        <h3 class="Argument">N_Parameters</h3>
+        <p>Number of parameters to be estimated.</p>
+        <h3 class="Argument">X</h3>
+        <p>Two-dimensional array containing the matrix of independent (explanatory) variables.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array of length N_ELEMENTS (<i>x</i>(*, 0)) containing the dependent (response) variable.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ABS_EPS_SSE"></a>ABS_EPS_SSE (optional)</h3>
+        <p>Absolute SSE function tolerance. Default: max(10 –20, ε2), max(10 – 40, ε2) in double, where ε is the machine precision</p>
+        <h3 class="Keyword"><a name="DF"></a>DF (optional)</h3>
+        <p>Named variable into which the degrees of freedom is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="JACOBIAN"></a>JACOBIAN (optional)</h3>
+        <p>Scalar string specifying the name of a user-supplied function to compute the <i>i</i>-th row of the Jacobian. This keyword accepts the following parameters:</p>
+        <ul>
+            <li value="1"><i>X</i>: One-dimensional array of length N_ELEMENTS (<i>x</i>(0, *)) containing the data values corresponding to the <i>i</i>-th row.</li>
+            <li value="2"><i>Theta</i>: One-dimensional array of length <i>N_Parameters</i> containing the regression coefficients for which the Jacobian is evaluated. The return value of this function is an array of length <i>N_Parameters</i> containing the computed <i>N_Parameters</i> row of the Jacobian for observation i at Theta. Note that each derivative ∂f(xi)/¹∂θj should be returned in element (j – 1) of the returned array for j = 1, 2, ..., n parameters.</li>
+        </ul>
+        <h3 class="Keyword"><a name="GRAD_EPS"></a>GRAD_EPS (optional)</h3>
+        <p>Scaled gradient tolerance. The <i>j</i>-th component of the scaled gradient at θ is calculated as:</p>
+        <p>
+            <img src="images/IMSL_NONLINREGRESS-074.jpg" />
+        </p>
+        <p>where <img src="images/IMSL_NONLINREGRESS-075.jpg" /> and <img src="images/IMSL_NONLINREGRESS-076.jpg" /> and <img src="images/IMSL_NONLINREGRESS-077.jpg" /></p>
+        <p>The value <i>F</i>(θ) is the vector of the residuals at the point θ. Default: <img src="images/IMSL_NONLINREGRESS-078.jpg" /> in double), where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX</h3>
+        <p>Maximum number of iterations. Default: 100</p>
+        <h3 class="Keyword"><a name="MAX_JAC_EVALS"></a>MAX_JAC_EVALS (optional)</h3>
+        <p>Maximum number of Jacobian evaluations. Default: 400</p>
+        <h3 class="Keyword"><a name="MAX_SSE_EVALS"></a>MAX_SSE_EVALS (optional)</h3>
+        <p>Maximum number of SSE function evaluations. Default: 400</p>
+        <h3 class="Keyword"><a name="MAX_STEP"></a>MAX_STEP (optional)</h3>
+        <p>Maximum allowable step size. Default: 1000&#160;max(ε<sub>1</sub>, ε<sub>2</sub>), where ε<sub>1</sub> = (<i>t</i><sup>T</sup>θ<sub>0</sub>)<sup>1/2</sup>, ε<sub>2</sub> = ||<i>t</i>||<sub>2</sub> &#160;, t = THETA_SCALE, and θ<sub>0</sub> = THETA_GUESS.</p>
+        <h3 class="Keyword"><a name="N_DIGIT"></a>N_DIGIT (optional)</h3>
+        <p>Number of good digits in the function. Default: machine dependent</p>
+        <h3 class="Argument"><a name="PREDICTED"></a>PREDICTED</h3>
+        <p>Named variable into which the one-dimensional array, containing the predicted values at the approximate solution, is stored.</p>
+        <h3 class="Keyword"><a name="R_MATRIX"></a>R_MATRIX (optional)</h3>
+        <p>Named variable into which the two-dimensional array of size <i>N_Parameters</i> x <i>N_Parameters</i>, containing the <i>R</i> matrix from a <i>QR</i> decomposition of the Jacobian, is stored.</p>
+        <h3 class="Keyword"><a name="R_RANK"></a>R_RANK (optional)</h3>
+        <p>Named variable into which the rank of the R matrix is stored. A rank of less than <i>N_Parameters</i> may indicate the model is overparameterized.</p>
+        <h3 class="Keyword"><a name="RESIDUAL"></a>RESIDUAL (optional)</h3>
+        <p>Named variable into which the one-dimensional array, containing the residuals at the approximate solution, is stored.</p>
+        <h3 class="Keyword"><a name="STEP_EPS"></a>STEP_EPS (optional)</h3>
+        <p>Scaled step tolerance. The <i>j</i>-th component of the scaled step from points θ and θ′ is computed as:</p>
+        <p>θ – θ′</p>
+        <p>--------------j-----------j---------- max( θj , 1 ⁄                                                                                tj )</p>
+        <p>where <i>t</i> = THETA_SCALE. Default: ε2/ 3,  where ε is machine precision</p>
+        <h3 class="Keyword"><a name="SSE"></a>SSE</h3>
+        <p>Named variable into which the residual sum of squares is stored.</p>
+        <h3 class="Keyword"><a name="REL_EPS_SSE"></a>REL_EPS_SSE (optional)</h3>
+        <p>Relative SSE function tolerance. Default: Rel_Eps_Sse = max(10–10, ε2 / 3), max (10– 20, ε2 / 3) in double, where ε is the machine precision</p>
+        <h3 class="Keyword"><a name="THETA_GUESS"></a>THETA_GUESS (optional)</h3>
+        <p>Array with <i>N_Parameters</i> components containing an initial guess. Default: THETA_GUESS(*) = 0</p>
+        <h3 class="Keyword"><a name="THETA_SCALE"></a>THETA_SCALE (optional)</h3>
+        <p>One-dimensional array of length <i>N_Parameters</i> containing the scaling array for θ. Keyword THETA_SCALE is used mainly in scaling the gradient and the distance between two points. See keywords Grad_Eps and Step_Eps for more details. Default: Theta_Scale(*) = 1</p>
+        <h3 class="Keyword"><a name="TOLERANCE"></a>TOLERANCE (optional)</h3>
+        <p>False convergence tolerance. Default: 100 * ε, where ε is machine precision.</p>
+        <h3 class="Keyword"><a name="TRUST_REGION"></a>TRUST_REGION (optional)</h3>
+        <p>Size of initial trust region radius. The default is based on the initial scaled Cauchy step.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_NONLINOPT.htm">IMSL_NONLINOPT</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

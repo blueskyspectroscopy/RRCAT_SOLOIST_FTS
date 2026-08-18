@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_LNORMREGRESS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_LNORMREGRESS</span>
+        </div>
+        <h1 class="Routine">IMSL_LNORMREGRESS</h1>
+        <p>The IMSL_LNORMREGRESS function fits a multiple linear regression model using criteria other than least squares. Namely, IMSL_LNORMREGRESS allows you to choose Least Absolute Value (L1), Least Lp norm (Lp), or Least Maximum Value (Minimax or Linfinity) method of multiple linear regression.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <h2 class="API">Least Absolute Value Criterion</h2>
+        <p>The IMSL_LNORMREGRESS function computes estimates of the regression coefficients in a multiple linear regression model. For keyword LAV (default), the criterion satisfied is the minimization of the sum of the absolute values of the deviations of the observed response <i>y</i><sub>i</sub> from the fitted response:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-149.jpg" />
+        </p>
+        <p>for a set on <i>n</i> observations. Under this criterion, known as the <i>L</i><sub>1</sub> or LAV (least absolute value) criterion, the regression coefficient estimates minimize:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-148.jpg" />
+        </p>
+        <p>The estimation problem can be posed as a linear programming problem. The special nature of the problem, however, allows for considerable gains in efficiency by the modification of the usual simplex algorithm for linear programming. These modifications are described in detail by Barrodale and Roberts (1973, 1974).</p>
+        <p>In many cases, the algorithm can be made faster by computing a least-squares solution prior to the use of keyword Lav. This is particularly useful when a least- squares solution has already been computed. The procedure is as follows:</p>
+        <ol>
+            <li value="1">Fit the model using least squares and compute the residuals from this fit.</li>
+            <li value="2">Fit the residuals from Step 1 on the regressor variables in the model using keyword Lav.</li>
+            <li value="3">Add the two estimated regression coefficient vectors from Steps 1 and 2. The result is an L1 solution.</li>
+        </ol>
+        <p>When multiple solutions exist for a given problem, option LAV may yield different estimates of the regression coefficients on different computers, however, the sum of the absolute values of the residuals should be the same (within rounding differences). The informational error indicating nonunique solutions may result from rounding accumulation. Conversely, because of rounding the error may fail to result even when the problem does have multiple solutions.</p>
+        <h2 class="API">L<sub>p</sub> Norm Criterion</h2>
+        <p>Keyword LLP computes estimates of the regression coefficients in a multiple linear regression model y = Xβ + ε under the criterion of minimizing the <i>L</i><sub>p</sub> norm of the deviations for <i>i</i> = 0, ... , n - 1 of the observed response<i>y</i><sub>i</sub> from the fitted response:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-149.jpg" />
+        </p>
+        <p>for a set on n observations and for p ≥ 1. For the case when keywords WEIGHTS and FREQUENCIES are not supplied, the estimated regression coefficient vector:</p>
+        <p>βˆ</p>
+        <p>(output in Result) minimizes the <i>L</i><sub>p</sub> norm:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-151.jpg" />
+        </p>
+        <p>The choice <i>p</i> = 1 yields the maximum likelihood estimate for β when the errors have a Laplace distribution. The choice <i>p</i> = 2 is best for errors that are normally distributed. Sposito (1989, pages 36−40) discusses other reasonable alternatives for <i>p</i> based on the sample kurtosis of the errors.</p>
+        <p>Weights are useful if errors in the model have known unequal variances:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-152.jpg" />
+        </p>
+        <p>In this case, the weights should be taken as:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-153.jpg" />
+        </p>
+        <p>Frequencies are useful if there are repetitions of some observations in the data set. If a single row of data corresponds to <i>n</i><sub>i</sub> observations, set the frequency <i>f</i><sub>i</sub> =<i>n</i><sub>i</sub>. In general, keyword Llp minimizes the <i>L</i><sub>p</sub> norm:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-154.jpg" />
+        </p>
+        <p>The asymptotic variance-covariance matrix of the estimated regression coefficients is given by:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-155.jpg" />
+        </p>
+        <p>where <i>R</i> is from the <i>QR</i> decomposition of the matrix of regressors (output in keyword R_MATRIX) and where an estimate of λ2 is output in keyword SCALE.</p>
+        <p>In the discussion that follows, we will first present the algorithm with frequencies and weights all taken to be one. Later, we will present the modifications to handle frequencies and weights different from one.</p>
+        <p>Keyword LLP uses Newton’s method with a line search for <i>p</i> &gt; 1.25 and, for <i>p</i> ≤ 1.25, uses a modification due to Ekblom (1973, 1987) in which a series of perturbed problems are solved in order to guarantee convergence and increase the convergence rate. The cutoff value of 1.25 as well as some of the other implementation details given in the remaining discussion were investigated by Sallas (1990) for their effect on CPU times.</p>
+        <p>For the first iteration in each case, a least-squares solution for regression coefficients is computed with IMSL_MULTIREGRESS. If <i>p</i> = 2, the computations are finished. Otherwise, the residuals from the <i>k</i>-th iteration:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-156.jpg" />
+        </p>
+        <p>are used to compute the gradient and Hessian for the Newton step for the (<i>k</i> + 1)-st iteration for minimizing the <i>p</i>-th power of the <i>L</i><sub>p</sub> norm. (The exponent 1/<i>p</i> in the <i>L</i><sub>p</sub> norm can be omitted during the iterations.)</p>
+        <p>For subsequent iterations, we first discuss the p &gt; 1.25 case. For <i>p</i> &gt; 1.25, the gradient and Hessian at the (<i>k</i> + 1)-st iteration depend upon:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-157.jpg" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-158.jpg" />
+        </p>
+        <p>In the case 1.25 &lt; <i>p</i> &lt; 2 and:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-159.jpg" />
+        </p>
+        <p>and the Hessian are undefined; and we follow the recommendation of Merle and Spath (1974). Specifically, we modify the definition of:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-160.jpg" />
+        </p>
+        <p>to the following:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-161.jpg" />
+        </p>
+        <p>where τ equals 100 * machine epsilon times the square root of the residual mean square from the least-squares fit.</p>
+        <p>Let <i>V</i><sup>(k+1)</sup> be a diagonal matrix with diagonal entries:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-162.jpg" />
+        </p>
+        <p>and let <i>z</i><sup>(k+1)</sup> be a vector with elements:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-163.jpg" />
+        </p>
+        <p>In order to compute the step on the (<i>k</i> + 1)-st iteration, the <i>R</i> from the <i>QR</i> decomposition of:</p>
+        <p>[V<sup>(k+1)</sup>]<sup>1/2</sup>X</p>
+        <p>is computed using fast Givens transformations. Let:</p>
+        <p>R<sup>(k+1)</sup></p>
+        <p>denote the upper triangular matrix from the QR decomposition. The linear system:</p>
+        <p>[R<sup>(k+1)</sup>]TR<sup>(k+1)</sup>d<sup>(k+1)</sup>  = XT z<sup>(k+1)</sup></p>
+        <p>is solved for:</p>
+        <p>d<sup>(k+1)</sup></p>
+        <p>where R<sup>(k+1)</sup> is from the QR decomposition of [V<sup>(k+1)</sup>]<sup>1/2</sup>X. The step taken on the (<i>k</i> + 1)-st iteration is:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-164.jpg" />
+        </p>
+        <p>The first attempted step on the (k + 1)-st iteration is with α(k+1) = 1. If all of the:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-165.jpg" />
+        </p>
+        <p>are nonzero, this is exactly the Newton step. See Kennedy and Gentle (1980, pages 528−529) for further discussion.</p>
+        <p>If the first attempted step does not lead to a decrease of at least one-tenth of the predicted decrease in the <i>p</i>-th power of the <i>L</i><sub>p</sub> norm of the residuals, a backtracking linesearch procedure is used. The backtracking procedure uses a one-dimensional quadratic model to estimate the backtrack constant <i>p</i>. The value of <i>p</i> is constrained to be no less that 0.1. An approximate upper bound for <i>p</i> is 0.5. If after 10 successive backtrack attempts, α(k) = p1p2... p10 does not produce a step with a sufficient decrease, then IMSL_LNORMREGRESS issues a message with error code 5. For further details on the backtrack line-search procedure, see Dennis and Schnabel (1983, pages 126−127).</p>
+        <p>Convergence is declared when the maximum relative change in the residuals from one iteration to the next is less than or equal to EPS. The relative change:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-166.jpg" />
+        </p>
+        <p>in the <i>i</i>-th residual from iteration k to iteration <i>k</i> + 1 is computed as follows:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-167.jpg" />
+        </p>
+        <p>&#160;</p>
+        <p>where s is the square root of the residual mean square from the least-squares fit on the first iteration.</p>
+        <p>For the case 1 ≤ <i>p</i> ≤ 1.25, we describe the modifications to the previous procedure that incorporate Ekblom’s (1973) results. A sequence of perturbed problems are solved with a successively smaller perturbation constant <i>c</i>. On the first iteration, the least-squares problem is solved. This corresponds to an infinite <i>c</i>. For the second problem, <i>c</i> is taken equal to <i>s</i>, the square root of the residual mean square from the least- squares fit. Then, for the (<i>j</i> + 1)-st problem, the value of <i>c</i> is computed from the previous value of <i>c</i> according to:</p>
+        <p>Each problem is stated as:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-169.jpg" />
+        </p>
+        <p>For each problem, the gradient and Hessian on the (k + 1)-st iteration depend upon:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-170.jpg" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-171.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-172.jpg" />
+        </p>
+        <p>The linear system [R<sup>(k+1)</sup>]TR<sup>(k+1)</sup>d<sup>(k+1)</sup> = XTz<sup>(k+1)</sup> is solved for d<sup>(k+1)</sup> where R<sup>(k+1)</sup> is from the <i>QR</i> decomposition of [V<sup>(k+1)</sup>]<sup>1/2</sup>X. The step taken on the (<i>k</i> + 1)-st iteration is:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-173.jpg" />
+        </p>
+        <p>where the first attempted step is with α<sup>(k+1)</sup> = 1. If necessary, the backtracking line- search procedure discussed earlier is used.</p>
+        <p>Convergence for each problem is relaxed somewhat by using a convergence epsilon equal to max(EPS, 10–j) where <i>j</i> = 1, 2, 3, ... indexes the problems (<i>j</i> = 0 corresponds to the least-squares problem).</p>
+        <p>After the convergence of a problem for a particular <i>c</i>, Ekblom’s (1987) extrapolation technique is used to compute the initial estimate of β for the new problem. Let <i>R</i><sup>(k)</sup>:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-174.jpg" />
+        </p>
+        <p>and <i>c</i> be from the last iteration of the last problem. Let:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-175.jpg" />
+        </p>
+        <p>and let t be the vector with elements ti. The initial estimate of β for the new problem with perturbation constant 0.01c is:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-176.jpg" />
+        </p>
+        <p>where ∆c = (0.01c - <i>c</i>) = -0.99c, and where <i>d</i> is the solution of the linear system [R<sup>(k)</sup>]TR<sup>(k)</sup>d = X<sup>T</sup><i>t</i>.</p>
+        <p>Convergence of the sequence of problems is declared when the maximum relative difference in residuals from the solution of successive problems is less than EPS.</p>
+        <p>The preceding discussion was limited to the case for which WEIGHTS(*) = 1 and FREQUENCIES(*) = 1, i.e., the weights and frequencies are all taken equal to one. The necessary modifications to the preceding algorithm to handle weights and frequencies not all equal to one are as follows:</p>
+        <p>1.   Replace:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-177.jpg" />
+        </p>
+        <p>in the definitions of:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-178.jpg" />
+        </p>
+        <p>and <i>t</i><sub>i</sub>.</p>
+        <p>2.   Replace:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-179.jpg" />
+        </p>
+        <p>These replacements have the same effect as multiplying the <i>i</i>-th row of <i>X</i> and <i>y</i> by:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-180.jpg" />
+        </p>
+        <p>and repeating the row fi times except for the fact that the residuals returned by IMSL_LNORMREGRESS are in terms of the original <i>y</i> and <i>X</i>.</p>
+        <p>Finally, <i>R</i> and an estimate of λ<sup>2</sup> are computed. Actually, <i>R</i> is recomputed because on output it corresponds to the <i>R</i> from the initial <i>QR</i> decomposition for least squares. The formula for the estimate of λ<sup>2</sup> depends on <i>p</i>.</p>
+        <p>For <i>p</i> = 1, the estimator for λ<sup>2</sup> is given by (McKean and Schrader 1987):</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-181.jpg" />
+        </p>
+        <p>with:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-182.jpg" />
+        </p>
+        <p>where z0.975 is the 97.5 percentile of standard normal distribution, and:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-183.jpg" />
+        </p>
+        <p>are ordered residuals where Rank zero residuals are excluded. Note that:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-184.jpg" />
+        </p>
+        <p>For <i>p</i> = 2, the estimator of λ<sup>2</sup> is the customary least-squares estimator given by:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-185.jpg" />
+        </p>
+        <p>For 1 &lt; <i>p</i> &lt; 2 and for <i>p</i> &gt; 2, the estimator for λ<sup>2</sup> is given by (Gonin and Money 1989):</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-186.jpg" />
+        </p>
+        <p>with:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-187.jpg" />
+        </p>
+        <h2 class="API">Least Minimum Value Criterion (minimax)</h2>
+        <p>Keyword LMV computes estimates of the regression coefficients in a multiple linear regression model. The criterion satisfied is the minimization of the maximum deviation of the observed response <i>y</i><sub>i</sub> from the fitted response:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-149.jpg" />
+        </p>
+        <p>for a set on n observations. Under this criterion, known as the minimax or LMV (least maximum value) criterion, the regression coefficient estimates minimize:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-189.jpg" />
+        </p>
+        <p>The estimation problem can be posed as a linear programming problem. A dual simplex algorithm is appropriate, however, the special nature of the problem allows for considerable gains in efficiency by modification of the dual simplex iterations so as to move more rapidly toward the optimal solution. The modifications are described in detail by Barrodale and Phillips (1975).</p>
+        <p>When multiple solutions exist for a given problem, LMV may yield different estimates of the regression coefficients on different computers, however, the largest residual in absolute value should have the same absolute value (within rounding differences). The informational error indicating nonunique solutions may result from rounding accumulation. Conversely, because of rounding, the error may fail to result even when the problem does have multiple solutions.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>A straight line fit to a data set is computed under the LAV criterion.</p>
+        <p class="Code">PRO print_results, coefs, rank, sea, iters, nmissing</p>
+        <p class="Code_Indented">PRINT, 'B =	', coefs(0), coefs(1), $</p>
+        <p class="Code_Indented2">FORMAT = '(A6, F5.2, 5X, F5.2)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, 'Rank of Regressors Matrix	= ', rank, $</p>
+        <p class="Code_Indented2">FORMAT = '(A32, I3)'</p>
+        <p class="Code_Indented">PRINT, 'Sum Absolute Value of Error	= ', sea, $</p>
+        <p class="Code_Indented2">FORMAT = '(A32, F7.4)'</p>
+        <p class="Code_Indented">PRINT, 'Number of Iterations	= ', iters, $</p>
+        <p class="Code_Indented2">FORMAT = '(A32, I3)'</p>
+        <p class="Code_Indented">PRINT, 'Number of Rows Missing	= ', nmissing, $</p>
+        <p class="Code_Indented2">FORMAT = '(A32, I3)'</p>
+        <p class="Code">END</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-print1.png" />
+        </p>
+        <h3>Example 2</h3>
+        <p>Different straight line fits to a data set are computed under the criterion of minimizing the Lp norm by using p equal to 1, 1.5, 2.0 and 2.5.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, coefs, residuals, p, resid_norm, rank, df, $</p>
+        <p class="Code">iters, nmissing, scale, rm</p>
+        <p class="Code">PRINT, 'Coefficients ', coefs, FORMAT = '(A13, 2F7.2)' PRINT, 'Residuals ', residuals, FORMAT = '(A10, 8F6.2)' PRINT</p>
+        <p class="Code">PRINT, 'p	', p, $ FORMAT = '(A33, F6.3)'</p>
+        <p class="Code">PRINT, 'Lp norm of the residuals	', resid_norm, $</p>
+        <p class="Code">FORMAT = '(A33, F6.3)'</p>
+        <p class="Code">PRINT, 'Rank of the matrix of regressors ', rank, $ FORMAT = '(A33, I6)'</p>
+        <p class="Code">PRINT, 'Degrees of freedom error	', df, $ FORMAT = '(A33, F6.3)'</p>
+        <p class="Code">PRINT, 'Number of iterations	', iters, $</p>
+        <p class="Code">FORMAT = '(A33, I6)'</p>
+        <p class="Code">PRINT, 'Number of missing values	', nmissing, $ FORMAT = '(A33, I6)'</p>
+        <p class="Code">PRINT, 'Square of the scale constant	', scale, $ FORMAT = '(A33, F6.3)'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PM, rm, FORMAT = '(2F8.3)', Title = '	R matrix' PRINT</p>
+        <p class="Code">PRINT, '------------------------------------------------'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">x  = [1.0, 4.0, 2.0, 2.0, 3.0, 3.0, 4.0, 5.0]</p>
+        <p class="Code">y  = [1.0, 5.0, 0.0, 2.0, 1.5, 2.5, 2.0, 3.0]</p>
+        <p class="Code">eps = 0.001</p>
+        <p class="Code">FOR i = 0, 3 DO BEGIN</p>
+        <p class="Code_Indented">p	=	1.0 + i*0.5</p>
+        <p class="Code_Indented">coefs	=	IMSL_LNORMREGRESS(x, y, /Llp, P = p, Eps = eps, $</p>
+        <p class="Code_Indented2">Nmissing = nmissing, Rank = rank, $</p>
+        <p class="Code_Indented2">Iters = iters, Scale = scale, $</p>
+        <p class="Code_Indented2">Df = df, R_Matrix = rm, Residuals = residuals, $</p>
+        <p class="Code_Indented2">Resid_Norm = resid_norm)</p>
+        <p class="Code_Indented">print_results, coefs, residuals, p, resid_norm, rank, df, $</p>
+        <p class="Code_Indented2">iters, nmissing, scale, rm</p>
+        <p class="Code">ENDFOR</p>
+        <p class="Code">END</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-print2.png" />
+        </p>
+        <h3>Example 3</h3>
+        <p>A straight line fit to a data set is computed under the LMV criterion.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, coefs, rank, rm, iters, nmissing</p>
+        <p class="Code_Indented">PRINT, 'B =	', coefs(0), coefs(1), $</p>
+        <p class="Code_Indented2">FORMAT = '(A6, F5.2, 5X, F5.2)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, 'Rank of Regressors Matrix	= ', rank, $</p>
+        <p class="Code_Indented2">FORMAT = '(A34, I3)'</p>
+        <p class="Code_Indented">PRINT, 'Magnitude of Largest Residual	= ', rm, $</p>
+        <p class="Code_Indented2">FORMAT = '(A34, F7.4)'</p>
+        <p class="Code_Indented">PRINT, 'Number of Iterations	= ', iters, $</p>
+        <p class="Code_Indented2">FORMAT = '(A34, I3)'</p>
+        <p class="Code_Indented">PRINT, 'Number of Rows Missing	= ', nmissing, $</p>
+        <p class="Code_Indented2">FORMAT = '(A34, I3)'</p>
+        <p class="Code">END</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_LNORMREGRESS-print3.png" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_LNORMREGRESS(<i>X, Y</i> [, <a href="#DF" class="selected">DF</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#EPS" class="selected">EPS</a>=<i>value</i>] [, <a href="#FREQUENCIES" class="selected">FREQUENCIES</a>=<i>array</i>] [, <a href="#ITERS" class="selected">ITERS</a>=<i>variable</i>] [, /<a href="#LAV" class="selected">LAV</a> | /<a href="#LLP" class="selected">LLP</a> | /<a href="#LMV" class="selected">LMV</a>] [, <a href="#NMISSING" class="selected">NMISSING</a>=<i>variable</i>] [, /<a href="#NO_INTERCEPT" class="selected">NO_INTERCEPT</a>] [, <a href="#P" class="selected">P</a>=<i>value</i>] [, <a href="#RANK" class="selected">RANK</a>=<i>variable</i>] [, <a href="#R_MATRIX" class="selected">R_MATRIX</a>=<i>variable</i>] [, <a href="#RESID_MAX" class="selected">RESID_MAX</a>=<i>variable</i>] [, <a href="#RESID_NORM" class="selected">RESID_NORM</a>=<i>variable</i>] [, <a href="#RESIDUALS" class="selected">RESIDUALS</a>=<i>variable</i>] [, <a href="#SCALE" class="selected">SCALE</a>=<i>variable</i>] [, <a href="#SEA" class="selected">SEA</a>=<i>variable</i>] [, <a href="#TOLERANCE" class="selected">TOLERANCE</a>=<i>value</i>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length <i>n_independent</i> + 1 containing a least absolute value solution for the regression coefficients. The estimated intercept is the initial component of the array, where the <i>i</i>-th component contains the regression coefficients for the <i>i</i>-th dependent variable. If the keyword No_Intercept is used then the (i-1)-st component contains the regression coefficients for the <i>i</i>-th dependent variable. IMSL_LNORMREGRESS returns the <i>L</i><sub>p</sub> norm or least maximum value solution for
+the regression coefficients when appropriately specified in the input keyword list.
+</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>Two-dimensional array of size n_rows by <i>n_independent</i> containing the independent (explanatory) variables(s) where <i>n_rows</i> = N_ELEMENTS(x(*,0)) and <i>n_independent</i> is the number of independent (explanatory) variables. The <i>i</i>-th column of <i>x</i> contains the <i>i</i>-th independent variable.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array of size n_rows containing the dependent (response) variable.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DF"></a>DF (optional)</h3>
+        <p>Named variable into which the sum of the frequencies minus Rank is stored. In least squares fit (<i>p</i>=2) Df is called the degrees of freedom of error. Keyword LLP is required when using keyword DF.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="EPS"></a>EPS (optional)</h3>
+        <p>Convergence criterion. If the maximum relative difference in residuals from the <i>k</i>-th to (<i>k</i>+1)-st iterations is less than EPS, convergence is declared. Keyword LLP is required when using keyword EPS. Default: 100 * (machine epsilon).</p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>One-dimensional array of size n_rows containing the frequencies for the independent (explanatory) variable. Keyword LLP is required when using keyword FREQUENCIES.</p>
+        <h3 class="Keyword"><a name="ITERS"></a>ITERS (optional)</h3>
+        <p>Named variable into which the number of iterations performed is stored.</p>
+        <h3 class="Keyword"><a name="LAV"></a>LAV (optional)</h3>
+        <p>By default (or if LAV is used) the function fits a multiple linear regression model using the least absolute values criterion. Keywords LAV, LLP, and LMV can not be used together.</p>
+        <h3 class="Keyword"><a name="LLP"></a>LLP (optional)</h3>
+        <p>If present and nonzero, IMSL_LNORMREGRESS fits a multiple linear regression model using the <i>L</i><sub>p</sub> norm criterion. LLP requires the keyword <i>P</i>, for <i>P</i> ≥ 1. Keywords Lav, Llp, and Lmv can not be used together.</p>
+        <h3 class="Keyword"><a name="LMV"></a>LMV (optional)</h3>
+        <p>If present and nonzero, IMSL_LNORMREGRESS fits a multiple linear regression model using the minimax criterion. Keywords Lav, Llp, and Lmv cannot be used together.</p>
+        <h3 class="Keyword"><a name="NMISSING"></a>NMISSING (optional)</h3>
+        <p>Named variable into which the number of rows of data containing NaN (not a number) for the dependent or independent variables is stored. If a row of data contains NaN for any of these variables, that row is excluded from the computations.</p>
+        <h3 class="Keyword"><a name="NO_INTERCEPT"></a>NO_INTERCEPT (optional)</h3>
+        <p>If present and nonzero, the intercept term:</p>
+        <p>βˆ 0</p>
+        <p>is omitted from the model and the return value from regression is a one-dimensional array of length <i>n_independent</i>. By default the fitted value for observation <i>i</i> is:</p>
+        <p>βˆ 0 + βˆ 1 x1 + ... + βˆ k xk</p>
+        <p>where <i>k = n_independent</i>.</p>
+        <h3 class="Keyword"><a name="P"></a>P (optional)</h3>
+        <p>The <i>p</i> in the <i>L</i><sub>p</sub> norm criterion (see the description above for details). <i>P</i> must be greater than or equal to one. <i>P</i> and LLP must be used together.</p>
+        <h3 class="Keyword"><a name="RANK"></a>RANK (optional)</h3>
+        <p>Named variable into which the rank of the fitted model is stored.</p>
+        <h3 class="Keyword"><a name="R_MATRIX"></a>R_MATRIX (optional)</h3>
+        <p>Named variable into which the two-dimensional array containing the upper triangular matrix of dimension (number of coefficients by number of coefficients) containing the R matrix from a QR decomposition of the matrix of regressors is stored. Keyword LLPis required when using keyword R_MATRIX.</p>
+        <h3 class="Keyword"><a name="RESID_MAX"></a>RESID_MAX (optional)</h3>
+        <p>Named variable into which the magnitude of the largest residual is stored. Keyword LMVis required when using keyword RESID_MAX.</p>
+        <h3 class="Keyword"><a name="RESID_NORM"></a>RESID_NORM (optional)</h3>
+        <p>Named variable into which the <i>L</i><sub>p</sub> norm of the residuals is stored. Keyword LLP is required when using keyword RESID_NORM.</p>
+        <h3 class="Keyword"><a name="RESIDUALS"></a>RESIDUALS (optional)</h3>
+        <p>Named variable into which the one-dimensional array (of length equal to the number of observations) containing the residuals is stored. LLP is required when using keyword RESIDUALS.</p>
+        <h3 class="Keyword"><a name="SCALE"></a>SCALE (optional)</h3>
+        <p>Named variable into which the square of the scale constant used in an <i>L</i><sub>p</sub> analysis is stored. An estimated asymptotic variance-covariance matrix of the regression coefficients is <i>Scale</i> * (R<sup>T</sup>R)<sup>-1</sup>. Keyword LLP is required when using keyword SCALE.</p>
+        <h3 class="Keyword"><a name="SEA"></a>SEA (optional)</h3>
+        <p>Named variable into which the sum of the absolute value of the errors is stored. Keyword LAV is required when using keyword SEA.</p>
+        <h3 class="Keyword"><a name="TOLERANCE"></a>TOLERANCE (optional)</h3>
+        <p>Tolerance used in determining linear dependence. Keyword LLP is required when using keyword Tolerance. Default: 100 * (machine epsilon).</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>One-dimensional array of size <i>n_rows</i> containing the weights for the independent (explanatory) variable. Keyword LLP is required when using keyword Weights.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

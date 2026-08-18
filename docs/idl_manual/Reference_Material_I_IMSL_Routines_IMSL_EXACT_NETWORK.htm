@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_EXACT_NETWORK</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_EXACT_NETWORK</span>
+        </div>
+        <h1 class="Routine">IMSL_EXACT_NETWORK</h1>
+        <p>The IMSL_EXACT_NETWORK function computes Fisher exact probabilities and a hybrid approximation of the Fisher exact method for a two-way contingency table using the network algorithm.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_EXACT_NETWORK function computes Fisher exact probabilities, or a hybrid algorithm approximation to Fisher exact probabilities, for a <i>N_rows</i> by <i>N_columns</i> contingency table with fixed row and column marginals. A marginal is the number of counts in a row or column. </p>
+        <p>Let <i>f</i><sub>ij</sub> denote the count in row <i>i</i> and column <i>j</i> of a table, and let <i>f</i><sub>i</sub> and f<sub>•j</sub> denote the row and column marginals. Under the hypothesis of independence, the (conditional) probability of the fixed marginals of the observed table is given by:</p>
+        <p>
+            <img src="images/IMSL_EXACT_NETWORK-28.jpg" />
+        </p>
+        <p>Where:</p>
+        <ul>
+            <li value="1"> <i>f</i><sub>••</sub> is the total number of counts in the table</li>
+            <li value="2"><i>P</i><sub>f</sub>  corresponds to the output keyword PROB_TABLE.</li>
+        </ul>
+        <p>A more extreme table <i>X</i> is defined in the probabilistic sense as more extreme than the observed table if the conditional probability computed for table <i>X</i> (for the same marginal sums) is less than the conditional probability computed for the observed table. Note that this definition can be considered two-sided in the cell counts.</p>
+        <h2 class="API">Example</h2>
+        <p>This example demonstrates various methods of computing chi-squared <i>p</i>-values with respect to accuracy. As seen in the output of this example, the Fisher exact probability and the usual asymptotic chi-squared probability (generated using IMSL_CONTINGENCY) can be different.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, p, p2, p3, p4</p>
+        <p class="Code">PRINT, 'Asymptotic Chi-Squared p-value'</p>
+        <p class="Code">PRINT, 'p-value =', p</p>
+        <p class="Code">PRINT, 'Network Algorithm with Approximation'</p>
+        <p class="Code">PRINT, 'p-value =', p2</p>
+        <p class="Code">PRINT, 'Network Algorithm without Approximation'</p>
+        <p class="Code">PRINT, 'p-value =', p3</p>
+        <p class="Code">PRINT, 'Total Enumeration Method'</p>
+        <p class="Code">PRINT, 'p-value =', p4</p>
+        <p class="Code">END</p>
+        <p class="Code">table = TRANSPOSE([[20, 20, 0, 0, 0], [10, 10, 2, 2, 1], $ </p>
+        <p class="Code">&#160;&#160;[20, 20, 0, 0, 0]])</p>
+        <p class="Code">p	= IMSL_CONTINGENCY(table)</p>
+        <p class="Code">p2 = IMSL_EXACT_NETWORK(table)</p>
+        <p class="Code">p3 = IMSL_EXACT_NETWORK(table, /NO_APPROX)</p>
+        <p class="Code">p4 = IMSL_EXACT_ENUM(table)</p>
+        <p class="Code">print_results, p, p2, p3, p4</p>
+        <p>IDL prints:</p>
+        <p class="Code">Asymptotic Chi-Squared p-value </p>
+        <p class="Code">p-value =	0.0322604</p>
+        <p class="Code">Network Algorithm with Approximation</p>
+        <p class="Code">p-value =	0.0601165</p>
+        <p class="Code">Network Algorithm without Approximation </p>
+        <p class="Code">p-value =	0.0598085</p>
+        <p class="Code">Total Enumeration Method </p>
+        <p class="Code">p-value =	0.0597294</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_HASH_TABLE_ERROR_2: The value "ldkey" = # is too small. "ldkey" is calculated as <i>Wk_Params</i>(0)*<i>pow</i>(10, <i>N_Attempts</i>−1) ending this execution attempt.</p>
+        <p>STAT_HASH_TABLE_ERROR_3: The value "ldstp" = # is too small. "ldstp" is calculated as <i>Wk_Params</i>(1)*<i>pow</i>(10, <i>N_Attempts</i>−1) ending this execution attempt.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_HASH_TABLE_ERROR_1: The hash table key cannot be computed because the largest key is larger than the largest representable integer. The algorithm cannot proceed.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_EXACT_NETWORK(<i>Table</i> [, <a href="#APPROX_PARAMS" class="selected">APPROX_PARAMS</a>=<i>array</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, /<a href="#NO_APPROX" class="selected">NO_APPROX</a>] [, <a href="#P_VALUE" class="selected">P_VALUE</a>=<i>variable</i>] [, <a href="#PROB_TABLE" class="selected">PROB_TABLE</a>=<i>variable</i>] [, <a href="#WK_PARAMS" class="selected">WK_PARAMS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The <i>p</i>-value for independence of rows and columns. The <i>p</i>-value represents the probability of a more extreme table where "extreme" is taken in the Neyman-Pearson sense. The <i>p</i>-value is "two-sided".</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Table</h3>
+        <p>Two-dimensional array containing the observed counts in the contingency table.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="APPROX_PARAMS"></a>APPROX_PARAMS (optional)</h3>
+        <p>One-dimensional array of size 3. APPROX_PARAMS(0) is the expected value used in the hybrid approximation to Fisher’s exact test algorithm for deciding when to use asymptotic probabilities when computing path lengths. APPROX_PARAMS(1) is the percentage of remaining cells that must have estimated expected values greater than APPROX_PARAMS(0) before asymptotic probabilities can be used in computing path lengths. APPROX_PARAMS(2) is the minimum cell estimated value allowed for asymptotic chi-squared probabilities to be used.</p>
+        <p>Asymptotic probabilities are used in computing path lengths whenever APPROX_PARAMS(1) or more of the cells in the table have estimated expected values of APPROX_PARAMS(0) or more, with no cell having expected value less than APPROX_PARAMS(2). See the description at the beginning of this topic for details.</p>
+        <p>Defaults: </p>
+        <p>APPROX_PARAMS(0) = 5.0</p>
+        <p>APPROX_PARAMS(1) = 80.0</p>
+        <p>APPROX_PARAMS(2) = 1.0</p>
+        <p>These defaults correspond to the "Cochran" condition.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="NO_APPROX"></a>NO_APPROX (optional)</h3>
+        <p>If present and nonzero, the Fisher exact test is used and APPROX_PARAMS is ignored.</p>
+        <h3 class="Keyword"><a name="P_VALUE"></a>P_VALUE (optional)</h3>
+        <p>Named variable containing the <i>p</i>-value for independence of rows and columns. The <i>p</i>-value represents the probability of a more extreme table where "extreme" is in the Neyman-Pearson sense. The P_Value is "two-sided." The <i>p</i>-value is also returned in functional form.</p>
+        <p>A table is more extreme if its probability (for fixed marginals) is less than or equal to PROB_TABLE.</p>
+        <h3 class="Keyword"><a name="PROB_TABLE"></a>PROB_TABLE (optional)</h3>
+        <p>Named variable containing the probability of the observed table occurring, given that the null hypothesis of independent rows and columns is true.</p>
+        <h3 class="Keyword"><a name="WK_PARAMS"></a>WK_PARAMS (optional)</h3>
+        <p>One-dimensional array of size 3. The network algorithm requires a large amount of workspace. Some of the workspace requirements are well-defined, while most of the workspace requirements can only be estimated. The estimate is based primarily on table size.</p>
+        <p>The IMSL_EXACT_ENUM function allocates a default amount of workspace suitable for small problems. If the algorithm determines that this initial allocation of workspace is inadequate, the memory is freed, a larger amount of memory allocated (twice as much as the previous allocation), and the network algorithm is re-started. The algorithm allows for up to WK_PARAMS(2) attempts to complete the algorithm.</p>
+        <p>Because each attempt requires computer time, it is suggested that WK_PARAMS(0) and WK_PARAMS(1) be set to some large numbers (like 1,000 and 30,000) if the problem to be solved is large. It is suggested that WK_PARAMS(1) be 30 times larger than WK_PARAMS(0). Although IMSL_EXACT_ENUM will eventually work its way up to a large enough memory allocation, it is quicker to allocate enough memory initially.</p>
+        <p>The known (well-defined) workspace requirements are as follows: </p>
+        <ul>
+            <li value="1"><i>f</i><sub>••</sub> = ΣΣ<i>f</i><sub>ij</sub> is equal to the sum of all cell frequencies in the observed table</li>
+            <li value="2"><i>nt</i> = <i>f</i><sub>••</sub> + 1</li>
+            <li value="3"><i>mx</i> = <i>max</i>(<i>N_rows</i>, <i>N_columns</i>)</li>
+            <li value="4"><i>mn</i> = <i>min</i>(<i>N_rows</i>, <i>N_columns</i>)</li>
+            <li value="5"><i>t</i><sub>1</sub> = <i>max</i>(800 + 7<i>mx</i>, (5 +2<i>mx</i>) (<i>N_rows</i> + <i>N_columns</i> + 1) )</li>
+            <li value="6"><i>t</i><sub>2</sub> = <i>max</i>(400 + <i>mx</i>, + 1, <i>N_rows</i> + <i>N_columns</i> + 1)</li>
+        </ul>
+        <p> IN&#160;IDL terms:</p>
+        <ul>
+            <li value="1"><i>N_rows</i> = N_ELEMENTS(<i>Table</i>(*,0))</li>
+            <li value="2"><i>N_columns</i> = N_ELEMENTS(<i>Table</i>(0,*)).</li>
+        </ul>
+        <p>The amount of integer workspace allocated is 3<i>mx</i> + 2<i>mn</i> + <i>t</i><sub>1</sub>. </p>
+        <p>The  amount of real workspace allocated is <i>nt</i> + <i>t</i><sub>2</sub>.</p>
+        <p>The remainder of workspace that is required must be estimated and allocated based on WK_PARAMS(0) and WK_PARAMS(1). </p>
+        <ul>
+            <li value="1">The amount of integer workspace allocated is 6<i>n</i> * (WK_PARAMS(0) + WK_PARAMS(1)). </li>
+            <li value="2">The amount of real workspace allocated is <i>n</i>, where <i>n</i> is (6*WK_PARAMS(0) + 2* Wk_Params(1)). </li>
+            <li value="3">Variable <i>n</i> is the index for the attempt, 1 &lt; <i>n</i> ≤ Wk_Params(2).</li>
+        </ul>
+        <p>Defaults: </p>
+        <p>WK_PARAMS(0) = 100</p>
+        <p>WK_PARAMS(1) = 3000</p>
+        <p>WK_PARAMS(2) = 10</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

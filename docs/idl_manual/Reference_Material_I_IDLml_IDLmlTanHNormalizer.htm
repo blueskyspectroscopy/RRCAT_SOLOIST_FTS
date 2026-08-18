@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IDLml Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLmlTanHNormalizer</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IDLml Routines.htm">IDLml Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLmlTanHNormalizer</span>
+        </div>
+        <h1 class="ObjClass">IDLmlTanHNormalizer</h1>
+        <p>The IDLmlTanHNormalizer class implements a Hyperbolic Tangent Normalizer which maps the data to the Tanh of the data. This spreads out or increases the resolution around the mean and squishes the outliers to the edges. For example, data that follows a normal distribution will concentrate on the middle. The normalized data will be confined to the range (-1, +1).</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">Data = findgen(10)</p>
+        <p class="Code">Normalizer = IDLmlTanHNormalizer(data)</p>
+        <p class="Code">Print, Normalizer.Normalize(data)</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLmlTanHNormalizer(<i>Data</i>)</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Data</h3>
+        <p>A numerical array from which the normalizer will determine the proper normalization parameters. The array must be 2D, of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Properties</h2>
+        <p>None</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1"><a href="#Normalize" class="selected">IDLmlTanHNormalizer::Normalize</a>
+            </li>
+            <li value="2"><a href="#Restore" class="selected">IDLmlTanHNormalizer::Restore</a>
+            </li>
+            <li value="3"><a href="#Save" class="selected">IDLmlTanHNormalizer::Save</a>
+            </li>
+            <li value="4"><a href="#Unnormalize" class="selected">IDLmlTanHNormalizer::Unnormalize</a>
+            </li>
+        </ul>
+        <h1 class="ObjMethod"><a name="Normalize"></a>IDLmlTanHNormalizer::Normalize</h1>
+        <p>The IDLmlTanHNormalizer::Normalize method computes the normalization of input data.</p>
+        <h2 class="API">Syntax</h2>
+        <p>This method can be invoked as a procedure or a function. The procedure syntax is faster and more efficient, but it overwrites the <i>Data</i> argument. The function syntax is less efficient, but it leaves the input argument untouched.</p>
+        <p style="font-weight: bold;">As a procedure:</p>
+        <p class="Syntax">Obj-&gt;[<i>IDLmlTanHNormalizer::</i>]Normalize, <i>Data</i></p>
+        <p style="font-weight: bold;">As a function:</p>
+        <p class="Syntax"><i>Result</i> = Obj-&gt;[<i>IDLmlTanHNormalizer::</i>]Normalize(<i>Data</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>If called as a procedure, the normalized array will overwrite the input <i>Data</i> argument. If called as a function, the return value will be an array with the same dimensions as <i>Data</i>, which contains the normalized result.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Data</h3>
+        <p>Specify a scalar, 1D array or 2D array of data to normalize.</p>
+        <p>If the data is 2D, the array must be of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples. If the data is 1D, the array must be of size <i>n</i> (number of attributes).</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Restore"></a>IDLmlTanHNormalizer::Restore</h1>
+        <p>The IDLmlTanHNormalizer::Restore static method restores the normalizer from a file.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = <i>IDLmlTanHNormalizer</i>.Restore(<i>Filename</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>A reference to the object instance restored from the file.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Filename</h3>
+        <p>Specify the name of the file to restore.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Save"></a>IDLmlTanHNormalizer::Save</h1>
+        <p>The IDLmlTanHNormalizer::Save method saves the normalizer to a file.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">Obj-&gt;[<i>IDLmlTanHNormalizer::</i>]Save, <i>Filename</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Keyword">Filename</h3>
+        <p>Specify the name of the file to save.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Unnormalize"></a>IDLmlTanHNormalizer::Unnormalize</h1>
+        <p>The IDLmlTanHNormalizer::Unnormalize method returns normalized data to its original values.</p>
+        <h2 class="API">Syntax</h2>
+        <p>This method can be invoked as a procedure or a function. The procedure syntax is faster and more efficient, but it overwrites the <i>Data</i> argument. The function syntax is less efficient, but leaves the input argument untouched.</p>
+        <p style="font-weight: bold;">As a procedure:</p>
+        <p class="Syntax">Obj-&gt;[<i>IDLmlTanHNormalizer::</i>]Unnormalize, <i>Data</i></p>
+        <p style="font-weight: bold;">As a function:</p>
+        <p class="Syntax"><i>Result</i> = Obj-&gt;[<i>IDLmlTanHNormalizer::</i>]Unnormalize(<i>Data</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>If called as a procedure, the unnormalized array will overwrite the input <i>Data</i> argument. If called as a function, the return value will be an array with the same dimensions as <i>Data</i>, which contains the unnormalized result.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Data</h3>
+        <p>Specify a scalar, 1D array or 2D array of data to normalize.</p>
+        <p>If the data is 2D, the array must be of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples. If the data is 1D, the array must be of size <i>n</i> (number of attributes).</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLmlLinearNormalizer.htm">IDLmlLinearNormalizer</a>, <a href="IDLmlRangeNormalizer.htm">IDLmlRangeNormalizer</a>, <a href="IDLmlUnitNormalizer.htm">IDLmlUnitNormalizer</a>, <a href="IDLmlVarianceNormalizer.htm">IDLmlVarianceNormalizer</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

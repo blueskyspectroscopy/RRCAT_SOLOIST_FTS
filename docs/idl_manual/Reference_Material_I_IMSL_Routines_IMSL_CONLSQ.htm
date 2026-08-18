@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CONLSQ</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CONLSQ</span>
+        </div>
+        <h1 class="Routine">IMSL_CONLSQ</h1>
+        <p>The IMSL_CONLSQ function computes a least-squares constrained spline approximation.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CONLSQ function produces a constrained, weighted, least-squares fit to data from a spline subspace. Constraints involving one-point, two-points, or integrals over an interval are allowed.</p>
+        <p>The types of constraints supported by the functions are of four types:</p>
+        <p>
+            <img src="images/IMSL_CONLSQ-77 (1).jpg" />
+        </p>
+        <p>An interval, <i>I</i><sub>p</sub>, (which may be a point, a finite interval, or a semi-infinite interval) is associated with each of these constraints.</p>
+        <p>The input for this function consists of the data set (<i>x</i><sub>i</sub><i>, f</i><sub>i</sub>) for <i>i</i> = 1, ..., <i>N</i> (where <i>N</i> = N_ELEMENTS(<i>Xdata</i>)); that is, the data which is to be fit and the dimension of the spline space from which a fit is to be computed, <i>Spacedim</i>. The <i>Constraints</i> argument is an array of structures that contains the abscissas of the points involved in specifying the constraints, as well as information relating the type of constraints and the constraint interval. The optional argument <i>Nhard</i> allows users of this code to specify which constraints must be met and which constraints can be removed in order to compute a fit. The algorithm tries to satisfy all the constraints, but if the constraints are inconsistent, then it drops constraints in the reverse order specified, until either a consistent set of constraints is found or the "hard" constraints are determined to be inconsistent (the "hard" constraints are those involving <i>Constraints</i>(0), ..., <i>Constraints</i>(<i>Nhard</i> – 1)).</p>
+        <p>Let <i>n</i><sub>f</sub> denote the number of feasible constraints as described above. The function solved the problem:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-78.jpg" />
+        </p>
+        <p>subject to:</p>
+        <p>
+            <img src="images/IMSL_CONLSQ-79.jpg" />
+        </p>
+        <p>This linearly constrained least-squares problem is treated as a quadratic program and is solved by invoking <a href="IMSL_QUADPROG.htm">IMSL_QUADPROG</a>.</p>
+        <p>The choice of weights depends on the data uncertainty in the problem. In some cases, there is a natural choice for the weights based on the estimates of errors in the data points.</p>
+        <p>Determining feasibility of linear constraints is a numerically sensitive task. If difficulties are encountered, a quick fix is to widen the constraint intervals <i>I<sub>p</sub></i>.</p>
+        <h2 class="API">Example</h2>
+        <p>This example is a simple application of IMSL_CONLSQ. Data from the function <i>x</i>/2 + sin(<i>x</i>/2) contaminated with random noise is generated and then fit with cubic splines. The function is increasing so it is hoped that the least-squares fit also is increasing. This is not the case for the unconstrained least-squares fit generated by the <a href="IMSL_BSLSQ.htm">IMSL_BSLSQ</a> function. The derivative is then forced to be greater than zero at 15 equally spaced points and IMSL_CONLSQ is called. The resulting curve is monotone as shown in the figure that follows.</p>
+        <p class="Code">IMSL_RANDOMOPT, Set = 234579</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Set the random seed.</p>
+        <p class="Code">ndata = 15;</p>
+        <p class="Code">spacedim = 8;</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Generate the data to be fit.</p>
+        <p class="Code">x = 10 * FINDGEN(ndata)/(ndata - 1)</p>
+        <p class="Code">y = .5 * (x) + SIN(.5 * (x)) + IMSL_RANDOM(ndata) - .5</p>
+        <p class="Code">sp1 = IMSL_BSLSQ(x, y, spacedim)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Compute the unconstrained least-squares fit. </p>
+        <p class="Code">nconstraints = 15</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the constraints to be used by IMSL_CONLSQ.</p>
+        <p class="Code">constraints = REPLICATE({constraint, $</p>
+        <p class="Code_Indented">XVAL:0.0, DER:0L, TYPE:0L, BL:0.0, BU:0.0}, nconstraints)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define an array of constraint structures. Each element of the</p>
+        <p class="Code">; array contains one structure that defines a constraint.</p>
+        <p class="Code">constraints.XVAL = 10*FINDGEN(nconstraints)/(nconstraints-1)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Put a constant at 15 equally spaced points.</p>
+        <p class="Code">FOR i = 0, nconstraints - 1 DO BEGIN &amp; $</p>
+        <p class="Code_Indented">constraints(i).DER	= 1 &amp; $</p>
+        <p class="Code_Indented">constraints(i).TYPE = 3 &amp; $</p>
+        <p class="Code_Indented">constraints(i).BL	= 0. &amp; $ </p>
+        <p class="Code">ENDFOR</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define constraints to force the second derivative to be greater</p>
+        <p class="Code">; than zero at the 15 equally spaced points. </p>
+        <p class="Code">sp2 = IMSL_CONLSQ(x, y, spacedim, constraints)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_CONLSQ.</p>
+        <p class="Code">nplot = 100</p>
+        <p class="Code">xplot = 10 * FINDGEN(nplot)/(nplot - 1)</p>
+        <p class="Code">yplot1 = IMSL_SPVALUE(xplot, sp1)</p>
+        <p class="Code">yplot2 = IMSL_SPVALUE(xplot, sp2)</p>
+        <p class="Code">PLOT, xplot, yplot1, Linestyle = 2</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Plot the results.</p>
+        <p class="Code">OPLOT, xplot, yplot2</p>
+        <p class="Code">OPLOT, x, y, Psym = 6</p>
+        <p class="Code">XYOUTS, 1, 4.5, 'IMSL_CONLSQ', Charsize = 2</p>
+        <p class="Code">XYOUTS, 1, 4, 'IMSL_BSLSQ', Charsize = 2</p>
+        <p class="Code">OPLOT, [5.0, 6.0], [4.6, 4.6]</p>
+        <p class="Code">OPLOT, [5.0, 6.0], [4.1, 4.1], Linestyle = 2</p>
+        <p>
+            <img src="images/interp13.gif" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CONLSQ(<i>Xdata, Fdata, Spacedim, Constraints</i>[, <i>Nhard</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#KNOTS" class="selected">KNOTS</a>=<i>value</i>] [, <a href="#ORDER" class="selected">ORDER</a>=<i>value</i>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A structure that represents the spline fit.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Xdata</h3>
+        <p>One-dimensional array containing the abscissas of the least-squares problem.</p>
+        <h3 class="Argument">Fdata</h3>
+        <p>One-dimensional array containing the ordinates of the least-squares problem.</p>
+        <h3 class="Argument">Spacedim</h3>
+        <p>Linear dimension of the spline subspace. It should be smaller than the number of data points and greater than or equal to the order of the spline (whose default value is 4).</p>
+        <h3 class="Argument">Constraints</h3>
+        <p>Array of structures containing the abscissas at which the fit is to be constrained, the derivative of the spline that is to be constrained, the type of constraints, and any lower or upper limits. A description of the structure fields follows.</p>
+        <ul>
+            <li value="1">XVAL: Point at which fit is constrained (float).</li>
+            <li value="2">DER: Derivative value of the spline to be constrained (long int).</li>
+            <li value="3">TYPE: Types of the general constraints (long int).</li>
+            <li value="4">BL: Lower limit of the general constraints (float).</li>
+            <li value="5">BU: Upper limit of the general constraints (float).</li>
+        </ul>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>To constrain the integral of the spline over the closed interval (<i>c</i>, <i>d</i>), set <i>Constraints</i>(<i>i</i>).XVAL = <i>c</i> and <i>Constraints</i>(<i>i</i> + 1).XVAL = <i>d</i>. For consistency, insist that <i>Constraints</i>(<i>i</i>).TYPE = <i>Constraints</i>(<i>i</i> + 1).TYPE = 5, 6, 7, or 8 and <i>c</i> ≤ <i>d</i>.</p>
+        <h4><i>Constraints</i>(<i>i</i>).TYPE-th constraint</h4>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-65.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-66.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-67.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-68.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-69.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-70.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-71.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-72.jpg" />
+        </p>
+        <p>20 periodic end conditions</p>
+        <p>99 disregard this constraint</p>
+        <p>In order to have two-point constraints, <i>Constraints</i>(<i>i</i>).TYPE = <i>Constraints</i>(<i>i</i> + 1).TYPE is needed.</p>
+        <h4><i>Constraints</i>(<i>i</i>).TYPE <i>i</i>-th constraint</h4>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-73.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-74.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-75.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONLSQ-76.jpg" />
+        </p>
+        <h3 class="Argument">Nhard (optional)</h3>
+        <p>The number of entries of constraints involved in the "hard" constraints. Note that 0 ≤  <i>Nhard</i> ≤  (SIZE (<i>Constraints</i>(1)). The default, <i>Nhard</i> = 0, always results in a fit, while setting <i>Nhard</i> = (SIZE (<i>Constraints</i>(1)) forces all constraints to be met.</p>
+        <p>The "hard" constraints must be met or the function signals fail. The "soft" constraints need not be satisfied, but there is an attempt to satisfy the "soft" constraints. The constraints must be listed in terms of priority with the most important constraints first. Thus, all "hard" constraints must precede "soft" constraints. If infeasibility is detected among the "soft" constraints, the function satisfies, in order, as many of the "soft" constraints as possible. The default value is 0.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="KNOTS"></a>KNOTS (optional)</h3>
+        <p>Specifies the array of knots to be used when computing the spline. Default: knots are equally spaced.</p>
+        <h3 class="Keyword"><a name="ORDER"></a>ORDER (optional)</h3>
+        <p>Specifies the order of the spline. Default: 4, i.e., cubic splines.</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>Array containing the weights to be used. Default: all weights equal 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

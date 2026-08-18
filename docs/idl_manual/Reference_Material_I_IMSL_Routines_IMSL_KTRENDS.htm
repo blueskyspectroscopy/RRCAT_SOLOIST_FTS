@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_KTRENDS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_KTRENDS</span>
+        </div>
+        <h1 class="Routine">IMSL_KTRENDS</h1>
+        <p>The IMSL_KTRENDS function performs a k-sample trends test against ordered alternatives.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_KTRENDS function performs a <i>k</i>-sample trends test against ordered alternatives. The alternative to the null hypothesis of equality is that <i>F</i><sub>1</sub>(X)&#160;&lt;&#160;<i>F</i><sub>2</sub>(X) &lt; <i>... F</i><sub>k</sub>(<i>X</i>)<i>, </i>where <i>F</i><sub>1</sub>, <i>F</i><sub>2</sub>, etc., are cumulative distribution functions, and the operator &lt; implies that the less than relationship holds for all values of <i>x</i>. While the trends test used in IMSL_KTRENDS requires that the background populations be continuous, ties occurring within a sample have no effect on the test statistic or associated probabilities. Ties between samples are important, however. Two methods for handling ties between samples are used. These are:</p>
+        <ol>
+            <li value="1">Ties are randomly split (<i>Result</i>(0)).</li>
+            <li value="2">Ties are counted in a manner that is unfavorable to the alternative hypothesis (<i>Result</i>(1)).</li>
+        </ol>
+        <h2 class="API">Computational Procedure</h2>
+        <p>Consider the matrices:</p>
+        <p>
+            <img src="images/IMSL_KTRENDS-10.jpg" />
+        </p>
+        <p>where <i>X</i><sub>ki</sub><i>  <![CDATA[ ]]></i>is the <i>i</i>-th observation in the <i>k</i>-th population, <i>X</i><sub>mj</sub> is the<i> j</i>-th observation in the <i>m</i>-th population, and each matrix <i>M</i><sup style="font-style: italic" class="cSuperscriptItalic">km</sup> is <i> n</i><sub>k</sub> by <i>n</i><sub>m</sub> where <i>n</i><sub>i</sub><i> = n</i>(<i>i</i>). Let <i>S</i><sub>km</sub><i>  <![CDATA[ ]]></i>denote the sum of all elements in <i>M</i><sup style="font-style: italic" class="cSuperscriptItalic">km</sup><i>.</i> Then, <i>Result</i>(1) is computed as the sum over all elements in <i>S</i><sub>km</sub><i>,</i> minus the expected value of this sum (computed as:</p>
+        <p>
+            <img src="images/IMSL_KTRENDS-11.jpg" />
+        </p>
+        <p>when there are no ties and the distributions in all populations are equal). In <i>Result</i>(0), ties are broken randomly, and the element in the summation is taken as 2.0 or 0.0 depending upon the result of breaking the tie.</p>
+        <p><i>Result</i>(2) and <i>Result</i>(3) are computed using the <i>t</i> distribution. The probabilities reported are asymptotic approximations based upon the <i>t</i> statistics in <i>Result</i>(12) and <i>Result</i>(13), which are computed as in Jonckheere (1954, page 141).</p>
+        <p>Similarly, <i>Result</i>(4) and <i>Result</i>(5) give the probabilities for <i>Result</i>(14) and <i>Result</i>(15), the continuity corrected versions of <i>Result</i>(2) and <i>Result</i>(3). The degrees of freedom for each <i>t</i> statistic (<i>Result</i>(16)) are computed so as to make the <i>t</i> distribution selected as close as possible to the actual distribution of the statistic (see Jonckheere 1954, page 141).</p>
+        <p><i>Result</i>(6), the variance of the test statistic <i>Result</i>(0), and <i>Result</i>(7), the kurtosis of the test statistic, are computed as in Jonckheere (1954, page 138). The coefficients of rank correlation in <i>Result</i>(8) and <i>Result</i>(9) reduce to the Kendall <span style="font-family: Symbol" class="cSymbol">t</span> statistic when there are just two groups.</p>
+        <p>Exact probabilities in small samples can be obtained from tables in Jonckheere (1954). Note, however, that the <i>t</i> approximation appears to be a good one.</p>
+        <h2 class="API">Assumptions</h2>
+        <ol>
+            <li value="1">The <i>X</i><sub>mi</sub> for each sample are independently and identically distributed according to a single continuous distribution.</li>
+            <li value="2">The samples are independent.</li>
+        </ol>
+        <h2 class="API">Hypothesis Tests</h2>
+        <p><i>H</i><sub>0</sub> : <i>F</i><sub>1</sub>(X) ≥ <i>F</i><sub>2</sub>(X) ≥ ... ≥ <i>F</i><sub>k</sub><i>(X) <br />H</i><sub>1</sub> : <i>F</i><sub>1</sub>(X) &lt; <i>F</i><sub>2</sub>(X) &lt; ... &lt; <i>F</i><sub>k</sub><i>(</i><i>X</i><i>) <br /></i>Reject if <i>Result</i>(2) (or <i>Result</i>(3), or <i>Result</i>(4) or <i>Result</i>(5), depending upon the method used) is too large.</p>
+        <h2 class="API">Example</h2>
+        <p>The following example is taken from Jonckheere (1954, page 135). It involves four observations in four independent samples.</p>
+        <p class="Code">y	=	[19.0, 20.0, 60.0, 130.0, 21.0, 61.0, 80.0, 129.0, $</p>
+        <p class="Code">40.0, 99.0, 100.0, 149.0, 49.0, 110.0, 151.0, 160.0]</p>
+        <p class="Code">n  = [4, 4,  4,  4]</p>
+        <p class="Code">rlabel = ['stat(0) - Test Statistic (random) .............', $</p>
+        <p class="Code_Indented">'stat(1) - Test Statistic (null hypothesis) ....', $</p>
+        <p class="Code_Indented">'stat(2) - p-value for stat(0) .................', $</p>
+        <p class="Code_Indented">'stat(3) - p-value for stat(1) .................', $</p>
+        <p class="Code_Indented">'stat(4) - Continuity corrected for stat(2) ....', $</p>
+        <p class="Code_Indented">'stat(5) - Continuity corrected for stat(3) ....', $</p>
+        <p class="Code_Indented">'stat(6) - Expected mean .......................', $</p>
+        <p class="Code_Indented">'stat(7) - Expected kurtosis ...................', $</p>
+        <p class="Code_Indented">'stat(8) - Total sample size ...................', $</p>
+        <p class="Code_Indented">'stat(9) - Rank corr. coef. based on stat(0) ...', $</p>
+        <p class="Code_Indented">'stat(10)- Rank corr. coef. based on stat(1) ...', $</p>
+        <p class="Code_Indented">'stat(11)- Total number of ties ................', $</p>
+        <p class="Code_Indented">'stat(12)- t-statistic associated w/stat(2) ....', $</p>
+        <p class="Code_Indented">'stat(13)- t-statistic associated w/stat(3) ....', $</p>
+        <p class="Code_Indented">'stat(14)- t-statistic associated w/stat(4) ....', $</p>
+        <p class="Code_Indented">'stat(15)- t-statistic associated w/stat(5) ....', $</p>
+        <p class="Code_Indented">'stat(16)- Degrees of freedom ..................']</p>
+        <p class="Code">s  = IMSL_KTRENDS(n, y)</p>
+        <p class="Code">FOR i = 0, 16 DO PM, rlabel(i), s(i), FORMAT = '(A45, F10.5)'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">stat(0) - Test Statistic (random) ............  46.00000</p>
+        <p class="Code">stat(1) - Test Statistic (null hypothesis) ...  46.00000</p>
+        <p class="Code">stat(2) - p-value for stat(0) .................  0.01483</p>
+        <p class="Code">stat(3) - p-value for stat(1) .................  0.01483</p>
+        <p class="Code">stat(4) - Continuity corrected for stat(2) ....   0.01683</p>
+        <p class="Code">stat(5) - Continuity corrected for stat(3) ..,.   0.01683</p>
+        <p class="Code">stat(6) - Expected mean ..................... 458.66666</p>
+        <p class="Code">stat(7) - Expected kurtosis ..................  -0.15365</p>
+        <p class="Code">stat(8) - Total sample size ..................  16.00000</p>
+        <p class="Code">stat(9) - Rank corr. coef. based on stat(0) ...  0.47917</p>
+        <p class="Code">stat(10)- Rank corr. coef. based on stat(1) ...  0.47917</p>
+        <p class="Code">stat(11)- Total number of ties ................  0.00000</p>
+        <p class="Code">stat(12)- t-statistic associated w/stat(2) ....  2.26435</p>
+        <p class="Code">stat(13)- t-statistic associated w/stat(3) ....  2.26435</p>
+        <p class="Code">stat(14)- t-statistic associated w/stat(4) ....  2.20838</p>
+        <p class="Code">stat(15)- t-statistic associated w/stat(5) ....  2.20838</p>
+        <p class="Code">stat(16)- Degrees of freedom .................  36.04963</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_KTRENDS(<i>N, Y</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length 17 containing the test results.</p>
+        <ul>
+            <li value="1">0: Test statistic (ties are randomized).</li>
+            <li value="2">1: Conservative test statistic with ties counted in favor of the null hypothesis.</li>
+            <li value="3">2: p-value associated with Result(0).</li>
+            <li value="4">3: p-value associated with Result(1).</li>
+            <li value="5">4: Continuity corrected Result(2).</li>
+            <li value="6">5: Continuity corrected Result(3).</li>
+            <li value="7">6: Expected mean of the statistic.</li>
+            <li value="8">7: Expected kurtosis of the statistic. (The expected skewness is zero.)</li>
+            <li value="9">8: Total sample size.</li>
+            <li value="10">9: Coefficient of rank correlation based upon Result(0).</li>
+            <li value="11">10: Coefficient of rank correlation based upon Result(1).</li>
+            <li value="12">11: Total number of ties between samples.</li>
+            <li value="13">12: The t-statistic associated with Result(2).</li>
+            <li value="14">13: The t-statistic associated with Result(3).</li>
+            <li value="15">14: The t-statistic associated with Result(4).</li>
+            <li value="16">15: The t-statistic associated with Result(5).</li>
+            <li value="17">16: Degrees of freedom for each t-statistic.</li>
+        </ul>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N</h3>
+        <p>One-dimensional array containing the number of responses for each of the groups.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array that contains the responses for each of the groups. <i>Y</i> must be sorted by group, with the <i>n</i>(0) observations in group 1 coming first, the <i>n</i>(1) observations in group two coming second, and so on.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

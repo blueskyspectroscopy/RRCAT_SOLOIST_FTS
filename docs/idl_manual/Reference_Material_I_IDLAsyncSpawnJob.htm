@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLAsyncSpawnJob</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLAsyncSpawnJob</span>
+        </div>
+        <h1 class="ObjClass">IDLAsyncSpawnJob</h1>
+        <p>The IDLAsyncSpawnJob class represents a unit of work to be done at some point in the future by spawning an external process to perform the work. On creation, specify the scalar string to be passed into that process via STDIN. After the job is complete, you can retrieve the contents of the process's STDOUT output. Submitting these to an IDLAsyncQueue will allow them to be performed as resources become available.</p>
+        <h2 class="API">Superclasses</h2>
+        <ul>
+            <li value="1"><a href="IDLAsyncJob.htm">IDLAsyncJob</a>
+            </li>
+        </ul>
+        <h2 class="API">Examples</h2>
+        <p class="Code">; Use S3 folder for a dataset covering Boulder, CO, taken April 4, 2017</p>
+        <p class="Code">folderUrl = 'https://s3-us-west-2.amazonaws.com/landsat-pds/L8/033/032/LC80330322017104LGN00'</p>
+        <p class="Code">; Dataset name is same as folder name, and is root of all files</p>
+        <p class="Code">datasetName = File_BaseName(folderUrl)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; List of suffixes to apply to dataset name for all files needed to</p>
+        <p class="Code">; comprise a full Landsat 8 dataset.  Band 8 is the panchromatic band,</p>
+        <p class="Code">; which is the largest, so start downloading it first.</p>
+        <p class="Code">suffixes = [ '_B8.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B1.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B2.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B3.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B4.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B5.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B6.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B7.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B9.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B10.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B11.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_BQA.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_MTL.txt' ]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; create a folder in the temp folder for the local files</p>
+        <p class="Code">localFolder = FilePath(datasetName, /TMP)</p>
+        <p class="Code">if (~File_Test(localFolder)) then File_MkDir, localFolder</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct IDLAsyncJoin object to use for waiting on all jobs to complete</p>
+        <p class="Code">oJoin = IDLAsyncJoin()</p>
+        <p class="Code">; construct IDLAsyncQueue to manage parallel execution of jobs</p>
+        <p class="Code">oQueue = IDLAsyncQueue(CONCURRENCY=6)</p>
+        <p class="Code">; create object array to hold all jobs</p>
+        <p class="Code">jobs = ObjArr(N_Elements(suffixes))</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define compound command to execute in the bridge.</p>
+        <p class="Code">; This command creates an IDLnetURL object, then calls its Get() method,</p>
+        <p class="Code">; passing in the remote URL and local filename to use.  The command must</p>
+        <p class="Code">; also exit IDL so that the job can terminate.</p>
+        <p class="Code">; An alternate command that works using a procedure is:</p>
+        <p class="Code">;   idlCmdFormat = 'download_S3_URL, S3_URL=''%s'', LOCAL_FILE=''%s'' &amp; exit'</p>
+        <p class="Code">idlCmdFormat = 'u = IDLnetURL() &amp; !null = u.Get(URL=''%s'', FILE=''%s'') &amp; exit'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">case (!version.OS) of</p>
+        <p class="Code">&#160;&#160;&#160;&#160;'Win32': idlExecutable = FilePath('idl.exe', SUBDIR=['bin', 'bin.'+!version.ARCH])</p>
+        <p class="Code">&#160;&#160;&#160;&#160;else: idlExecutable = FilePath('idl', SUBDIR=['bin'])</p>
+        <p class="Code">endcase</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct a unique job for each remote file to download</p>
+        <p class="Code">foreach suf, suffixes, i do begin</p>
+        <p class="Code">&#160;&#160;&#160;&#160;file = datasetName + suf</p>
+        <p class="Code">&#160;&#160;&#160;&#160;remote = folderUrl + '/' + file</p>
+        <p class="Code">&#160;&#160;&#160;&#160;local = FilePath(file, ROOT=localFolder)</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; populate the IDL command string with current file suffix</p>
+        <p class="Code">&#160;&#160;&#160;&#160;idlCmd = String(Format=idlCmdFormat, remote, local)</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; construct IDL Command Line spawn command</p>
+        <p class="Code">&#160;&#160;&#160;&#160;execCmd = idlExecutable + ' -e "' + idlCmd + '"'</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; construct IDLAsyncSpawnJob to execute compound command in IDL Command Line,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; passing in join object</p>
+        <p class="Code">&#160;&#160;&#160;&#160;jobs[i] = IDLAsyncSpawnJob(execCmd, JOIN=oJoin)</p>
+        <p class="Code">endforeach</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">tic</p>
+        <p class="Code">; submit all the jobs to the queue for execution</p>
+        <p class="Code">oQueue.SubmitJob, jobs</p>
+        <p class="Code">; wait for all jobs to be done</p>
+        <p class="Code">oJoin.WaitForJoin</p>
+        <p class="Code">toc</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncSpawnJob(<i>Exec</i> [, JOIN=<i>IDLAsyncJoin</i>] [, STDIN=<i>String</i>] [, WAIT=<i>Float</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Exec</h3>
+        <p>Specify a scalar string for the external application to spawn. Standard use of the PATH environment variable and current working directory will apply if this is a relative path. This string can contain command line arguments if needed.</p>
+        <p>The STDERR&#160;keyword is not set when calling <a href="../S/SPAWN.htm">SPAWN</a>, so output on STDERR will not be captured unless you make that part of this command string. You can redirect STDERR to a file or multiplex it into stdout as needed.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>On Windows the /NOSHELL&#160;keyword is set in the call to SPAWN, to ensure that standard redirection syntax can be used.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>On Unix the /SH keyword is set in the call to SPAWN, to ensure the Bourne shell is used and standard redirection syntax can be used.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">JOIN (optional)</h3>
+        <p>Specify an <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a> object that is passed to the IDLAsyncJob base class Init() method for handling.</p>
+        <h3 class="Keyword">STDIN (optional)</h3>
+        <p>Specify a scalar string that will be sent to the external application via STDIN.</p>
+        <h3 class="Keyword">WAIT (optional)</h3>
+        <p>Specify the amount of time in seconds to wait between polling the external process for output or completion. If this is not set, then the default value is 0.1 seconds.</p>
+        <h2 class="API"><a name="Methods"></a>Methods</h2>
+        <ul>
+            <li value="1">IDLAsyncSpawnJob inherits all methods from <a href="IDLAsyncJob.htm#Methods">IDLAsyncJob</a>.</li>
+            <li value="2">IDLAsyncSpawnJob()</li>
+            <li value="3"><a href="#GetReturnValue" class="selected">IDLAsyncSpawnJob::GetReturnValue</a>
+            </li>
+            <li value="4"><a href="#OnDone" class="selected">IDLAsyncSpawnJob::OnDone</a>
+            </li>
+            <li value="5"><a href="#OnStart" class="selected">IDLAsyncSpawnJob::OnStart</a>
+            </li>
+        </ul>
+        <h2 class="API"><a name="Properties"></a>Properties</h2>
+        <p>IDLAsyncSpawnJob inherits all properties from <a href="IDLAsyncJob.htm#Properties">IDLAsyncJob</a>. The IDLAsyncSpawnJob properties below are Get-only.</p>
+        <h3 class="Property"><a name="COMMAND"></a>COMMAND</h3>
+        <p>The external process to spawn when this job is run. This was the <i>Exec</i> argument used in constructing this job.</p>
+        <h3 class="Property">EXIT_STATUS</h3>
+        <p>The exit code of the spawned external process when it terminates.</p>
+        <h3 class="Property">PID</h3>
+        <p>The process ID of the spawned external process.</p>
+        <h3 class="Property">STDOUT</h3>
+        <p>A <a href="../L/LIST.htm">List</a> containing all the lines of text the spawned external process wrote to STDOUT.</p>
+        <h1 class="ObjMethod"><a name="GetReturnValue"></a>IDLAsyncSpawnJob::GetReturnValue</h1>
+        <p>The IDLAsyncSpawnJob::GetReturnValue method is an override of the IDLAsyncJob interface method. The only variable that can be retrieved is STDOUT, which is a List containing all the string output read from the STDOUT pipe connected to the external process.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span> This will only contain information from STDERR multiplexed into STDOUT if that redirection is specified in the <a href="#COMMAND" class="selected">COMMAND</a> property.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncSpawnJob.GetReturnValue, STDOUT=<i>list</i></p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">STDOUT</h3>
+        <p>The contents read from STDOUT from the external application. This is stored as a list of strings, to allow users to insert carriage returns between lines as needed.</p>
+        <h1 class="ObjMethod"><a name="OnDone"></a>IDLAsyncSpawnJob::OnDone</h1>
+        <p>The IDLAsyncSpawnJob::OnDone method is an implementation override of the IDLAsyncJob callback invoked on this job by the Done event handler. This will ensure the LUN returned in the UNIT keyword of Spawn will be freed.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncSpawnJob.OnDone</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="OnStart"></a>IDLAsyncSpawnJob::OnStart</h1>
+        <p>The IDLAsyncSpawnJob::OnStart method is an implementation override of the IDLAsyncJob callback invoked on this job by the Start event handler. The basic sequence of operations is:</p>
+        <ul>
+            <li value="1">Spawn the process, opening a pipe for communication.</li>
+            <li value="2">Print the input data to the pipe to be sent to STDIN.</li>
+            <li value="3">Create a timer to wait for the process to complete.</li>
+        </ul>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncSpawnJob.OnStart</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLAsyncJob.htm">IDLAsyncJob</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

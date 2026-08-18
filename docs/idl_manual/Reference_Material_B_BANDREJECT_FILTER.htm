@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: B">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>BANDREJECT_FILTER</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="B_list.htm">Routines: B</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">BANDREJECT_FILTER</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor72"></a>BANDREJECT_FILTER</h1>
+        <p>The BANDREJECT_FILTER function applies a low-reject, high-reject, or band-reject filter on a one-channel image.</p>
+        <p>A band reject filter is useful when the general location of the noise in the frequency domain is known. A band reject filter blocks frequencies within the chosen range and lets frequencies outside of the range pass through.</p>
+        <p>The following diagrams give a visual interpretation of the transfer functions:</p>
+        <p>
+            <img src="../../images/bandreject.gif" />
+        </p>
+        <p>This routine is written in the IDL language. Its source code can be found in the file <code>bandreject_filter.pro</code> in the <code>lib</code> subdirectory of the IDL distribution.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = BANDREJECT_FILTER( <i>ImageData</i>, <i>LowFreq</i>, <i>HighFreq</i> [,&#160;/<a href="#B_856805997_1044906" class="selected">IDEAL</a>] [,&#160;<a href="#B_856805997_1044917" class="selected">BUTTERWORTH</a>=<i>value</i>] [,&#160;/<a href="#B_856805997_1044929" class="selected">GAUSSIAN</a>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>Returns a filtered image array of the same dimensions and type as <i>ImageData</i>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">ImageData</h3>
+        <p>A two-dimensional array containing the pixel values of the input image.</p>
+        <h3 class="Argument">LowFreq</h3>
+        <p>The lower limit of the cutoff frequency band. This value should be between 0 and 1 (inclusive), and must be less than <i>HighFreq</i>.</p>
+        <h3 class="Argument">HighFreq</h3>
+        <p>The upper limit of the cutoff frequency band. This value should be between 0 and 1 (inclusive), and must be greater than <i>LowFreq</i>.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="B_856805997_1044906"></a>IDEAL</h3>
+        <p>Set this keyword to use an ideal band reject filter. In this type of filter, frequencies outside of the given range are passed without attenuation and frequencies inside of the given range are blocked. This behavior makes ideal band reject filters very sharp.</p>
+        <p>The centered Fast Fourier Transform (FFT) is filtered by the following function, where <i>D<sub>L</sub></i> is the lower bound of the frequency band, <i>D<sub>H</sub></i> is the upper bound of the frequency band, and <i>D(u,v)</i> is the distance between a point <i>(u,v)</i> in the frequency domain and the center of the frequency rectangle:</p>
+        <p style="text-align: center;">
+            <img src="../../images/8_21.jpg" />
+        </p>
+        <h3 class="Keyword"><a name="B_856805997_1044917"></a>BUTTERWORTH</h3>
+        <p>Set this keyword to the dimension of the Butterworth filter to apply to the frequency domain. With a Butterworth band reject filter, frequencies at the center of the frequency band are completely blocked and frequencies at the edge of the band are attenuated by a fraction of the maximum value. The Butterworth filter does not have any sharp discontinuities between passed and filtered frequencies.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The default for BANDREJECT_FILTER is BUTTERWORTH=1.</p>
+        <p>The centered FFT is filtered by one of the following functions, where <i>D<sub>0</sub></i> is the center of the frequency band, <i>W</i> is the width of the frequency band, <i>D=D(u,v)</i> is the distance between a point <i>(u,v)</i> in the frequency domain and the center of the frequency rectangle, and <i>n</i> is the dimension of the Butterworth filter:</p>
+        <p style="text-align: center;">
+            <img src="../../images/8_9.jpg" />
+        </p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>A low Butterworth dimension is close to Gaussian, and a high Butterworth dimension is close to Ideal.</p>
+        <h3 class="Keyword"><a name="B_856805997_1044929"></a>GAUSSIAN</h3>
+        <p>Set this keyword to use a Gaussian band reject filter. In this type of filter, the transition between unfiltered and filtered frequencies is very smooth.</p>
+        <p>The centered FFT is filtered by one of the following functions, where <i>D<sub>0</sub></i> is the center of the frequency band, <i>W</i> is the width of the frequency band, and <i>D=D(u,v)</i> is the distance between a point <i>(u,v)</i> in the frequency domain and the center of the frequency rectangle:</p>
+        <p style="text-align: center;">
+            <img src="../../images/8_22.jpg" />
+        </p>
+        <h2 class="API">Examples</h2>
+        <p>Here, we plot the frequency response of the Butterworth (n=5) and Gaussian filters. For the low-reject filter we use a high-frequency cutoff of 0.5, for high-reject we use a cutoff of 0.5, and for the band-reject we use <i>D<sub>L</sub></i>=0.2 and <i>D<sub>H</sub></i>=0.6.</p>
+        <p class="Code">m = [0.2,0.27,0.05,0.1]</p>
+        <p class="Code">p = PLOT('1-1/(1 + (X/0.5)^10)', '3', DIM=[600,300], FONT_SIZE=10, $</p>
+        <p class="Code_Indented">XRANGE=[0,1], YRANGE=[0,1.1], LAYOUT=[2,1,1], MARGIN=m, $</p>
+        <p class="Code_Indented">XTITLE='frequency', YTITLE='H(u,v)', TITLE='Butterworth (n=5)')</p>
+        <p class="Code">p = PLOT('1/(1 + (X*0.4/(X^2-0.4^2))^10)', '3g', /OVERPLOT)</p>
+        <p class="Code">p = PLOT('1-1/(1 + (0.5/X)^10)', '3r', /OVERPLOT)</p>
+        <p class="Code">p = PLOT('1-exp(-X^2/(2*0.5^2))', '3', DIM=[600,300], FONT_SIZE=10, $</p>
+        <p class="Code_Indented">XRANGE=[0,1], YRANGE=[0,1.1], LAYOUT=[2,1,2], MARGIN=m, $</p>
+        <p class="Code_Indented">XTITLE='frequency', YTITLE='H(u,v)', TITLE='Gaussian', /CURRENT)</p>
+        <p class="Code">p = PLOT('1-exp(-((X^2-0.4^2)/(X*0.4))^2)', '3g', /OVERPLOT)</p>
+        <p class="Code">p = PLOT('exp(-X^2/(2*0.5^2))', '3r', /OVERPLOT)</p>
+        <p class="Code">t = TEXT(0.12,0.05,'Low-reject $D_H=0.5$',/NORM, FONT_SIZE=9)</p>
+        <p class="Code">t = TEXT(0.38,0.05,'High-reject $D_L=0.5$',COLOR='red',/NORM, FONT_SIZE=9)</p>
+        <p class="Code">t = TEXT(0.64,0.05,'Band-reject $D_L=0.2, D_H=0.6$', $</p>
+        <p class="Code_Indented">COLOR='green',/NORM, FONT_SIZE=9)</p>
+        <p class="Code">p.Save, 'bandreject_filter.png', resolution=120</p>
+        <p style="text-align: center;">
+            <img src="../../images/bandreject_filter.png" />
+        </p>
+        <p>In the following example, we add some sinusoidal noise to an image and filter it with BANDREJECT_FILTER.</p>
+        <p class="Code">; Read in the file</p>
+        <p class="Code">file = FILEPATH('moon_landing.png', SUBDIR=['examples','data'])</p>
+        <p class="Code">imageOriginal = READ_PNG(file)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Generate some sinusoidal noise</p>
+        <p class="Code">xCoords = LINDGEN(300,300) MOD 300</p>
+        <p class="Code">yCoords = TRANSPOSE(xCoords)</p>
+        <p class="Code">noise = -SIN(xCoords*1.5)-SIN(yCoords*1.5)</p>
+        <p class="Code">imageNoise = imageOriginal + 50*noise</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Filter the noise with a band reject filter</p>
+        <p class="Code">imageFiltered = BANDREJECT_FILTER(imageNoise, 0.28, 0.38)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Display the original, noise-added, and filtered images</p>
+        <p class="Code">i=IMAGE(imageOriginal, LAYOUT=[3,1,1], TITLE='Original Image', $</p>
+        <p class="Code_Indented">DIMENSIONS=[700,300])</p>
+        <p class="Code">i=IMAGE(imageNoise, LAYOUT=[3,1,2], /CURRENT, TITLE='Added Noise')</p>
+        <p class="Code">i=IMAGE(imageFiltered, LAYOUT=[3,1,3], /CURRENT, $</p>
+        <p class="Code_Indented">TITLE='Band Reject Filtered')</p>
+        <p class="Code">i.Save, 'bandreject_filter_ex.gif', resolution=120</p>
+        <p style="text-align: center;">
+            <img src="../../images/bandreject_filter_ex.gif" />
+        </p>
+        <h2 class="API">Reference</h2>
+        <p>Gonzalez, R.C., and R.E. Woods. <i>Digital Image Processing, 3rd edition</i>. Pearson Education, Upper Saddle River, New Jersey, 2008.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.5.2</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Add equations for low-reject and high-reject filters.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../M/MEAN_FILTER.htm">MEAN_FILTER</a>, <a href="../E/ESTIMATOR_FILTER.htm">ESTIMATOR_FILTER</a>, <a href="BANDPASS_FILTER.htm">BANDPASS_FILTER</a>, <a href="../W/WIENER_FILTER.htm">WIENER_FILTER</a>, <a href="../L/LEAST_SQUARES_FILTER.htm">LEAST_SQUARES_FILTER</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

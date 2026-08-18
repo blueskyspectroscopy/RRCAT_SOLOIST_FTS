@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Environment|Distributing IDL Applications|Callable IDL Applications">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Licensing Options</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../IDL Concepts.htm">Environment</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../DistributingIDLApplications.htm">Distributing IDL Applications</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../CallableIDLApplications/CallableIDLApplicationsIntro.htm">Callable IDL Applications</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Licensing Options</span>
+        </div>
+        <h1>Licensing Options<a name="kanchor4474"></a></h1>
+        <p>To distribute an application that uses IDL to users who do not have an IDL development license, the following options are available:</p>
+        <ul>
+            <li value="1">Ask your users to install the free IDL Virtual Machine and run your application in the Virtual Machine.</li>
+            <li value="2">Purchase a runtime license from IDL that enables you to bundle IDL with your application.</li>
+            <li value="3">If your end users have an existing runtime license for another application, your application can run using that license.</li>
+        </ul>
+        <h2>Licensing Options for Runtime Mode Applications</h2>
+        <h3>Free Runtime License (IDL Virtual Machine)</h3>
+        <p>The <a href="../VirtualMachineApplications/VirtualMachineApplicationsIntro.htm">IDL Virtual Machine</a> is a runtime version of IDL that can execute IDL SAVE files without an IDL license. Users install the IDL Virtual Machine with the IDL Installer available on an IDL distribution CD-ROM or from the IDL download website.</p>
+        <h3>Purchased Runtime Licenses</h3>
+        <p>You can purchase runtime mode licenses from IDL. Runtime mode licenses provide a way to include a licensed IDL installation with your IDL application or Callable IDL application.</p>
+        <p>When you distribute a licensed version of IDL with your application, you provide users with IDL functionality, but do not provide access to the IDL command line, the IDL Workbench, or the ability to compile IDL <code>.pro</code> files. Runtime licenses are appropriate for:</p>
+        <ul>
+            <li value="1">Vertical-market packages developed in IDL but appear to the user as standalone applications.</li>
+            <li value="2">Software designed for use by operators or technicians who do not need programmatic access to IDL’s full range of analytical tools.</li>
+            <li value="3">Situations in which the you do not want end users to be able to modify functions written in the IDL language.</li>
+            <li value="4">Organizations with existing investments in IDL code, where some mixture of distributable and development IDL licenses may be cost-effective.</li>
+        </ul>
+        <p>If your users need access to the full scope of IDL’s features or advanced analytical tools outside the scope of your application, you might choose to distribute your application with an IDL development license. Contact your sales representative to purchase copies that you can distribute.</p>
+        <h3><a name="Runtime"></a>Runtime Licensing<a name="kanchor4475"></a></h3>
+        <p>A runtime license allows you to run an IDL application that cannot display the IDL Workbench or IDL command line, and cannot compile <code>.pro</code> files. This type of licensing offers developers who have smaller customer bases the opportunity to buy single distribution licenses as needed, paying a small fee for each license. The license is either a node-locked license running on the machine that has the application (you will need to obtain information about your customer’s machine), or a  floating license running on a license server machine.</p>
+        <p>When using runtime licensing, you can create a single unlicensed distribution that you can distribute to all your customers, you purchase a license for each customer and provide that license along with the information necessary for the customer to license your application. To create a license for a user that does not have Internet access, contact Technical Support.</p>
+        <h4>Ensuring Your License is Used</h4>
+        <p>To ensure your application will run with your runtime license and not in the IDL Virtual Machine, add code similar to the following to your application before preparing the application distribution:</p>
+        <p xml:space="preserve" class="Code">isVM = LMGR(/VM)</p>
+        <p xml:space="preserve" class="Code">
+IF isVM THEN BEGIN</p>
+        <p xml:space="preserve" class="Code">
+&#160;&#160;&#160;void = DIALOG_MESSAGE(['Please contact the author', $</p>
+        <p xml:space="preserve" class="Code">
+&#160;&#160;&#160;&#160;&#160;&#160;'for licensing instructions'])</p>
+        <p xml:space="preserve" class="Code">
+&#160;&#160;&#160;RETURN</p>
+        <p xml:space="preserve" class="Code">
+ENDIF</p>
+        <h4>Obtaining and Installing Runtime Licenses</h4>
+        <p>Runtime applications are licensed as node-locked licenses or floating licenses. If you purchased a runtime license, you will receive an e-mail from <span class="DocumentTitleCompanyName">Harris Geospatial Solutions</span> with a license activation code. To activate a node-locked license, see the installation and licensing documentation that came with your software entitlements. To activate a floating license, see the Flexera license server installation and administration documentation that came with your software entitlements.</p>
+        <h4>Custom Features</h4>
+        <p>You can request to have your own custom feature license added to your runtime license. Using a custom feature license allows you to specify that your application will only run if the custom feature license is present. Contact your  sales representative for information on adding custom features to your runtime license.</p>
+        <h3><a name="Embedded"></a><a name="kanchor4476"></a>Buffer Licensing</h3>
+        <p>A buffer license allows your application to run without an external IDL license. The application can be distributed to multiple users and will run on any system supported by IDL. Licensing an IDL application with a buffer license is the simplest form of licensing for end users.</p>
+        <p>To create applications with buffer licenses, purchase an IDL Developer’s Kit license from <span class="DocumentTitleCompanyName">Harris Geospatial Solutions</span>. The Developer’s Kit license gives your copy of IDL the ability to add a binary buffer license to your application’s SAVE file. See <a href="CreatingApplicationDistributionRuntime.htm">Creating an Application Distribution</a> for information on embedding the license information in your application’s SAVE file.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Licenses for <a href="../CallableIDLApplications/CallableIDLApplicationsIntro.htm">Callable IDL applications</a> are embedded directly in the application code.</p>
+        <h4>Optional Features</h4>
+        <p>When you purchase an IDL Developer’s Kit license, you can request to include one or more optional features in the license. Optional feature licenses control access to additional-cost IDL modules, such as the IDL DataMiner.</p>
+        <p>When your application attempts to use an additional-cost IDL module, IDL first checks if a license for the module is included in your application’s buffer license. If a license for the module is not included in the buffer license, IDL checks for node-locked or floating licenses available to that product installation. If a license for the module is not available, the user will not be able to use the features of that module.</p>
+        <h2>Licensing Options for Callable IDL&#160;Applications</h2>
+        <p>Refer to the previous section on Licensing Options for Runtime Mode Applications. The licensing options and steps are the same for callable IDL applications.</p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

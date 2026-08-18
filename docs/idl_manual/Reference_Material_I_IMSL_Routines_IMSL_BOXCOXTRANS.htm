@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_BOXCOXTRANS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_BOXCOXTRANS</span>
+        </div>
+        <h1 class="Routine">IMSL_BOXCOXTRANS</h1>
+        <p>The IMSL_BOXCOXTRANS function performs a forward or an inverse Box-Cox (power) transformation.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_BOXCOXTRANS function performs a forward or an inverse Box-Cox</p>
+        <p>(power) transformation of n = N_ELEMENTS(z) observations {Zt} for t = 0, 1, ..., n–</p>
+        <p>1.</p>
+        <p>The forward transformation is useful in the analysis of linear models or models with non-normal errors or non-constant variance (Draper and Smith 1981, p. 222). In the time series setting, application of the appropriate transformation and subsequent differencing of a series can enable model identification and parameter estimation in the class of homogeneous stationary autoregressive-moving average models. The inverse transformation can later be applied to certain results of the analysis, such as forecasts and prediction limits of forecasts, in order to express the results in the scale of the original data. A brief note concerning the choice of transformations in the time series models is given in Box and Jenkins (1976, p. 328).</p>
+        <p>The class of power transformations discussed by Box and Cox (1964) is defined by:</p>
+        <p>
+            <img src="images/IMSL_BOXCOXTRANS-072.jpg" />
+        </p>
+        <p>where Z<sub>t</sub> + ξ &gt; 0 for all <i>t</i>. Since:</p>
+        <p>
+            <img src="images/IMSL_BOXCOXTRANS-073.jpg" />
+        </p>
+        <p>the family of power transformations is continuous.</p>
+        <p>Let λ = <i>power</i> and ξ = <i>S</i>; then, the computational formula used by IMSL_BOXCOXTRANS is given by:</p>
+        <p>
+            <img src="images/IMSL_BOXCOXTRANS-074.jpg" />
+        </p>
+        <p>where Z<sub>t</sub> + ξ &gt; 0 for all t. The computational and Box-Cox formulas differ only in the scale and origin of the transformed data. Consequently, the general analysis of the data is unaffected (Draper and Smith 1981, p. 225).</p>
+        <p>The inverse transformation is computed by:</p>
+        <p>
+            <img src="images/IMSL_BOXCOXTRANS-075.jpg" />
+        </p>
+        <p>where {Z<sub>t</sub>} now represents the result computed by IMSL_BOXCOXTRANS for a forward transformation of the original data using parameters λ and ξ.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The following example performs a Box-Cox transformation with power = 2.0 on 10 data points.</p>
+        <p class="Code">power	=	2.0</p>
+        <p class="Code">z	=	[1.0, 2.0, 3.0, 4.0, 5.0, 5.5, 6.5, 7.5, 8.0, 10.0]</p>
+        <p class="Code">; Transform Data using Box Cox Transform</p>
+        <p class="Code">x	=	IMSL_BOXCOXTRANS(z, power)</p>
+        <p class="Code">PM, x, Title = 'Transformed</p>
+        <p>IDL prints:</p>
+        <p class="Code">Data'Transformed Data</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">4.00000</p>
+        <p class="Code_Indented">9.00000</p>
+        <p class="Code_Indented">16.0000</p>
+        <p class="Code_Indented">25.0000</p>
+        <p class="Code_Indented">30.2500</p>
+        <p class="Code_Indented">42.2500</p>
+        <p class="Code_Indented">56.2500</p>
+        <p class="Code_Indented">64.0000</p>
+        <p class="Code_Indented">100.000</p>
+        <h3>Example 2</h3>
+        <p>This example extends the first example; an inverse transformation is applied to the transformed data to return to the original data values.</p>
+        <p class="Code">power = 2.0</p>
+        <p class="Code">z	=	[1.0, 2.0, 3.0, 4.0, 5.0, 5.5, 6.5, 7.5, 8.0, 10.0]</p>
+        <p class="Code">x	=		IMSL_BOXCOXTRANS(z, power)</p>
+        <p class="Code">PM,	x, Title = 'Transformed Data'</p>
+        <p class="Code">Transformed Data</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">4.00000</p>
+        <p class="Code_Indented">9.00000</p>
+        <p class="Code_Indented">16.0000</p>
+        <p class="Code_Indented">25.0000</p>
+        <p class="Code_Indented">30.2500</p>
+        <p class="Code_Indented">42.2500</p>
+        <p class="Code_Indented">56.2500</p>
+        <p class="Code_Indented">64.0000</p>
+        <p class="Code_Indented">100.000</p>
+        <p class="Code">; Perform an Inverse Transform on the Transformed Data</p>
+        <p class="Code">y = IMSL_BOXCOXTRANS(x, power, /inverse)</p>
+        <p class="Code">PM, y, Title = 'Inverse Transformed Data'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Inverse Transformed Data</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">2.00000</p>
+        <p class="Code_Indented">3.00000</p>
+        <p class="Code_Indented">4.00000</p>
+        <p class="Code_Indented">5.00000</p>
+        <p class="Code_Indented">5.50000</p>
+        <p class="Code_Indented">6.50000</p>
+        <p class="Code_Indented">7.50000</p>
+        <p class="Code_Indented">8.00000</p>
+        <p class="Code_Indented">10.0000</p>
+        <h2 class="API">Errors</h2>
+        <h3>Fatal Errors</h3>
+        <p>STAT_ILLEGAL_SHIFT: <i>S</i> = # and the smallest element of <i>z</i> is <i>z</i>(#) = #. <i>S</i> plus <i>z</i>(#) = #. <i>S</i> + <i>z</i>(I) must be greater than 0 for <i>i</i> = 1, ..., N_ELEMENTS(<i>z</i>). N_ELEMENTS(<i>z</i>) = #.</p>
+        <p>STAT_BCTR_CONTAINS_NAN: One or more elements of <i>z</i> is equal to NaN (Not a number). No missing values are allowed. The smallest index of an element of <i>z</i> that is equal to NaN is #.
+		</p>
+        <p>STAT_BCTR_F_UNDERFLOW: Forward transform. <i>power</i> = #. <i>S</i> = #. The minimum element of <i>z</i> is <i>z</i>(#) = #. (<i>z</i>(#)+ <i>S</i>) ^ <i>power</i> will underflow.
+		</p>
+        <p>STAT_BCTR_F_OVERFLOW: Forward transformation. <i>power</i> = #. <i>S</i> = #. The maximum element of <i>z</i> is <i>z</i>(#) = #. (<i>z</i>(#) + <i>S</i>) ^ <i>power</i> will overflow.
+		</p>
+        <p>STAT_BCTR_I_UNDERFLOW: Inverse transformation. <i>power</i> = #. The minimum element of z is z(#) = #. exp(z(#)) will underflow.
+		</p>
+        <p>STAT_BCTR_I_OVERFLOW: Inverse transformation. <i>power</i> = #. The maximum element of <i>z</i>(#) = #. exp(<i>z</i>(#)) will overflow.
+		</p>
+        <p>STAT_BCTR_I_ABS_UNDERFLOW: Inverse transformation. <i>power</i> = #. The element of <i>z</i> with the smallest absolute value is <i>z</i>(#) = #. <i>z</i>(#) ^ (1/<i>power</i>) will underflow.
+		</p>
+        <p>STAT_BCTR_I_ABS_OVERFLOW: Inverse transformation. <i>power</i> = #. The element of <i>z</i> with the largest absolute value is <i>z</i>(#) = #. <i>z</i>(#) ^ (1/ <i>power</i>) will overflow.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_BOXCOXTRANS(<i>Z, Power</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#INVERSE" class="selected">/INVERSE</a>] [, <a href="#S" class="selected">S</a>=parameter])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array containing the transformed data..</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Power</h3>
+        <p>Exponent parameter in the Box-Cox (power) transformation.</p>
+        <h3 class="Argument">Z</h3>
+        <p>One-dimensional array containing the observations.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="INVERSE"></a>INVERSE (optional)</h3>
+        <p>If present and nonzero, the inverse transform is performed.</p>
+        <h3 class="Keyword"><a name="S"></a>S (optional)</h3>
+        <p>Shift parameter in the Box-Cox (power) transformation. Parameter shift must satisfy the relation min (<i>z</i>(<i>i</i>)) + <i>S</i> &gt; 0. Default: 0.0.
+		</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

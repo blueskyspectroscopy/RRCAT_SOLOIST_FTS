@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_AIRY_BI</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_AIRY_BI</span>
+        </div>
+        <h1>IMSL_AIRY_BI</h1>
+        <p>The IMSL_AIRY_BI function evaluates the Airy function of the second kind.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The airy function Bi(<i>x</i>) is defined to be:</p>
+        <p>
+            <img src="images/IMSL_AIRY_BI-41.gif" />
+        </p>
+        <p>It can also be expressed in terms of modified Bessel functions of the first kind, <i>I</i><sub>v</sub>(<i>x</i>), and Bessel functions of the first kind <i>J</i><sub>v</sub>(<i>x</i>) (see IMSL_BESSI, and IMSL_BESSJ):</p>
+        <p>
+            <img src="images/IMSL_AIRY_BI-42.gif" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_AIRY_BI-43.gif" />
+        </p>
+        <p>Here ϵ is the machine precision. If <i>x</i> &lt; -1.31ϵ-<sup>2/3</sup>, then the answer will have no precision. If <i>x</i> &lt; -1.31ϵ-<sup>1/3</sup>, the answer will be less accurate than half precision. In addition, <i>x</i> should not be so large that <i>exp</i>[(2/3)<i>x</i><sup>3/2</sup>] overflows.</p>
+        <p>If the keyword DERIVATIVE is set, the airy function Bi′(<i>x</i>) is defined to be the derivative of the Airy function of the second kind, Bi(<i>x</i>) (see IMSL_AIRY_BI). If <i>x</i> &lt; -1.31ϵ<sup>–2/3</sup>, then the answer will have no precision. If x &lt; -1.31ϵ–<sup>1/3</sup>, the answer will be less accurate than half precision. Here ϵ is the machine precision. In addition, <i>x</i> should not be so large that exp[(2/3)x<sup>3/2</sup>] overflows.</p>
+        <h2 class="API">Example</h2>
+        <p>n this example, Bi(-4.9) and Bi′(-4.9) are evaluated.</p>
+        <p class="Code">PRINT, IMSL_AIRY_BI(-4.9)</p>
+        <p class="Code_Indented">-0.0577468</p>
+        <p class="Code">PRINT, IMSL_AIRY_BI(-4.9, /Derivative)</p>
+        <p class="Code_Indented">0.827219</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_AIRY_BI(<i>X</i> [, <a href="#DERIVATIVE" class="selected">DERIVATIVE</a>=<i>value</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The value of the Airy function evaluated at <i>x</i>, Bi(<i>x</i>).</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>Argument for which the function value is desired.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DERIVATIVE"></a>DERIVATIVE (optional)</h3>
+        <p>If present and nonzero, then the derivative of the Airy function is computed.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_AIRY_AI.htm">IMSL_AIRY_AI</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

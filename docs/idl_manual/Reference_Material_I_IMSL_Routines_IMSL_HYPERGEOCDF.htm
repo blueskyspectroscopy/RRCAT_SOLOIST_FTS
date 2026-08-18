@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_HYPERGEOCDF</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_HYPERGEOCDF</span>
+        </div>
+        <h1>IMSL_HYPERGEOCDF</h1>
+        <p>The IMSL_HYPERGEOCDF function evaluates the hypergeometric distribution function.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_HYPERGEOCDF function evaluates the distribution function of a hypergeometric random variable with parameters n, l, and m. The hypergeometric random variable X can be thought of as the number of items of a given type in a random sample of size n that is drawn without replacement from a population of size l containing m items of this type.</p>
+        <p>The probability function is:</p>
+        <p>
+            <img src="images/IMSL_HYPERGEOCDF01.svg" />
+        </p>
+        <p>where <i>i = max(0, n – l + m)</i>.</p>
+        <p>If <i>k</i> is greater than or equal to <i>i</i> and less than or equal to min(<i>n</i>, <i>m</i>), IMSL_BINOMIALCDF sums the terms in this expression for <i>j</i> going from <i>i</i> up to <i>k</i>; otherwise, 0 or 1 is returned, as appropriate. To avoid rounding in the accumulation, IMSL_BINOMIALCDF performs the summation differently, depending on whether or not <i>k</i> is greater than the mode of the distribution, which is the greatest integer in <i>(m + 1) (n + 1)/(l + 2)</i>.</p>
+        <h2 class="API">Example</h2>
+        <p>Suppose <i>X</i> is a hypergeometric random variable with <i>n</i> = 100, <i>l</i> = 1000, and <i>m</i> = 70. In this example, the distribution function is evaluated at 7.</p>
+        <p class="Code">p = IMSL_HYPERGEOCDF(7, 100, 70, 1000)</p>
+        <p class="Code">PM, 'Pr(x &lt;= 7) = ', p, FORMAT = '(a13,f7.4)'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Pr(x &lt;= 7) = 0.5995</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_HYPERGEOCDF(<i>K, N, M, L</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The probability that <i>K</i> or fewer defectives occur in a sample of size N drawn from a lot of size <i>L</i> that contains <i>M</i> defectives.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">K</h3>
+        <p>Parameter for which the hypergeometric distribution function is to be evaluated.</p>
+        <h3 class="Argument">L</h3>
+        <p>Lot size. Parameter <i>L</i> must be greater than or equal to <i>N</i> and <i>M</i>.</p>
+        <h3 class="Argument">M</h3>
+        <p>Number of defectives in the lot.</p>
+        <h3 class="Argument">N</h3>
+        <p>Sample size. Argument <i>n</i> must be greater than or equal to <i>k</i>.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h2 class="API">Errors</h2>
+        <h3>Informational Errors</h3>
+        <p>STAT_LESS_THAN_ZERO: Input parameter, <i>k</i>, is less than zero.</p>
+        <p>STAT_K_GREATER_THAN_N: Input parameter, <i>k</i>, is greater than the sample size.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_LOT_SIZE_TOO_SMALL: Lot size must be greater than or equal to <i>n</i> and <i>m</i>.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

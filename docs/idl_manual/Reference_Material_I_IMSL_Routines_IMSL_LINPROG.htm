@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_LINPROG</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_LINPROG</span>
+        </div>
+        <h1 class="Routine">IMSL_LINPROG</h1>
+        <p>The IMSL_LINPROG function solves a linear programming problem using the revised simplex algorithm.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_LINPROG function uses a revised simplex method to solve linear programming problems; i.e., problems of the form:</p>
+        <p>
+            <img src="images/IMSL_LINPROG-35.jpg" />
+        </p>
+        <p>subject to:</p>
+        <p>
+            <img src="images/IMSL_LINPROG-36.jpg" />
+        </p>
+        <p>where <i>c</i> is the objective coefficient vector, A is the coefficient matrix, and the vectors <i>b</i><sub>l</sub>, <i>b</i><sub>u</sub>, <i>x</i><sub>l</sub>, and <i>x</i><sub>u</sub> are the lower and upper bounds on the constraints and the variables. For a complete discussion of the revised simplex method, see Murtagh (1981) or Murty (1983). This problem can be solved more efficiently.</p>
+        <h2 class="API">Example</h2>
+        <p>In this example, the linear programming problem in the standard form:</p>
+        <p>In this example, the linear programming problem in the standard form: </p>
+        <p>min <i>f</i>(<i>x</i>) = –<i>x</i><sub>0</sub> – 3<i>x</i><sub>1</sub></p>
+        <p>subject to:</p>
+        <p>
+            <img src="images/IMSL_LINPROG-37.jpg" />
+        </p>
+        <p>is solved.</p>
+        <p class="Code">; Define the coefficients of the constraints.</p>
+        <p class="Code">a = [[1, 1, 1, 0],$</p>
+        <p class="Code">[1, 1, 0, 1],$</p>
+        <p class="Code">[1, 0, 0, 0],$</p>
+        <p class="Code">[0, (-1), 0, 0],$</p>
+        <p class="Code">[0, 0, 1, 0],$</p>
+        <p class="Code">[0, 0, 0, 1]]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the right-hand side of the constraints.</p>
+        <p class="Code">b = [1.5,.5,1,1]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the coefficients of the objective function.</p>
+        <p class="Code">c = [(-1),(-3),0,0,0,0]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PM, IMSL_LINPROG(a, b, c), Title = ';Solution'</p>
+        <p class="Code">&#160;</p>
+        <p>IDL prints:</p>
+        <p class="Code">Solution</p>
+        <p class="Code_Indented">0.500000</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">0.00000</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">0.500000</p>
+        <p class="Code_Indented">0.00000</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_PROB_UNBOUNDED: Problem is unbounded. </p>
+        <p>MATH_TOO_MANY_ITN: Maximum number of iterations exceeded.</p>
+        <p>MATH_PROB_INFEASIBLE: Problem is infeasible.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_NUMERIC_DIFFICULTY: Numerical difficulty occurred. If float is currently being used, using double may help.</p>
+        <p>MATH_BOUNDS_INCONSISTENT: Bounds are inconsistent.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_LINPROG(<i>A, B, C</i> [, <a href="#BU" class="selected">BU</a>=<i>array</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DUAL" class="selected">DUAL</a>=<i>variable</i>] [, <a href="#IRTYPE" class="selected">IRTYPE</a>=<i>array</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#OBJ" class="selected">OBJ</a>=<i>variable</i>] [, <a href="#XLB" class="selected">XLB</a>=<i>array</i>] [, <a href="#XUB" class="selected">XUB</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The solution <i>x</i> of the linear programming problem.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">A</h3>
+        <p>Two-dimensional matrix containing the coefficients of the constraints. The coefficient for the <i>i</i>-th constraint is contained in <i>A</i> (<i>i</i>, *).</p>
+        <h3 class="Argument">B</h3>
+        <p>One-dimensional matrix containing the right-hand side of the constraints. If there are limits on both sides of the constraints, b contains the lower limit of the constraints.</p>
+        <h3 class="Argument">C</h3>
+        <p>One-dimensional array containing the coefficients of the objective function.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="BU"></a>BU</h3>
+        <p>Array with N_ELEMENTS(b) elements containing the upper limit of the constraints that have both the lower and the upper bounds. If no such constraint exists, BU is not needed.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="DUAL"></a>DUAL (optional)</h3>
+        <p>Name of the variable into which the array with N_ELEMENTS(<i>c</i>) elements, containing the dual solution, is stored.</p>
+        <h3 class="Keyword"><a name="IRTYPE"></a>IRTYPE (optional)</h3>
+        <p>Array with N_ELEMENTS(<i>b</i>) elements indicating the types of general constraints in the matrix A. Let <i>r<sub>i</sub></i> = <i>A<sub>i0</sub>x</i><sub>0</sub> + ... + <i>A</i><sub>in–1 </sub><i>x</i><sub style="font-style: italic">n</sub><sub>–1</sub>. The value of IRTYPE (<i>i</i>) is described below. The default is IRTYPE (*) = 0.</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>IRTYPE (i)</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Constraints</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>r<sub>i</sub> = b<sub>i</sub></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>r<sub>i</sub> ≤ bu</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>r<sub>i</sub> ≥ b<sub>i</sub></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>b<sub>i</sub> ≤ r<sub>i</sub> ≤ bu</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum number of iterations. Default: 10,000</p>
+        <h3 class="Keyword"><a name="OBJ"></a>OBJ (optional)</h3>
+        <p>Name of the variable into which the optimal value of the objective function is stored.</p>
+        <h3 class="Keyword"><a name="XLB"></a>XLB (optional)</h3>
+        <p>Array with N_ELEMENTS(<i>c</i>) elements containing the lower bound on the variables. If there is no lower bound on a variable, 1030 should be set as the lower bound. Default:  (*) = 0</p>
+        <h3 class="Keyword"><a name="XUB"></a>XUB (optional)</h3>
+        <p>Array with N_ELEMENTS(<i>c</i>) elements containing the upper bound on the variables. If there is no upper bound on a variable, –1030 should be set as the upper bound. Default: (*) = infinity</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

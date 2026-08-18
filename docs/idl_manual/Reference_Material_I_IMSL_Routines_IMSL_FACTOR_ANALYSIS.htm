@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_FACTOR_ANALYSIS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_FACTOR_ANALYSIS</span>
+        </div>
+        <h1 class="Routine">IMSL_FACTOR_ANALYSIS</h1>
+        <p>The IMSL_FACTOR_ANALYSIS function extracts initial factor-loading estimates in factor analysis.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Function <i>S</i> computes unrotated factor loadings in exploratory factor-analysis models. Models available in IMSL_FACTOR_ANALYSIS are the principal component</p>
+        <p>model for factor analysis and the common factor model with additions to the common factor model in alpha-factor analysis and image analysis. Methods of estimation include principal components, principal factor, image analysis, unweighted least squares, generalized least squares, and maximum likelihood.</p>
+        <p>In the factor-analysis model used for factor extraction, the basic model is given as Σ = ΛΛT + Ψ, where:</p>
+        <ul>
+            <li value="1"> Σ is the <i>p</i> x <i>p</i> population covariance matrix</li>
+            <li value="2">Λ is the <i>p</i> by <i>k</i> matrix of factor loadings relating the factors <i>f</i> to the observed variables <i>x</i></li>
+            <li value="3">Ψ is the <i>p</i> x <i>p</i> matrix of covariances of the unique errors <i>e</i></li>
+            <li value="4"><i>p</i> is N_ELEMENTS(<i>Covariances</i>(0, *))</li>
+            <li value="5"><i>k</i> is the <i>n_Factors</i> argument value</li>
+        </ul>
+        <p> The relationship between the factors, the unique errors, and the observed variables is given as <i>x</i> = Λ<i>f</i> + <i>e</i>. In addition, the expected values of <i>e</i>, <i>f</i>, and <i>x</i> are assumed to be zero. (The sample means can be subtracted from <i>x</i> if the expected value of <i>x</i> is not zero.) It also is assumed that each factor has unit variance, that the factors are independent of each other, and that the factors and the unique errors are mutually independent. In the common factor model, the elements of unique errors e also are assumed to be independent of one another so that the matrix Ψ is diagonal. This is not the case in the principal component model in which the errors may be correlated.</p>
+        <p>Further differences between the various methods concern the criterion that is optimized and the amount of computer effort required to obtain estimates. Generally speaking, the least-squares and maximum likelihood methods, which use iterative algorithms, require the most computer time with the principal factor, principal component and the image methods requiring much less time since the algorithms in these methods are not iterative. The algorithm in alpha-factor analysis is also iterative, but the estimates in this method generally require somewhat less computer effort than the least squares and maximum likelihood estimates. In all methods, one eigensystem analysis is required on each iteration.</p>
+        <h3>Principal Component and Principal Factor Methods</h3>
+        <p>Both the principal component and principal factor methods compute the factor- loading estimates as:</p>
+        <p>
+            <img src="images/IMSL_FACTOR_ANALYSIS-03.jpg" />
+        </p>
+        <p>where Γ and the diagonal matrix ∆ are the eigenvectors and eigenvalues of a matrix. In the principal component model, the eigensystem analysis is performed on the sample covariance (correlation) matrix <i>S</i>, while in the principal factor model, the matrix (<i>S</i> + Ψ) is used. If the unique error variances Ψ are not known in the principal factor mode, then IMSL_FACTOR_ANALYSIS obtains estimates for them.</p>
+        <p>The basic idea in the principal component method is to find factors that maximize the variance in the original data that is explained by the factors. Because this method allows the unique errors to be correlated, some factor analysts insist that the principal component method is not a factor analytic method. Usually, however, the estimates obtained by the principal component model and factor analysis model are quite similar.</p>
+        <p>It should be noted that both the principal component and principal factor methods give different results when the correlation matrix is used in place of the covariance matrix. In fact, any rescaling of the sample covariance matrix can lead to different estimates with either of these methods. A further difficulty with the principal factor method is the problem of estimating the unique error variances. Theoretically, these variances must be known in advance and must be passed to IMSL_FACTOR_ANALYSIS using the keyword <a href="#UNIQUE_VAR_IN" class="selected">UNIQUE_VAR_IN</a>. In practice, the estimates of these parameters are produced by IMSL_FACTOR_ANALYSIS when UNIQUE_VAR_IN is not specified. In either case, the resulting adjusted covariance (correlation) matrix:</p>
+        <p>
+            <img src="images/IMSL_FACTOR_ANALYSIS-04.jpg" />
+        </p>
+        <p>may not yield the <i>N_factors</i> positive eigenvalues required for <i>N_factors</i> factors to be obtained. If this occurs, you must either lower the number of factors to be estimated or give new unique error variance values.</p>
+        <h3>Least-squares and Maximum Likelihood Methods</h3>
+        <p>Unlike the previous two methods, the algorithm used to compute estimates in this section is iterative (see Jöreskog 1977). As with the principal factor model, you can either initialize the unique error variances or allow IMSL_FACTOR_ANALYSIS to compute initial estimates. Unlike the principal factor method, IMSL_FACTOR_ANALYSIS optimizes the criterion function with respect to both Ψ and Γ. (In the principal factor method, Ψ is assumed to be known. Given Ψ, estimates for Λ may be obtained.)</p>
+        <p>The major difference between the methods discussed in this section is in the criterion function that is optimized. Let <i>S</i> denote the sample covariance (correlation) matrix, and let Σ denote the covariance matrix that is to be estimated by the factor model. In the unweighted least-squares method, also called the <i>iterated principal factor</i> method or the <i>minres</i> method (see Harman 1976, p. 177), the function minimized is the sum-of-squared differences between <i>S</i> and Σ. This is written as:</p>
+        <p>Φ<sub>ul</sub> = 0.5 (trace(<i>S</i> – Σ)<sup>2</sup> )</p>
+        <p>Generalized least-squares and maximum-likelihood estimates are asymptotically equivalent methods. Maximum-likelihood estimates maximize the (normal theory) likelihood:</p>
+        <p>{φ<sub>ml</sub> = trace(Σ <sup>–1</sup><i>S</i>) – log( | Σ <sup>–1</sup><sub>S</sub> |)}</p>
+        <p>while generalized least squares optimizes the function:</p>
+        <p>Φ<sub>gs</sub> = trace(Σ <i>S</i> <sup>–1</sup> – <i>I</i>)<sup>2</sup></p>
+        <p>In all three methods, a two-stage optimization procedure is used. This proceeds by first solving the likelihood equations for Λ in terms of Ψ and substituting the solution into the likelihood. This gives a criterion φ( Ψ, Λ(Ψ) ), which is optimized with respect to Ψ. In the second stage, the estimates <img src="images/IMSL_FACTOR_ANALYSIS-05.jpg" class="VertCenter" />are obtained from the estimates for Ψ.</p>
+        <p>The generalized least-squares and maximum-likelihood methods allow for the computation of a statistic (<a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a>) for testing that <i>N_factors</i> common factors are adequate to fit the model. This is a chi-squared test that all remaining parameters associated with additional factors are zero. If the probability of a larger chi-squared is so small that the null hypothesis is rejected, then additional factors are needed (although these factors may not be of any practical importance). Failure to reject does not legitimize the model. The statistic CHI_SQ_TEST is a likelihood ratio statistic in maximum likelihood estimation. As such, it asymptotically follows a chi-squared distribution with degrees of freedom given by <i>D</i><sub>f</sub>.</p>
+        <p>The Tucker and Lewis reliability coefficient, ρ, is returned by <a href="#TUCKER_COEF" class="selected">TUCKER_COEF</a> when the maximum likelihood or generalized least-squares methods are used. This coefficient is an estimate of the ratio of explained variation to the total variation in the data. It is computed as follows:</p>
+        <p>
+            <img src="images/IMSL_FACTOR_ANALYSIS-06.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_FACTOR_ANALYSIS-07.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_FACTOR_ANALYSIS-08.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_FACTOR_ANALYSIS-09.jpg" />
+        </p>
+        <p>Where:</p>
+        <p>|<i>S</i>| is the determinant of <i>Covariances</i></p>
+        <p><i>p</i> = N_ELEMENTS(<i>Covariances</i>(0, *))</p>
+        <p><i>k</i> = N_ELEMENTS(<i>Covariances</i>(0, *))</p>
+        <p>φ is the optimized criterion</p>
+        <p><i>d</i> = <i>D</i><sub>f</sub></p>
+        <h3>Image Analysis</h3>
+        <p>The term image analysis is used here to denote the noniterative image method of Kaiser (1963), rather than the image analysis discussed by Harman (1976, p. 226). The image method (as well as the alpha-factor analysis method) begins with the notion that only a finite number from an infinite number of possible variables have been measured. The image-factor pattern is calculated under the assumption that the ratio of the number of factors to the number of observed variables is near zero, so that a very good estimate for the unique error variances (for standardized variables) is given as 1 minus the squared multiple correlation of the variable under consideration with all variables in the covariance matrix.</p>
+        <p>First, the matrix <i>D</i><sup>2</sup> = (diag(<i>S</i>–1))–1 is computed, where the operator <i>diag</i> results in a matrix consisting of the diagonal elements of its argument and <i>S</i> is the sample covariance (correlation) matrix. Then, the eigenvalues Λ and eigenvectors Γ of the matrix <i>D</i> <sup>–1</sup><i>SD</i><sup>–1</sup> are computed. Finally, the unrotated image-factor pattern is computed as <i>D</i>Γ [ ( Λ – <i>I</i> )<sup>2</sup> Λ<sup>–1</sup> ]<sup>1/2</sup>.</p>
+        <p>Alpha-factor Analysis</p>
+        <p>The alpha-factor analysis method of Kaiser and Caffrey (1965) finds factor-loading estimates to maximize the correlation between the factors and the complete universe of variables of interest. The basic idea in this method is that only a finite number of variables out of a much larger set of possible variables is observed. The population factors are linearly related to this larger set, while the observed factors are linearly related to the observed variables. Let <i>f</i> denote the factors obtainable from a finite set of observed random variables, and let ξ denote the factors obtainable from the universe of observable variables. Then, the alpha method attempts to find factor-loading estimates so as to maximize the correlation between <i>f</i> and ξ. In order to obtain these estimates, the iterative algorithm of Kaiser and Caffrey (1965) is used.</p>
+        <h3>Comments</h3>
+        <ol>
+            <li value="1">  IMSL_FACTOR_ANALYSIS makes no attempt to solve for <i>N_factors</i>. In general, if <i>N_factors</i> is not known in advance, several different values should be used and the most reasonable value kept in the final solution.</li>
+            <li value="2">Iterative methods are generally thought to be superior from a theoretical point of view, but in practice, often lead to solutions that differ little from the noniterative methods. For this reason, it is usually suggested that a noniterative method be used in the initial stages of the factor analysis and that the iterative methods be used when issues such as the number of factors have been resolved.</li>
+            <li value="3">Initial estimates for the unique variances can be input. If the iterative methods fail for these values, new initial estimates should be tried. These can be obtained by use of another factoring method. (Use the final estimates from the new method as the initial estimates in the old method.)</li>
+        </ol>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>In this example, factor analysis is performed for a nine-variable matrix using the default method of unweighted least squares.</p>
+        <p class="Code">covariances = $</p>
+        <p class="Code">[[1.0, 0.523, 0.395, 0.471, 0.346, 0.426, 0.576, 0.434, 0.639], $ </p>
+        <p class="Code">&#160;&#160;[0.523, 1.0,  0.479, 0.506, 0.418, 0.462, 0.547, 0.283, 0.645], $</p>
+        <p class="Code">&#160;&#160;[0.395, 0.479, 1.0, 0.355, 0.27,  0.254, 0.452, 0.219, 0.504], $</p>
+        <p class="Code">&#160;&#160;[0.471, 0.506, 0.355, 1.0,  0.691, 0.791, 0.443, 0.285, 0.505], $</p>
+        <p class="Code">&#160;&#160;[0.346, 0.418, 0.27, 0.691, 1.0,  0.679, 0.383, 0.149, 0.409], $</p>
+        <p class="Code">&#160;&#160;[0.426, 0.462, 0.254, 0.791, 0.679, 1.0,  0.372, 0.314, 0.472], $</p>
+        <p class="Code">&#160;&#160;[0.576, 0.547, 0.452, 0.443, 0.383, 0.372, 1.0,  0.385, 0.68], $</p>
+        <p class="Code">&#160;&#160;[0.434, 0.283, 0.219, 0.285, 0.149, 0.314, 0.385, 1.0,  0.47], $ </p>
+        <p class="Code">&#160;&#160;[0.639, 0.645, 0.504, 0.505, 0.409, 0.472, 0.68, 0.47, 1.0]]</p>
+        <p class="Code">n_factors = 3</p>
+        <p class="Code">a = IMSL_FACTOR_ANALYSIS(covariances, n_factors)</p>
+        <p class="Code">PM, a, Title = 'Unrotated Loadings:'</p>
+        <p>IDL&#160;prints:</p>
+        <p class="Code">Unrotated Loadings:</p>
+        <p class="Code">0.701801	-0.231594	0.0795559</p>
+        <p class="Code">0.719964	-0.137227	-0.208225</p>
+        <p class="Code">0.535122	-0.214389	-0.22709</p>
+        <p class="Code">0.790669	0.405017	0.00704257</p>
+        <p class="Code">0.653203	0.422066	-0.104563</p>
+        <p class="Code">0.753915	0.484247	0.160720</p>
+        <p class="Code">0.712674	-0.281911	-0.0700779</p>
+        <p class="Code">0.483540	-0.262720	0.461992</p>
+        <p class="Code">0.819210	-0.313728	-0.0198735</p>
+        <h3>Example 2</h3>
+        <p>The following data were originally analyzed by Emmett (1949). There are 211 observations on nine variables. Following Lawley and Maxwell (1971), three factors are obtained by the method of maximum likelihood. This example uses the same data as the first example.</p>
+        <p class="Code">n_factors = 3</p>
+        <p class="Code">a = IMSL_FACTOR_ANALYSIS(covariances, n_factors, $</p>
+        <p class="Code">&#160;&#160;Max_Likelihood=210, Switch_Eps=0.01, $</p>
+        <p class="Code">&#160;&#160;Eps=0.000001, Itmax=30, Max_Steps=10)</p>
+        <p class="Code">PM, a, Title = 'Unrotated Loadings:'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Unrotated Loadings:</p>
+        <p class="Code">0.664210	-0.320874	0.0735207</p>
+        <p class="Code">0.688833	-0.247138	-0.193280</p>
+        <p class="Code">0.492616	-0.302161	-0.222433</p>
+        <p class="Code">0.837198	0.292427	-0.0353954</p>
+        <p class="Code">0.705002	0.314794	-0.152784</p>
+        <p class="Code">0.818701	0.376672	0.104524</p>
+        <p class="Code">0.661494	-0.396031	-0.0777453</p>
+        <p class="Code">0.457925	-0.295526	0.491347</p>
+        <p class="Code">0.765668	-0.427427	-0.0116992</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_VARIANCES_INPUT_IGNORED: When using the keyword <a href="#PRINC_COMP" class="selected">PRINC_COMP</a>, the unique variances are assumed to be zero. Input for <a href="#UNIQUE_VAR_IN" class="selected">UNIQUE_VAR_IN</a> is ignored.</p>
+        <p>STAT_TOO_MANY_ITERATIONS: Too many iterations. Convergence is assumed. </p>
+        <p>STAT_NO_DEG_FREEDOM: No degrees of freedom for the significance testing. </p>
+        <p>STAT_TOO_MANY_HALVINGS: Too many step halvings. Convergence is assumed.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_HESSIAN_NOT_POS_DEF: Approximate Hessian is not semidefinite on iteration #. The computations cannot proceed. Try using different initial estimates.</p>
+        <p>STAT_FACTOR_EVAL_NOT_POS: Variable <a href="#EIGENVALUES" class="selected">EIGENVALUES</a>(#) = #. An eigenvalue corresponding to a factor is negative or zero. Either use different initial estimates for UNIQUE_VAR_IN or reduce the number of factors.</p>
+        <p>STAT_COV_NOT_POS_DEF: Parameter covariances is not positive semidefinite. The computations cannot proceed.</p>
+        <p>STAT_COV_IS_SINGULAR: Matrix covariances is singular. The computations cannot continue because variable # is linearly related to the remaining variables.</p>
+        <p>STAT_COV_EVAL_ERROR: An error occurred in calculating the eigenvalues of the adjusted (inverse) covariance matrix. Check <i>Covariances</i>.</p>
+        <p>STAT_ALPHA_FACTOR_EVAL_NEG: In alpha-factor analysis on iteration #, eigenvalue # is #. As all eigenvalues corresponding to the factors must be positive, either the number of factors must be reduced or new initial estimates for UNIQUE_VAR_IN must be given.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_FACTOR_ANALYSIS(<i>Covariances</i>, <i>N_factors</i> [, <a href="#ALPHA" class="selected">ALPHA</a>=<i>value</i>] [, <a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#EIGENVALUES" class="selected">EIGENVALUES</a>=<i>variable</i>] [, <a href="#EPS" class="selected">EPS</a>=<i>value</i>] [, <a href="#F_MIN" class="selected">F_MIN</a>=<i>variable</i>] [, /<a href="#GEN_LSQ" class="selected">GEN_LSQ</a>] [, /<a href="#IMAGE" class="selected">IMAGE</a>] [, <a href="#ITERS" class="selected">ITERS</a>=<i>variable</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#LAST_STEP" class="selected">LAST_STEP</a>=<i>variable</i>] [, <a href="#MAX_LIKELIHOOD" class="selected">MAX_LIKELIHOOD</a>=<i>value</i>] [, <a href="#MAX_STEPS" class="selected">MAX_STEPS</a>=<i>value</i>] [, /<a href="#PRINC_COMP" class="selected">PRINC_COMP</a>] [, /<a href="#PRINC_FACTOR" class="selected">PRINC_FACTOR</a>] [, <a href="#SWITCH_EPS" class="selected">SWITCH_EPS</a>=<i>value</i>] [, <a href="#TUCKER_COEF" class="selected">TUCKER_COEF</a>=<i>variable</i>] [, <a href="#UNIQUE_VAR_IN" class="selected">UNIQUE_VAR_IN</a>=<i>array</i>] [, <a href="#UNIQUE_VAR_OUT" class="selected">UNIQUE_VAR_OUT</a>=<i>array</i>] [, /<a href="#UNWGT_LSQ" class="selected">UNWGT_LSQ</a>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A two-dimensional array containing the matrix of factor loadings.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Covariances</h3>
+        <p>Two-dimensional array containing the variance-covariance or correlation matrix.</p>
+        <h3 class="Argument">N_factors</h3>
+        <p>Number of factors in the model.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ALPHA"></a>ALPHA (optional)</h3>
+        <p>The number of degrees of freedom in covariances. Using ALPHA forces the alpha-factor analysis (common factor model) method to be used to obtain the estimates.</p>
+        <h3 class="Keyword"><a name="CHI_SQ_TEST"></a>CHI_SQ_TEST (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length 3 containing the chi- squared test statistics. The contents of the array are, in order, the number of degrees of freedom in chi-squared, the chi-squared test statistic for testing that <i>N_factors</i> common factors are adequate for the data, and the probability of a greater chi-squared statistic.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="EIGENVALUES"></a>EIGENVALUES (optional)</h3>
+        <p>Named variable into which a one-dimensional array of length N_ELEMENTS(<i>Covariances</i>(0, *)) containing the eigenvalues of the matrix from which the factors were extracted is stored.</p>
+        <h3 class="Keyword"><a name="EPS"></a>EPS (optional)</h3>
+        <p>Convergence criterion used to terminate the iterations. For the unweighted least squares, generalized least squares, or maximum likelihood methods, convergence is assumed when the relative change in the criterion is less than EPS. For alpha-factor analysis, convergence is assumed when the maximum change (relative to the variance) of a uniqueness is less than EPS. The default value is 0.0001.</p>
+        <h3 class="Keyword"><a name="F_MIN"></a>F_MIN (optional)</h3>
+        <p>Named variable into which the value of the function minimum is stored.</p>
+        <h3 class="Keyword"><a name="GEN_LSQ"></a>GEN_LSQ (optional)</h3>
+        <p>If present and nonzero, the generalized least-squares (common factor model) method is used to obtain the estimates. MAX_LIKELIHOOD, PRINC_COMP, PRINC_FACTOR, UNWGT_LSQ, GEN_LSQ, IMAGE, and ALPHA cannot be used together.</p>
+        <h3 class="Keyword"><a name="IMAGE"></a>IMAGE (optional)</h3>
+        <p>If present and nonzero, the image-factor analysis (common factor model) method is used to obtain the estimates.  MAX_LIKELIHOOD, PRINC_COMP, PRINC_FACTOR, UNWGT_LSQ, GEN_LSQ, IMAGE, and ALPHA cannot be used together.</p>
+        <h3 class="Keyword"><a name="ITERS"></a>ITERS (optional)</h3>
+        <p>Named variable into which the number of iterations is stored.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum number of iterations in the iterative procedure. The default value is 60.</p>
+        <h3 class="Keyword"><a name="LAST_STEP"></a>LAST_STEP (optional)</h3>
+        <p>Named variable in the form of an array of length N_ELEMENTS(<i>Covariances</i>(0, *)). The array contains the updates of the unique variance estimates when convergence was reached (or the iterations terminated).</p>
+        <h3 class="Keyword"><a name="MAX_LIKELIHOOD"></a>MAX_LIKELIHOOD (optional)</h3>
+        <p>The number of degrees of freedom in covariances. Using Max_Likelihood forces the maximum likelihood (common factor) model to be used to obtain the estimates. MAX_LIKELIHOOD, PRINC_COMP, PRINC_FACTOR, UNWGT_LSQ, GEN_LSQ, IMAGE, and ALPHA cannot be used together.</p>
+        <h3 class="Keyword"><a name="MAX_STEPS"></a>MAX_STEPS (optional)</h3>
+        <p>Maximum number of step halvings allowed during any one iteration. The default value is 10.</p>
+        <h3 class="Keyword"><a name="PRINC_COMP"></a>PRINC_COMP (optional)</h3>
+        <p>If present and nonzero, the principal component (principal component model) is used to obtain the estimates.</p>
+        <h3 class="Argument"><a name="PRINC_FACTOR"></a>PRINC_FACTOR</h3>
+        <p>If present and nonzero, the principal factor (common factor model) is used to obtain the estimates. MAX_LIKELIHOOD, PRINC_COMP, PRINC_FACTOR, UNWGT_LSQ, GEN_LSQ, IMAGE, and ALPHA cannot be used together.</p>
+        <h3 class="Keyword"><a name="SWITCH_EPS"></a>SWITCH_EPS (optional)</h3>
+        <p>Convergence criterion used to switch to exact second derivatives. When the largest relative change in the unique standard deviation vector is less than SWITCH_EPS, exact second derivative vectors are used. The value of SWITCH_EPS is not used with the principal component, principal factor, image-factor analysis, or alpha-factor analysis methods. The default value is 0.1.</p>
+        <h3 class="Keyword"><a name="TUCKER_COEF"></a>TUCKER_COEF (optional)</h3>
+        <p>Named variable into which the Tucker reliability coefficient is stored.</p>
+        <h3 class="Keyword"><a name="UNIQUE_VAR_IN"></a>UNIQUE_VAR_IN (optional)</h3>
+        <p>One-dimensional array of length N_ELEMENTS(<i>Covariances</i>(0, *)) containing the initial estimates of the unique variances. Default: initial estimates are taken as the constant 1 – <i>N_factors</i>/2 * N_ELEMENTS(<i>Covariances</i>(0, *)) divided by the diagonal elements of the inverse of covariances.</p>
+        <h3 class="Keyword"><a name="UNIQUE_VAR_OUT"></a>UNIQUE_VAR_OUT (optional)</h3>
+        <p>One-dimensional array of length N_ELEMENTS(<i>Covariances</i>(0, *)) containing the estimated unique variances.</p>
+        <h3 class="Keyword"><a name="UNWGT_LSQ"></a>UNWGT_LSQ (optional)</h3>
+        <p>If present and nonzero, the unweighted least-squares (common factor model) method is used to obtain the estimates. This option is the default. MAX_LIKELIHOOD, PRINC_COMP, PRINC_FACTOR, UNWGT_LSQ, GEN_LSQ, IMAGE, and ALPHA cannot be used together.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

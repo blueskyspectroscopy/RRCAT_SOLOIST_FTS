@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: A">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>APP_USER_DIR_QUERY</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="A_list.htm">Routines: A</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">APP_USER_DIR_QUERY</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor38"></a>APP_USER_DIR_QUERY</h1>
+        <p>The APP_USER_DIR_QUERY function is used to locate existing <i>application user directories</i> previously created by the <a href="APP_USER_DIR.htm">APP_USER_DIR</a> function. An IDL application can use APP_USER_DIR_QUERY to locate the directories that were used by other (presumably older) versions of itself. A newly installed version can use this information to migrate application settings or data from another version in order to preserve the user’s customizations.</p>
+        <p>To use APP_USER_DIR_QUERY, your application should call it with the same values of the <i>AuthorDirname</i> and <i>AppDirname</i> arguments, and the exact set of RESTRICT keywords, used to call APP_USER_DIR. In this configuration, APP_USER_DIR_QUERY will return the same application user directory returned by APP_USER_DIR. To search for other <i>related</i> application user directories, use the QUERY keywords to specify which of the attributes specified in the call to APP_USER_DIR should be allowed to take on any value.</p>
+        <p>As an example, suppose your application creates user application directories that depend on the version of the application and on the operating system in use. You might want to locate all directories created for a specific application version, regardless of the operating system in use when the directory was created.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>The application user directory for the current system is always one of the values returned by APP_USER_DIR_QUERY. In the common example of an application that wants to migrate data from a different version, the path for the current system is not desired. Use the EXCLUDE_CURRENT keyword to suppress it from the results.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = APP_USER_DIR_QUERY(<i>AuthorDirname</i>, <i>AppDirname</i>  [,&#160;<a href="#COUNT" class="selected">COUNT</a>=<i>variable</i>]   [,&#160;/<a href="#EXCLUDE" class="selected">EXCLUDE_CURRENT</a>]   [,&#160;/<a href="#QUERY_APPVERSION" class="selected">QUERY_APPVERSION</a>]    [,&#160;/<a href="#QUERY_ARCH" class="selected">QUERY_ARCH</a>]    [,&#160;/<a href="#QUERY_FAMILY" class="selected">QUERY_FAMILY</a>]    [,&#160;/<a href="#QUERY_FILE_OFFSET_BITS" class="selected">QUERY_FILE_OFFSET_BITS</a>]    [,&#160;/<a href="#QUERY_IDL_RELEASE" class="selected">QUERY_IDL_RELEASE</a>]    [,&#160;/<a href="#QUERY_MEMORY_BITS" class="selected">QUERY_MEMORY_BITS</a>]    [,&#160;/<a href="#QUERY_OS" class="selected">QUERY_OS</a>]  [,&#160;<a href="#APPVERSION" class="selected">RESTRICT_APPVERSION</a>=<i>string</i>]  [,&#160;/<a href="#ARCH" class="selected">RESTRICT_ARCH</a>]   [,&#160;/<a href="#FAMILY" class="selected">RESTRICT_FAMILY</a>]   [,&#160;/<a href="#FILE_OFFSET_BITS" class="selected">RESTRICT_FILE_OFFSET_BITS</a>]   [,&#160;/<a href="#IDL_RELEASE" class="selected">RESTRICT_IDL_RELEASE</a>]   [,&#160;/<a href="#MEMORY_BITS" class="selected">RESTRICT_MEMORY_BITS</a>]   [,&#160;/<a href="#OS" class="selected">RESTRICT_OS</a>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>Returns a string array containing all application user directories that match the query criteria. If no matching application user directories exist, a null scalar string is returned.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">AuthorDirname</h3>
+        <p>The name of the <i>author directory</i> to be used by the calling application. For APP_USER_DIR_QUERY to work correctly, <i>AuthorDirname</i> must be set to the same value used in the call to APP_USER_DIR. See <a href="APP_USER_DIR.htm">APP_USER_DIR</a> for details.</p>
+        <p>If <i>AuthorDirname</i> is an empty string, then the default product name will be used. This default is "idl" unless  the <a href="../../Creating IDL Programs/Appendices/prefs_directory.htm#IDL_PREF_DIR">IDL_PREF_DIR</a> preference has been set.</p>
+        <h3 class="Argument">AppDirname</h3>
+        <p>The name of the application directory to be used by the calling application. For APP_USER_DIR_QUERY to work correctly, <i>AppDirname</i> must be set to the same value used in the call to APP_USER_DIR. See <a href="APP_USER_DIR.htm">APP_USER_DIR</a> for details.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="COUNT"></a>COUNT</h3>
+        <p>A named variable that will contain the number of matching application user directories found. If no matching directories are found, the specified variable will contain the value 0 (zero).</p>
+        <p>If COUNT is not specified, and the desired directory does not exist, then IDL will automatically create the directory and return it as the result. If you only want to query if the directory exists, then you must set COUNT to a named variable.</p>
+        <h3 class="Keyword"><a name="EXCLUDE"></a>EXCLUDE_CURRENT</h3>
+        <p>By default, APP_USER_DIR_QUERY includes the application user directory that matches the current system (the directory that would be returned by APP_USER_DIR) in <i>Result</i>. Set this keyword to exclude the directory returned by APP_USER_DIR from the <i>Result</i>.</p>
+        <h3 class="Keyword"><a name="QUERY_APPVERSION"></a>QUERY_APPVERSION</h3>
+        <p>Set this keyword to match application user directories that have any value for the application version.  To use this keyword you must also set /RESTRICT_APPVERSION.</p>
+        <h3 class="Keyword"><a name="QUERY_ARCH"></a>QUERY_ARCH</h3>
+        <p>Set this keyword to match application user directories that have any value for the hardware architecture.  To use this keyword you must also set /RESTRICT_ARCH.</p>
+        <h3 class="Keyword"><a name="QUERY_FAMILY"></a>QUERY_FAMILY</h3>
+        <p>Set this keyword to match application user directories that have any value for the operating system family.  To use this keyword you must also set /RESTRICT_FAMILY.</p>
+        <h3 class="Keyword"><a name="QUERY_FILE_OFFSET_BITS"></a>QUERY_FILE_OFFSET_BITS</h3>
+        <p>Set this keyword to match application user directories that have any value for the number of bits used for file offsets.  To use this keyword you must also set /RESTRICT_FILE_OFFSET_BITS.</p>
+        <h3 class="Keyword"><a name="QUERY_IDL_RELEASE"></a>QUERY_IDL_RELEASE</h3>
+        <p>Set this keyword to match application user directories that have any value for the IDL version string.  To use this keyword you must also set /RESTRICT_IDL_RELEASE.</p>
+        <h3 class="Keyword"><a name="QUERY_MEMORY_BITS"></a>QUERY_MEMORY_BITS</h3>
+        <p>Set this keyword to match application user directories that have any value for the number of bits used for memory addresses. To use this keyword you must also set /RESTRICT_MEMORY_BITS.</p>
+        <h3 class="Keyword"><a name="QUERY_OS"></a>QUERY_OS</h3>
+        <p>Set this keyword to match application user directories that have any value for the operating system. To use this keyword you must also set /RESTRICT_OS.</p>
+        <h3 class="Keyword"><a name="APPVERSION"></a>RESTRICT_APPVERSION</h3>
+        <p>An arbitrary string giving the application version. Different application user directories will be created for different values of this keyword.</p>
+        <h3 class="Keyword"><a name="ARCH"></a>RESTRICT_ARCH</h3>
+        <p>Set this keyword to match application user directories that only match your system architecture, as given by the !VERSION.ARCH system variable field.</p>
+        <h3 class="Keyword"><a name="FAMILY"></a>RESTRICT_FAMILY</h3>
+        <p>Set this keyword to match application user directories that only match your operating system family, as given by the !VERSION.OS_FAMILY system variable field.</p>
+        <p>If RESTRICT_OS is also specified, RESTRICT_FAMILY is ignored and has no effect.</p>
+        <h3 class="Keyword"><a name="FILE_OFFSET_BITS"></a>RESTRICT_FILE_OFFSET_BITS</h3>
+        <p>Set this keyword to match application user directories that only match your current IDL file-offset bits, as given by the !VERSION.FILE_OFFSET_BITS system variable field.</p>
+        <h3 class="Keyword"><a name="IDL_RELEASE"></a>RESTRICT_IDL_RELEASE</h3>
+        <p>Set this keyword to match application user directories that only match your current IDL version, as given by the !VERSION.RELEASE  system variable field.</p>
+        <h3 class="Keyword"><a name="MEMORY_BITS"></a>RESTRICT_MEMORY_BITS</h3>
+        <p>Set this keyword to match application user directories that only match your current IDL memory-address bits, as given by the !VERSION.MEMORY_BITS system variable field.</p>
+        <h3 class="Keyword"><a name="OS"></a>RESTRICT_OS</h3>
+        <p>Set this keyword to match application user directories that only match your operating system, as given by the !VERSION.OS system variable field.</p>
+        <h2 class="API">Example</h2>
+        <p>In the discussion of the APP_USER_DIR function, we give the example of an IDL application supporting the “Amazing” Grill System, a product of the fictional Acme Widgets, Inc. The application user directory created for that application is dependent on two attributes:</p>
+        <ol>
+            <li value="1">Application version (RESTRICT_APPVERSION)</li>
+            <li value="2">Operating system family (RESTRICT_FAMILY)</li>
+        </ol>
+        <p>When a new version of IDL runs this application for the first time, the application code will find that its newly created application directory is empty. In such a situation, the application might wish to offer the user a choice between starting over with the application defaults or migrating settings and data from an older version of the application.</p>
+        <p>The following call to APP_USER_DIR_QUERY can be used to locate application user directories that are for other versions of the application, but for the same operating system family. The QUERY_APPVERSION keyword causes the function to match all application versions, while the EXCLUDE_CURRENT keyword tells it to exclude the application user directory for the current system:</p>
+        <p class="Code">old_appdirs = APP_USER_DIR_QUERY('acme', 'acme_grill', $</p>
+        <p class="Code">&#160;&#160;RESTRICT_APPVERSION='1.0', /RESTRICT_FAMILY, $</p>
+        <p class="Code">&#160;&#160;/QUERY_APPVERSION, /EXCLUDE_CURRENT)</p>
+        <p>Note that APP_USER_DIR_QUERY may return more than one directory. It is up to the application to decide which one to use. Applications that intend to migrate information between versions should include information in their application user directories that will facilitate such migration.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="APP_USER_DIR.htm">APP_USER_DIR</a>, <a href="../F/FILE_SEARCH.htm">FILE_SEARCH</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

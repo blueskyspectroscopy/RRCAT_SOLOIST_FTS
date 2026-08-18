@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: A">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>APP_USER_DIR</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="A_list.htm">Routines: A</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">APP_USER_DIR</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor35"></a>APP_USER_DIR</h1>
+        <p><a name="kanchor36"></a>The APP_USER_DIR function provides access to the IDL <i><a name="kanchor37"></a>application user directory</i>. The application user directory is a location where IDL, and applications written in IDL, can store user-specific data that will persist between IDL sessions. For example, the IDL iTools store user-specified preferences, styles, and macros in the application user directory.</p>
+        <p>The application user directory is created automatically by IDL as a subdirectory (named <code>.idl</code>) of the user’s <i>home directory</i>. </p>
+        <p>To prevent unrelated applications from encountering each other’s files, the <code>.idl</code> directory is organized into subdirectories with names specified by the application author. For example, files used by applications distributed with IDL are stored in a subdirectories of <code>.idl</code> named <code>envi</code> and <code>idl</code>. Inside each author’s subdirectory, files are organized by application and (optionally) by a combination of attributes of the IDL version that creates the directory. </p>
+        <p>The organization of the <code>.idl</code> directory is opaque to both users and authors of IDL applications. Application authors are expected to manage the directory exclusively using the APP_USER_DIR function, and application users generally do not need to manually modify the files it contains.</p>
+        <p>APP_USER_DIR simplifies cross-platform application development by providing a well-defined location for IDL applications to store their resource files, regardless of the platform or version of IDL. The uniform organization it enforces is also a benefit for IDL users, since it makes it easier for them to understand the meaning and importance of the files found in their <code>.idl</code> directory.</p>
+        <p>Directories created by APP_USER_DIR have the following features:</p>
+        <ul>
+            <li value="1">Each author of IDL applications has a unique area underneath the <code>.idl </code>directory. Different authors do not share space with each other, or with IDL distribution files.</li>
+            <li value="2">By default, an application directory is shared by all instances of the application. The application author can use RESTRICT keywords to specify that the directory only be used by a specified version of the application, or when running on a version of IDL with specified attributes such as release, operating system, hardware platform, <i>etc</i>.</li>
+            <li value="3">A README file is automatically generated for each author and application directory, following a standard format. The application author is required to supply the body text for the application README file (text for the author README file is optional, but recommended). The text is expected to explain the purpose of the directory, and supply contact information for the author. Each README file has a version associated with it, allowing APP_USER_DIR to automatically update the file as necessary.</li>
+        </ul>
+        <p>APP_USER_DIR performs the following operations, in order:</p>
+        <ol>
+            <li value="1">If the specified author directory does not exist, it is created.</li>
+            <li value="2">If the specified author directory does not have a standard README file, it is created. If there is an existing README file with a version number that is lower than the specified number, the file is replaced.</li>
+            <li value="3">If the specified application subdirectory does not exist within the author directory, it is created.</li>
+            <li value="4">If the specified application directory does not have a standard README file, it is created. If there is an existing README file with a version number that is lower than the specified number, the file is replaced.</li>
+            <li value="5">The path to the application directory is returned as the value of the APP_USER_DIR function. </li>
+        </ol>
+        <p>Other than the README file, the contents of an application directory are entirely up to the application author. The APP_USER_DIR function does not manage the content, only its location. The FILEPATH function can be used to construct filenames within the application directory, and IDL’s many input/output and file manipulation routines can be used to create and manage application specific content within it.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = APP_USER_DIR(<i>AuthorDirname</i>, <i>AuthorDesc</i>, <i>AppDirname</i>, <i>AppDesc</i>, <i>AppReadmeText, AppReadmeVersion</i> [,&#160;<a href="#TEXT" class="selected">AUTHOR_README_TEXT</a>=<i>string</i>]  [,&#160;<a href="#VERSION" class="selected">AUTHOR_README_VERSION</a>=<i>integer</i>]  [,&#160;<a href="#APPVERSION" class="selected">RESTRICT_APPVERSION</a>=<i>string</i>]  [,&#160;/<a href="#ARCH" class="selected">RESTRICT_ARCH</a>]   [,&#160;/<a href="#FAMILY" class="selected">RESTRICT_FAMILY</a>]   [,&#160;/<a href="#FILE_OFFSET_BITS" class="selected">RESTRICT_FILE_OFFSET_BITS</a>]   [,&#160;/<a href="#IDL_RELEASE" class="selected">RESTRICT_IDL_RELEASE</a>]   [,&#160;/<a href="#MEMORY_BITS" class="selected">RESTRICT_MEMORY_BITS</a>]   [,&#160;/<a href="#OS" class="selected">RESTRICT_OS</a>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>Returns a string containing the path to the directory to be used by the calling application. </p>
+        <p>The directory and all associated README files are created if they do not exist. If the README files exit, they will be updated if the values of <i>AppReadmeVersion</i> and the AUTHOR_README_VERSION keyword are greater than those of the existing README files.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">AuthorDirname</h3>
+        <p>A string specifying the name of the <i>author directory</i> to be used by the calling application. Use caution and pick a unique name unlikely to conflict with others.</p>
+        <p>In choosing <i>AuthorDirname</i>, consider the following:</p>
+        <ol>
+            <li value="1"><i>AuthorDirname</i> is case insensitive, regardless of the operating system platform. APP_USER_DIR will convert the name to lower case before creating the directory or returning its path string.</li>
+            <li value="2">Keep the name short to minimize the chance that the full directory name is longer than the maximum supported length on the current platform.</li>
+            <li value="3">The following characters are automatically converted to underscores (<code>_</code>) when creating the directory name: <code>-&#160;)&#160;(&#160;.&#160;:&#160;&gt;&#160;&lt;</code> as well as <i>space</i> and <i>tab</i>.</li>
+        </ol>
+        <p>If <i>AuthorDirname</i> is an empty string, then the default product name will be used. This default is "idl" unless the <a href="../../Creating IDL Programs/Appendices/prefs_directory.htm#IDL_PREF_DIR">IDL_PREF_DIR</a> preference has been set.</p>
+        <h3 class="Argument">AuthorDesc</h3>
+        <p>A one-line description of the author, in human-readable form. This string is used for the header of the README file within the author directory.</p>
+        <h3 class="Argument">AppDirname</h3>
+        <p>The name of the application directory to be used by the calling application. For example, the IDL iTools application uses the application directory name “itools”.</p>
+        <p>APP_USER_DIR modifies the <i>AppDirname</i> string you specify in the same way it modifies the <i>AuthorDirname</i> string. See AuthorDirname, above.</p>
+        <h3 class="Argument">AppDesc</h3>
+        <p>A string specifying a brief description of the application in human-readable form. This string is used for the header of the README file within the application directory. For example, the <i>AppDesc</i> for the IDL iTools application is “IDL Intelligent Tools (iTools)”.</p>
+        <h3 class="Argument">AppReadmeText</h3>
+        <p>A string or string array giving the text used as the body of the README file within the application directory. The README text is for the benefit of IDL users who are trying to understand what the directory is for, and is expected to supply the following information:</p>
+        <ul>
+            <li value="1">The identity of the author, and author contact information.</li>
+            <li value="2">A brief description of what the application is, and what it does.</li>
+            <li value="3">Any special rules governing if and when the user is allowed to delete the directory and its contents. </li>
+        </ul>
+        <h3 class="Argument">AppReadmeVersion</h3>
+        <p>An integer greater than zero containing the version number of the README file.</p>
+        <p>Initially, <i>AppReadmeVersion</i> should be set to one. Every time you modify the text supplied as the <i>AppReadmeText</i> argument, increment the value of <i>AppReadmeVersion</i> by one. APP_USER_DIR uses this information to ensure that existing README files are automatically updated to the latest version.</p>
+        <p>The application README file version is different from, and unrelated to, the application version (as specified via the RESTRICT_APPVERSION keyword). The README version applies only to the contents of the README file. You might want to change the text in a README file without changing the version of the application; perhaps to clarify existing information or update your contact information.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="TEXT"></a>AUTHOR_README_TEXT</h3>
+        <p>Supplies the README text for the author directory. Authors with multiple IDL applications should consider providing application-independent contact information here.</p>
+        <p>APP_USER_DIR requires you to supply text for the body of the application directory README file. You are not required to supply text for the author directory README file, but supplying such text is strongly recommended.</p>
+        <p>If you include this keyword, use the AUTHOR_README_VERSION keyword to supply a version number for the README file.</p>
+        <h3 class="Keyword"><a name="VERSION"></a>AUTHOR_README_VERSION</h3>
+        <p>The version number for the author README file; must be greater than zero, the default is 1.</p>
+        <p>Initially, AUTHOR_README_VERSION should be explicitly specified and set equal to one. Every time you modify the text supplied as the AUTHOR_README_TEXT keyword, increment the value of AUTHOR_README_VERSION by one. APP_USER_DIR uses this information to ensure that existing author README files are automatically updated to the latest version.</p>
+        <p>The author README file version is different from, and unrelated to, the application version (as specified via the RESTRICT_APPVERSION keyword). The README version applies only to the contents of the README file. </p>
+        <h3><a name="APPVERSION"></a>RESTRICT_APPVERSION</h3>
+        <p>An arbitrary string giving the application version. Different application user directories will be created for different values of this keyword.</p>
+        <p>In choosing your version string, consider the same details described for the <i>AppDirname</i> argument apply to RESTRICT_APPVERSION.</p>
+        <h3><a name="ARCH"></a>RESTRICT_ARCH</h3>
+        <p>Specifies that different application user directories be created when your application runs on systems with different hardware architectures, as reported by the !VERSION.ARCH system variable field.</p>
+        <h3><a name="FAMILY"></a>RESTRICT_FAMILY</h3>
+        <p>Specifies that different application user directories be created when your application runs on systems running different operating system families, as reported by the !VERSION.OS_FAMILY system variable field. </p>
+        <p>If RESTRICT_OS is also specified, RESTRICT_FAMILY is ignored and has no effect.</p>
+        <h3><a name="FILE_OFFSET_BITS"></a>RESTRICT_FILE_OFFSET_BITS</h3>
+        <p>Specifies that different application user directories be created when your application runs on versions of IDL that use a different number of file offset bits, as reported by the !VERSION.FILE_OFFSET_BITS system variable field.</p>
+        <h3><a name="IDL_RELEASE"></a>RESTRICT_IDL_RELEASE</h3>
+        <p>Specifies that different application user directories be created when your application runs under different versions of IDL, as specified by the !VERSION.RELEASE system variable field.</p>
+        <h3><a name="MEMORY_BITS"></a>RESTRICT_MEMORY_BITS</h3>
+        <p>Specifies that different application user directories be created when your application runs on versions of IDL that use a different number of memory address bits, as reported by the !VERSION.MEMORY_BITS system variable field.</p>
+        <h3><a name="OS"></a>RESTRICT_OS</h3>
+        <p>Set this keyword to specify that different application user directories be created when your application runs on systems running different operating systems, as reported by the !VERSION.OS system variable field.</p>
+        <p>If RESTRICT_OS is also specified, RESTRICT_FAMILY is ignored and has no effect.</p>
+        <h2 class="API">Examples</h2>
+        <p>The following function demonstrates how APP_USER_DIR can be used efficiently to create an application user directory for an IDL application supporting the “Amazing” Grill System (AGS), a product of the fictional Acme Widgets, Inc. We assume that each AGS application user directory should only be shared between instances of the same version of the application that are running under the same operating system family. The use of the RESTRICT keywords causes the AGS software to create a different application user directory for each unique combination of these two attributes. The rest of the application can call this function as many times as desired. It ensures that the necessary directory exists on the first call, and then returns the path string on subsequent calls:</p>
+        <p class="Code">FUNCTION acme_grill_config_dir</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;COMMON acme_grill_common, config_dir</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;IF (N_ELEMENTS(config_dir) NE 1) THEN BEGIN</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;; Increment if author_readme_text is changed</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;author_readme_version = 1</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;author_readme_text = $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;['This is the user configuration directory for', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'IDL based products from Acme Widgets, Inc:', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'    Acme Widgets, Inc.', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'    1234 Amazing Way', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'    Grill Valley, NV, 12345', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'    USA', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'Thank you for using products from Acme Widgets, Inc.' ]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;; Increment if app_readme_text is changed</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;app_readme_version = 1      </p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;app_readme_text = $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;['This is the configuration directory for the', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'Acme "Amazing" Grill System. It is used to', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'remember grill settings in between grill', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'invocations.', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'It is safe to remove this directory, as it', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'will be recreated on demand. Note that all', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'settings (e.g. smoke injection depth, juicitron', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'angle, etc.) will revert to their default settings.', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'Thank you for using the Acme "Amazing" Grill System.']</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;config_dir = APP_USER_DIR('acme', 'Acme Widgets, Inc.', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'acme_grill', 'The Acme "Amazing" Grill System', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;app_readme_text, app_readme_version, $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;AUTHOR_README_TEXT=author_readme_text, $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;AUTHOR_README_VERSION=author_readme_version, $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;RESTRICT_APPVERSION='1.0', /RESTRICT_FAMILY)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;ENDIF</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;&#160;RETURN, config_dir</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">END</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="APP_USER_DIR_QUERY.htm">APP_USER_DIR_QUERY</a>, <a href="../F/FILE_MKDIR.htm">FILE_MKDIR</a>, <a href="../F/FILE_TEST.htm">FILE_TEST</a>, <a href="../F/FILEPATH.htm">FILEPATH</a>, <a href="../O/OPEN.htm">OPENR/OPENU/OPENW</a>, <a href="../../Creating IDL Programs/Appendices/IDL_Environment_System_V.htm#sysvars_272074529_997111">!VERSION</a> system variable</p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

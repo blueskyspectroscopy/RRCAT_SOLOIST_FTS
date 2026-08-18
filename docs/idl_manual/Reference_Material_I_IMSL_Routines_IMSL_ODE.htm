@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_ODE</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_ODE</span>
+        </div>
+        <h1 class="Routine">IMSL_ODE</h1>
+        <p>The IMSL_ODE function solves an initial value problem, which is possibly stiff, using the Adams-Gear methods for ordinary differential equations. Using keywords, the Runge-Kutta-Verner fifth-order and sixth-order method can be used if you know the problem is not stiff.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_ODE function finds an approximation to the solution of a system of first- order differential equations of the form:</p>
+        <p>
+            <img src="images/IMSL_ODE-17.jpg" />
+        </p>
+        <p>with given initial conditions for <i>y</i> at the starting value for <i>t</i>. The function attempts to keep the global error proportional to a user-specified tolerance. The proportionality depends on the differential equation and the range of integration.</p>
+        <p>The function returns a two-dimensional array with the (<i>i, j</i>)-th component containing the <i>i</i>-th approximate solution at the <i>j</i>-th time step. Thus, the returned matrix has dimension (N_ELEMENTS (<i>y</i>), N_ELEMENTS (<i>t</i>)). It is important to notice here that the initial values of the problem also are included in this two-dimensional matrix.</p>
+        <p>The code is based on using backward differentiation formulas not exceeding order five as outlined in Gear (1971) and implemented by Hindmarsh (1974). There is an optional use of the code that employs implicit Adams formulas. This use is intended for nonstiff problems with expensive functions <i>y</i>′ = <i>f</i>(<i>t, y</i>).</p>
+        <p>If the keyword R_K_V is set, the IMSL_ODE function uses the Runge-Kutta-Verner fifth-order and sixth-order method and is efficient for nonstiff systems where the evaluations of <i>f</i>(<i>t, y</i>) are not expensive. The code is based on an algorithm designed by Hull et al. (1976) and Jackson et al. (1978) and uses Runge-Kutta formulas of order five and six developed by J.H. Verner.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This is a mildly stiff example problem (F2) from the test set of Enright and Pryce (1987).</p>
+        <p>.RUN</p>
+        <p class="indent"><i>y'</i><sub>1</sub>  = –<i>k</i><sub>1</sub><i>y</i><sub>1</sub> + <i>k</i><sub>2</sub> (1 – <i>y</i><sub>1</sub>) <i>y</i><sub>0</sub></p>
+        <p class="indent"><i>y'</i><sub>1</sub>  = –<i>k</i><sub>1</sub><i>y</i><sub>1</sub> + <i>k</i><sub>2</sub> (1 – <i>y</i><sub>1</sub>) <i>y</i><sub>0</sub></p>
+        <p class="indent"><i>y</i><sub>0</sub>(0)  = 1</p>
+        <p class="indent"><i>y</i><sub>1</sub>(0)  = 0</p>
+        <p class="indent"><i>k</i><sub>0</sub>  = 294</p>
+        <p class="indent"><i>k</i><sub>1</sub>  = 3</p>
+        <p class="indent"><i>k</i><sub>2</sub>  = 0.01020408</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define function f.</p>
+        <p class="Code">FUNCTION f, t, y</p>
+        <p class="Code_Indented">RETURN, [-y(0) - y(0) * y(1) + 294. * y(1), $</p>
+        <p class="Code_Indented2">-3.*y(1) + 0.01020408*(1. - y(1)) * y(0)]</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">yp = IMSL_ODE([0, 120, 240], [1, 0], 'f')</p>
+        <p class="Code">; Call the IMSL_ODE code with the values of the independent</p>
+        <p class="Code">; variable at which a solution is desired and the initial</p>
+        <p class="Code">; conditions.</p>
+        <p class="Code">PM, yp, FORMAT = '(3f10.6)', $</p>
+        <p class="Code_Indented2">Title = '	y(0)	y(120)	y(240)'</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_ODE_print1.png" />
+        </p>
+        <p>Now solve the same problem but with a user supplied Jacobian.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define function f.</p>
+        <p class="Code">FUNCTION f, t, y</p>
+        <p class="Code_Indented">RETURN, [-y(0)-y(0)*y(1)+294.0*y(1), $</p>
+        <p class="Code_Indented2">-3.0*y(1)+0.01020408*(1.0-y(1))*y(0)]</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION jacob, x, y, dydx</p>
+        <p class="Code_Indented">dydx = [ [-y(1)-1,0.01020408*(1-y(1))], $</p>
+        <p class="Code_Indented2">[294-y(0),-0.01020408*y(0)-3] ]</p>
+        <p class="Code_Indented">RETURN, dydx</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">yp = IMSL_ODE( [0,120,240], [1,0], 'f', JACOBIAN='jacob', MITER=2)</p>
+        <p class="Code">PM, yp, FORMAT='(3f10.6)', TITLE='	y(0)	y(120)	y(240)'</p>
+        <h3>Example 2</h3>
+        <p>Runge-Kutta Method</p>
+        <p>This example solves:</p>
+        <p>
+            <img src="images/IMSL_ODE-18.jpg" />
+        </p>
+        <p>over the interval [0, 1] with the initial condition y(0) = 1 using the Runge-Kutta- Verner fifth-order and sixth-order method. The solution is <i>y</i>(<i>t</i>) = <i>e</i><sup>–t</sup>.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define function f.</p>
+        <p class="Code">FUNCTION f, t, y</p>
+        <p class="Code_Indented">RETURN, -y</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">yp = IMSL_ODE([0, 1], [1], 'f', /R_K_V)</p>
+        <p class="Code">; Call IMSL_ODE with the keyword R_K_V set.</p>
+        <p class="Code">PM, yp, Title = 'Solution'</p>
+        <p>IDL prints:</p>
+        <p class="Code">
+            <img src="images/IMSL_ODE_print2.png" />
+        </p>
+        <h3>Example 3</h3>
+        <p>Predator-Prey Problem</p>
+        <p>Consider a predator-prey problem with rabbits and foxes. Let <i>r</i> be the density of rabbits, and let <i>f</i> be the density of foxes. In the absence of any predator-prey interaction, the rabbits would increase at a rate proportional to their number, and the foxes would die of starvation at a rate proportional to their number. Mathematically, the model without species interaction is approximated by the following equations:</p>
+        <p>
+            <img src="images/IMSL_ODE-19.jpg" />
+        </p>
+        <p>With species interaction, the rate at which the rabbits are consumed by the foxes is assumed to equal the value <i>2rf</i>. The rate at which the foxes increase because they are consuming the rabbits, is equal to <i>rf</i>. Thus, the model differential equations to be solved are as follows:</p>
+        <p>
+            <img src="images/IMSL_ODE-20.jpg" />
+        </p>
+        <p>For illustration, the initial conditions are taken to be <i>r</i>(0) = 1 and <i>f</i>(0) = 3. The interval of integration is 0 ≤ <i>t</i> ≤ 40. In the program, <i>y</i>(0) = <i>r</i> and <i>y</i>(1) = <i>f</i>. The IMSL_ODE function is then called with 100 time values from 0 to 40. The results are shown in the figure that follows.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the function f.</p>
+        <p class="Code">FUNCTION f, t, y</p>
+        <p class="Code_Indented">yp = y</p>
+        <p class="Code_Indented">yp(0) = 2 * y(0) * (1 - y(1))</p>
+        <p class="Code_Indented">yp(1) = -y(1) * (1 - y(0))</p>
+        <p class="Code_Indented">RETURN, yp</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">y = [1, 3]</p>
+        <p class="Code">; Set the initial values and time values.</p>
+        <p class="Code">t = 40 * FINDGEN(100)/99</p>
+        <p class="Code">y = IMSL_ODE(t, y, 'f', /R_K_V)</p>
+        <p class="Code">; Call IMSL_ODE with R_K_V set to use the Runge-Kutta method.</p>
+        <p class="Code">PLOT, y(0, *), y(1, *), Psym = 2, XTitle = 'Density of Rabbits', $</p>
+        <p class="Code_Indented">YTitle = 'Density of Foxes'</p>
+        <p class="Code">; Plot the result.</p>
+        <p>
+            <img src="images/diff_eq01.gif" />
+        </p>
+        <h3>Example 4</h3>
+        <p>Stiff Problems and Changing Defaults</p>
+        <p>This problem is a stiff example (F5) from the test set of Enright and Pryce (1987). An initial step size of <i>h</i> = 10–7 is suggested by these authors. When solving a problem that is known to be stiff, using double precision is advisable. The IMSL_ODE function is forced to use the suggested initial step size and double precision by using keywords.</p>
+        <p class="indent"><i>y'</i><sub>0</sub> = <i>k</i><sub>0</sub>( –<i>k</i><sub>1</sub><i>y</i><sub>0</sub><i>y</i><sub>1</sub> + <i>k</i><sub>2</sub><i>y</i><sub>3</sub> – <i>k</i><sub>3</sub> <i>y</i><sub>0</sub><i>y</i><sub>2</sub>)</p>
+        <p>
+            <p class="indent"><i>y'</i><sub>1</sub> = <i>k</i><sub>0</sub><i>k</i><sub>1</sub><i>y</i><sub>0</sub><i>y</i><sub>1</sub> + <i>k</i><sub>4</sub><i>y</i><sub>3</sub></p>
+        </p>
+        <p>
+            <p class="indent"><i>y'</i><sub>2</sub> = <i>k</i><sub>0 </sub>( –<i>k</i><sub>3</sub><i>y</i><sub>0</sub><i>y</i><sub>2</sub> + <i>k</i><sub>5</sub><i>y</i><sub>3</sub>)</p>
+        </p>
+        <p class="indent"><i>y'</i><sub>3</sub> = <i>k</i><sub>0 </sub>( <i>k</i><sub>1</sub><i>y</i><sub>0</sub><i>y</i><sub>1</sub> – <i>k</i><sub>2</sub><i>y</i><sub>3</sub> + <i>k</i><sub>3</sub> <i>y</i><sub>0</sub><i>y</i><sub>2 </sub>)</p>
+        <p class="indent"><i>y</i><sub>0</sub>(0) = 3.365 x 10<sup>–7</sup></p>
+        <p class="indent"><i>y</i><sub>1</sub>(0) = 8.261 x 10<sup>–3</sup></p>
+        <p class="indent"><i>y</i><sub>2</sub>(0) = 1.641 x 10<sup>–3</sup></p>
+        <p class="indent"><i>y</i><sub>3</sub>(0) = 9.380 x 10<sup>–6</sup></p>
+        <p class="indent"><i>k</i><sub>0</sub> = 10<sup>11</sup></p>
+        <p class="indent"><i>k</i><sub>1</sub> = 3</p>
+        <p class="indent"><i>k</i><sub>2</sub> = 0.0012</p>
+        <p class="indent"><i>k</i><sub>3</sub> = 9</p>
+        <p class="indent"><i>k</i><sub>4</sub> = 2 x 10<sup>7</sup></p>
+        <p class="indent"><i>k</i><sub>5</sub> = 0.001</p>
+        <p>The results are shown in the figure that follows.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the function.</p>
+        <p class="Code">FUNCTION f, t, y</p>
+        <p class="Code_Indented">k	= [1d11, 3., .0012, 9., 2d7, .001]</p>
+        <p class="Code_Indented">yp = [k(0)*(-k(1)*y(0)*y(1)+k(2)*y(3)- $</p>
+        <p class="Code_Indented2">k(3)*y(0)*y(2)),-k(0)*k(1)*y(0)*y(1)+ $</p>
+        <p class="Code_Indented2">k(4)*y(3),k(0)*(-k(3)*y(0)*y(2) + $</p>
+        <p class="Code_Indented2">k(5)*y(3)),k(0)* (k(1)*y(0)*y(1)- $</p>
+        <p class="Code_Indented2">k(2)*y(3)+k(3)*y(0)*y(2))]</p>
+        <p class="Code_Indented">RETURN, yp</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">t = FINDGEN(500)/5e6</p>
+        <p class="Code">; Set up the values of the independent variable.</p>
+        <p class="Code">y = [3.365e-7, 8.261e-3, 1.641e-3, 9.380e-6]</p>
+        <p class="Code">; Set the initial values.</p>
+        <p class="Code">y = IMSL_ODE(t, y, 'f', Hinit = 1d-7, /Double)</p>
+        <p class="Code">; Call IMSL_ODE.</p>
+        <p class="Code">!P.Multi = [0, 2, 2]</p>
+        <p class="Code">!P.Font = 0</p>
+        <p class="Code">PLOT, t, y(0, *), Title = '!8y!I0!5', XTICKS=2</p>
+        <p class="Code">PLOT, t, y(1, *), Title = '!8y!I1!5', XTICKS=2</p>
+        <p class="Code">PLOT, t, y(2, *), Title = '!8y!I2!5', XTICKS=2</p>
+        <p class="Code">PLOT, t, y(3, *), Title = '!8y!I3!5', XTICKS=2</p>
+        <p class="Code">; Plot each variable on a separate axis.</p>
+        <p>
+            <img src="images/diff_eq02.gif" />
+        </p>
+        <h3>Example 5</h3>
+        <p>Strange Attractors, the Rossler System</p>
+        <p>This example illustrates a strange attractor. The strange attractor used is the Rossler system, a simple model of a truncated Navier-Stokes equation. The Rossler system is given by relation below.</p>
+        <p><i>y'</i><sub>0</sub> = – <i>y</i><sub>1</sub> – <i>y</i><sub>2</sub></p>
+        <p><i>y'</i><sub>1</sub> = <i>y</i><sub>0</sub> + <i>a y</i><sub>1</sub></p>
+        <p><i>y'</i><sub>2</sub> = <i>b + y</i><sub>0</sub> <i>y</i><sub>2</sub> – <i>c y</i><sub>2</sub></p>
+        <p>The initial conditions and constants are shown below.</p>
+        <p class="Code"><i>y</i><sub>0</sub>(0) = 1 </p>
+        <p class="Code"><i>y</i><sub>1</sub>(0) = 0</p>
+        <p class="Code"><i>y</i><sub>2</sub>(0) = 0</p>
+        <p class="Code_Indented"><i>a = </i>0.2</p>
+        <p class="Code_Indented"><i>b</i> = 0.2</p>
+        <p class="Code_Indented"><i>c</i> = 5.7</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define function f.</p>
+        <p class="Code">FUNCTION f, t, y</p>
+        <p class="Code">COMMON constants, a, b, c</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define some common variables. yp = y</p>
+        <p class="Code">yp(0) = -y(1) - y(2)</p>
+        <p class="Code">yp(1) = y(0) + a * y(1)</p>
+        <p class="Code">yp(2) = b + y(0) * y(2) - c * y(2) RETURN, yp</p>
+        <p class="Code">END</p>
+        <p class="Code">COMMON constants, a, b, c a = .2</p>
+        <p class="Code">b = .2</p>
+        <p class="Code">c = 5.7</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Assign values to the common variables. ntime = 5000</p>
+        <p class="Code">; Set the number of values of the independent variable. time_range = 200</p>
+        <p class="Code">; Set the range of the independent variable to 0, ..., 200. max_steps = 20000</p>
+        <p class="Code">; Allow up to 20,000 steps per value of the independent variable.</p>
+        <p class="Code">t = FINDGEN(ntime)/(ntime - 1) * time_range y = [1, 0, 0]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Set the initial conditions.</p>
+        <p class="Code">y = IMSL_ODE(t, y, 'f', Max_Steps = max_steps, /Double)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_ODE using keywords Max_Steps and Double.</p>
+        <p class="Code">!P.Charsize = 1.5</p>
+        <p class="Code">SURFACE, FINDGEN(2, 2), /Nodata, $</p>
+        <p class="Code_Indented2">XRange = [MIN(y(0, *)), MAX(y(0, *))], $</p>
+        <p class="Code_Indented2">YRange = [MIN(y(1, *)), MAX(y(1, *))], $</p>
+        <p class="Code_Indented2">ZRange = [MIN(y(2, *)), MAX(y(2, *))], $</p>
+        <p class="Code_Indented2">XTitle = '!6y!i0', YTitle = 'y!i1', $</p>
+        <p class="Code_Indented2">ZTitle = 'y!i2', Az = 25, /Save</p>
+        <p class="Code_Indented">PLOTS, y(0, *), y(1, *), y(2, *), /T3d</p>
+        <p class="Code">; Set up axes to plot solution. SURFACE draws the axes and defines</p>
+        <p class="Code">; the transformation used in PLOTS. The transformation is saved</p>
+        <p class="Code">; using keyword Save in SURFACE, then applied in PLOTS using T3d.</p>
+        <p>
+            <img src="images/diff_eq03.gif" />
+        </p>
+        <h3>Example 6</h3>
+        <p>Coupled, Second-order System</p>
+        <p>Consider the two-degrees-of-freedom system represented by the model (and corresponding free-body diagrams) in the figure that follows. Assuming y1 is greater than y0 causes the spring k1 to be in tension, as seen by the tensile force k1 (y1 – y0).</p>
+        <p>
+            <img src="images/diff_eq04.gif" />
+        </p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If y0 is taken to be greater than y1, then spring k1 is in compression, with the spring force k1 (y0 – y1). Both methods give correct results when a summation of forces is written.</p>
+        <p>The differential equations of motion for the system are written as follows:</p>
+        <p>
+            <img src="images/IMSL_ODE-21.jpg" />
+        </p>
+        <p>Thus:</p>
+        <p>
+            <img src="images/IMSL_ODE-22.jpg" />
+        </p>
+        <p>If given the mass and spring constant values:</p>
+        <p>
+            <img src="images/IMSL_ODE-23.jpg" />
+        </p>
+        <p>the following is true:</p>
+        <p>
+            <img src="images/IMSL_ODE-24.jpg" />
+        </p>
+        <p>Now, in order to convert this problem into one which IMSL_ODE can be used to solve, choose the following variables:</p>
+        <p>
+            <img src="images/IMSL_ODE-25.jpg" />
+        </p>
+        <p>which yields the following equations:</p>
+        <p>
+            <img src="images/IMSL_ODE-26.jpg" />
+        </p>
+        <p>The last four equations are the object of the return values of the user-supplied function in the exact order as previously specified.</p>
+        <p>The example below loops through four different sets of initial values for <i>z</i>. The results are shown below.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define a function.</p>
+        <p class="Code">FUNCTION f, t, z</p>
+        <p class="Code_Indented">k = [-2000, 1000]</p>
+        <p class="Code_Indented">RETURN, [z(2), z(3), k(0) * z(0) + k(1) * $</p>
+        <p class="Code_Indented2">z(1), k(1) * z(0) + k(0) * z(1)]</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">t = FINDGEN(1000)/999</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Independent variable, t, is between 0 and 1.</p>
+        <p class="Code">!P.MULTI = [0, 2, 2]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Place all four plots in one window.</p>
+        <p class="Code">FOR i = 0, 3 DO BEGIN</p>
+        <p class="Code_Indented">z = [1, i/3., 0, 0]</p>
+        <p class="Code_Indented">z = IMSL_ODE(t, z, 'f', Max_Steps = 1000, Hinit = 0.001, /R_K_V)</p>
+        <p class="Code_Indented">PLOT, t, z(0, *), Thick = 2, Title = 'Displacement of Mass'</p>
+        <p class="Code_Indented">; Plot the displacement of m0 as a solid line.</p>
+        <p class="Code_Indented">OPLOT, t, z(1, *), Linestyle = 1, Thick = 2</p>
+        <p class="Code_Indented">; Overplot the displacement of m1 as a dotted line.</p>
+        <p class="Code">ENDFOR</p>
+        <p class="Code">END</p>
+        <p>The displacement for <i>m</i><sub>0</sub> is the solid line, and the dotted line represents the displacement for <i>m</i><sub>1</sub>. Note that when the initial conditions for:</p>
+        <p>
+            <img src="images/IMSL_ODE-27.jpg" /> and <img src="images/IMSL_ODE-28.jpg" /></p>
+        <p>are equal, the displacement of the masses is equal for all values of the independent variable (as seen in the fourth plot). Also, the two principal modes of this problem occur when the following is true:</p>
+        <p>
+            <img src="images/IMSL_ODE-29.jpg" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Fatal Errors</h3>
+        <p>MATH_ODE_TOO_MANY_EVALS: Completion of the next step would make the number of function evaluations #, but only # evaluations are allowed.</p>
+        <p>MATH_ODE_TOO_MANY_STEPS: Maximum number of steps allowed; # used. The problem may be stiff.</p>
+        <p>MATH_ODE_FAIL: Unable to satisfy the error requirement. TOLERANCE = # may be too small.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_ODE(<i>T, Y, F</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FLOOR" class="selected">FLOOR</a>=<i>value</i>] [, <a href="#HINIT" class="selected">HINIT</a>=<i>value</i>] [, <a href="#HMAX" class="selected">HMAX</a>=<i>value</i>] [, <a href="#HMIN" class="selected">HMIN</a>=<i>value</i>] [, <a href="#MAX_EVALS" class="selected">MAX_EVALS</a>=<i>value</i>] [, <a href="#MAX_STEPS" class="selected">MAX_STEPS</a>=<i>value</i>] [, <a href="#N_STEPS" class="selected">N_STEPS</a>=<i>variable</i>] [, <a href="#N_EVALS" class="selected">N_EVALS</a>=<i>variable</i>] [, <a href="#NORM" class="selected">NORM</a>=<i>value</i>] [, <a href="#R_K_V" class="selected">R_K_V</a>=<i>value</i>] [, <a href="#SCALE" class="selected">SCALE</a>=<i>value</i>] [, <a href="#TOLERANCE" class="selected">TOLERANCE</a>=<i>value</i>] [, <a href="#JACOBIAN" class="selected">JACOBIAN</a>=<i>string</i>] [, <a href="#MAX_ORD" class="selected">MAX_ORD</a>=<i>value</i>] [, <a href="#METHOD" class="selected">METHOD</a>=<i>value</i>] [, <a href="#MITER" class="selected">MITER</a>=<i>value</i>] [, <a href="#N_JEVALS" class="selected">N_JEVALS</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A two-dimensional array containing the approximate solutions for each specified value of the independent variable. The elements (<i>i</i>, *) are the solutions for the <i>i</i>-th variable.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">T</h3>
+        <p>One-dimensional array containing values of the independent variable. Parameter <i>t</i>(0) should contain the initial independent variable value, and the remaining elements of t should be filled with values of the independent variable at which a solution is desired.</p>
+        <h3 class="Argument">Y</h3>
+        <p>Array containing the initial values of the dependent variables.</p>
+        <h3 class="Argument">F</h3>
+        <p>Scalar string specifying a user-supplied function to evaluate the right-hand side. This function takes two parameters, <i>t</i> and <i>y</i>, where <i>t</i> is the current value of the independent variable and y is defined above.</p>
+        <p>The return value of this function is an array defined by the following equation:</p>
+        <p>
+            <img src="images/IMSL_ODE-16.jpg" />
+        </p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="FLOOR"></a>FLOOR (optional)</h3>
+        <p>Used with <a href="IMSL_NORM.htm">IMSL_NORM</a>. Provides a positive lower bound for the error norm option with value 2. Default: 1.0</p>
+        <h3 class="Keyword"><a name="HINIT"></a>HINIT (optional)</h3>
+        <p>Scalar value used for the initial value for the step size <i>h</i>. Steps are applied in the direction of integration. Default: 0.001 | <i>t</i> (i + 1 ) – <i>t</i> (i) |</p>
+        <h3 class="Keyword"><a name="HMAX"></a>HMAX (optional)</h3>
+        <p>Scalar value used as the maximum value for the step size <i>h</i>. If keyword R_K_V is set, HMAX = 2.0 is used. Default: largest machine-representable number.</p>
+        <h3 class="Keyword"><a name="HMIN"></a>HMIN (optional)</h3>
+        <p>Scalar value used as the minimum value for the step size <i>h</i>. Default: 0.0</p>
+        <h3 class="Keyword"><a name="MAX_EVALS"></a>MAX_EVALS (optional)</h3>
+        <p>Integer value used in the maximum number of function evaluations allowed per time step. Default: no enforced limit.</p>
+        <h3 class="Keyword"><a name="MAX_STEPS"></a>MAX_STEPS (optional)</h3>
+        <p>Integer value used in the maximum number of steps allowed per time step. Default: 500.</p>
+        <h3 class="Keyword"><a name="N_STEPS"></a>N_STEPS (optional)</h3>
+        <p>Named variable into which the array containing the number of steps taken at each value of t is stored.</p>
+        <h3 class="Keyword"><a name="N_EVALS"></a>N_EVALS (optional)</h3>
+        <p>Named variable into which the array containing the number of function evaluations used at each value of <i>t</i> is stored.</p>
+        <h3 class="Keyword"><a name="NORM"></a>NORM (optional)</h3>
+        <p>Switch determining the error norm. The default is 0. In the following, ei is the absolute value of the error estimate for yi.</p>
+        <ul>
+            <li value="1">0: Minimum of the absolute error and the relative error equals the maximum of <i>e</i><sub>i</sub>/max ( |<i>y</i><sub>i</sub>|, 1) for <i>i</i> = 0, ..., N_ELEMENTS (<i>y</i>) – 1.</li>
+            <li value="2">1: Absolute error, equals maxiei.</li>
+            <li value="3">2: The error norm is maxi(<i>e</i><sub>i</sub>/<i>w</i>i), where <i>w</i><sub>i</sub> = max ( |<i>y</i><sub>i</sub>|, <i>Floor</i>).</li>
+        </ul>
+        <h3 class="Keyword"><a name="R_K_V"></a>R_K_V (optional)</h3>
+        <p>If present and nonzero, uses the Runge-Kutta-Verner fifth-order and sixth-order method.</p>
+        <h3 class="Keyword"><a name="SCALE"></a>SCALE (optional)</h3>
+        <p>Scalar value used as a measure of the scale of the problem, such as an approximation to the Jacobian along the trajectory. Default: 1</p>
+        <h3 class="Keyword"><a name="TOLERANCE"></a>TOLERANCE (optional)</h3>
+        <p>Scalar value used to set the tolerance for error control. An attempt is made to control the norm of the local error such that the global error is proportional to TOLERANCE. Default: 0.001</p>
+        <p><i>The following keywords are for the Adams Gear (Default) method only:</i>
+        </p>
+        <h3 class="Keyword"><a name="JACOBIAN"></a>JACOBIAN (optional)</h3>
+        <p>Scalar string specifying a user-supplied function to evaluate the Jacobian matrix. This function takes three parameters, <i>x</i>, <i>y</i>, and <i>yprime</i>, where <i>x</i> and <i>y</i> are defined in the description of the argument <i>F</i> and <i>yprime</i> is the array returned by the user-supplied argument <i>F</i>. The return value of this function is a two-dimensional array containing the partial derivatives. Each derivative ∂y'i / ∂yj is evaluated at the provided (<i>x, y</i>) values and is returned in array location (<i>i, j</i>).</p>
+        <h3 class="Keyword"><a name="MAX_ORD"></a>MAX_ORD (optional)</h3>
+        <p>Defines the highest order formula of implicit Adams type or BDF type to use. Default: value 12 for Adams formulas; value 5 for BDF formulas</p>
+        <h3 class="Keyword"><a name="METHOD"></a>METHOD (optional)</h3>
+        <p>Chooses the class of integration methods. The default is 2:</p>
+        <ul>
+            <li value="1">1: Uses implicit Adams method.</li>
+            <li value="2">2: Uses backward differentiation formula (BDF) methods.</li>
+        </ul>
+        <h3 class="Keyword"><a name="MITER"></a>MITER (optional)</h3>
+        <p>Chooses the method for solving the formula equations. The default is 3:</p>
+        <ul>
+            <li value="1">1: Uses function iteration or successive substitution.</li>
+            <li value="2">2: Uses chord or modified Newton method and a user-supplied Jacobian matrix.</li>
+            <li value="3">3: Same as 2 except Jacobian is approximated within the function by divided differences.</li>
+        </ul>
+        <h3 class="Keyword"><a name="N_JEVALS"></a>N_JEVALS (optional)</h3>
+        <p>Named variable into which the array containing the number of Jacobian function evaluations used at each value of <i>t</i> is stored. The values returned are nonzero only if the keyword JACOBIAN is also used.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_NORM.htm">IMSL_NORM</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

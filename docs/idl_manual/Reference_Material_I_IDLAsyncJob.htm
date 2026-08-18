@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLAsyncJob</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLAsyncJob</span>
+        </div>
+        <h1 class="ObjClass">IDLAsyncJob</h1>
+        <p>The IDLAsyncJob class is an abstract base class that represents a unit of work to be done at some point in the future. Submitting these to an <a href="IDLAsyncQueue.htm">IDLAsyncQueue</a> will allow them to be performed as resources become available.</p>
+        <h2 class="API">Superclasses</h2>
+        <ul>
+            <li value="1"><a href="../../Object Classes/Miscellaneous/IDL_Object.htm">IDL_OBJECT</a>
+            </li>
+        </ul>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncJob([JOIN=<i>IDLAsyncJoin</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">JOIN (optional)</h3>
+        <p>Specify the IDLAsyncJoin object to notify when this job has finished execution.</p>
+        <h2 class="API"><a name="Methods"></a>Methods</h2>
+        <ul>
+            <li value="1">IDLAsyncJob()</li>
+            <li value="2"><a href="#Done" class="selected">IDLAsyncJob::Done</a>
+            </li>
+            <li value="3"><a href="#GetReturnValue" class="selected">IDLAsyncJob::GetReturnValue</a>
+            </li>
+            <li value="4"><a href="#OnDone" class="selected">IDLAsyncJob::OnDone</a>
+            </li>
+            <li value="5"><a href="#OnQueued" class="selected">IDLAsyncJob::OnQueued</a>
+            </li>
+            <li value="6"><a href="#OnStart" class="selected">IDLAsyncJob::OnStart</a>
+            </li>
+            <li value="7"><a href="#Queued" class="selected">IDLAsyncJob::Queued</a>
+            </li>
+            <li value="8"><a href="#Start" class="selected">IDLAsyncJob::Start</a>
+            </li>
+        </ul>
+        <h2 class="API"><a name="Properties"></a>Properties</h2>
+        <p>All properties are Get-only.</p>
+        <h3 class="Property">CREATION_TIME</h3>
+        <p>The system time when this job was created.</p>
+        <h3 class="Property">DONE_TIME</h3>
+        <p>The system time when this job finished execution. The value is 0 if the job has not finished execution.</p>
+        <h3 class="Property">QUEUED_TIME</h3>
+        <p>The system time when this job was added to an IDLAsyncQueue for execution. The value is 0 if the job has not been queued.</p>
+        <h3 class="Property">START_TIME</h3>
+        <p>The system time when this job started execution. The value is 0 if the job has not started execution.</p>
+        <h3 class="Property">STATUS</h3>
+        <p>A scalar string indicating the current status of this job. Status values are:</p>
+        <ul>
+            <li value="1">' ' (empty string)</li>
+            <li value="2">'Queued'</li>
+            <li value="3"> 'Started'</li>
+            <li value="4">'Succeeded'</li>
+            <li value="5">'Failed'</li>
+        </ul>
+        <h3 class="Property">UDATA</h3>
+        <p>User defined data that is relevant to a particular subclass of IDLAsyncJob.</p>
+        <h1 class="ObjMethod"><a name="Done"></a>IDLAsyncJob::Done</h1>
+        <p>The IDLAsyncJob::Done method is an event handler invoked by this job on itself when its execution is completed. This method will invoke the OnDone callback on itself, which can be overridden by subclasses to define custom behavior. If the JOIN property was set, then this method will invoke the OnJobDone callback on that object. If this job is currently owned by an IDLAsyncQueue, then it will invoke OnJobDone on that object. Override OnDone instead of this method.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJob.Done, FAILED=<i>value</i></p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">FAILED</h3>
+        <p>A Boolean value indicating whether this job succeeded or failed execution.  The default value is <code>False</code>, indicating a successful job.</p>
+        <h1 class="ObjMethod"><a name="GetReturnValue"></a>IDLAsyncJob::GetReturnValue</h1>
+        <p>The IDLAsyncJob::GetReturnValue method is an abstract interface declaration of the method clients should call to retrieve one or more named variables from this job after it has finished executing. This method must be overridden to retrieve the values from the job.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJob.GetReturnValue [, Variables=<i>Value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="OnDone"></a>IDLAsyncJob::OnDone</h1>
+        <p>The IDLAsyncJob::OnDone method is an abstract interface declaration of the callback invoked on this job by the Done event handler. This method can perform any cleanup when the job is finished executing. Subclasses must override this method instead of Done. This method should not throw any errors to avoid breaking the class.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJob.OnDone</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="OnQueued"></a>IDLAsyncJob::OnQueued</h1>
+        <p>The IDLAsyncJob::OnQueued method is an abstract interface declaration of the callback invoked on this job by the Queued event handler. Subclasses must override this method instead of Queued. This method should not throw any errors to avoid breaking the class.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJob.OnQueued</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="OnStart"></a>IDLAsyncJob::OnStart</h1>
+        <p>The IDLAsyncJob::OnStart method is an abstract interface declaration of the callback invoked on this job by the Start event handler. This is the method that defines what this job actually does when executed. Subclasses must override this method instead of Start. This method should not throw any errors to avoid breaking the class.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJob.OnStart</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Queued"></a>IDLAsyncJob::Queued</h1>
+        <p>The IDLAsyncJob::Queued method is an event handler invoked on this job when it is added to an IDLAsyncQueue. This method will invoke the OnQueued callback on itself, which can be overridden by subclasses for custom behavior. Override OnQueued instead of this method.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJob.Queued, <i>Queue</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Queue</h3>
+        <p>The IDLAsyncQueue object that now owns this job and will execute it at some point in the future.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Start"></a>IDLAsyncJob::Start</h1>
+        <p>The IDLAsyncJob::Start method is an event handler to begin this job's execution. It is invoked on this job when the IDLAsyncQueue that owns it has available concurrency and wants this job to begin. This method will invoke the OnStart callback on itself, which is to be overridden by subclasses to define this job's execution. Override OnStart instead of this method.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJob.Start</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLAsyncQueue.htm">IDLAsyncQueue</a>, <a href="IDLAsyncBridgeJob.htm">IDLAsyncBridgeJob</a>, <a href="IDLAsyncSpawnJob.htm">IDLAsyncSpawnJob</a>, <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

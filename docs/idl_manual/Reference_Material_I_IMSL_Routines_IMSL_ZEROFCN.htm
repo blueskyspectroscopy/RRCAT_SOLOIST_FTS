@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_ZEROCFN</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_ZEROFCN</span>
+        </div>
+        <h1 class="Routine">IMSL_ZEROCFN</h1>
+        <p>The IMSL_ZEROFCN function finds the real zeros of a real function using Müller’s method.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_ZEROFCN function computes <i>n</i> real zeros of a real function <i>f</i>. Given a user-supplied function <i>f</i>(<i>x</i>) and an <i>n</i>-vector of initial guesses <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x<sub>n–1</sub></i>, the function uses Müller's method to locate <i>n</i> real zeros of <i>f.</i> The function has two convergence criteria. The first criterion requires that | <i>f</i> (<i>x</i><sub>i</sub><sup>(m)</sup>) | be less than ERR_ABS. The second criterion requires that the relative change of any two successive approximations to an <i>x</i><sub>i</sub> be less than ERR_REL. Here, <i>x</i><sub style="font-style: italic">i</sub><sup>(m)</sup>) is the <i>m</i>-th approximation to <i>x<sub>i</sub></i>. Let ERR_ABS be denoted by <span style="font-family: Symbol" class="cSymbol">e</span><sub>1</sub>, and ERR_REL be denoted by <span style="font-family: Symbol" class="cSymbol">e</span><sub>2</sub>. The criteria can be stated mathematically as follows. IMSL_ZEROFCN has two convergence criteria; 'convergence' is the satisfaction of either criterion.</p>
+        <p><b>Criterion 1:</b>
+        </p>
+        <p>
+            <img src="images/IMSL_ZEROFCN-3.gif" />
+        </p>
+        <p><b>Criterion 2:</b>
+        </p>
+        <p>
+            <img src="images/IMSL_ZEROFCN-4.gif" />
+        </p>
+        <p>'Convergence' is the satisfaction of either criterion.</p>
+        <h2 class="API">Example</h2>
+        <p>This example finds a real zero of the third-degree polynomial: </p>
+        <p><i>f</i>(x) = <i>x</i><sup>3</sup> – 3<i>x</i><sup>2</sup> + 3<i>x</i> – 1</p>
+        <p>The results are shown in in the figure that follows.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define function f. FUNCTION f, x</p>
+        <p class="Code_Indented">return, x^3 - 3 * x^2 + 3 * x - 1</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">zero = IMSL_ZEROFCN('f')</p>
+        <p class="Code">; Compute the real zero(s). x = 2 * FINDGEN(100)/99</p>
+        <p class="Code">PLOT, x, f(x)</p>
+        <p class="Code">; Plot results.</p>
+        <p class="Code">OPLOT, [zero], [f(zero)], Psym = 6</p>
+        <p class="Code">XYOUTS, .5, .5, 'Computed zero is at x = ' + $ </p>
+        <p class="Code_Indented">STRING(zero(0)), Charsize = 1.5</p>
+        <p>
+            <img src="images/IMSL_ZEROCFN_nonlinear01.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_NO_CONVERGE_MAX_ITER: Function failed to converge within ITMAX iterations for at least one of the N_ROOTS roots.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_ZEROFCN(<i>F</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#ERR_ABS" class="selected">ERR_ABS</a>=<i>value</i>] [, <a href="#ERR_REL" class="selected">ERR_REL</a>=<i>value</i>] [, <a href="#ETA" class="selected">ETA</a>=<i>value</i>] [, <a href="#EPS" class="selected">EPS</a>=<i>value</i>] [, <a href="#INFO" class="selected">INFO</a>=<i>array</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#N_ROOTS" class="selected">N_ROOTS</a>=<i>value</i>] [, <a href="#XGUESS" class="selected">XGUESS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>An array containing the zeros <i>x</i> of the function.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">F</h3>
+        <p>Scalar string specifying a user-supplied function for which the zeros are to be found. The <i>F</i> function accepts one scalar parameter from which the function is evaluated and returns a scalar of the same type.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="ERR_ABS"></a>ERR_ABS (optional)</h3>
+        <p>First stopping criterion. A zero, <i>x<sub>i</sub></i>, is accepted if | <i>f</i> (<i>x</i><sub>i</sub>) |&#160;&lt;&#160;ERR_ABS. Default: SQRT(ε),&#160;where ε is the machine precision
+		.</p>
+        <h3 class="Keyword"><a name="ERR_REL"></a>ERR_REL (optional)</h3>
+        <p>Second stopping criterion. A zero, xi, is accepted if the relative change of two successive approximations to <i>x<sub>i</sub></i> is less than ERR_REL. Default: SQRT(ε),  where ε is the machine precision</p>
+        <h3 class="Keyword"><a name="ETA"></a>ETA (optional)</h3>
+        <p>Spread criteria for multiple zeros. If the zero, <i>x<sub>i</sub></i>, has been computed and |<i> x</i><sub>i</sub> – <i>x<sub>j </sub></i>| &lt; EPS, where <i>x</i><sub>j</sub> is a previously computed zero, then the computation is restarted with a guess equal to <i>x<sub>i</sub></i> + ETA. Default: 0.01
+		</p>
+        <h3 class="Keyword"><a name="EPS"></a>EPS (optional)</h3>
+        <p>See ETA. Default: SQRT(ε), where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="INFO"></a>INFO (optional)</h3>
+        <p>Array of length N_ROOTS containing convergence information. The value INFO (<i>j</i> – 1) is the number of iterations used in finding the <i>j</i>-th zero when convergence is achieved. If convergence is not obtained in ITMAX iterations, INFO (<i>j</i> – 1) is greater than ITMAX.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX</h3>
+        <p>Maximum number of iterations per zero. Default: 100.</p>
+        <h3 class="Keyword"><a name="N_ROOTS"></a>N_ROOTS (optional)</h3>
+        <p>Number of roots for IMSL_ZEROFCN to find. Default: 1.</p>
+        <h3 class="Keyword"><a name="XGUESS"></a>XGUESS (optional)</h3>
+        <p>Array with N_ROOTS components containing the initial guesses for the zeros. Default: 0</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

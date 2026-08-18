@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines|IMSL_INTFCN">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_INTFCN: Computation of Fourier Sine or Cosine Transforms</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_INTFCN: Fourier Sine Cosine</span>
+        </div>
+        <h1 class="Routine">IMSL_INTFCN: Computation of Fourier Sine or Cosine Transforms</h1>
+        <p>This version of the <a href="IMSL_INTFCN.htm">IMSL_INTFCN</a> function computes Fourier sine or cosine transforms. To use this integration method, supply the  <i>Omega</i> argument and one of the following keywords: SINE, or COSINE.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>This method is a special-purpose integrator that uses a globally adaptive scheme to reduce the absolute error. It computes integrals whose integrands have the special form <i>w (x) f (x)</i>, where <i>w (x)</i> is either cos (<span style="font-family: Symbol; font-style: normal" class="cSymbol">w</span><i>x</i>) or sin (<span style="font-family: Symbol; font-style: normal" class="cSymbol">w</span><i>x</i>). The integration interval is always semi-infinite of the form [<i>a</i>,&#160;<i>infinity</i>]. This method is based on the subroutine QAWF by Piessens et al<i>.</i> (1983).
+		</p>
+        <p>If this method is used, the function should be coded to protect endpoint singularities if they exist.</p>
+        <h2 class="API">Example</h2>
+        <p>The value of:</p>
+        <p>
+            <img src="images/IMSL_INTFCN_Computation_of_Fourier_Sine_or_Cosine_Transforms-30.jpg" />
+        </p>
+        <p>is computed. Notice that the function is coded to protect for the singularity at zero.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the function to be integrated.</p>
+        <p class="Code">FUNCTION f, x</p>
+        <p class="Code_Indented">IF (x EQ 0) THEN RETURN, x $</p>
+        <p class="Code_Indented2">ELSE RETURN, 1/SQRT(x)</p>
+        <p class="Code">END</p>
+        <p class="Code">ans = IMSL_INTFCN('f', 0, !Pi/2, /Cosine)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_INTFCN with keyword Cosine set and a value </p>
+        <p class="Code">; for the method specific parameter omega.</p>
+        <p class="Code">PM, 'Computed Answer:', ans</p>
+        <p>IDL prints:</p>
+        <p class="Code">Computed Answer:</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">exact = 1.0</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PM, 'Exact - Computed:', exact - ans</p>
+        <p>IDL prints:</p>
+        <p class="Code">Exact - Computed:</p>
+        <p class="Code_Indented">-1.19209e-007</p>
+        <h2 class="API">Errors</h2>
+        <p>See <a href="IMSL_INTFCN.htm#Errors">IMSL_INTFCN Errors</a>.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_INTFCN(<i>F, A, Omega</i>, /<a href="#SINE" class="selected">SINE</a> | /<a href="#COSINE" class="selected">COSINE</a> [, <a href="#MAX_MOMENTS" class="selected">MAX_MOMENTS</a>=<i>value</i>] [, <a href="#N_CYCLES" class="selected">N_CYCLES</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The value of:</p>
+        <p>
+            <img src="images/IMSL_INTFCN_Computation_of_Fourier_Sine_or_Cosine_Transforms-29.jpg" />
+        </p>
+        <p> 
+
+where the weight function <i>w</i> (ω<i>x</i>) is defined by the keywords below, is returned. If no value can be computed, the floating-point value NaN (Not a Number) is returned.
+</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">F</h3>
+        <p>A scalar string specifying the name of a user-supplied function to be integrated. The function f accepts one scalar parameter and returns a single scalar of the same type.</p>
+        <h3 class="Argument">A</h3>
+        <p>A scalar expression specifying the lower limit of integration.</p>
+        <h3 class="Argument">Omega</h3>
+        <p>A scalar expression specifying the frequency of the trigonometric weighting function.</p>
+        <h2 class="API">Keywords</h2>
+        <p>In addition to the global <a href="IMSL_INTFCN.htm#Keywords">IMSL_INTFCN keywords</a>, the following keywords are available:</p>
+        <h3 class="Keyword"><a name="SINE"></a>SINE (optional)</h3>
+        <p>Set this keyword to use sin (ωx) for the integration weight function. If SINE is supplied, COSINE must not be present.</p>
+        <h3 class="Keyword"><a name="COSINE"></a>COSINE (optional)</h3>
+        <p>Set this keyword to use cos (ωx) for the integration weight function. IF COSINE is supplied, SINE must not be present.</p>
+        <h3 class="Keyword"><a name="MAX_MOMENTS"></a>MAX_MOMENTS (optional)</h3>
+        <p>Set this keyword equal to a scalar expression specifying an upper bound on the number of Chebyshev moments that can be stored. Increasing (decreasing) this number may increase (decrease) execution speed and space used. The default is 21.</p>
+        <h3 class="Keyword"><a name="N_CYCLES"></a>N_CYCLES (optional)</h3>
+        <p>Set this keyword equal to a named variable that will contain the number of cycles.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_INTFCN.htm">IMSL_INTFCN</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

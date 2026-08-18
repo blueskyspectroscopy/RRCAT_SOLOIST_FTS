@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_RADBF</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_RADBF</span>
+        </div>
+        <h1 class="Routine">IMSL_RADBF</h1>
+        <p>The IMSL_RADBF function computes an approximation to scattered data in Rn for n ≥ 2 using radial-basis functions.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_RADBF function computes a least-squares fit to scattered data in <i>R</i><sup>d</sup>. More precisely, let <i>n</i> = N_ELEMENTS (<i>fdata</i>), <i>x</i> = <i>abscissa</i>, <i>f = fdata</i>, and <i>d</i>&#160;=&#160;N_ELEMENTS (<i>abscissa </i>(0, *)). Then:</p>
+        <p>
+            <img src="images/IMSL_RADBF-89.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_RADBF-90.jpg" />
+        </p>
+        <p>This function computes a function F which approximates the above data in the sense that it minimizes the sum-of-squares error:</p>
+        <p>
+            <img src="images/IMSL_RADBF-91.jpg" />
+        </p>
+        <p>where <i>w</i> = WEIGHTS.</p>
+        <p>The functional form of <i>F</i> is restricted as follows:</p>
+        <p>
+            <img src="images/IMSL_RADBF-92.jpg" />
+        </p>
+        <p>&#160;</p>
+        <p>The function φ is called the radial function. It maps <i>R</i><sup>1</sup> into <i>R</i><sup>1</sup>. It needs to be defined only for the nonnegative reals. For the purpose of this routine, the user supplied a function:</p>
+        <p>
+            <img src="images/IMSL_RADBF-93.jpg" />
+        </p>
+        <p>Note that the value of delta is defaulted to 1. It can be set by the user by using keyword Delta.</p>
+        <p>The default-basis function is called the Hardy multiquadric and is defined as:</p>
+        <p>
+            <img src="images/IMSL_RADBF-94.jpg" />
+        </p>
+        <p>A key feature of this routine is the user’s control over the selection of the basis function.</p>
+        <p>In order to obtain the default selection of centers, first compute the number of centers that will be on a grid and the number that will be on a random subset of the <i>Abscissa</i>. Next, compute those centers on a grid. Finally, a random subset of <i>Abscissa</i> is obtained. This determines where the centers are placed. The selection of centers is discussed in more detail below.</p>
+        <p>First, the computed grid is restricted to have the same number of grid values in each of the dimension directions. Then, the number of centers placed on a grid, <i>num_gridded</i>, is computed as follows:</p>
+        <p>
+            <img src="images/IMSL_RADBF-95.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_RADBF-96.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_RADBF-97.jpg" />
+        </p>
+        <p>Note that there are β grid values in each of the dimension directions. Then:</p>
+        <p>num_random = (<i>num_centers</i>) – (<i>num_gridded</i>)</p>
+        <p>How many centers are placed on a grid and how many are placed on a random subset of the abscissa is now known. The gridded centers are computed such that they are equally spaced in each of the dimension directions. The last problem is to compute a random subset, without replacement, of the abscissa. The selection is based on a random seed. The default seed is 234579. The user can change this using optional keyword RANDOM_SEED. Once the subset is computed, the <i>Abscissa</i> as centers is used.</p>
+        <p>Since the selection of good centers for a specific problem is an unsolved problem at this time, ultimate flexibility is given to the user; that is, the user can select centers using keyword CENTERS. As a rule of thumb, the centers should be interspersed with the <i>Abscissa</i>.</p>
+        <p>The return value for this function is a pointer to the structure containing all the information necessary to evaluate the fit. This pointer is then passed to the IMSL_RADBE function to produce values of the fitted function.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>Fitting Noisy Data with Default Radial Function</p>
+        <p>In this example, IMSL_RADBF is used to fit noisy data. Four plots are generated using different values for num_centers as shown in the figure that follows. The plots generated by running this example are included after the code. Note that the triangles represent the placement of the centers.</p>
+        <p class="Code">PRO radbf_ex1</p>
+        <p class="Code_Indented">!P.Multi = [0, 2, 2]</p>
+        <p class="Code_Indented">ndata = 10 noise_size = .05</p>
+        <p class="Code_Indented">xydata = DBLARR(1, ndata)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">fdata = DBLARR(ndata)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Set up parameters. IMSL_RANDOMOPT, Set = 234579</p>
+        <p class="Code_Indented">; Set the random number seed.</p>
+        <p class="Code_Indented">noise = 1 - 2 * IMSL_RANDOM(ndata, /Double)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Generate the noisy data.</p>
+        <p class="Code_Indented">xydata(0, *) = 15 * IMSL_RANDOM(ndata)</p>
+        <p class="Code_Indented">fdata = REFORM(COS(xydata(0, *)) + noise_size * noise, ndata)</p>
+        <p class="Code_Indented">FOR i = 0, 3 DO BEGIN</p>
+        <p class="Code_Indented2">num_centers = ndata/3 + i</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Loop on different values of num_centers.</p>
+        <p class="Code_Indented2">radial_struct = IMSL_RADBF(xydata, fdata, num_centers)</p>
+        <p class="Code_Indented2">; Compute the fit. a = DBLARR(1, 100)</p>
+        <p class="Code_Indented2">a(0, *) = 15 * FINDGEN(100)/99.</p>
+        <p class="Code_Indented2">fit = IMSL_RADBE(a, radial_struct)</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Evaluate fit.</p>
+        <p class="Code_Indented2">title = 'Fit with NUM_CENTERS = ' + $</p>
+        <p class="Code_Indented3">STRCOMPRESS(num_centers, /Remove_All)</p>
+        <p class="Code_Indented2">PLOT, xydata(0, *), fdata, Title = title, $</p>
+        <p class="Code_Indented3">Psym = 6, Yrange = [-1.25, 1.25]</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Plot results. OPLOT, a(0, *), fit</p>
+        <p class="Code_Indented2">; Plot the original data as squares.</p>
+        <p class="Code_Indented2">OPLOT, radial_struct.CENTERS, $</p>
+        <p class="Code_Indented3">MAKE_ARRAY(num_centers, Value=-1.25), Psym = 5</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Plot the x-values of the centers as triangles.</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code">END</p>
+        <p>
+            <img src="images/interp17.gif" />
+        </p>
+        <h3>Example 2</h3>
+        <p>Fitting Noisy Data with User-supplied Radial Function</p>
+        <p>This example fits the same data as the first example, but the user supplies the radial function and sets RATIO_CENTERS to zero. The radial function used in this example is φ (<i>r</i>) = <i>ln</i> (1 + <i>r</i><sup>2</sup>). Four plots are generated using different values for <i>Num_Centers</i> as shown in the figure that follows. The plots generated by running this example are included after the code. Note that the triangles represent the placement of the centers.</p>
+        <p class="Code">FUNCTION user_fcn, distance</p>
+        <p class="Code_Indented">; Define the radial function. RETURN, ALOG(1 + distance^2)</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO radbf_ex2</p>
+        <p class="Code_Indented">; Set up parameters.</p>
+        <p class="Code_Indented">!P.Multi = [0, 2, 2]</p>
+        <p class="Code_Indented">ndata = 10 noise_size = .05</p>
+        <p class="Code_Indented">xydata = DBLARR(1, ndata) fdata = DBLARR(ndata)</p>
+        <p class="Code_Indented">IMSL_RANDOMOPT, Set = 234579</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Set the random number seed.</p>
+        <p class="Code_Indented">noise = 1 - 2 * IMSL_RANDOM(ndata, /Double)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Generate the noisy data.</p>
+        <p class="Code_Indented">xydata(0, *) = 15 * IMSL_RANDOM(ndata)</p>
+        <p class="Code_Indented">fdata = REFORM(COS(xydata(0,*)) + noise_size * noise, ndata)</p>
+        <p class="Code_Indented">FOR i = 0, 3 DO BEGIN</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented2">; Loop on different values of num_centers. num_centers = ndata/3 + i</p>
+        <p class="Code_Indented2">radial_struct = IMSL_RADBF(xydata, fdata, $</p>
+        <p class="Code_Indented3">num_centers, Ratio_Centers = 0, Basis = 'user_fcn')</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Compute the fit. a = DBLARR(1, 100)</p>
+        <p class="Code_Indented2">a(0, *) = 15 * FINDGEN(100)/99.</p>
+        <p class="Code_Indented2">fit = IMSL_RADBE(a, radial_struct)</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Evaluate fit.</p>
+        <p class="Code_Indented2">title = 'Fit with NUM_CENTERS = ' + $</p>
+        <p class="Code_Indented3">STRCOMPRESS(num_centers, /Remove_All)</p>
+        <p class="Code_Indented2">PLOT, xydata(0,*), fdata, Title = title, $</p>
+        <p class="Code_Indented3">Psym = 6, Yrange = [-1.25, 1.25]</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Plot results.</p>
+        <p class="Code_Indented2">OPLOT, a(0, *), fit</p>
+        <p class="Code_Indented2">OPLOT, radial_struct.CENTERS, $</p>
+        <p class="Code_Indented3">MAKE_ARRAY(num_centers,Value = -1.25), Psym = 5</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code">END</p>
+        <p>
+            <img src="images/interp18.gif" />
+        </p>
+        <p>Figure 6-17: Fit using a User-Defined Radial Function</p>
+        <h3>Example 3: Fitting a Surface to Three-dimensional Scattered Data</h3>
+        <p>This example fits a surface to scattered data. The scattered data is generated using the function <i>f</i> (<i>x, y</i>) = <i>exp</i> (<i>ln</i> (<i>y</i> + 1) sin (<i>x</i>)). The plots generated by running this example are included after the code as shown in the figures that follow.</p>
+        <p class="Code">FUNCTION f, x1, x2</p>
+        <p class="Code_Indented">; This function generates the scattered data function values.</p>
+        <p class="Code_Indented">RETURN, EXP(ALOG10(x2 + 1)) * SIN(x1)</p>
+        <p class="Code">END</p>
+        <p class="Code">PRO radbf_ex3</p>
+        <p class="Code_Indented">; Set up initial parameters.</p>
+        <p class="Code_Indented">IMSL_RANDOMOPT, Set = 123457</p>
+        <p class="Code_Indented">ndata	= 50 num_centers	= ndata</p>
+        <p class="Code_Indented">xydata	= DBLARR(2, ndata)</p>
+        <p class="Code_Indented">fdata	= DBLARR(ndata)</p>
+        <p class="Code_Indented">xrange	= 8 yrange	= 5</p>
+        <p class="Code_Indented">xydata(0,*) = xrange * IMSL_RANDOM(ndata, /Double)</p>
+        <p class="Code_Indented">xydata(1,*) = yrange * IMSL_RANDOM(ndata, /Double)</p>
+        <p class="Code_Indented">fdata(*)	= f(xydata(0, *), xydata(1, *))</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Generate data.</p>
+        <p class="Code_Indented">radial_struct = IMSL_RADBF(xydata, fdata, num_centers, Ratio=0)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Compute fit using IMSL_RADBF. WINDOW, /Free</p>
+        <p class="Code_Indented">; Plot results.</p>
+        <p class="Code_Indented">nx = 25</p>
+        <p class="Code_Indented">ny = 25</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Variables nx and ny are coarseness of the plotted surfaces.</p>
+        <p class="Code_Indented">xyfit	= DBLARR(2, nx * ny)</p>
+        <p class="Code_Indented">xyfit(0, *) = xrange * (FINDGEN(nx * ny)/ny)/(nx - 1)</p>
+        <p class="Code_Indented">xyfit(1, *) = yrange * (FINDGEN(nx * ny) MOD ny)/(ny - 1)</p>
+        <p class="Code_Indented">zfit = TRANSPOSE(REFORM(IMSL_RADBE(xyfit, Radial_Struct), $</p>
+        <p class="Code_Indented">ny, nx))</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Use TRANSPOSE and REFORM in order to get the results</p>
+        <p class="Code_Indented">; into a form that SURFACE can use.</p>
+        <p class="Code_Indented">xt = xrange * FINDGEN(nx)/(nx-1)</p>
+        <p class="Code_Indented">yt = yrange * FINDGEN(ny)/(ny-1)</p>
+        <p class="Code_Indented">SURFACE, zfit, xt, yt, /Save, Zrange = [MIN(zfit), MAX(zfit)]</p>
+        <p class="Code_Indented">PLOTS, xydata(0, *), xydata(1, *), fdata, $</p>
+        <p class="Code_Indented2">/T3d, Psym = 4, Symsize = 2</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Plot the original data points over the surface plot.</p>
+        <p class="Code_Indented">WINDOW, /Free</p>
+        <p class="Code_Indented">orig = DBLARR(nx, ny)</p>
+        <p class="Code_Indented">FOR i = 0, (nx-1) DO FOR j = 0, (ny-1) DO $</p>
+        <p class="Code_Indented2">orig(i, j) = f(xt(i), yt(j))</p>
+        <p class="Code_Indented">SURFACE, orig, xt, yt, Zrange = [MIN(zfit), MAX(zfit)]</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Plot original function.</p>
+        <p class="Code">END</p>
+        <p>&#160;</p>
+        <p>
+            <img src="images/interp19.gif" />
+        </p>
+        <p>
+            <img src="images/interp20.gif" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_RADBF(<i>Abscissa, Fdata, Num_Centers</i> [, BASIS=<i>string</i>] [, <a href="#CENTERS" class="selected">CENTERS</a>=<i>value</i>] [, <a href="#DELTA" class="selected">DELTA</a>=<i>value</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#RANDOM_SEED" class="selected">RANDOM_SEED</a>=<i>value</i>] [, <a href="#RATIO_CENTERS" class="selected">RATIO_CENTERS</a>=<i>value</i>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A structure that represents the radial-basis fit.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Abscissa</h3>
+        <p>Two-dimensional array containing the abscissas of the data points. Parameter abscissa (<i>i, j</i>) is the <i>Abscissa</i> value of the <i>j</i>-th data point in the <i>i</i>-th dimension.</p>
+        <h3 class="Argument">Fdata</h3>
+        <p>One-dimensional array containing the ordinates for the problem.</p>
+        <h3 class="Argument">Num_Centers</h3>
+        <p>Number of centers to be used when computing the radial-basis fit. The <i>Num_Centers</i> argument should be less than or equal to N_ELEMENTS (<i>Fdata</i>).</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="BASIS"></a>BASIS (optional)</h3>
+        <p>Character string specifying a user-supplied function to compute the values of the radial functions. The form of the input function is ϕ (r). Default: the Hardy multiquadratic.</p>
+        <h3 class="Keyword"><a name="CENTERS"></a>CENTERS (optional)</h3>
+        <p>User-supplied centers. See the discussion section for details.</p>
+        <h3 class="Keyword"><a name="DELTA"></a>DELTA (optional)</h3>
+        <p>Delta used in the default basis function, φ (r) = SQRT(r2 + δ2). Default: 1.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="RANDOM_SEED"></a>RANDOM_SEED (optional)</h3>
+        <p>Value of the random seed used when determining the random subset of abscissa to use as centers. By changing the value of seed on different calls to IMSL_RADBF, with the same data set, a different set of random centers are chosen. Setting RANDOM_SEED to zero forces the random number seed to be based on the system clock, so possibly, a different set of centers is chosen each time the program is executed. Default: 234579.</p>
+        <h3 class="Keyword"><a name="RATIO_CENTERS"></a>RATIO_CENTERS (optional)</h3>
+        <p>Desired ratio of centers placed on an evenly spaced grid to the total number of centers. There is a condition: The same number of centers placed on a grid for each dimension must be equal. Thus, the actual number of centers placed on a grid is usually less than RATIO_CENTERS * <i>Num_Centers</i>, but is never more than RATIO_CENTERS * <i>Num_Centers</i>. The remaining centers are randomly chosen from the set of abscissa given in abscissa. Default:  0.5</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>Requires the user to provide the weights. Default: all weights equal 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_RADBE.htm">IMSL_RADBE</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

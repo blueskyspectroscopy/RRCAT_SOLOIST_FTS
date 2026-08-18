@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_QUADPROG</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_QUADPROG</span>
+        </div>
+        <h1 class="Routine">IMSL_QUADPROG</h1>
+        <p>The IMSL_QUADPROG function solves a quadratic programming (QP) problem subject to linear equality or inequality constraints.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_QUADPROG function is based on M.J.D. Powell’s implementation of the Goldfarb and Idnani dual quadratic programming (QP) algorithm for convex QP problems subject to general linear equality/inequality constraints (Goldfarb and Idnani 1983). That is, problems of the form:</p>
+        <p>
+            <img src="images/IMSL_QUADPROG-38.jpg" />
+        </p>
+        <p>subject to:</p>
+        <p>
+            <img src="images/IMSL_QUADPROG-39.jpg" />
+        </p>
+        <p>given the vectors <i>b</i><sub>0</sub>, <i>b</i><sub>1</sub>, and g, and the matrices <i>H</i>, <i>A</i><sub>0</sub>, and <i>A</i><sub>1</sub>. Matrix <i>H</i> is required to be positive definite. In this case, a unique <i>x</i> solves the problem, or the constraints are inconsistent. If <i>H</i> is not positive definite, a positive definite perturbation of <i>H</i> is used in place of <i>H</i>. For more details, see Powell (1983, 1985).</p>
+        <p>If a perturbation of <i>H</i>, <i>H</i> + α<i>I</i>, is used in the QP problem, <i>H</i> + α<i>I</i> also should be used in the definition of the Lagrange multipliers.</p>
+        <h2 class="API">Example</h2>
+        <p>In this example, the QP problem:</p>
+        <p>min <i>f</i>(<i>x</i>) = –<i>x</i><sup>2</sup><sub>0</sub> + <i>x</i><sup>2</sup><sub>1</sub><sup style="vertical-align: super" class="cSuperscript"> + </sup><i style="font-style: italic; vertical-align: baseline">x</i><sup>2</sup><sub>2</sub> + <i>x</i><sup>2</sup><sub>3</sub> + <i>x</i><sup>2</sup><sub>4</sub> – 2<i>x</i><sub>1</sub><i style="font-style: italic; vertical-align: baseline">x</i><sub>2</sub>– 2<i>x</i><sub>3</sub><i style="font-style: italic; vertical-align: baseline">x</i><sub>4</sub><sup>  <![CDATA[ ]]></sup>–2<i>x</i><sub>0</sub></p>
+        <p>subject to:</p>
+        <p><i>x</i><sub>0</sub> + <i>x</i><sub>1</sub> + <i>x</i><sub>2</sub> + <i>x</i><sub>3</sub> + <i>x</i><sub>4</sub> = 5</p>
+        <p><i>x</i><sub>2</sub> – 2<i>x</i><sub>3</sub> – 2<i>x</i><sub>4</sub> = –3</p>
+        <p>is solved.</p>
+        <p class="Code">RM, a, 2, 5</p>
+        <p class="Code">; Define the coefficient matrix A.</p>
+        <p class="Code">row 0: 1 1 1	1	1</p>
+        <p class="Code">row 1: 0 0 1 -2 -2</p>
+        <p class="Code">h = [[2,	0,	0,	0,	0], [0,	2, -2,	0,	0], $</p>
+        <p class="Code_Indented">[0, -2,	2,	0,	0], [0,	0,	0,	2, -2], $</p>
+        <p class="Code_Indented">[0,	0,	0, -2,	2]]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the Hessian matrix of the objective function. Notice</p>
+        <p class="Code">; that since h is symmetric, the array concatenation operators</p>
+        <p class="Code">; “[ ]” are used to define it. b = [5, -3]</p>
+        <p class="Code">; Define b.</p>
+        <p class="Code">g = [ -2, 0, 0, 0, 0]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define g.</p>
+        <p class="Code">x = IMSL_QUADPROG(a, b, g, h)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_QUADPROG.</p>
+        <p class="Code">PM, x</p>
+        <p>Result:</p>
+        <p class="Code">Solution:</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">1.00000</p>
+        <p class="Code_Indented">1.00000</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_NO_MORE_PROGRESS: Due to the effect of computer rounding error, a change in the variables fails to improve the objective function value. Usually, the solution is close to optimum.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_SYSTEM_INCONSISTENT: System of equations is inconsistent. There is no solution.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_QUADPROG(<i>A, B, G, H</i> [, <a href="#DIAG" class="selected">DIAG</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DUAL" class="selected">DUAL</a>=<i>variable</i>] [, <a href="#MEQ" class="selected">MEQ</a>=<i>value</i>] [, <a href="#OBJ" class="selected">OBJ</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The solution <i>x</i> of the QP problem.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">A</h3>
+        <p>Two-dimensional matrix containing the linear constraints.</p>
+        <h3 class="Argument">B</h3>
+        <p>One-dimensional matrix of the right-hand sides of the linear constraints.</p>
+        <h3 class="Argument">g</h3>
+        <p>One-dimensional array of the coefficients of the linear term of the objective function.</p>
+        <h3 class="Argument">h</h3>
+        <p>Two-dimensional array of size N_ELEMENTS(g) x N_ELEMENTS(g) containing the Hessian matrix of the objective function. It must be symmetric positive definite. If h is not positive definite, the algorithm attempts to solve the QP problem with h replaced by h + Diag*I, such that h + Diag*I is positive definite.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DIAG"></a>DIAG (optional)</h3>
+        <p>Name of the variable into which the scalar, equal to the multiple of the identity matrix added to <i>h</i> to give a positive definite matrix, is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="DUAL"></a>DUAL (optional)</h3>
+        <p>Name of the variable into which an array with N_ELEMENTS(<i>g</i>) elements, containing the Lagrange multiplier estimates, is stored.</p>
+        <h3 class="Keyword"><a name="MEQ"></a>MEQ (optional)</h3>
+        <p>Number of linear equality constraints. If MEQ is used, then the equality constraints are located at <i>a</i>(<i>i</i>, *) for <i>i</i> = 0, ..., <i>Meq</i> – 1. Default: MEQ = N_ELEMENTS(<i>a</i>(*, 0)) <i>n</i>; i.e., all constraints are equality constraints.</p>
+        <h3 class="Keyword"><a name="OBJ"></a>OBJ (optional)</h3>
+        <p>Name of variable into which optimal object function found is stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

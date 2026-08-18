@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CSSMOOTH</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CSSMOOTH</span>
+        </div>
+        <h1 class="Routine">IMSL_CSSMOOTH</h1>
+        <p>The CSSMOOTH function computes a smooth cubic spline approximation to noisy data by using cross-validation to estimate the smoothing parameter or by directly choosing the smoothing parameter.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CSSMOOTH function is designed to produce a <i>C</i><sup>2</sup> cubic spline approximation to a data set in which the function values are noisy. This spline is called a smoothing spline.</p>
+        <p>Consider first the situation when the optional keyword SMPAR is selected. Then, a natural cubic spline with knots at all the data abscissas <i>x</i> = <i>Xdata</i> is computed, but it does not interpolate the data (<i>x</i><sub>i</sub>, <i>f</i><sub>i</sub>). The smoothing spline s is the unique <i>C</i><sup>2</sup> function which minimizes:</p>
+        <p>
+            <img src="images/IMSL_CSSMOOTH-80.jpg" />
+        </p>
+        <p>subject to the constraint:</p>
+        <p>
+            <img src="images/IMSL_CSSMOOTH-81.jpg" />
+        </p>
+        <p>where <i>w</i> = WEIGHTS, σ = SMPAR is the smoothing parameter, and <i>n</i> = N_ELEMENTS(<i>Xdata</i>).</p>
+        <p>Recommended values for σ depend on the weights <i>w</i>. If an estimate for the standard deviation of the error in the value fi is available, then wi should be set to the inverse of this value. The smoothing parameter σ should be chosen in the confidence interval corresponding to the left side of the above inequality; that is:</p>
+        <p>
+            <img src="images/IMSL_CSSMOOTH-82.jpg" />
+        </p>
+        <p>The IMSL_CSSMOOTH function is based on an algorithm of Reinsch (1967). This algorithm also is discussed in de Boor (1978, pp. 235–243).</p>
+        <p>The default for this function chooses the smoothing parameter σ by a statistical technique called cross-validation. For more information on this topic, refer to Craven and Wahba (1979).</p>
+        <p>The return value for this function is a structure containing all the information to determine the spline (stored as a piecewise polynomial) that is computed by this procedure.</p>
+        <h2 class="API">Example</h2>
+        <p>In this example, function values are contaminated by adding a small "random" amount to the correct values. The IMSL_CSSMOOTH function is used to approximate the original, uncontaminated data as shown in the figure below.</p>
+        <p class="Code">n = 25</p>
+        <p class="Code">x = 6 * FINDGEN(n)/(n - 1)</p>
+        <p class="Code">f = SIN(x) + .5 * (IMSL_RANDOM(n) - .5)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Generate the data.</p>
+        <p class="Code">pp = IMSL_CSSMOOTH(x, f)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Compute the fit.</p>
+        <p class="Code">x2 = 6 * FINDGEN(100)/99</p>
+        <p class="Code">; Evaluate the computed fit at 100 values in [0, 6].</p>
+        <p class="Code">ppeval = IMSL_SPVALUE(x2, pp)</p>
+        <p class="Code">PLOT, x2, ppeval</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Plot the results.</p>
+        <p class="Code">OPLOT, x, f, Psym = 6, Symsize = .5</p>
+        <p>
+            <img src="images/interp14.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_MAX_ITERATIONS_REACHED: Maximum number of iterations has been reached. The best approximation is returned.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_DUPLICATE_XDATA_VALUES: The xdata values must be distinct.</p>
+        <p>MATH_NEGATIVE_WEIGHTS: All weights must be greater than or equal to zero.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CSSMOOTH(<i>Xdata</i>, <i>Fdata</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#SMPAR" class="selected">SMPAR</a>=<i>value</i>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The structure that represents the cubic spline.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Xdata</h3>
+        <p>One-dimensional array containing the abscissas of the problem.</p>
+        <h3 class="Argument">Fdata</h3>
+        <p>One-dimensional array containing the ordinates of the problem.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="SMPAR"></a>SMPAR (optional)</h3>
+        <p>Specifies the real, scalar smoothing parameter explicitly. See the description for more details.</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>Array containing the weights to be used in the problem. Default: all weights are equal to 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

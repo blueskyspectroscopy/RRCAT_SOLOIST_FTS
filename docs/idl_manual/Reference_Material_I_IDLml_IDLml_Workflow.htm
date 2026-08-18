@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>The IDL Machine Learning Framework</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <h1>The IDL Machine Learning Framework</h1>
+        <p>The IDL Machine Learning framework provides a powerful and flexible way to run machine learning applications on numerical data. You can create and train models and apply them in classification, clustering, or regression applications.</p>
+        <p>For a detailed example of how to use the IDL Machine Learning Framework to train a model that learns to recognize hand-written digits, compile and run <code>classify_digits.pro</code>, which is located in the <code>examples/machine_learning</code> directory of your IDL installation.</p>
+        <p>This topic provides basic concepts and workflows to get  started with IDL Machine Learning. The following steps are described here.</p>
+        <ul>
+            <li value="1"><b>Prepare Data:</b> How to get data ready to use in machine learning.</li>
+            <li value="2"><b>Classification:</b> Use examples to train a model that will predict a discrete output class (only a finite number of outputs is possible).</li>
+            <li value="3"><b>Clustering:</b> Use examples to train a model that will cluster a dataset into a given number of groups or clusters.</li>
+            <li value="4"><b>Regression:</b> Use examples to train a model that will predict a continuous output value (an infinite number of output values is possible).</li>
+        </ul>
+        <h2><a name="PrepareData"></a>Prepare Data</h2>
+        <p>The first step in machine learning is to identify your input data. The input data is a set of numerical attributes that will feed your model to produce an output. There are two important considerations when preparing your data:</p>
+        <ol>
+            <li value="1"><b>Data normalization:</b> Machine learning algorithms work best if the data is constrained to a [0 to 1] or [-1 to 1] range. Use a normalizer to perform this task, which is described in the examples that follow. The normalizers are: <a href="IDLmlLinearNormalizer.htm">IDLmlLinearNormalizer</a>, <a href="IDLmlRangeNormalizer.htm">IDLmlRangeNormalizer</a>, <a href="IDLmlTanHNormalizer.htm">IDLmlTanHNormalizer</a>, <a href="IDLmlUnitNormalizer.htm">IDLmlUnitNormalizer</a>, <a href="IDLmlVarianceNormalizer.htm">IDLmlVarianceNormalizer</a>.</li>
+            <li value="2"><b>Data separation:</b> Prepare two groups of data. One group is used for training the model, the other is used to test its accuracy. It is recommended that you do not use the same data for training and testing. Depending on how you read your data, two helper routines can split the data: <a href="IDLmlShuffle.htm">IDLmlShuffle</a> and <a href="IDLmlPartition.htm">IDLmlPartition</a>.  Shuffling randomizes the order of the features and values. Partitioning separates the data into two or more groups, where each group contains a specific quantity of the elements.</li>
+        </ol>
+        <p>To illustrate these steps, start by reading some data:</p>
+        <p class="Code">read_seeds_example_data, features, labels</p>
+        <p>This routine reads a CSV file that ships with IDL and returns two arrays: Features and Labels. Features is an array of 7 x 210 elements. Each column represents a different attribute (area, perimeter, compactness, length, width, asymmetry coefficient, and length of kernel groove), and there are 210 different instances. Labels is a string array of 210 elements that contain the type of seed (Kama, Rosa, or Canadian).</p>
+        <p>Below shows a preview of 13 rows (out of 210) of the CSV file:</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" class="TableStyle_VersionTable" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Area</p>
+                    </td>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Perimeter</p>
+                    </td>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Compactness</p>
+                    </td>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Length<br />of Kernel</p>
+                    </td>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Width<br />of Kernel</p>
+                    </td>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Asymmetry<br />Coefficient</p>
+                    </td>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Length of<br />Kernel Groove</p>
+                    </td>
+                    <td style="font-weight: bold;" class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Seed<br />Type</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>15.26</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>14.84</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>0.871</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.763</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>3.312</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>2.221</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.22</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColEnd">
+                        <p>Kama</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>14.88</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>14.57</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>0.8811</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.554</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>3.333</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>1.018</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>4.956</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Kama</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>14.29</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>14.09</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>0.905</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.291</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>3.337</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>2.699</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>4.825</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColEnd">
+                        <p>Kama</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>13.84</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>13.94</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>0.8955</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.324</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>3.379</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>2.259</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>4.805</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Kama</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColEnd">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>13.07</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>13.92</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>0.848</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.472</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>2.994</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.304</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.395</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Canadian</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>13.32</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>13.94</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>0.8613</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.541</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>3.073</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>7.035</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.44</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColEnd">
+                        <p>Canadian</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>13.34</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>13.95</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>0.862</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.389</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>3.074</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.995</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.307</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Canadian</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>12.22</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>13.32</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>0.8652</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.224</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>2.967</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.469</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.221</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColEnd">
+                        <p>Canadian</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>21.18</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>17.21</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>0.8989</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>6.573</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>4.033</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>5.78</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>6.231</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColEnd">
+                        <p>Rosa</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>20.88</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>17.05</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>0.9031</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>6.45</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>4.032</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.016</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>6.321</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Rosa</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>20.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>16.99</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>0.8746</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>6.581</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>3.785</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>1.955</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColSep">
+                        <p>6.449</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowSep_ColEnd">
+                        <p>Rosa</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>18.76</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>16.2</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>0.8984</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>6.172</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>3.796</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>3.12</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>6.053</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Rosa</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>18.81</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>16.29</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>0.8906</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.272</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>3.693</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>3.237</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.053</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Rosa</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Below is the output if you print the Features array. This example shows only the first 10 lines of the output:</p>
+        <p class="Code">IDL&gt; print, features</p>
+        <p class="Code_Indented">15.260000&#160;&#160;&#160;&#160;14.840000&#160;&#160;&#160;&#160;0.87100000&#160;&#160;&#160;&#160;5.7630000&#160;&#160;&#160;&#160;3.3120000&#160;&#160;&#160;&#160;2.2210000&#160;&#160;&#160;&#160;5.2200000</p>
+        <p class="Code_Indented">14.880000&#160;&#160;&#160;&#160;14.570000&#160;&#160;&#160;&#160;0.88110000&#160;&#160;&#160;&#160;5.5540000&#160;&#160;&#160;&#160;3.3330000&#160;&#160;&#160;&#160;1.0180000&#160;&#160;&#160;&#160;4.9560000</p>
+        <p class="Code_Indented">14.290000&#160;&#160;&#160;&#160;14.090000&#160;&#160;&#160;&#160;0.90500000&#160;&#160;&#160;&#160;5.2910000&#160;&#160;&#160;&#160;3.3370000&#160;&#160;&#160;&#160;2.6990000&#160;&#160;&#160;&#160;4.8250000</p>
+        <p class="Code_Indented">13.840000&#160;&#160;&#160;&#160;13.940000&#160;&#160;&#160;&#160;0.89550000&#160;&#160;&#160;&#160;5.3240000&#160;&#160;&#160;&#160;3.3790000&#160;&#160;&#160;&#160;2.2590000&#160;&#160;&#160;&#160;4.8050000</p>
+        <p class="Code_Indented">16.140000&#160;&#160;&#160;&#160;14.990000&#160;&#160;&#160;&#160;0.90340000&#160;&#160;&#160;&#160;5.6580000&#160;&#160;&#160;&#160;3.5620000&#160;&#160;&#160;&#160;1.3550000&#160;&#160;&#160;&#160;5.1750000</p>
+        <p class="Code_Indented">14.380000&#160;&#160;&#160;&#160;14.210000&#160;&#160;&#160;&#160;0.89510000&#160;&#160;&#160;&#160;5.3860000&#160;&#160;&#160;&#160;3.3120000&#160;&#160;&#160;&#160;2.4620000&#160;&#160;&#160;&#160;4.9560000</p>
+        <p class="Code_Indented">14.690000&#160;&#160;&#160;&#160;14.490000&#160;&#160;&#160;&#160;0.87990000&#160;&#160;&#160;&#160;5.5630000&#160;&#160;&#160;&#160;3.2590000&#160;&#160;&#160;&#160;3.5860000&#160;&#160;&#160;&#160;5.2190000</p>
+        <p class="Code_Indented">14.110000&#160;&#160;&#160;&#160;14.100000&#160;&#160;&#160;&#160;0.89110000&#160;&#160;&#160;&#160;5.4200000&#160;&#160;&#160;&#160;3.3020000&#160;&#160;&#160;&#160;2.7000000&#160;&#160;&#160;&#160;5.0000000</p>
+        <p class="Code_Indented">16.630000&#160;&#160;&#160;&#160;15.460000&#160;&#160;&#160;&#160;0.87470000&#160;&#160;&#160;&#160;6.0530000&#160;&#160;&#160;&#160;3.4650000&#160;&#160;&#160;&#160;2.0400000&#160;&#160;&#160;&#160;5.8770000</p>
+        <p class="Code_Indented">16.440000&#160;&#160;&#160;&#160;15.250000&#160;&#160;&#160;&#160;0.88800000&#160;&#160;&#160;&#160;5.8840000&#160;&#160;&#160;&#160;3.5050000&#160;&#160;&#160;&#160;1.9690000&#160;&#160;&#160;&#160;5.5330000</p>
+        <p class="Code_Indented">15.260000&#160;&#160;&#160;&#160;14.850000&#160;&#160;&#160;&#160;0.86960000&#160;&#160;&#160;&#160;5.7140000&#160;&#160;&#160;&#160;3.2420000&#160;&#160;&#160;&#160;4.5430000&#160;&#160;&#160;&#160;5.3140000</p>
+        <p>The steps below will prepare the data for use in the classification example that follows this section.</p>
+        <p>To prepare the data, start by normalizing it. </p>
+        <p class="Code">Normalizer = IDLmlVarianceNormalizer(features)</p>
+        <p class="Code">Normalizer.Normalize, features</p>
+        <p>Next, shuffle the data, then split it in two groups. One group will have 80% of the samples (for training), the other group will have 20% of the samples (for testing).</p>
+        <p class="Code">IDLmlShuffle, features, labels</p>
+        <p class="Code">part = IDLmlPartition({train:80, test:20}, features, labels)</p>
+        <p>The following variables are now ready for use:</p>
+        <p class="indent"><code style="font-style: italic;">part.train.features</code>:  A 7 x 168 array of features that will be used for training.</p>
+        <p class="indent"><code style="font-style: italic;">part.train.labels</code>: A 168 string array of labels that will be used for training.</p>
+        <p class="indent"><code style="font-style: italic;">part.test.features</code>: A 7 x 42 array of features that will be used for testing.</p>
+        <p class="indent"><code style="font-style: italic;">part.test.labels</code>: A 168 string array of labels that will be used for testing.</p>
+        <h2>Classification</h2>
+        <p>IDL provides three models you can use for classification purposes:</p>
+        <ul>
+            <li value="1"><a href="IDLmlFeedForwardNeuralNetwork.htm">IDLmlFeedForwardNeuralNetwork</a>
+            </li>
+            <li value="2"><a href="IDLmlSoftmax.htm">IDLmlSoftmax</a>
+            </li>
+            <li value="3"><a href="IDLmlSupportVectorMachineClassification.htm">IDLmlSupportVectorMachineClassification</a>
+            </li>
+        </ul>
+        <p>The following provides a simple example of performing classification using a Support Vector Machine model.</p>
+        <p>After loading and preparing your data as described previously, the next step is to define a classifier. From the data description there are seven input attributes and three possible string outputs, so define the model as follows:</p>
+        <p class="Code">Classifier = IDLmlSupportVectorMachineClassification(7, ['Kama', 'Rosa', 'Canadian'])</p>
+        <p>To train the model, call the Train method and pass in training features and labels:</p>
+        <p class="Code">loss = Classifier.Train(part.train.features, LABELS=part.train.labels)</p>
+        <p>Notice that SVM is unique among models in that you only need to invoke the Train method once. Other classifiers require iterative training in a loop. For example, with the Softmax classifier:</p>
+        <p class="Code">SoftmaxClassifier = IDLmlSoftmax(7, ['Kama', 'Rosa', 'Canadian'])</p>
+        <p class="Code">p = Plot(Fltarr(2), title='Loss')</p>
+        <p class="Code">Loss = List()</p>
+        <p class="Code">for i=1, 200 do begin</p>
+        <p class="Code_Indented">Loss.Add, SoftmaxClassifier.Train(part.train.features, $</p>
+        <p class="Code_Indented2">LABELS=part.train.labels)</p>
+        <p class="Code_Indented">p.SetData, Loss.ToArray()</p>
+        <p class="Code">endfor</p>
+        <p>Within the loop, you can check the value of Loss. When it stabilizes at its lowest possible value, the model has been fully trained.</p>
+        <p>To assess the quality of a model trained for classification, take the portion of the data allocated for testing and run it through another helper function, <a href="IDLmlTestClassifier.htm">IDLmlTestClassifier</a>. This will return a number of indicators of the accuracy of the model’s performance:</p>
+        <p class="Code">confMatrix = IDLmlTestClassifier(Classifier, $</p>
+        <p class="Code_Indented3">part.test.features, part.test.labels, $</p>
+        <p class="Code_Indented3">ACCURACY=accuracy)</p>
+        <p class="Code_Indented3">print, accuracy</p>
+        <p>The result is 0.928571, which indicates a 92.8% classification accuracy using test data.</p>
+        <p>Now the model is ready to classify data.</p>
+        <p class="Code">print, Classifier.Classify(part.test.features[*,0])</p>
+        <p>To use the model in a future IDL session without having to retrain it, save it to a file. Also save the normalizer, since you will have to renormalize the data too:</p>
+        <p class="Code">Classifier.Save, 'c:\tmp\myclassifier.sav'</p>
+        <p class="Code">Normalizer.Save, 'c:\tmp\mynormalizer.sav'</p>
+        <p>To restore these in a future IDL session:</p>
+        <p class="Code">Classifier = IDLmlModel.Restore('c:\tmp\myclassifier.sav')</p>
+        <p class="Code">Normalizer = IDLmlNormalizer.Restore('c:\tmp\mynormalizer.sav')</p>
+        <h2><a name="Clustering"></a>Clustering</h2>
+        <p>IDL provides two models you can use for clustering purposes:</p>
+        <ul>
+            <li value="1"><a href="IDLmlAutoEncoder.htm">IDLmlAutoEncoder</a>
+            </li>
+            <li value="2"><a href="IDLmlKMeans.htm">IDLmlKMeans</a>
+            </li>
+        </ul>
+        <p>This section provides a simple example of performing classification using an autoencoder. An autoencoder is a type of neural network that specializes in learning a representation of the data, which can be used group or cluster a dataset into a small set of categories.</p>
+        <p>Use a small JPEG file for this example and cluster the image into five different categories based on the RGB pixel values. To read the image:</p>
+        <p class="Code">file = Filepath('rose.jpg', subdirectory=['examples', 'data'])</p>
+        <p class="Code">data = Read_Image(file)</p>
+        <p>IDL machine learning algorithms require the input data to be stored in a 2D array of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples. This example has three attributes (the red, green, and blue values per pixel), where the number of examples is the total number of pixels in the image. The data is a 3 x 227 x 149 array that you can reform to 3 attributes by 33823 examples by doing the following:</p>
+        <p class="Code">features = Reform(data, 3, (data.dim)[1]*(data.dim)[2])</p>
+        <p>As discussed in <a href="#PrepareData" class="selected">Prepare Data</a>, define a normalizer that will transform the data. You can use any normalizer; this example uses IDLmlVarianceNormalizer:</p>
+        <p class="Code">Normalizer = IDLmlVarianceNormalizer(features)</p>
+        <p class="Code">Normalizer.Normalize, features</p>
+        <p>Now define the autoencoder, and determine how many layers to use. In this case, use two layers. Since there are three attributes, the sizes for the first and last layer must be 3. To cluster into five categories, the size of the middle layer will be 5.</p>
+        <p class="Code">Classifier = IDLmlAutoEncoder([3, 5, 3])</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>To fine-tune your autoencoder, you can define an Activation Function for each layer. See <a href="#ActivationFunctions" class="selected">Defining Activation Functions</a> for more information.</p>
+        <p>Now train the model. During training, an autoencoder will learn how to produce the input image based on  features. These internal features effectively become the clustered image:</p>
+        <p class="Code">Optimizer = IDLmloptGradientDescent(0.01)</p>
+        <p class="Code">p = Plot(Fltarr(2), title='Loss')</p>
+        <p class="Code">Loss = List()</p>
+        <p class="Code">for i=1, 300 do begin</p>
+        <p class="Code_Indented">Loss.Add, Classifier.Train(features, OPTIMIZER=Optimizer)</p>
+        <p class="Code_Indented">p.SetData, Loss.ToArray()</p>
+        <p class="Code">endfor</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Training a neural network requires the use of an optimizer. An optimizer helps the neural network adjust the learning rate during training based on how quickly the model converges to a solution. The optimizers are: <a href="IDLmloptAdam.htm">IDLmloptAdam</a>, <a href="IDLmloptGradientDescent.htm">IDLmloptGradientDescent</a>, <a href="IDLmloptMomentum.htm">IDLmloptMomentum</a>, <a href="IDLmloptRMSProp.htm">IDLmloptQuickProp</a>, and <a href="IDLmloptRMSProp.htm">IDLmloptRMSProp</a>.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>An instance of an optimizer should not be reused to train a different model.</p>
+        <p>To obtain the clustered image, classify the input data:</p>
+        <p class="Code">result = Classifier.Classify(features)</p>
+        <p>Display the original image next to the cluster result:</p>
+        <p class="Code">!null = Image(data, title='Original Image', layout=[2,1,1])</p>
+        <p class="Code">!null = Image(Reform(result, (data.dim)[1], (data.dim)[2]), $</p>
+        <p class="Code_Indented">rgb_table=25, title='Clustered Image', layout=[2,1,2], /current)</p>
+        <p>Which results in an image that looks like this:</p>
+        <p>
+            <img src="../../../Resources/Images/IML-clustering.png" />
+        </p>
+        <p>&#160;</p>
+        <h2><a name="Regression"></a>Regression</h2>
+        <p>IDL provides three classes you can use for regression purposes:</p>
+        <ul>
+            <li value="1"><a href="IDLmlFeedForwardNeuralNetwork.htm">IDLmlFeedForwardNeuralNetwork</a>
+            </li>
+            <li value="2"><a href="IDLmlSoftmax.htm">IDLmlSoftmax</a>
+            </li>
+            <li value="3"><a href="IDLmlSupportVectorMachineRegression.htm">IDLmlSupportVectorMachineRegression</a>
+            </li>
+        </ul>
+        <p>This section provides a simple example of performing regression using a Feed Forward Neural Network model.</p>
+        <p>First, define an array with two attributes (x and y), and a particular shape for the model to <i>learn</i>:</p>
+        <p class="Code">size = 100</p>
+        <p class="Code">x = Findgen(size) / (size-1) * 4 - 2</p>
+        <p class="Code">y = Fltarr(size) + 1.0</p>
+        <p class="Code">xx = x # y</p>
+        <p class="Code">yy = Transpose(xx)</p>
+        <p class="Code">zz = 2.0/(exp((xx-0.5)^2+yy^2))-2.0/(exp((xx+0.5)^2+yy^2))</p>
+        <p class="Code">s = Surface(zz)</p>
+        <p>
+            <img src="../../../Resources/Images/IML-regression.png" />
+        </p>
+        <p>IDL machine learning algorithms require storing the input data in a 2D array of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples. In the example below, the number of attributes is 2 (the x and y components), where the number of examples is the total number of values in the array. Combine the xx and yy arrays into a 2D array with the following:</p>
+        <p class="Code">features = Transpose([[Reform(xx, size^2)], [Reform(yy, size^2)]])</p>
+        <p class="Code">scores = Reform(zz, size^2)</p>
+        <p>Now shuffle and partition the data into two groups: one group will be used for training, the other for testing. Make the groups the same size:</p>
+        <p class="Code">IDLmlShuffle, features, scores</p>
+        <p class="Code">part = IDLmlPartition({train:50, test:50}, features, scores)</p>
+        <p>As discussed in <a href="#PrepareData" class="selected">Prepare Data</a>, define a normalizer that will transform the data. You can use any normalizer; this example uses IDLmlVarianceNormalizer:</p>
+        <p class="Code">Normalizer1 = IDLmlVarianceNormalizer(features)</p>
+        <p class="Code">Normalizer1.Normalize, features</p>
+        <p>The same applies to the model outputs. Unlike classification, where there are a finite and fixed set of outputs, the output of a regression is continuous, and it is important to keep it normalized.</p>
+        <p class="Code">Normalizer2 = IDLmlVarianceNormalizer(scores)</p>
+        <p class="Code">Normalizer2.Normalize, scores</p>
+        <p>Now define the neural network, and determine how many layers to use. In this case, use three layers. Since there are three attributes, the size for the first layer must be 3. For a regression problem, the size of the last layer will be 1, since you will not be classifying into different classes.</p>
+        <p class="Code">Model = IDLmlFeedForwardNeuralNetwork([2, 7, 7, 1], $</p>
+        <p class="Code_Indented">ACTIVATION_FUNCTIONS=[IDLmlafArcTan(), IDLmlafArcTan(), $</p>
+        <p class="Code_Indented2">IDLmlafArcTan()])</p>
+        <h3><a name="ActivationFunctions"></a>Defining Activation Functions</h3>
+        <p>Activation functions are important in machine learning. They allow neural networks (which by themselves are only linear systems) to introduce non-linearities, thus making them able to model more complex functions. IDL includes the following activation functions:</p>
+        <p>
+            <img src="../../../Resources/Images/IML-activation-functions1.png" />
+        </p>
+        <p>Choosing the right activation function for each layer is crucial to the accuracy of the neural network. There are very few guidelines; therefore, in most cases it is a trial and error method:</p>
+        <p class="Code">Optimizer = IDLmloptAdam(0.1)</p>
+        <p class="Code">Loss = List()</p>
+        <p class="Code">p = Plot(Fltarr(10), title='Loss')</p>
+        <p class="Code">for i=1, 300 do begin</p>
+        <p class="Code_Indented">Loss.Add, Model.Train(part.train.features, $</p>
+        <p class="Code_Indented2">SCORES=part.train.scores, OPTIMIZER=Optimizer)</p>
+        <p class="Code_Indented">p.SetData, Loss.ToArray()</p>
+        <p class="Code">endfor</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Training a neural network requires the use of an optimizer. An optimizer helps the neural network adjust the learning rate during training based on how quickly the model converges to a solution. The following optimizers are available: <a href="IDLmloptAdam.htm">IDLmloptAdam</a>, <a href="IDLmloptGradientDescent.htm">IDLmloptGradientDescent</a>, <a href="IDLmloptMomentum.htm">IDLmloptMomentum</a>, <a href="IDLmloptQuickProp.htm">IDLmloptQuickProp</a>, and <a href="IDLmloptRMSProp.htm">IDLmloptRMSProp</a>.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>An optimizer that is used to train one model should not be reused to train a different model.</p>
+        <p>Now pass the entire x, y dataset through the model and see how well the output resembles the data it tried to learn:</p>
+        <p class="Code">data = Transpose([[Reform(xx, size^2)], [Reform(yy, size^2)]])</p>
+        <p class="Code">Normalizer1.Normalize, data</p>
+        <p class="Code">result = Model.Evaluate(data)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">result2D = Reform(result, size, size)</p>
+        <p class="Code">!null = Surface(result2D, xx, yy, color=[255,0,0], style='mesh')</p>
+        <p>
+            <img src="../../../Resources/Images/IML-activation-functions2.png" />
+        </p>
+        <p>You can also use the Evaluate method to evaluate the accuracy of the model against the test data. This is returned by the LOSS keyword that will produce the RMSE (root mean square error) of the calculated results as compared to the actual scores:</p>
+        <p class="Code">!null = Model.Evaluate(part.test.features, SCORES=part.test.scores, $</p>
+        <p class="Code_Indented">LOSS=loss)</p>
+        <p class="Code">print, loss</p>
+        <p>The result is 0.0981930.</p>
+        <p>To use the model in a future IDL session without having to retrain it, you can save it to a file. Also save the normalizer, since you will have to renormalize your data too:</p>
+        <p class="Code">Model.Save, 'c:\tmp\model.sav'</p>
+        <p class="Code">Normalizer1.Save, 'c:\tmp\normalizer.sav'</p>
+        <p>To restore these in a future IDL session:</p>
+        <p class="Code">Model = IDLmlModel.Restore('c:\tmp\model.sav')</p>
+        <p class="Code">Normalizer = IDLmlNormalizer.Restore('c:\tmp\normalizer.sav')</p>
+        <h2>See Also</h2>
+        <p><a href="../../Functional List of IDL Routines/Machine Learning.htm">IDL Machine Learning list of routines</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

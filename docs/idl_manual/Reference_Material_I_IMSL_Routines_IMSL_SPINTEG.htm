@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_SPINTEG</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_SPINTEG</span>
+        </div>
+        <h1 class="Routine">IMSL_SPINTEG</h1>
+        <p>The IMSL_SPINTEG function computes the integral of a one- or two-dimensional spline.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_SPINTEG function can be used to integrate splines of the following type:</p>
+        <ul>
+            <li value="1">Piecewise polynomials returned by <a href="IMSL_CSINTERP.htm">IMSL_CSINTERP</a>, <a href="IMSL_CSSHAPE.htm">IMSL_CSSHAPE</a>, and <a href="IMSL_CSSMOOTH.htm">IMSL_CSSMOOTH</a>.</li>
+            <li value="2">One-dimensional B-splines returned by <a href="IMSL_BSINTERP.htm">IMSL_BSINTERP</a>, <a href="IMSL_BSLSQ.htm">IMSL_BSLSQ</a>, and <a href="IMSL_CONLSQ.htm">IMSL_CONLSQ</a>.</li>
+            <li value="3">Two-dimensional, tensor-product B-splines returned from <a href="IMSL_BSINTERP.htm">IMSL_BSINTERP</a> and <a href="IMSL_BSLSQ.htm">IMSL_BSLSQ</a>.</li>
+        </ul>
+        <p>If <i>s</i> = <i>Spline</i> is a one-dimensional piecewise polynomial or B-spline, then IMSL_SPINTEG computes:</p>
+        <p>
+            <img src="images/IMSL_SPINTEG-52.jpg" />
+        </p>
+        <p>If spline is a one-dimensional B-spline, then this function uses identity (22) of de Boor (1978, p. 115).</p>
+        <p>If <i>s</i> = <i>Spline</i> is a two-dimensional, tensor-product spline, then the arguments c and d are required, and IMSL_SPINTEG computes:</p>
+        <p>
+            <img src="images/IMSL_SPINTEG-53.jpg" />
+        </p>
+        <p>This function uses the (univariate integration) identity (22) of de Boor (1978, p. 151):</p>
+        <p>
+            <img src="images/IMSL_SPINTEG-54.jpg" />
+        </p>
+        <p>where t0 ≤ x ≤ tr. It assumes (for all knot sequences) that the first and last k knots are stacked; that is, t0 = . . . = tk – 1 and tn = . . . = tn + k – 1, where k is the order of the spline in the x or y direction.</p>
+        <h2 class="API">Example</h2>
+        <p>This example computes a cubic spline interpolant to function values. The values of the integral of this spline are then compared with the exact integral values. Since the default settings are being used, the interpolant is determined by the not-a-knot condition (de Boor 1978).</p>
+        <p class="Code">n = 21</p>
+        <p class="Code">; Generate the data.</p>
+        <p class="Code">x = FINDGEN(n)/(n - 1)</p>
+        <p class="Code">f = SIN(15 * x)</p>
+        <p class="Code">pp = IMSL_CSINTERP(x, f)</p>
+        <p class="Code">; Compute the interpolant. results = FLTARR(22, 4)</p>
+        <p class="Code">; Define an array to hold some results to be output later. FOR i = n/2, 3 * n/2 DO BEGIN &amp; $</p>
+        <p class="Code">x2 = i/FLOAT(2 * n - 2) &amp; $</p>
+        <p class="Code_Indented">y = IMSL_SPINTEG(0, x2, pp)	&amp; $</p>
+        <p class="Code_Indented">results[i - n/2, *] = $</p>
+        <p class="Code_Indented">[x2, (1 - COS(15 * x2))/15, y, $ ABS((1 - COS(15 * x2))/15 - y)] &amp; $</p>
+        <p class="Code">; Loop over different limits of integration and compare the</p>
+        <p class="Code">; results with the true answer. ENDFOR</p>
+        <p class="Code">PM, results, FORMAT = '(4f12.4)', $</p>
+        <p class="Code_Indented">Title	= '	X	True	Approx	Error'</p>
+        <p class="Code_Indented">; Output the results.</p>
+        <p class="Code_Indented">&#160;X&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;True&#160;&#160;&#160;&#160;&#160;&#160;Approx&#160;&#160;&#160;&#160;Error</p>
+        <p class="Code_Indented">0.2500&#160;&#160;&#160;&#160;0.1214&#160;&#160;&#160;&#160;0.1215&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.2750&#160;&#160;&#160;&#160;0.1036&#160;&#160;&#160;&#160;0.1037&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.3000&#160;&#160;&#160;&#160;0.0807&#160;&#160;&#160;&#160;0.0808&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.3250&#160;&#160;&#160;&#160;0.0559&#160;&#160;&#160;&#160;0.0560&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.3500&#160;&#160;&#160;&#160;0.0325&#160;&#160;&#160;&#160;0.0327&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.3750&#160;&#160;&#160;&#160;0.0139&#160;&#160;&#160;&#160;0.0141&#160;&#160;&#160;&#160;0.0002</p>
+        <p class="Code_Indented">0.4000&#160;&#160;&#160;&#160;0.0027&#160;&#160;&#160;&#160;0.0028&#160;&#160;&#160;&#160;0.0002</p>
+        <p class="Code_Indented">0.4250&#160;&#160;&#160;&#160;0.0003&#160;&#160;&#160;&#160;0.0004&#160;&#160;&#160;&#160;0.0002</p>
+        <p class="Code_Indented">0.4500&#160;&#160;&#160;&#160;0.0071&#160;&#160;&#160;&#160;0.0073&#160;&#160;&#160;&#160;0.0002</p>
+        <p class="Code_Indented">0.4750&#160;&#160;&#160;&#160;0.0223&#160;&#160;&#160;&#160;0.0224&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.5000&#160;&#160;&#160;&#160;0.0436&#160;&#160;&#160;&#160;0.0437&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.5250&#160;&#160;&#160;&#160;0.0681&#160;&#160;&#160;&#160;0.0682&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.5500&#160;&#160;&#160;&#160;0.0924&#160;&#160;&#160;&#160;0.0925&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.5750&#160;&#160;&#160;&#160;0.1131&#160;&#160;&#160;&#160;0.1132&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.6000&#160;&#160;&#160;&#160;0.1274&#160;&#160;&#160;&#160;0.1275&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.6250&#160;&#160;&#160;&#160;0.1333&#160;&#160;&#160;&#160;0.1333&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.6500&#160;&#160;&#160;&#160;0.1298&#160;&#160;&#160;&#160;0.1299&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.6750&#160;&#160;&#160;&#160;0.1176&#160;&#160;&#160;&#160;0.1177&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.7000&#160;&#160;&#160;&#160;0.0984&#160;&#160;&#160;&#160;0.0985&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.7250&#160;&#160;&#160;&#160;0.0747&#160;&#160;&#160;&#160;0.0748&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.7500&#160;&#160;&#160;&#160;0.0499&#160;&#160;&#160;&#160;0.0500&#160;&#160;&#160;&#160;0.0001</p>
+        <p class="Code_Indented">0.7750&#160;&#160;&#160;&#160;0.0274&#160;&#160;&#160;&#160;0.0276&#160;&#160;&#160;&#160;0.0001</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_SPLINE_LEFT_ENDPT: Left endpoint of <i>x</i> integration is not within the knot sequence. Integration occurs only from <b>t</b><sub style="font-style: italic;">Order – 1</sub> to <i>B</i>.</p>
+        <p>MATH_SPLINE_RIGHT_ENDPT: Right endpoint of <i>x</i> integration is not within the knot sequence. Integration occurs only from <b>t</b><sub style="font-style: italic;">Order – 1</sub> to <i>A</i>.</p>
+        <p>MATH_SPLINE_LEFT_ENDPT_1: Left endpoint of <i>x</i> integration is not within the knot sequence. Integration occurs only from <i>B</i> to <b>t</b><sub style="font-style: italic;">Spline_Space_Dim – 1</sub>.</p>
+        <p>MATH_SPLINE_RIGHT_ENDPT_1: Right endpoint of <i>x</i> integration is not within the knot sequence. Integration occurs only from <i>A</i> to <b>t</b><sub style="font-style: italic;">Spline_Space_Dim – 1</sub>.</p>
+        <p>MATH_SPLINE_LEFT_ENDPT_2: Left endpoint of <i>y</i> integration is not within the knot sequence. Integration occurs only from <b>t</b><sub style="font-style: italic;">Order – 1</sub> to <i>D</i>.</p>
+        <p>MATH_SPLINE_RIGHT_ENDPT_2: Right endpoint of <i>y</i> integration is not within the knot sequence. Integration occurs only from <b>t</b><sub style="font-style: italic;">Order – 1</sub> to <i>C</i>.</p>
+        <p>MATH_SPLINE_LEFT_ENDPT_3: Left endpoint of <i>y</i> integration is not within the knot sequence. Integration occurs only from <i>D</i> to <b>t</b><sub style="font-style: italic;">Spline_Space_Dim – 1</sub>.</p>
+        <p>MATH_SPLINE_RIGHT_ENDPT_3: Right endpoint of y integration is not within the knot sequence. Integration occurs only from <i>C</i> to <b>t</b><sub style="font-style: italic;">Spline_Space_Dim – 1</sub>.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_KNOT_MULTIPLICITY: Multiplicity of the knots cannot exceed the order of the spline.</p>
+        <p>MATH_KNOT_NOT_INCREASING: Knots must be nondecreasing.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_SPINTEG(<i>A, B, C, D, Spline</i>)</p>
+        <p>or</p>
+        <p><i>Result</i> = IMSL_SPINTEG(<i>A, B, C, D, Spline</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>If spline is a one-dimensional spline, then the returned value is the integral from a to b of spline. If spline is a two-dimensional, tensor-product spline, then the returned value is the value of the integral of <i>Spline</i> over the rectangle [<i>A, B</i>] x [<i>C, D</i>]. If no value can be computed, NaN (Not a Number) is returned.</p>
+        <h2 class="API">Arguments</h2>
+        <p>If integration of a one-dimensional spline is desired, then arguments a, b, and spline are required. If integration of a two-dimensional spline is desired, then a, b, c, d, and spline are required.</p>
+        <h3 class="Argument">A</h3>
+        <p>Right endpoint of integration.</p>
+        <h3 class="Argument">B</h3>
+        <p>Left endpoint of integration.</p>
+        <h3 class="Argument">C</h3>
+        <p>Right endpoint of integration for the second variable of the tensor-product spline. This argument should only be used if <i>Spline</i> is a two-dimensional, tensor-product spline.</p>
+        <h3 class="Argument">D</h3>
+        <p>Left endpoint of integration for the second variable of the tensor-product spline. This argument should only be used if spline is a two-dimensional, tensor-product spline.</p>
+        <h3 class="Argument">Spline</h3>
+        <p>Structure that represents the spline to be integrated.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_BSINTERP.htm">IMSL_BSINTERP</a>, <a href="IMSL_BSLSQ.htm">IMSL_BSLSQ</a>, <a href="IMSL_CONLSQ.htm">IMSL_CONLSQ</a>, <a href="IMSL_CSINTERP.htm">IMSL_CSINTERP</a>, <a href="IMSL_CSSHAPE.htm">IMSL_CSSHAPE</a>, <a href="IMSL_CSSMOOTH.htm">IMSL_CSSMOOTH</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

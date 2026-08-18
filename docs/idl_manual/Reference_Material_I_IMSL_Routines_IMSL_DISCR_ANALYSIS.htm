@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_DISCR_ANALYSIS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_DISCR_ANALYSIS</span>
+        </div>
+        <h1 class="Routine">IMSL_DISCR_ANALYSIS</h1>
+        <p>The IMSL_DISCR_ANALYSIS procedure performs a linear or a quadratic discriminant function analysis among several known groups.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>IMSL_DISCR_ANALYSIS performs discriminant function analysis using either linear or quadratic discrimination. The output includes a measure of distance between the groups, a table summarizing the classification results, a matrix containing the posterior probabilities of group membership for each observation, and the within- sample means and covariance matrices. Linear discriminant function coefficients are also computed.</p>
+        <p>Covariance matrices are defined as follows: Let <i>N</i><sub>i</sub> denote the sum of frequencies of observations in group <i>i</i> and <i>M</i><sub>i</sub> denote the number of observations in group <i>i</i>. Then, if <i>S</i><sub>i</sub> denotes the within-group <i>i</i> covariance matrix:</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-12.jpg" />
+        </p>
+        <p>Where:</p>
+        <ul>
+            <li value="1"> <i>w</i><sub>j</sub> is the weight of the <i>j</i>-th observation in group <i>i</i></li>
+            <li value="2"><i>f</i><sub>j</sub> is the frequency</li>
+            <li value="3"><i>x</i><sub>j</sub> is the <i>j</i>-th observation column vector in group <i>i</i></li>
+            <li value="4">
+                <img src="images/IMSL_DISCR_ANALYSIS-13.jpg" class="VertCenter" />is the mean vector of the observations in group <i>i</i></li>
+        </ul>
+        <p>The mean vectors are computed as:</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-14.jpg" />
+        </p>
+        <p>Given the means and the covariance matrices, the linear discriminant function for group i is computed as:</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-15.jpg" />
+        </p>
+        <p>Where:</p>
+        <ul>
+            <li value="1"> ln (<i>p</i><sub>i</sub>) is the natural log of the prior probability for the <i>i</i>-th group</li>
+            <li value="2"><i>x</i> is the observation to be classified</li>
+            <li value="3"><i>S</i><sub>p</sub> denoted the pooled covariance matrix</li>
+        </ul>
+        <p>Let <i>S</i> denote either the pooled covariance matrix of one of the within-group covariance matrices <i>S</i><sub>i</sub>. (<i>S</i> will be the pooled covariance matrix in linear discrimination, and <i>S</i><sub>i</sub> otherwise.) The Mahalanobis distance between group i and group j is computed as:</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-16.jpg" />
+        </p>
+        <p>Finally, the asymptotic chi-squared test for the equality of covariance matrices is computed as follows (Morrison 1976, p. 252):</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-17.jpg" />
+        </p>
+        <p>Where:</p>
+        <ul>
+            <li value="1"> <i>n</i><sub>i</sub> is the number of degrees of freedom in the <i>i</i>-th sample covariance matrix</li>
+            <li value="2"><i>k</i> is the number of groups</li>
+            <li value="3">
+                <img src="images/IMSL_DISCR_ANALYSIS-18.jpg" class="VertCenter" />
+            </li>
+            <li value="4"><i>p</i> is the number of variables</li>
+        </ul>
+        <p>The estimated posterior probability of each observation <i>x</i> belonging to group is computed using the prior probabilities and the sample mean vectors and estimated covariance matrices under a multivariate normal assumption. Under quadratic discrimination, the within-group covariance matrices are used to compute the estimated posterior probabilities. The estimated posterior probability of an observation <i>x</i> belonging to group <i>i</i> is:</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-19.jpg" />
+        </p>
+        <p>Where:</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-20.jpg" />
+        </p>
+        <p>For the leaving-out-one method of classification (<a href="#METHOD" class="selected">METHOD</a> equal to 4, 5 or 6), the sample mean vector and sample covariance matrices in the formula for <i>D</i><sub>i</sub><sup> 2</sup> are adjusted so as to remove the observation <i>x</i> from their computation. For linear discrimination (METHOD equal to 1, 2, 4, or 6), the linear discriminant function coefficients are actually used to compute the same posterior probabilities.</p>
+        <p>Using the posterior probabilities, each observation in <i>x</i> is classified into a group; the result is tabulated in the CLASS_TABLE array and saved in the CLASS_MEMBER array. The CLASS_TABLE array is not altered at this stage if <i>x</i>(<i>i</i>)(<a href="#IDX_COLS" class="selected">IDX_VARS</a>(0)) contains a group number that is out of range. If the reclassification method is specified, then all observations with no missing values in the <i>N_variables</i> classification variables are classified. When the leaving-out-one method is used, observations with invalid group numbers, weights, frequencies, or classification variables are not classified. Regardless of the frequency, a 1 is added (or subtracted) from CLASS_TABLE for each row of <i>x</i> that is classified and contains a valid group number.</p>
+        <p>When METHOD &gt; 3, adjustment is made to the posterior probabilities to remove the effect of the observation in the classification rule. In this adjustment, each observation is presumed to have:</p>
+        <ul>
+            <li value="1">a weight of <i>x</i>(<i>i</i>)(IDX_VARS(2)) if IDX_VARS(2) &gt; −1, and:</li>
+            <li value="2">a weight of 1.0 if IDX_VARS(2) = −1, and:</li>
+            <li value="3"> a frequency of 1.0. </li>
+        </ul>
+        <p>See Lachenbruch (1975, p. 36) for the required adjustment.</p>
+        <p>The covariance matrices are computed from their <i>LU</i> factorizations.</p>
+        <h2 class="API">Example</h2>
+        <p>The following example uses liner discrimination with equal prior probabilities on Fisher’s (1936) iris data.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, counts, table, d2, prior_out, coef, means, $</p>
+        <p class="Code">&#160;&#160;cov, stats, nrmiss</p>
+        <p class="Code">num	=	INDGEN(3) </p>
+        <p class="Code">PRINT, '&#160;&#160;&#160;&#160;&#160;&#160;&#160;Counts'</p>
+        <p class="Code">PRINT, num + 1, FORMAT = '(3I5)' </p>
+        <p class="Code">PRINT, counts, FORMAT = '(3I5)' </p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PRINT, '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Table'</p>
+        <p class="Code">PRINT, num + 1, FORMAT = '(2X, 3I5)' </p>
+        <p class="Code">FOR i	=	0, 2 DO $</p>
+        <p class="Code">&#160;&#160;PRINT, num(i) + 1, table(i, *), FORMAT = '(I2, 3I5)' </p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PRINT, '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;D2'</p>
+        <p class="Code">PRINT, num + 1, FORMAT = '(3I7)'</p>
+        <p class="Code">FOR i	=	0, 2 DO $</p>
+        <p class="Code">&#160;&#160;PRINT, num(i) + 1, d2(i, *), FORMAT = '(I2, 3F7.1)'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PRINT, '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Prior OUT'</p>
+        <p class="Code">PRINT, num + 1, FORMAT = '(3I10)'</p>
+        <p class="Code">PRINT, prior_out, FORMAT = '(3F10.4)' </p>
+        <p class="Code">PRINT</p>
+        <p class="Code">num	=	INDGEN(5)</p>
+        <p class="Code">PRINT, '		&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Coef' </p>
+        <p class="Code">PRINT, num + 1, FORMAT = '(1X, 5I10)'</p>
+        <p class="Code">FOR i	=	0, 2 DO $</p>
+        <p class="Code">&#160;&#160;PRINT, num(i) + 1, coef(i, *), FORMAT = '(I2, 5F10.1)'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">num	=	INDGEN(4)</p>
+        <p class="Code">PRINT, '	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Means' </p>
+        <p class="Code">PRINT, num + 1, FORMAT = '(4I10)'</p>
+        <p class="Code">FOR i	=	0, 2 DO $</p>
+        <p class="Code">&#160;&#160;PRINT, num(i) + 1, means(i, *), FORMAT = '(I2, 4F10.3)'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PRINT, '	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;	Covariance'</p>
+        <p class="Code">PRINT, num + 1, FORMAT = '(4I10)' </p>
+        <p class="Code">FOR i	=	0, 3 DO $</p>
+        <p class="Code">&#160;&#160;PRINT, num(i) + 1, cov(0, *, i), FORMAT = '(I2, 4F10.4)'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">num	=	INDGEN(12)</p>
+        <p class="Code">PRINT, '		Stats' FOR i	=	0, 11 DO $</p>
+        <p class="Code">&#160;&#160;PRINT, num(i) + 1, stats(i)</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PRINT, 'nrmiss = ', nrmiss</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">idxv	=	[1, 2, 3, 4]</p>
+        <p class="Code">idxc	=	[0, -1, -1]</p>
+        <p class="Code">n_groups		=	3</p>
+        <p class="Code">method	=	3</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Retrieve the Fisher Iris Data Set</p>
+        <p class="Code">x	=	IMSL_STATDATA(3)</p>
+        <p class="Code">IMSL_DISCR_ANALYSIS, x, n_groups, Idx_Vars = idxv, $ </p>
+        <p class="Code">&#160;&#160;Idx_cols = idxc, Method = method, /Prior_Equal, $ </p>
+        <p class="Code">&#160;&#160;Prior_Output = prior_out, Group_Counts = counts, $ </p>
+        <p class="Code">&#160;&#160;Means = means, Covariances = cov, $</p>
+        <p class="Code">&#160;&#160;Coefficients = coef, Class_Member = cm, $</p>
+        <p class="Code">&#160;&#160;Class_Table = table, Prob = prob, $</p>
+        <p class="Code">&#160;&#160;Mahalanobis = d2, Stats = stats, Nmissing = nrmiss</p>
+        <p class="Code">print_results, counts, table, d2, prior_out, coef, means, $</p>
+        <p class="Code">&#160;&#160;cov, stats, nrmiss</p>
+        <p>IDL&#160;prints:</p>
+        <p>
+            <img src="images/IMSL_DISCR_ANALYSIS-21.jpg" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_BAD_OBS_1: In call #, row # of the data matrix, "x", has group number = #. The group number must be an integer between 1.0 and "n_groups" = #, inclusively. This observation will be ignored.</p>
+        <p>STAT_BAD_OBS_2: The leaving-out-one method is specified but this observation does not have a valid group number (Its group number is #). This observation (row #) is ignored.</p>
+        <p>STAT_BAD_OBS_3: The leaving-out-one method is specified but this observation does not have a valid weight or it does not have a valid frequency. This observation (row #) is ignored.</p>
+        <p>STAT_COV_SINGULAR_3: The group # covariance matrix is singular. "Stats(1)" cannot be computed. "Stats(1)" and "Stats(3)" are set to the missing value code (NaN).</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_COV_SINGULAR_1: The variance-covariance matrix for population number # is singular. The computations cannot continue.</p>
+        <p>STAT_COV_SINGULAR_2: The pooled variance-covariance matrix is singular. The computations cannot continue.</p>
+        <p>STAT_COV_SINGULAR_4: A variance-covariance matrix is singular. The index of the first zero element is equal to #.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IMSL_DISCR_ANALYSIS, <i>X</i>, <i>N_groups</i> [, <a href="#CLASS_MEMBER" class="selected">CLASS_MEMBER</a>=<i>variable</i>] [, <a href="#CLASS_TABLE" class="selected">CLASS_TABLE</a>=<i>variable</i>] [, <a href="#COEFFICIENTS" class="selected">COEFFICIENTS</a>=<i>variable</i>] [, <a href="#COVARIANCES" class="selected">COVARIANCES</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#GROUP_COUNTS" class="selected">GROUP_COUNTS</a>=<i>variable</i>] [, <a href="#IDX_COLS" class="selected">IDX_COLS</a>=<i>array</i>] [, <a href="#IDX_VARS" class="selected">IDX_VARS</a>=<i>array</i>] [, <a href="#MAHALANOBIS" class="selected">MAHALANOBIS</a>=<i>variable</i>]  [, <a href="#MEANS" class="selected">MEANS</a>=<i>variable</i>] [, <a href="#METHOD" class="selected">METHOD</a>=<i>value</i>] [, <a href="#NMISSING" class="selected">NMISSING</a>=<i>variable</i>] [, /<a href="#PRIOR_EQUAL" class="selected">PRIOR_EQUAL</a>] [, <a href="#PRIOR_INPUT" class="selected">PRIOR_INPUT</a>=<i>array</i>] [, <a href="#PRIOR_OUTPUT" class="selected">PRIOR_OUTPUT</a>=<i>variable</i>] [, /<a href="#PRIOR_PROP" class="selected">PRIOR_PROP</a>]   [, <a href="#PROB" class="selected">PROB</a>=<i>variable</i>] [, <a href="#STATS" class="selected">STATS</a>=<i>variable</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Keyword">N_groups (optional)</h3>
+        <p>Number of groups in the data.</p>
+        <h3 class="Argument">X</h3>
+        <p>Two-dimensional array of size <i>N_rows</i> by <i>N_variables</i> + 1 containing the data, where:</p>
+        <ul>
+            <li value="1"> <i>N_rows</i> = number of rows to be processed: N_ELEMENTS(<i>X</i>(*,0))</li>
+            <li value="2"><i>N_variables</i> = number of variables to be used in the discrimination. The first <i>N_variables</i> columns correspond to the variables, and the last column contains the group numbers. The groups must be numbered 1, 2, ..., <i>N_groups</i>.</li>
+        </ul>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CLASS_MEMBER"></a>CLASS_MEMBER (optional)</h3>
+        <p>Named variable in the form of a one-dimensional integer array of length <i>N_rows</i> containing the group to which the observation was classified. If an observation has an invalid group number, frequency, or weight when the leaving-out-one method has been specified, then the observation is not classified and the corresponding elements of CLASS_MEMBER (and <a href="#PROB" class="selected">PROB</a>) are set to 0.</p>
+        <h3 class="Keyword"><a name="CLASS_TABLE"></a>CLASS_TABLE (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size <i>N_groups</i> by <i>N_groups</i> containing the classification table. Each observation that is classified and has a group number 1.0, 2.0, ..., <i>N_groups</i> is entered into the table. The rows of the table correspond to the known group membership. The columns refer to the group to which the observation was classified.</p>
+        <h3 class="Keyword"><a name="COEFFICIENTS"></a>COEFFICIENTS (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size <i>N_groups</i> by (<i>N_variables</i> + 1) containing the linear discriminant coefficients. The first column of COEFFICIENTS contains the constant term, and the remaining columns contain the variable coefficients. Row <i>i</i> – 1 of COEFFICIENTS corresponds to group <i>i</i>, for <i>i</i> = 1, 2, ..., <i>N_variables</i> + 1. Array Coefficients are always computed as the linear discriminant function coefficients even when quadratic discrimination is specified.</p>
+        <h3 class="Keyword"><a name="COVARIANCES"></a>COVARIANCES (optional)</h3>
+        <p>Named variable in the form of a three-dimensional array of size <i>g</i> by <i>N_variables</i> by <i>N_variables</i> containing covariance results. The within-group covariance matrices (when <a href="#METHOD" class="selected">METHOD</a> is set to 1, 2, 4, or 5 only) is the first <i>g</i>-1 matrices, and the pooled covariance matrix is the <i>g</i>-th matrix.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="GROUP_COUNTS"></a>GROUP_COUNTS (optional)</h3>
+        <p>Named variable in the form of a one-dimensional integer array of length <i>N_groups</i> containing the number of observations in each group.</p>
+        <h3 class="Keyword"><a name="IDX_COLS"></a>IDX_COLS (optional)</h3>
+        <p>One-dimensional array containing the indices of the variables to be used in the analysis.</p>
+        <h3 class="Keyword"><a name="IDX_VARS"></a>IDX_VARS (optional)</h3>
+        <p>Three element array indicating the column numbers of <i>X</i> in which particular types of data are stored. Columns are numbered 0 ... N_ELEMENTS(IDX_COLS) − 1.</p>
+        <p>IDX_VARS(0) contains the index for the column of <i>X</i> in which the group numbers are stored.</p>
+        <p>IDX_VARS(1) and IDX_VARS(2) contain the column numbers of <i>X</i> in which the frequencies and weights, respectively, are stored. Set IDX_VARS(1) to a value of −1 if there will be no column for frequencies. Set IDX_VARS(2) to a value of −1 if there will be no column for weights. Weights are rounded to the nearest integer. Negative weights are not allowed.</p>
+        <p>Defaults: </p>
+        <ul>
+            <li value="1">IDX_COLS = 0, 1, ..., <i>N_variables</i> – 1</li>
+            <li value="2">IDX_VARS(0) =   <i>N_variables</i></li>
+            <li value="3">IDX_VARS(1) = −1</li>
+            <li value="4">IDX_VARS(2) = −1</li>
+        </ul>
+        <h3 class="Keyword"><a name="MAHALANOBIS"></a>MAHALANOBIS (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size <i>N_groups</i> by <i>N_groups</i> containing the Mahalanobis distances (<i>D</i><sub>ij</sub><sup>2</sup>) between the group means. For linear discrimination, the Mahalanobis distance is computed using the pooled covariance matrix. Otherwise, the Mahalanobis distance between group means <i>i</i> and <i>j</i> is computed using the within covariance matrix for group <i>i</i> in place of the pooled covariance matrix.</p>
+        <h3 class="Keyword"><a name="MEANS"></a>MEANS (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size <i>N_groups</i> by <i>N_variables</i> containing the variable means. The <i>i</i>-th row of means contains the group <i>i</i> variable means.</p>
+        <h3 class="Keyword"><a name="METHOD"></a>METHOD (optional)</h3>
+        <p>Method of discrimination. The method chosen determines whether linear or quadratic discrimination is used, whether the group covariance matrices are computed (the pooled covariance matrix is always computed), and whether the leaving-out-one or the reclassification method is used to classify each observation. The METHOD values are shown in the following table.</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Method</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Discrimination method</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Covariances computed</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Classification method</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>1 (default)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>linear</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>pooled, group</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>reclassification</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>quadratic</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>pooled, group</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>reclassification</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>linear</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>pooled</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>reclassification</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>linear</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>pooled, group</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>leaving-out-one</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>quadratic</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>pooled, group</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>leaving-out-one</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>6</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>linear</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>pooled</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>leaving-out-one</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>In the leaving-out-one method of classification, the posterior probabilities are adjusted so as to eliminate the effect of the observation from the sample statistics prior to its classification. In the classification method, the effect of the observation is not eliminated from the classification function.</p>
+        <h3 class="Keyword"><a name="NMISSING"></a>NMISSING (optional)</h3>
+        <p>Named variable into which the number of rows of data encountered containing missing values (NaN) for the classification, group, weight, and/or frequency variables is stored. If a row of data contains a missing value (NaN) for any of these variables, that row is excluded from the computations.</p>
+        <h3 class="Keyword"><a name="PRIOR_EQUAL"></a>PRIOR_EQUAL (optional)</h3>
+        <p>If present, equal prior probabilities are calculated as 1.0/<i>N_groups</i>. Keywords PRIOR_EQUAL, PRIOR_PROP, and PRIOR_INPUT must not be used together.</p>
+        <h3 class="Keyword"><a name="PRIOR_INPUT"></a>PRIOR_INPUT (optional)</h3>
+        <p>If present, an array of length <i>N_groups</i> containing the prior probabilities for each group, such that the sum of all prior probabilities is equal to 1.0. Keywords PRIOR_EQUAL, PRIOR_PROP, and PRIOR_INPUT must not be used together.</p>
+        <p>Common choices for the Bayesian prior probabilities are given by:</p>
+        <ul>
+            <li value="1">Prior_Input(i) =  1.0/<i>N_groups</i>   (equal priors)</li>
+            <li value="2">Prior_Input(i) =  GROUP_COUNTS/<i>N_rows</i>   (proportional priors)</li>
+            <li value="3">Prior_Input(i) =  Past history or subjective judgment</li>
+        </ul>
+        <p>In all cases, the priors should sum to 1.0.</p>
+        <h3 class="Keyword"><a name="PRIOR_OUTPUT"></a>PRIOR_OUTPUT (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length <i>N_groups</i> containing the most recently calculated or input prior probabilities.</p>
+        <h3 class="Keyword"><a name="PRIOR_PROP"></a>PRIOR_PROP (optional)</h3>
+        <p>If present, prior probabilities are calculated to be proportional to the sample size in each group. Keywords PRIOR_EQUAL, PRIOR_PROP, and PRIOR_INPUT must not be used together.</p>
+        <h3 class="Keyword"><a name="PROB"></a>PROB (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size <i>N_rows</i> by <i>N_groups</i> containing the posterior probabilities for each observation.</p>
+        <h3 class="Keyword"><a name="STATS"></a>STATS (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length 4 + 2 * (<i>N_groups</i> + 1) containing various statistics of interest. </p>
+        <p>The first element is the sum of the degrees of freedom for the within-covariance matrices. The second, third, and fourth elements correspond to the chi-squared statistic, its degrees of freedom, and the probability of a greater chi-squared, respectively, of a test of the homogeneity of the within-covariance matrices (not computed if METHOD is set to 3 or 6). </p>
+        <p>The fifth through 5 + <i>N_groups</i> elements contain the log of the determinants of each group’s covariance matrix (not computed if METHOD is set to 3 or 6) and of the pooled covariance matrix (element 4 + <i>N_groups</i>). Finally, the last <i>N_groups</i> + 1 elements contain the sum of the weights within each group, and in the last position, the sum of the weights in all groups.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: S">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SHIFT </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="S_list.htm">Routines: S</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">SHIFT</span>
+        </div>
+        <h1 class="Routine"><a name="S_820040301_678824"></a><a name="kanchor2572"></a><a name="S_820040301_56933"></a><a name="kanchor2573"></a>SHIFT </h1>
+        <p>The SHIFT function shifts elements of vectors or arrays along any dimension by any number of elements. Positive shifts are to the right while left shifts are expressed as a negative number. All shifts are circular.</p>
+        <p>Elements shifted off one end wrap around and are shifted onto the other end. In the case of vectors the action of SHIFT can be expressed:</p>
+        <p class="indent">Result<sub class="italic">(i + s) modulation</sub> = Array<sub><i>i</i></sub>&#160;&#160;for&#160;&#160;(0 ≤ 1 &lt; <i>n</i>)</p>
+        <p>where <i>s</i> is the amount of the shift, and <i>n</i> is the number of elements in the array.</p>
+        <h2 class="API">Examples</h2>
+        <p>The following example demonstrates using SHIFT with a vector. by entering:</p>
+        <p class="Code">A = INDGEN(5)<br /><br />; Print the original vector, the vector shifted one position to the <br />; right, and the vector shifted one position to the left:<br />PRINT, A, SHIFT(A, 1), SHIFT(A, -1)</p>
+        <p>IDL prints:</p>
+        <p class="Code">&#160;&#160;0 &#160;&#160;1 &#160;&#160;2 &#160;&#160;3 &#160;&#160;4</p>
+        <p class="Code">&#160;&#160;4 &#160;&#160;0&#160;&#160; 1&#160;&#160; 2&#160;&#160; 3</p>
+        <p class="Code">&#160;&#160;1&#160;&#160; 2&#160;&#160; 3&#160;&#160; 4&#160;&#160; 0</p>
+        <p>Notice how elements of the vector that shift off the end wrap around to the other end. This “wrap around” occurs when shifting arrays of any dimension.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = SHIFT(<i>Array</i>, <i>S<sub>1</sub></i>, ..., <i>S<sub>n</sub></i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>The result is a vector or array of the same structure and type as <i>Array</i>. </p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Array</h3>
+        <p>The array to be shifted.</p>
+        <h3 class="Argument">S<sub><i>i</i></sub></h3>
+        <p>The shift parameters. The <i>S<sub>i</sub></i> arguments can be either a single array containing the shift parameters for each dimension, or a sequence of up to eight scalar shift values. For arrays of more than one dimension, the parameter <i>S<sub>n</sub></i> specifies the shift applied to the <i>n</i>-th dimension. <i>S<sub>1</sub></i> specifies the shift along the first dimension and so on. If only one shift parameter is present and the parameter is an array, the array is treated as a vector (i.e., the array is treated as having one-dimensional subscripts).</p>
+        <p>A shift specification of 0 means that no shift is to be performed along that dimension.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>Original</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="S_820040301_1110297"></a><a name="S_820040301_1110297_PageTOC_SHIFT_"></a>See Also</h2>
+        <p><a href="../I/ISHFT.htm">ISHFT</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

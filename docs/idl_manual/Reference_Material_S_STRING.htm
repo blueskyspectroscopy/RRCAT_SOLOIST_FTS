@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: S">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>STRING </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="S_list.htm">Routines: S</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">STRING</span>
+        </div>
+        <h1 class="Routine"><a name="S_820040301_679053"></a><a name="S_820040301_79752"></a><a name="kanchor2667"></a>STRING </h1>
+        <p>The STRING function returns its arguments converted to string type. It is similar to the PRINT procedure, except that its output is placed in a string rather than being output to the console.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>Once an IDL string is created, you can use any of the <a href="../Static Methods/IDL_String.htm">IDL_String methods</a> on that variable.</p>
+        <h2 class="API">Examples</h2>
+        <p>To convert the contents of variable A to string type and store the result in variable B, enter:</p>
+        <p class="Code">B = STRING(A)</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = STRING( <i>Expression<sub>1</sub></i>, ..., <i>Expression<sub>n</sub></i> [,&#160;<a href="#S_820040301_1015738" class="selected">AM_PM</a>=<i>[string</i>, <i>string]</i>] [,&#160;<a href="#S_820040301_1015740" class="selected">DAYS_OF_WEEK</a>=<i>string_array</i>{7 names}] [,&#160;<a href="#S_820040301_1015736" class="selected">FORMAT</a>=<i>value</i>] [, /<a href="#IMPLIED_PRINT" class="selected">IMPLIED_PRINT</a>]  [,&#160;<a href="#S_820040301_1015759" class="selected">MONTHS</a>=<i>string_array</i>{12 names}] [,&#160;/<a href="#S_820040301_679063" class="selected">PRINT</a>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>Returns a string value or array of the same dimensions as <i>Expression.</i></p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If <i>Expression</i> includes complex numbers, STRING returns strings of the format <code>(real, complex)</code> unless FORMAT is specified.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If <i>Expression</i> is a byte array and the FORMAT keyword is not specified, then the bytes will automatically be concatenated into a scalar string using the corresponding ASCII values. See <a href="#S_820040301_679065" class="selected">Differences Between STRING and PRINT</a> for details.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If <i>Expression</i> is a byte array that contains a null (zero) value, the resulting string will be truncated at that position.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If multiple expressions are provided, the result will be a string array with the same dimensions as the last expression, where all of the previous expressions are concatenated together. However, if the combined length of the expressions is greater than the current width of your tty or command log window, STRING will create a string array with one element for each expression, rather than concatenating all expressions into a single string. In this case it is preferable to use the FORMAT keyword.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Expression<i><sub>n</sub></i></h3>
+        <p>The expressions to be converted to string type.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="S_820040301_1015738"></a><a name="S_820040301_1015738_Keywords_STRING__"></a>AM_PM</h3>
+        <p>Supplies a string array of 2 names to be used for the names of the AM and PM string when processing explicitly formatted dates (CAPA, CApA, and CapA format codes) with the FORMAT keyword.</p>
+        <h3 class="Keyword"><a name="S_820040301_1015740"></a><a name="S_820040301_1015740_Keywords_STRING__"></a>DAYS_OF_WEEK</h3>
+        <p>Supplies a string array of 7 names to be used for the names of the days of the week when processing explicitly formatted dates (CDWA, CDwA, and CdwA format codes) with the FORMAT keyword.</p>
+        <h3 class="Keyword"><a name="S_820040301_1015736"></a><a name="S_820040301_1015736_Keywords_STRING__"></a>FORMAT</h3>
+        <p>A format string to be used in formatting the expressions. See <a href="../../Creating IDL Programs/Components of the IDL Language/Using_Explicitly_Formatt.htm">Using Formatted Input/Output</a>.</p>
+        <h3 class="Keyword"><a name="IMPLIED_PRINT"></a>IMPLIED_PRINT</h3>
+        <p>Set this keyword to format the result using the same formatting rules as <a href="../../Creating IDL Programs/Components of the IDL Language/ImpliedPrint.htm">Implied Print</a>.</p>
+        <h3 class="Keyword"><a name="S_820040301_1015759"></a><a name="S_820040301_1015759_Keywords_STRING__"></a>MONTHS</h3>
+        <p>Supplies a string array of 12 names to be used for the names of the months when processing explicitly formatted dates (CMOA, CMoA, and CmoA format codes) with the FORMAT keyword.</p>
+        <h3 class="Keyword"><a name="S_820040301_679063"></a><a name="S_820040301_679063_Keywords_STRING__"></a>PRINT</h3>
+        <p>Set this keyword to specify that any special processing for byte data should be ignored and that STRING should behave exactly as the PRINT procedure would.</p>
+        <h2 class="API"><a name="S_820040301_679065"></a><a name="S_820040301_679065_PageTOC_STRING_"></a>Differences Between STRING and PRINT</h2>
+        <p>The behavior of STRING differs from the behavior of the PRINT procedure in the following ways (unless the PRINT keyword is set):</p>
+        <ul>
+            <li value="1">When called with a single non-byte argument and no format specification, STRING returns a result that has the same dimensions as the original argument. For example, the statement:</li>
+        </ul>
+        <p class="Code_Indented">HELP, STRING(INDGEN(5))</p>
+        <p class="indent">gives the result:</p>
+        <p class="Code_Indented">&lt;Expression&gt; STRING = Array[5]</p>
+        <p class="indent">while:</p>
+        <p class="Code_Indented">HELP, STRING(INDGEN(5), /PRINT)</p>
+        <p class="indent">results in:</p>
+        <p class="Code_Indented">&lt;Expression&gt; STRING =' 0 1 2 3 4'</p>
+        <ul>
+            <li value="1">If called with a single argument of byte type and the FORMAT keyword is not used, STRING simply stores the unmodified values of each byte element in the result. This result is a string containing the byte values from the original argument. Thus, the result has one less dimension than the original argument. For example, a 2-dimensional byte array becomes a vector of strings, a byte vector becomes a scalar string. However, a byte scalar also becomes a string scalar. For example, the statement:</li>
+        </ul>
+        <p class="Code_Indented">PRINT, STRING([72B, 101B, 108B, 108B, 111B])</p>
+        <p class="indent">produces the output<code> Hello </code>because the argument to STRING, is a byte vector. Its first element is a 72B which is the ASCII code for “H”, the second is 101B which is an ASCII “e”, and so forth.</p>
+        <ul>
+            <li value="1">If both the FORMAT and PRINT keywords are not present and STRING is called with more than one argument, and the last argument is a scalar string starting with the characters “$(” or “(”, this final argument is taken to be the format specification, just as if it had been specified via the FORMAT keyword. This feature is maintained for compatibility with version 1 of VMS IDL.</li>
+        </ul>
+        <h2 class="API">IDL_String Methods</h2>
+        <ul>
+            <li value="1"><a href="../Static Methods/IDL_String.htm#CapWords">CapWords</a>: Capitalize any words contained within the string.</li>
+            <li value="2"><a href="../Static Methods/IDL_String.htm#CharAt">CharAt</a>: Returns the character at the supplied index.</li>
+            <li value="3"><a href="../Static Methods/IDL_String.htm#Compress">Compress</a>: Removes all white space.</li>
+            <li value="4"><a href="../Static Methods/IDL_String.htm#Contains">Contains</a>: Returns true if the string contains a given substring.</li>
+            <li value="5"><a href="../Static Methods/IDL_String.htm#EndsWith">EndsWith</a>: Returns true if the string ends with the given string.</li>
+            <li value="6"><a href="../Static Methods/IDL_String.htm#Extract">Extract</a>: Returns part of the string using a regular expression.</li>
+            <li value="7"><a href="../Static Methods/IDL_String.htm#IndexOf">IndexOf</a>: Returns the index of a character or substring.</li>
+            <li value="8"><a href="../Static Methods/IDL_String.htm#Insert">Insert</a>: Inserts another string.</li>
+            <li value="9"><a href="../Static Methods/IDL_String.htm#Join">Join</a>: Combines multiple strings into a single string.</li>
+            <li value="10"><a href="../Static Methods/IDL_String.htm#LastIndexOf">LastIndexOf</a>: Returns the last index of a character or substring.</li>
+            <li value="11"><a href="../Static Methods/IDL_String.htm#Matches">Matches</a>: Returns true if the string matches a regular expression.</li>
+            <li value="12"><a href="../Static Methods/IDL_String.htm#Remove">Remove</a>: Remove part of a string.</li>
+            <li value="13"><a href="../Static Methods/IDL_String.htm#Replace">Replace</a>: Replaces text within the string.</li>
+            <li value="14"><a href="../Static Methods/IDL_String.htm#Reverse">Reverse</a>: Reverse a string.</li>
+            <li value="15"><a href="../Static Methods/IDL_String.htm#Split">Split</a>: Split into substrings using a regular expression.</li>
+            <li value="16"><a href="../Static Methods/IDL_String.htm#StartsWith">StartsWith</a>: Returns true if the string starts with the given string.</li>
+            <li value="17"><a href="../Static Methods/IDL_String.htm#StrLen">Strlen</a>: Returns the string length.</li>
+            <li value="18"><a href="../Static Methods/IDL_String.htm#Substring">Substring</a>: Returns part of a string.</li>
+            <li value="19"><a href="../Static Methods/IDL_String.htm#ToByte">ToByte</a>: Converts to a byte array.</li>
+            <li value="20"><a href="../Static Methods/IDL_String.htm#ToLower">ToLower</a>: Convert all characters to lowercase.</li>
+            <li value="21"><a href="../Static Methods/IDL_String.htm#ToUpper">ToUpper</a>: Convert all characters to uppercase.</li>
+            <li value="22"><a href="../Static Methods/IDL_String.htm#Trim">Trim</a>: Removes leading and trailing white space.</li>
+        </ul>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>Original</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../../Creating IDL Programs/Components of the IDL Language/String_Operations.htm">String Operations</a>, <a href="../Functional List of IDL Routines/String_Processing.htm">String Processing</a>, <a href="../Static Methods/IDL_String.htm">IDL_String</a>, <a href="../B/BYTE.htm">BYTE</a>, <a href="../C/COMPLEX.htm">COMPLEX</a>, <a href="../D/DCOMPLEX.htm">DCOMPLEX</a>, <a href="../D/DOUBLE.htm">DOUBLE</a>, <a href="../F/FIX.htm">FIX</a>, <a href="../F/FLOAT.htm">FLOAT</a>, <a href="../L/LONG.htm#L_826528365_928337">LONG</a>, <a href="../L/LONG64.htm#L_826528365_918926">LONG64</a>, <a href="../P/PRINT.htm#P_817877613_1152289">PRINT/PRINTF</a>, <a href="../U/UINT.htm#U_807064173_950191">UINT</a>, <a href="../U/ULONG.htm#U_807064173_950523">ULONG</a>, <a href="../U/ULONG64.htm#U_807064173_950582">ULONG64</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

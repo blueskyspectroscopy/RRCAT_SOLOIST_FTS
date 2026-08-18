@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_KELVIN_BER0</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_KELVIN_BER0</span>
+        </div>
+        <h1 class="Routine">IMSL_KELVIN_BER0</h1>
+        <p>The IMSL_KELVIN_BER0 function evaluates the Kelvin function of the first kind, ber, of order zero.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The Kelvin function ber<sub>0</sub>(<i>x</i>) is defined to be <span style="font-family: Symbol; font-style: normal">¬</span><i>J</i><sub>0</sub>(<i>xe</i><sup>3</sup><span style="font-family: Symbol">p</span><sup>i/4</sup>). The Bessel function J<sub>0</sub>(<i>x</i>) is defined:</p>
+        <p>
+            <img src="images/IMSL_KELVIN_BER0-44.jpg" />
+        </p>
+        <p>If the keyword DERIVATIVE is set, the function ber<sub>0</sub>′(<i>x</i>) is defined to be:</p>
+        <p>
+            <img src="images/IMSL_KELVIN_BER0-45.jpg" />
+        </p>
+        <p>If |<i>x</i>| &gt; 119, NaN is returned.</p>
+        <p>The IMSL_KELVIN_BER0 function is based on the work of Burgoyne (1963).</p>
+        <h2 class="API">Example</h2>
+        <p>In this example, ber0 (0.4) and ber0′ (0.6) are evaluated.</p>
+        <p class="Code">PRINT, IMSL_KELVIN_BER0(0.4)</p>
+        <p class="Code_Indented">0.999600</p>
+        <p class="Code">PRINT, IMSL_KELVIN_BER0(0.6, /DERIVATIVE)</p>
+        <p class="Code_Indented">-0.0134985</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_KELVIN_BER0(<i>X</i> [, <a href="#DERIVATIVE" class="selected">DERIVATIVE</a>=<i>value</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The value of the Kelvin function of the first kind, ber, of order zero evaluated at <i>x</i>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>Argument for which the function value is desired.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DERIVATIVE"></a>DERIVATIVE (optional)</h3>
+        <p>If present and nonzero, then the derivative of the Kelvin function of the first kind, ber, of order zero evaluated at <i>x</i> is computed.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_KELVIN_BEI0.htm">IMSL_KELVIN_BEI0</a>, <a href="IMSL_KELVIN_KEI0.htm">IMSL_KELVIN_KEI0</a>, <a href="IMSL_KELVIN_KER0.htm">IMSL_KELVIN_KER0</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

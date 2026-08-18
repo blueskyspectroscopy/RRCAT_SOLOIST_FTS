@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_PARTIAL_COV</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_PARTIAL_COV</span>
+        </div>
+        <h1 class="Routine">IMSL_PARTIAL_COV</h1>
+        <p>The IMSL_PARTIAL_COV function computes partial covariances or partial correlations from the covariance or correlation matrix.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_PARTIAL_COV function computed partial covariances or partial correlations from an input covariance or correlation matrix. If the independent variables (the linear effect of the independent variables is removed in computing the partial covariances/correlations) are linearly related to one another, IMSL_PARTIAL_COV detects the linearity and eliminates one or more of the independent variables from the list of independent variables. The number of variables eliminated, if any, can be determined from keyword DF.</p>
+        <p>Given a covariance or correlation matrix Σ partitioned as:</p>
+        <p>
+            <img src="images/IMSL_PARTIAL_COV-11.jpg" />
+        </p>
+        <p>IMSL_PARTIAL_COV computed the partial covariances (of the standardized variables if Σ is a correlation matrix) as:</p>
+        <p>
+            <img src="images/IMSL_PARTIAL_COV-12.jpg" />
+        </p>
+        <p>If partial correlations are desired, these are computed as:</p>
+        <p>
+            <img src="images/IMSL_PARTIAL_COV-13.jpg" />
+        </p>
+        <p>where <i>diag</i> denotes the matrix containing the diagonal of its argument along its diagonal with zeros off the diagonal. If Σ11 is singular, then as many variables as required are deleted from Σ<sub>11</sub> (and Σ<sub>12</sub>) in order to eliminate the linear dependencies. The computations then proceed as above.</p>
+        <p>The <i>p</i>-value for a partial covariance tests the null hypothesis H<sub>0</sub>: σ<sub style="font-style: italic">ij</sub><sub>|1</sub> = 0, where σ<sub style="font-style: italic">ij</sub><sub>|1</sub> is the (<i>i</i>, <i>j</i>) element in matrix Σ<sub>22|1</sub>. The <i>p</i>-value for a partial correlation tests the null hypothesis H<sub>0</sub>: <span style="font-family: Symbol; font-style: normal" class="cSymbol">r</span><sub style="font-style: italic">ij</sub><sub>|1</sub> = 0, where <span style="font-family: Symbol; font-style: normal" class="cSymbol">r</span><sub style="font-style: italic">ij</sub><sub>|1</sub> is the (<i>i</i>, <i>j</i>) element in matrix P<sub>22|1</sub>. The p-values are returned in PVALS. If the degrees of freedom for <i>x</i>, DF, is not known, the resulting p-values may be useful for comparison, but they should not be used as an approximation to the actual probabilities.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The following example computes partial covariances, scaled from a nine-variable correlation matrix originally given by Emmett (1949). The first three rows and columns contain the independent variables and the final six rows and columns contain the dependent variables.</p>
+        <p class="Code">x	=	TRANSPOSE([ $</p>
+        <p class="Code_Indented">[6.300, 3.050, 1.933, 3.365, 1.317, 2.293, 2.586, 1.242, $</p>
+        <p class="Code_Indented">4.363], [3.050, 5.400, 2.170, 3.346, 1.473, 2.303, 2.274, $</p>
+        <p class="Code_Indented">0.750, 4.077], [1.933, 2.170, 3.800, 1.970, 0.798, 1.062, $</p>
+        <p class="Code_Indented">1.576, 0.487, 2.673], [3.365, 3.346, 1.970, 8.100, 2.983, $</p>
+        <p class="Code_Indented">4.828, 2.255, 0.925, 3.910], [1.317, 1.473, 0.798, 2.983, $</p>
+        <p class="Code_Indented">2.300, 2.209, 1.039, 0.258, 1.687], [2.293, 2.303, 1.062, $</p>
+        <p class="Code_Indented">4.828, 2.209, 4.600, 1.427, 0.768, 2.754], [2.586, 2.274, $</p>
+        <p class="Code_Indented">1.576, 2.255, 1.039, 1.427, 3.200, 0.785, 3.309], [1.242, $</p>
+        <p class="Code_Indented">0.750, 0.487, 0.925, 0.258, 0.768, 0.785, 1.300, 1.458], $</p>
+        <p class="Code_Indented">[4.363, 4.077, 2.673, 3.910, 1.687, 2.754, 3.309, 1.458, $</p>
+        <p class="Code_Indented">7.400]])</p>
+        <p class="Code">pcov	=	IMSL_PARTIAL_COV(3, 6, x)</p>
+        <p class="Code">PM, pcov, FORMAT = '(6F10.3)', Title = 'Partial Covariances'</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_PARTIAL_COV_print1.png" />
+        </p>
+        <h3>Example 2</h3>
+        <p>The following example computes partial correlations from a 9 variable correlation matrix originally given by Emmett (1949). The partial correlations between the remaining variables, after adjusting for variables 1, 3 and 9, are computed.</p>
+        <p class="Code">x = TRANSPOSE([ $</p>
+        <p class="Code_Indented">[1.0, 0.523, 0.395, 0.471, 0.346, 0.426, 0.576, 0.434, $</p>
+        <p class="Code_Indented">0.639], [0.523, 1.0, 0.479, 0.506, 0.418, 0.462, 0.547, $</p>
+        <p class="Code_Indented">0.283, 0.645], [0.395, 0.479, 1.0, 0.355, 0.27, 0.254, $</p>
+        <p class="Code_Indented">0.452, 0.219, 0.504], [0.471, 0.506, 0.355, 1.0, 0.691, $</p>
+        <p class="Code_Indented">0.791, 0.443, 0.285, 0.505], [0.346, 0.418, 0.27, 0.691, $</p>
+        <p class="Code_Indented">1.0, 0.679, 0.383, 0.149, 0.409], [0.426, 0.462, 0.254, $</p>
+        <p class="Code_Indented">0.791,	0.679,	1.0, 0.372, 0.314, 0.472], [0.576, 0.547, $</p>
+        <p class="Code_Indented">0.452,	0.443,	0.383, 0.372, 1.0, 0.385, 0.68], [0.434, $</p>
+        <p class="Code_Indented">0.283,	0.219,	0.285, 0.149, 0.314, 0.385, 1.0, 0.47], $</p>
+        <p class="Code_Indented">[0.639, 0.645, 0.504, 0.505, 0.409, 0.472, 0.68, 0.47, 1.0]])</p>
+        <p class="Code">df	=	30</p>
+        <p class="Code">indices	=	[1, 0, 1, 0, 0, 0, 0, 0, 1]</p>
+        <p class="Code">pcov	=	IMSL_PARTIAL_COV(3, 6, x, Indices = indices, Df = df, $</p>
+        <p class="Code_Indented">Pvals = pvals, /Corr)</p>
+        <p class="Code">PRINT, 'Degrees Of Freedom: ', df</p>
+        <p class="Code">PM, pcov, FORMAT = '(6F10.3)', Title = 'Partial Correlations'</p>
+        <p class="Code">PM, pvals, FORMAT = '(6F10.4)', Title = 'P values'</p>
+        <p>IDL Prints:</p>
+        <p>
+            <img src="images/IMSL_PARTIAL_COV_print2.png" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_NO_HYP_TESTS: The input matrix “x” has # degrees of freedom, and the rank of the dependent variables is #. There are not enough degrees of freedom for hypothesis testing. The elements of PVALS are set to NaN (not a number).</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_INVALID_MATRIX_1: The input matrix “x” is incorrectly specified. A computed correlation is greater than 1 for variables # and #.</p>
+        <p>STAT_INVALID_PARTIAL: A computed partial correlation for variables # and # is greater than 1. The input matrix “x” is not positive semi-definite.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_PARTIAL_COV(<i>N_Independent, N_Dependent, X</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, /<a href="#CORR" class="selected">CORR</a>] [, /<a href="#COV" class="selected">COV</a>] [, <a href="#DF" class="selected">DF</a>=integer] [, <a href="#INDICES" class="selected">INDICES</a>=<i>array</i>] [, /<a href="#PVALS" class="selected">PVALS</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>Array of size <i>N_Dependent</i> by <i>N_Dependent</i> containing the partial covariances (the default) or partial correlations (set keyword CORR).</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N_Dependent</h3>
+        <p>Number of variables for which partial covariances/correlations are desired (the number of “dependent” variables).</p>
+        <h3 class="Argument">N_Independent</h3>
+        <p>Number of “independent” variables to be used in the partial covariances/correlations. The partial covariances/correlations are the covariances/correlations between the dependent variables after removing the linear effect of the independent variables.</p>
+        <h3 class="Argument">X</h3>
+        <p>The n by n covariance or correlation matrix, where n = <i>N_Independent</i> + <i>N_Dependent</i>. The rows/columns must be ordered such that the first <i>N_Independent</i> rows/columns contain the independent variables, and the last <i>N_Dependent</i> rows/columns contain the dependent variables. Array x must always be square symmetric.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="CORR"></a>CORR (optional)</h3>
+        <p>If present and nonzero, then partial correlations are calculated. The keywords COV and CORR can not be used together.</p>
+        <h3 class="Keyword"><a name="COV"></a>COV (optional)</h3>
+        <p>If present and nonzero, then partial covariances are calculated. (Default) The keywords COV and CORR can not be used together.</p>
+        <h3 class="Keyword"><a name="DF"></a>DF (optional)</h3>
+        <p>On input, an integer indicating the number of degrees of freedom associated with input array x. If the number of degrees of freedom in x varies from element to element, then a conservative choice for DF is the minimum degrees of freedom for all elements in x.</p>
+        <p>Upon output, named variable into which the number of degrees of freedom in the test that the partial covariances/correlations are zero is stored. This value will usually be DF − <i>N_Independent</i>, but will be greater than this value if the independent variables are computationally linearly related. The keywords DF and PVALS must be used together.</p>
+        <h3 class="Keyword"><a name="INDICES"></a>INDICES (optional)</h3>
+        <p>An array containing values indicating the status of the variable, as follows:</p>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Indices(<i>i</i>)</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Variable is...</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>−1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>	Not used in analysis</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Dependent variable</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>Independent variable</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>	Default: The first <i>N_Independent</i> elements of Indices are equal to 1, and the last <i>N_Dependent</i> elements are equal to 0.</p>
+        <h3 class="Keyword"><a name="PVALS"></a>PVALS (optional)</h3>
+        <p>Named variable into which an array of size <i>N_Dependent</i> by <i>N_Dependent</i> containing the p-values for testing the null hypothesis that the associated partial covariance/correlation is zero is stored. It is assumed that the observations from which <i>x</i> was computed flows a multivariate normal distribution and that each element in <i>x</i> has DF degrees of freedom. The keywords DF and PVALS must be used together.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

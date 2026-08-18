@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: T">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>TRUNCATE_LUN </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="T_list.htm">Routines: T</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">TRUNCATE_LUN</span>
+        </div>
+        <h1 class="Routine"><a name="T_809226861_1089667"></a><a name="kanchor2803"></a><a name="T_809226861_69440"></a>TRUNCATE_LUN </h1>
+        <p>The TRUNCATE_LUN procedure truncates the contents of a file (which must be open for write access) at the current position of the file pointer. After this operation, all data before the current file pointer remains intact, and all data following the file pointer are gone. The position of the current file pointer is not altered.<a name="kanchor2804"></a></p>
+        <h2 class="API">Examples</h2>
+        <h3><a name="T_809226861_1098419_Keywords_TRUNCATE_LUN__"></a>Example 1</h3>
+        <p>Truncate the entire contents of an existing file:</p>
+        <p class="Code">OPENU, unit, 'baddata.dat', /GET_LUN</p>
+        <p class="Code">TRUNCATE_LUN, unit</p>
+        <p class="Code">FREE_LUN, unit</p>
+        <h3><a name="T_809226861_1098424_Keywords_TRUNCATE_LUN__"></a>Example 2</h3>
+        <p>Given an existing file of 10,000 bytes, throw away the final 5,000 bytes, and then write an additional 2,000 byte array in their place. The resulting file will be 7,000 bytes in length.</p>
+        <p class="Code">OPENU, unit, 'mydata.dat', /GET_LUN</p>
+        <p class="Code">POINT_LUN, unit, 5000</p>
+        <p class="Code">TRUNCATE_LUN, unit</p>
+        <p class="Code">WRITEU, unit, BYTARR(2000)</p>
+        <p class="Code">FREE_LUN, unit</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">TRUNCATE_LUN, <i>Unit<sub>1</sub></i>, ..., <i>Unit<sub>n</sub></i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Unit<i><sub>n</sub></i></h3>
+        <p>Scalar or array variables containing the logical file unit numbers of the open files to be truncated.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>5.6</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../G/GET_LUN.htm">GET_LUN</a>, <a href="../O/OPEN.htm#O_828691053_932624">OPENR/OPENU/OPENW</a>, <a href="../P/POINT_LUN.htm#P_817877613_678184">POINT_LUN</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

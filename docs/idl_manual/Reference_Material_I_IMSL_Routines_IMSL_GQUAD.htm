@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_GQUAD</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_GQUAD</span>
+        </div>
+        <h1 class="Routine">IMSL_GQUAD</h1>
+        <p>The IMSL_GQUAD procedure computes a Gauss, Gauss-Radau, or Gauss-Lobatto quadrature rule with various classical weight functions.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_GQUAD procedure produces the points and weights for the Gauss, Gauss-Radau, or Gauss-Lobatto quadrature formulas for some of the most popular weights. The default weight is the weight function identically equal to 1 on the interval (–1, 1). In fact, it is slightly more general than this suggests because the extra one or two points that can be specified do not have to lie at the endpoints of the interval. This procedure is a modification of the subroutine GAUSSQUADRULE (Golub and Welsch 1969).</p>
+        <p>In the default case, the procedure returns points in <i>x</i> = <i>Points</i> and weights in <i>w = Weights</i> so that:</p>
+        <p>
+            <img src="images/IMSL_GQUAD-47.jpg" />
+        </p>
+        <p>for all functions <i>f</i> that are polynomials of degree less than 2<i>N</i>.</p>
+        <p>If the keyword FIXED_POINTS is specified, then one or two of the above <i>x</i><sub>i</sub> is equal to the values specified by FIXED_POINTS. In general, the accuracy of the above quadrature formula degrades when n increases. The quadrature rule integrates all functions <i>f</i> that are polynomials of degree less than 2<i>N</i> – <i>F</i>, where <i>F</i> is the number of fixed points.</p>
+        <h2 class="API">Example</h2>
+        <p>This example computes the three-point Gauss Legendre quadrature points and weights, then uses them to approximate the integrals as follows:</p>
+        <p>
+            <img src="images/IMSL_GQUAD-48.jpg" />
+        </p>
+        <p>Notice that the integrals are exact for the first six monomials, but the last approximation is in error. In general, the Gauss rules with <i>k</i>-points integrate polynomials with degree less than 2<i>k</i> exactly.</p>
+        <p class="Code">IMSL_GQUAD, 3, weights, points</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_GQUAD to get the weights and points. </p>
+        <p class="Code">error = FLTARR(7)</p>
+        <p class="Code">; Define an array to hold the errors. </p>
+        <p class="Code">FOR i = 0, 6 DO error(i) = $</p>
+        <p class="Code">&#160;&#160;(TOTAL(weights*(points^i))-(1-(i MOD 2))*2./(i+1))</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Compute the errors for seven monomials. </p>
+        <p class="Code">PM, 'Error:', error</p>
+        <p>IDL prints:</p>
+        <p class="Code">Error:</p>
+        <p class="Code">-2.38419e-07</p>
+        <p class="Code">&#160;2.68221e-07</p>
+        <p class="Code">-5.96046e-08</p>
+        <p class="Code">&#160;2.08616e-07</p>
+        <p class="Code">&#160;2.98023e-08</p>
+        <p class="Code">&#160;1.78814e-07</p>
+        <p class="Code">-0.0457142</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_GQUAD, <i>n</i>, <i>Weights</i>, <i>Points</i> [, /<a href="#CHEBY_FIRST" class="selected">CHEBY_FIRST</a>] [, /<a href="#CHEBY_SECOND" class="selected">CHEBY_SECOND</a>] [, /<a href="#COSH" class="selected">COSH</a>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, /<a href="#HERMITE" class="selected">HERMITE</a>] [, <a href="#JACOBI" class="selected">JACOBI</a>=<i>vector</i>] [, <a href="#LAGUERRE" class="selected">LAGUERRE</a>=<i>parameter</i>] [, <a href="#FIXED_POINTS" class="selected">FIXED_POINTS</a>=<i>vector</i>]</p>
+        <h2 class="API">Return Value</h2>
+        <p>See the discussion above for the returned value.</p>
+        <p>If no value can be computed, the floating-point value NaN (Not a Number) is returned.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N</h3>
+        <p>The number of quadrature points.</p>
+        <h3 class="Argument">Weights</h3>
+        <p>A named variable in the form of an array of length <i>n</i> containing the quadrature weights.</p>
+        <h3 class="Argument">Points</h3>
+        <p>A named variable in the form of an array of length <i>n</i> containing quadrature points. The default action of this routine is to produce the Gauss Legendre points and weights.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CHEBY_FIRST"></a>CHEBY_FIRST (optional)</h3>
+        <p>Set this keyword to compute the Gauss points and weights using the weight function:</p>
+        <p>
+            <img src="images/IMSL_GQUAD-43.jpg" />
+        </p>
+        <p>on the interval (–1, 1).</p>
+        <h3 class="Keyword"><a name="CHEBY_SECOND"></a>CHEBY_SECOND (optional)</h3>
+        <p>Set this keyword to compute the Gauss points and weights using the weight function:</p>
+        <p>
+            <img src="images/IMSL_GQUAD-44.jpg" />
+        </p>
+        <p>on the interval (–1, 1).</p>
+        <h3 class="Keyword"><a name="COSH"></a>COSH (optional)</h3>
+        <p>Set this keyword to computes the Gauss points and weights using the weight function 1/cosh (<i>x</i>) on the interval (–∞, ∞).</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>Set this keyword to perform computations using double precision.</p>
+        <h3 class="Keyword"><a name="HERMITE"></a>HERMITE (optional)</h3>
+        <p>Set this keyword to compute the Gauss points and weights using the weight function exp (–<i>x</i><sup>2</sup>) on the interval (–∞, ∞).</p>
+        <h3 class="Keyword"><a name="JACOBI"></a>JACOBI (optional)</h3>
+        <p>Set this keyword equal to a two-element vector containing the parameters α and β to be used in the weight function (1 – <i>x</i> )<sup>α</sup>( 1 + <i>x</i>)<sup>β</sup> . If this keyword is present, IMSL_GQUAD computes the Gauss points and weights using the weight function (1 – <i>x</i> )<sup>α</sup>(1 + <i>x</i> )<sup>β</sup> on the interval (–1, 1).</p>
+        <h3 class="Keyword"><a name="LAGUERRE"></a>LAGUERRE (optional)</h3>
+        <p>Set this keyword equal to a scalar parameter α to be used in the weight function exp (–<i>x</i>) x<sup>α</sup>. If this keyword is present, IMSL_GQUAD computes the Gauss points and weights using the weight function exp (–<i>x</i>) <i>x</i><sup>a</sup> on the interval (0, ∞).</p>
+        <h3 class="Keyword"><a name="FIXED_POINTS"></a>FIXED_POINTS (optional)</h3>
+        <p>Set this keyword equal to a one- or two-element vector specifying the fixed points.</p>
+        <ul>
+            <li value="1">If FIXED_POINTS is a scalar or one-element vector, IMSL_GQUAD computes the Gauss-Radau points and weights using the specified weight function and the fixed point. This formula integrates polynomials of degree less than 2<i>N</i>–1 exactly.</li>
+            <li value="2">If FIXED_POINTS is a two-element vector, IMSL_GQUAD computes the Gauss-Lobatto points and weights using the specified weight function and the fixed points. This formula integrates polynomials of degree less than 2<i>N</i>–2 exactly.</li>
+        </ul>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

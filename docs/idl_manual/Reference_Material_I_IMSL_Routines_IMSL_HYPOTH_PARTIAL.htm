@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_HYPOTH_PARTIAL</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_HYPOTH_PARTIAL</span>
+        </div>
+        <h1 class="Routine">IMSL_HYPOTH_PARTIAL</h1>
+        <p>The IMSL_HYPOTH_PARTIAL function constructs an equivalent completely testable multivariate general linear hypothesis <i>H</i>β<i>U</i> = <i>G</i> from a partially testable hypothesis <i>H</i><sub>p</sub>β<i>U</i> = <i>G</i><sub>p</sub>.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Once a general linear model <i>y</i> = <i>X</i>β + ε is fitted, particular hypothesis tests are frequently of interest. If the matrix of regressors <i>X</i> is not full rank (as evidenced by the fact that some diagonal elements of the <i>R</i> matrix output from the fit are equal to zero), methods that use the results of the fitted model to compute the hypothesis sum of squares (see <a href="IMSL_HYPOTH_SCPH.htm">IMSL_HYPOTH_SCPH</a>) require specification in the hypothesis of only linear combinations of the regression parameters that are estimable. A linear combination of regression parameters <i>c</i><sup>T</sup>β is estimable if there exists some vector a such that <i>c</i><sup>T</sup> = <i>a</i><sup>T</sup><i>X</i>, i.e., <i>c</i><sup>T</sup> is in the space spanned by the rows of <i>X</i>. For a further discussion of estimable functions, see Maindonald (1984, pp. 1661168) and Searle (1971, pp. 1802188). The IMSL_HYPOTH_PARTIAL function is only useful in the case of non-full rank regression models, i.e., when the problem of estimability arises.</p>
+        <p>Peixoto (1986) noted that the customary definition of testable hypothesis in the context of a general linear hypothesis test <i>H</i>β = <i>g</i> is overly restrictive. He extended the notion of a testable hypothesis (a hypothesis composed of estimable functions of the regression parameters) to include partially testable and completely testable hypothesis. A hypothesis <i>H</i>β = <i>g</i> is partially testable if the intersection of the row space <i>H</i> (denoted by ℜ(<i>H</i>)  and the row space of <i>X</i> (ℜ(<i>X</i>)) is not essentially empty and is a proper subset of ℜ(<i>H</i>) , i.e., {0} ⊂ ℜ(<i>H</i>) ∩ ℜ(<i>X</i>) ⊂ ℜ(<i>H</i>) . A hypothesis <i>H</i>β = <i>g</i> is completely testable if {0} ⊂ ℜ(<i>H</i>) ∩ ℜ(<i>H</i>) ⊂ ℜ(<i>X</i>) .</p>
+        <p>Peixoto also demonstrated a method for converting a partially testable hypothesis to one that is completely testable so that the usual method for obtaining sums of squares for the hypothesis from the results of the fitted model can be used. The method replaces Hp in the partially testable hypothesis <i>H</i><sub>p</sub>β = <i>g</i><sub>p</sub> by a matrix <i>H</i> whose rows are a basis for the intersection of the row space of <i>H</i><sub>p</sub> and the row space of <i>X</i>. </p>
+        <p>A corresponding conversion of the null hypothesis values from <i>g</i><sub>p</sub> to <i>g</i> is also made. A sum of squares for the completely testable hypothesis can then be computed (see IMSL_HYPOTH_SCPH). The sum of squares that is computed for the hypothesis <i>H</i>β = <i>g</i> equals the difference in the error sums of squares from two fitted models; the restricted model with the partially testable hypothesis <i>H</i><sub>p</sub>β = <i>g</i><sub>p</sub> and the unrestricted model.</p>
+        <p>For the general case of the multivariate model <i>Y</i> = <i>X</i>β + ε with possible linear equality restrictions on the regression parameters, IMSL_HYPOTH_PARTIAL converts the partially testable hypothesis <i>H</i><sub>p</sub>β = <i>g</i><sub>p</sub> to a completely testable hypothesis <i>H</i>β<i>U</i> = <i>G</i>. For the case of the linear model with linear equality restrictions, the definitions of the estimable functions, nontestable hypothesis, partially testable hypothesis, and completely testable hypothesis are similar to those previously given for the unrestricted model with the exception that ℜ(<i>X</i>) is replaced by ℜ(<i>R</i>) where <i>R</i> is the upper triangular matrix based on the linear equality restrictions. The nonzero rows of <i>R</i> form a basis for the rowspace of the matrix (<i>X</i><sup>T</sup>, <i>A</i><sup>T</sup>)<sup>T</sup>. The rows of <i>H</i> form an orthonormal basis for the intersection of two subspaces; the subspace spanned by the rows of Hp and the subspace spanned by the rows of <i>R</i>. The algorithm used for computing the intersection of these two subspaces is based on an algorithm for computing angles between linear subspaces due to Björk and Golub (1973). (See also Golub and Van Loan 1983, pp. 429430). The method is closely related to a canonical correlation analysis discussed by Kennedy and Gentle (1980, pp. 561565). The algorithm is as follows:</p>
+        <ol>
+            <li value="1">Compute a <i>QR</i> factorization of:
+        
+        <p><img src="images/IMSL_HYPOTH_PARTIAL-102.jpg" /></p><p>with column permutations so that:</p><p><img src="images/IMSL_HYPOTH_PARTIAL-103.jpg" /></p><p>Here, <i>P</i><sub>1</sub> is the associated permutation matrix that is also an orthogonal matrix. Determine the rank of <i>H</i><sub>p</sub> as the number of nonzero diagonal elements of <i>R</i><sub>1</sub>, for example <i>n</i><sub>1</sub>. Partition <i>Q</i><sub>1</sub> = (<i>Q</i><sub>11</sub>, <i>Q</i><sub>12</sub>) so that <i>Q</i><sub>11</sub> is the first <i>n</i><sub>1</sub> column of <i>Q</i><sub>1</sub>. Set <a href="#RANK_HP" class="selected">RANK_HP</a> = <i>n</i>.</p></li>
+            <li value="2">Compute a <i>QR</i> factorization of the transpose of the <i>R</i> matrix (input through <i>Info_v</i>) with column permutations so that:
+        
+        <p><img src="images/IMSL_HYPOTH_PARTIAL-104.jpg" /></p></li>
+            <li value="3">Determine the rank of <i>R</i> from the number of nonzero diagonal elements of <i>R</i>, for example <i>n</i><sub>2</sub>. Partition <i>Q</i><sub>2</sub> = (<i>Q</i><sub>21</sub>, <i>Q</i><sub>22</sub>) so that <i>Q</i><sub>21</sub> is the first <i>n</i><sub>2</sub> columns of <i>Q</i><sub>2</sub>.</li>
+            <li value="4">Form:
+        <p><img src="images/IMSL_HYPOTH_PARTIAL-105.jpg" /></p></li>
+            <li value="5">Compute the singular values of <i>A</i>:
+		
+		<p><img src="images/IMSL_HYPOTH_PARTIAL-106.jpg" /></p><p>and the left singular vectors <i>W</i> of the singular value decomposition of <i>A</i> so that:</p><p><img src="images/IMSL_HYPOTH_PARTIAL-107.jpg" /></p><p>If σ<sub>1</sub> &lt; 1, then the dimension of the intersection of the two subspaces is <i>s</i> = 0. Otherwise, assume the dimension of the intersection to be s if σ<sub>s</sub> = 1 &gt; σ<sub>s</sub>+1. Set <i>nh</i> = <i>s</i>.</p></li>
+            <li value="6">Let <i>W</i><sub>1</sub> be the first <i>s</i> columns of <i>W</i>. Set <i>H</i> = (<i>Q</i><sub>1</sub><i>W</i><sub>1</sub>)<sup>T</sup>.</li>
+            <li value="7">Assume <i>R</i><sub>11</sub> to be a <i>nhp</i> by <i>nhp</i> matrix related to <i>R</i><sub>1</sub> as follows: If <i>nhp</i> &lt; <i>n_parameters</i>, <i>R</i><sub>11</sub> equals the first <i>nhp</i> rows of <i>R</i><sub>1</sub>. Otherwise, <i>R</i><sub>11</sub> contains <i>R</i><sub>1</sub> in its first <i>n_parameters</i> rows and zeros in the remaining rows. Compute a solution <i>Z</i> to the linear system:
+        <p><img src="images/IMSL_HYPOTH_PARTIAL-108.jpg" /></p><p>If this linear system is declared inconsistent, an error message with error code equal to 2 is issued.</p></li>
+            <li value="8">Partition:
+<p><img src="images/IMSL_HYPOTH_PARTIAL-109.jpg" /></p><p>so that <i>Z</i><sub>1</sub> is the first <i>n</i><sub>1</sub> rows of <i>Z</i>. Set:</p><p><img src="images/IMSL_HYPOTH_PARTIAL-110.jpg" /></p><p>The degrees of freedom (nh) classify the hypothesis <i>H</i><sub>p</sub>β<i>U</i> =<i>G</i><sub>p</sub> as nontestable (<i>nh</i> = 0), partially testable (0 &lt; <i>nh</i> &lt; RANK_HP), or completely testable (0 &lt; <i>nh</i>= RANK_HP).</p></li>
+        </ol>
+        <p>For further details concerning the algorithm, see Sallas and Lionti (1988).</p>
+        <h2 class="API">Example</h2>
+        <p>A one-way analysis-of-variance model discussed by Peixoto (1986) is fitted to data. The model is:</p>
+        <p><i>y</i><sub>ii</sub> = <i>µ</i> + <i>α</i><sub>i</sub> + ε<sub>ii</sub>..(i, j) = (1, 1) (2, 1) (2, 2)</p>
+        <p>The model is fitted using <a href="IMSL_MULTIREGRESS.htm">IMSL_MULTIREGRESS</a>. The partially testable hypothesis:</p>
+        <p>
+            <img src="images/IMSL_HYPOTH_PARTIAL-111.jpg" />
+        </p>
+        <p>is converted to a completely testable hypothesis.</p>
+        <p class="Code">nrows	=	3</p>
+        <p class="Code">n_indep	 =	1</p>
+        <p class="Code">n_dep	=	1</p>
+        <p class="Code">n_param	 =	3</p>
+        <p class="Code">n_class	 =	1</p>
+        <p class="Code">n_cont		=	 0</p>
+        <p class="Code">nhp	=		2</p>
+        <p class="Code">z	=	[1, 2, 2]</p>
+        <p class="Code">y	=	[17.3, 24.1, 26.3]</p>
+        <p class="Code">gp	=	[5, 3]</p>
+        <p class="Code">hp	=	TRANSPOSE([[0, 1, 0], [0, 0, 1]])</p>
+        <p class="Code">x	=	IMSL_REGRESSORS(z, n_class, n_cont)</p>
+        <p class="Code">size_x	=	SIZE(x)</p>
+        <p class="Code">nreg	=	size_x(2)</p>
+        <p class="Code">coefs	=	IMSL_MULTIREGRESS(x, y, Predict_Info = info_v)</p>
+        <p>IDL prints:</p>
+        <p class="Code">% IMSL_MULTIREGRESS: Warning: STAT_RANK_DEFICIENT</p>
+        <p class="Code">The model is not full rank.	There is not a unique least squares solution. The rank of the matrix of regressors is 2.</p>
+        <p> Continue:</p>
+        <p class="Code">nh	=	IMSL_HYPOTH_PARTIAL(info_v,	hp, Gp	=	gp, $</p>
+        <p class="Code">&#160;&#160;G_Matrix = g_matrix, H_Matrix = h_matrix, Rank_Hp = rank_hp)</p>
+        <p class="Code">IF (nh EQ 0) THEN PRINT, 'Nontestable Hypothesis' $</p>
+        <p class="Code">&#160;&#160;ELSE IF (nh LT rank_hp) THEN $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;PRINT,	'Partially Testable Hypothesis' $ </p>
+        <p class="Code">&#160;&#160;ELSE PRINT, 'Completely Testable Hypothesis'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Partially Testable Hypothesis</p>
+        <p>Continue:</p>
+        <p class="Code">PM,	h_matrix,	title	=	'H Matrix'</p>
+        <p class="Code">PM,	g_matrix,	title	=	'G'</p>
+        <p>IDL prints:</p>
+        <p class="Code">H Matrix</p>
+        <p class="Code">&#160;&#160;&#160;&#160;0.00000	0.707107	-0.707107</p>
+        <p class="Code">G</p>
+        <p class="Code">&#160;&#160;&#160;&#160;1.41421</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_HYP_NOT_CONSISTENT: The hypothesis is inconsistent within the computed tolerance.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_HYPOTH_PARTIAL(<i>Info_v</i>, <i>Hp</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#G_MATRIX" class="selected">G_MATRIX</a>=<i>variable</i>] [, <a href="#GP" class="selected">GP</a>=<i>array</i>] [, <a href="#H_MATRIX" class="selected">H_MATRIX</a>=<i>variable</i>] [, <a href="#RANK_HP" class="selected">RANK_HP</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>Number of rows in the completely testable hypothesis, <i>nh</i>. This value is also the degrees of freedom for the hypothesis. The value nh classifies the hypothesis <i>H</i><sub>p</sub>β<i>U</i> = <i>G</i><sub>p</sub> as nontestable (<i>nh</i> = 0), partially testable (0 &lt; <i>nh</i> &lt; <a href="#RANK_HP" class="selected">RANK_HP</a>) or completely testable (0 &lt; <i>nh</i> = RANK_HP), where RANK_HP is the rank of <i>H</i><sub>p</sub>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Info_v</h3>
+        <p>One-dimensional array of type BYTE containing information about the regression fit. See <a href="IMSL_MULTIREGRESS.htm">IMSL_MULTIREGRESS</a>.</p>
+        <h3 class="Argument">Hp</h3>
+        <p>The <i>H</i><sub>p</sub> array of size <i>nhp</i> by <i>n_coefficients</i> with each row corresponding to a row in the hypothesis and containing the constants that specify a linear combination of the regression coefficients. Here, <i>n_coefficients</i> is the number of coefficients in the fitted regression model.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="G_MATRIX"></a>G_MATRIX (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length <i>nu</i> containing the <i>G</i> matrix. The elements of the matrix contain the null hypothesis values for the completely testable hypothesis.</p>
+        <h3 class="Keyword"><a name="GP"></a>GP (optional)</h3>
+        <p>Two-dimensional array of size <i>nhp</i> by <i>nu</i> containing the <i>G</i>p matrix, the null hypothesis values. By default, each value of <i>G</i><sub>p</sub> is equal to 0.</p>
+        <h3 class="Keyword"><a name="H_MATRIX"></a>H_MATRIX (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size <i>nh</i> by <i>n_parameters</i> containing the <i>H</i> matrix. Each row of H_MATRIX corresponds to a row in the completely testable hypothesis and contains the constants that specify an estimable linear combination of the regression coefficients.</p>
+        <h3 class="Keyword"><a name="RANK_HP"></a>RANK_HP (optional)</h3>
+        <p>Named variable containing the rank of <i>H</i><sub>p</sub>.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

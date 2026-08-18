@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CHISQTEST</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CHISQTEST</span>
+        </div>
+        <h1>IMSL_CHISQTEST</h1>
+        <p>The IMSL_CHISQTEST function performs a chi-squared goodness-of-fit test.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CHISQTEST function performs a chi-squared goodness-of-fit test that a random sample of observations is distributed according to a specified theoretical cumulative distribution. The theoretical distribution, which may be continuous, discrete, or a mixture of discrete and continuous distributions, is specified by defined function <i>f</i>. Because you are allowed to give a range for the observations, a test that is conditional upon the specified range is performed.</p>
+        <p>The argument <i>N_categories</i> gives the number of intervals into which the observations are to be divided. By default, equi-probable intervals are computed by IMSL_CHISQTEST, but intervals that are not equi-probable can be specified (through the use of keyword CUTPOINTS).</p>
+        <p>Regardless of the method used to obtain the cutpoints, the intervals are such that the lower endpoint is not included in the interval, while the upper endpoint is always included. If the cumulative distribution function has discrete elements, then user- provided cutpoints should always be used since IMSL_CHISQTEST cannot determine the discrete elements in discrete distributions.</p>
+        <p>By default, the lower and upper endpoints of the first and last intervals are –infinity and +infinity. The endpoints can be specified by using the keywords LOWER_BOUND and UPPER_BOUND.</p>
+        <p>A tally of counts is maintained for the observations in <i>x</i> as follows:</p>
+        <ul>
+            <li value="1">If the cutpoints are specified, the tally is made in the interval to which x<sub>i</sub> belongs using the endpoints specified.</li>
+            <li value="2">If the cutpoints are determined by IMSL_CHISQTEST, then the cumulative probability at xi, <i>F</i>(x<sub>i</sub>), is computed by the function <i>f</i>.</li>
+        </ul>
+        <p>The tally for xi is made in interval number:</p>
+        <p>⋅<img src="images/IMSL_CHISQTEST-01.jpg" /></p>
+        <p>where m = n categories and:</p>
+        <p>
+            <img src="images/IMSL_CHISQTEST-02.jpg" />
+        </p>
+        <p>is the function that takes the greatest integer that is no larger than the parameter of the function. Thus, if the computer time required to calculate the cumulative distribution function is large, user-specified cutpoints may be preferred in order to reduce the total computing time.</p>
+        <p>If the expected count in any cell is less than 1, then a rule of thumb is that the chi- squared approximation may be suspect. A warning message to this effect is issued in this case, as well as when an expected value is less than 5.</p>
+        <h2 class="API">Programming Notes</h2>
+        <p>You must supply a function <i>f</i> with calling sequence <i>F</i>(<i>y</i>) that returns the value of the cumulative distribution function at any point <i>y</i> in the (optionally) specified range.</p>
+        <p>Many of the cumulative distribution functions in this reference manual can be used for <i>f</i>. It is, however, necessary to write a user-defined IDL Advanced Math and Stats function that calls the CDF, and then pass the name of this user-defined function for <i>f</i>.</p>
+        <h2 class="API">Example</h2>
+        <p>This example illustrates the use of IMSL_CHISQTEST on a randomly generated sample from the normal distribution. One-thousand randomly generated observations are tallied into 10 equi-probable intervals. In this example, the null hypothesis is not rejected.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the hypothesized, cumulative distribution function.</p>
+        <p class="Code">FUNCTION user_cdf, k</p>
+        <p class="Code_Indented">RETURN, IMSL_NORMALCDF(k)</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">IMSL_RANDOMOPT, Set = 123457</p>
+        <p class="Code">x = IMSL_RANDOM(1000, /Normal)</p>
+        <p class="Code">; Generate normal deviates.</p>
+        <p class="Code">p_value = IMSL_CHISQTEST('user_cdf', 10, x)</p>
+        <p class="Code">; Perform chi-squared test.</p>
+        <p class="Code">PM, p_value</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.154603</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_EXPECTED_VAL_LESS_THAN_1: An expected value is less than 1.</p>
+        <p>STAT_EXPECTED_VAL_LESS_THAN_5: An expected value is less than 5.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_ALL_OBSERVATIONS_MISSING: All observations contain missing values.</p>
+        <p>STAT_INCORRECT_CDF_1: Function f is not a cumulative distribution function. The value at the lower bound must be nonnegative, and the value at the upper bound must not be greater than 1.</p>
+        <p>STAT_INCORRECT_CDF_2: Function f is not a cumulative distribution function. The probability of the range of the distribution is not positive.</p>
+        <p>STAT_INCORRECT_CDF_3: Function f is not a cumulative distribution function. Its evaluation at an element in x is inconsistent with either the evaluation at the lower or upper bound.</p>
+        <p>STAT_INCORRECT_CDF_4: Function f is not a cumulative distribution function. Its evaluation at a cutpoint is inconsistent with either the evaluation at the lower or upper bound.</p>
+        <p>STAT_INCORRECT_CDF_5: An error has occurred when inverting the cumulative distribution function. This function must be continuous and defined over the whole real line.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CHISQTEST(<i>F, N_Categories, X</i> [, <a href="#CELL_COUNTS" class="selected">CELL_COUNTS</a>=<i>variable</i>] [, <a href="#CELL_EXPECTED" class="selected">CELL_EXPECTED</a>=<i>variable</i>] [, <a href="#CELL_CHISQ" class="selected">CELL_CHISQ</a>=<i>variable</i>] [, <a href="#CHI_SQUARED" class="selected">CHI_SQUARED</a>=<i>variable</i>] [, <a href="#CUTPOINTS" class="selected">CUTPOINTS</a>=<i>variable</i>] [, <a href="#DF" class="selected">DF</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, /<a href="#EQUAL_CUTPOINTS" class="selected">EQUAL_CUTPOINTS</a>] [, <a href="#FREQUENCIES" class="selected">FREQUENCIES</a>=<i>variable</i>] [, <a href="#LOWER_BOUND" class="selected">LOWER_BOUND</a>=<i>value</i>] [, <a href="#N_PARAMS_ESTIMATED" class="selected">N_PARAMS_ESTIMATED</a>=<i>value</i>] [, <a href="#UPPER_BOUND" class="selected">UPPER_BOUND</a>=<i>value</i>] [, <a href="#USED_CUTPOINTS" class="selected">USED_CUTPOINTS</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The <i>p</i>-value for the goodness-of-fit chi-squared statistic.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">F</h3>
+        <p>Scalar string specifying a user-supplied function. Argument <i>F</i> accepts one scalar parameter and returns the hypothesized, cumulative distribution function at that point.</p>
+        <h3 class="Argument">N_Categories</h3>
+        <p>Number of cells into which the observations are to be tallied.</p>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the vector of data elements for this test.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CELL_COUNTS"></a>CELL_COUNTS (optional)</h3>
+        <p>Named variable into which the cell counts are stored. The cell counts are the observed frequencies in each of the <i>N_Categories</i> cells.</p>
+        <h3 class="Keyword"><a name="CELL_EXPECTED"></a>CELL_EXPECTED (optional)</h3>
+        <p>Named variable into which the cell expected values are stored. The expected value of a cell is the expected count in the cell given that the hypothesized distribution is correct.</p>
+        <h3 class="Keyword"><a name="CELL_CHISQ"></a>CELL_CHISQ (optional)</h3>
+        <p>Named variable into which an array of length <i>N_Categories</i> containing the cell contributions to chi-squared are stored.</p>
+        <h3 class="Keyword"><a name="CHI_SQUARED"></a>CHI_SQUARED (optional)</h3>
+        <p>Named variable into which the chi-squared test statistic is stored.</p>
+        <h3 class="Keyword"><a name="CUTPOINTS"></a>CUTPOINTS (optional)</h3>
+        <p>Specifies the named variable containing user-defined cutpoints to be used by IMSL_CHISQTEST. The keywords CUTPOINTS and EQUAL_CUTPOINTS cannot be used together.</p>
+        <h3 class="Keyword"><a name="DF"></a>DF (optional)</h3>
+        <p>Named variable into which the degrees of freedom for the chi-squared goodness-of- fit test are stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="EQUAL_CUTPOINTS"></a>EQUAL_CUTPOINTS (optional)</h3>
+        <p>If present and nonzero, equal probability cutpoints are used. The keywords CUTPOINTS and EQUAL_CUTPOINTS cannot be used together.</p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>Named variable into which the array containing the vector frequencies for the observations stored in x is stored.</p>
+        <h3 class="Keyword"><a name="LOWER_BOUND"></a>LOWER_BOUND (optional)</h3>
+        <p>Lower bound of the range of the distribution. If LOWER_BOUND = UPPER_BOUND, a range on the whole real line is used (the default). If the lower and upper endpoints are different, points outside of the range of these bounds are ignored. Distributions conditional on a range can be specified when LOWER_BOUND and UPPER_BOUND are used. If LOWER_BOUND is specified, then UPPER_BOUND also must be specified. By convention, LOWER_BOUND is excluded from the first interval, but UPPER_BOUND is included in the last interval.</p>
+        <h3 class="Keyword"><a name="N_PARAMS_ESTIMATED"></a>N_PARAMS_ESTIMATED (optional)</h3>
+        <p>Number of parameters estimated in computing the cumulative distribution function.</p>
+        <h3 class="Keyword"><a name="UPPER_BOUND"></a>UPPER_BOUND (optional)</h3>
+        <p>Upper bound of the range of the distribution. If LOWER_BOUND = UPPER_BOUND, a range on the whole real line is used (the default). If the lower and upper endpoints are different, points outside of the range of these bounds are ignored. Distributions conditional on a range can be specified when LOWER_BOUND and UPPER_BOUND are used. If UPPER_BOUND is specified, then LOWER_BOUND also must be specified. By convention, LOWER_BOUND is excluded from the first interval, but UPPER_BOUND is included in the last interval.</p>
+        <h3 class="Keyword"><a name="USED_CUTPOINTS"></a>USED_CUTPOINTS (optional)</h3>
+        <p>Specifies the named variable into which the cutpoints to be used by IMSL_CHISQTEST are stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_NORMALITY.htm">IMSL_NORMALITY</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

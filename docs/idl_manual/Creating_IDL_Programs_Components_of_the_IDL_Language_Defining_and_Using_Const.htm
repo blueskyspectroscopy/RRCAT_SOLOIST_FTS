@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Language|Data Types">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Defining and Using Constants</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Programming.htm">Language</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IDL_Data_Types.htm">Data Types</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Defining and Using Constants</span>
+        </div>
+        <h1><a name="constants_818058343_701726"></a>Defining and Using Constants</h1>
+        <p>IDL can create a variety of numeric and string constants, with the data type and value depending upon the syntax.</p>
+        <p>When creating constants in your programs, you should know the data type of the constant and how it will be used in expressions. Having an incorrect data type for a constant can be inefficient and change your results.</p>
+        <p><a name="kanchor4712"></a>For example, if the data type does not match the other types in an expression, then either the other variables or your constant will be converted to match. Consider the following expression:</p>
+        <p class="Code">A = FINDGEN(100)</p>
+        <p class="Code">B = A + 5</p>
+        <p>If the variable A is of floating-point type, the constant 5 must be converted from short integer type to floating point each time the expression is evaluated. In this case it would be better to write:</p>
+        <p class="Code">A = FINDGEN(100)</p>
+        <p class="Code">B = A + <b>5.0</b></p>
+        <p>On the other hand, imagine A is of type byte:</p>
+        <p class="Code">A = BINDGEN(100)</p>
+        <p class="Code">B = A + 5</p>
+        <p>In this case the computation will be done using integer arithmetic and the result will be an array of type integer, leading to unexpected results if your algorithm expected variable B to be type byte. Here, it would be better to write:</p>
+        <p class="Code">A = BINDGEN(100)</p>
+        <p class="Code">B = A + <b>5b</b></p>
+        <h2 class="API">Boolean Constants</h2>
+        <p>There are two boolean constants: !TRUE, equal to 1, and !FALSE, equal to 0. Both of these constants are variables of type byte with the boolean flag.</p>
+        <h2 class="API"><a name="kanchor4713"></a>Integer Constants</h2>
+        <p>Numeric constants of different types are represented by the constant followed by an optional suffix specifying the type:</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Type</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Suffix</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Examples</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Byte 8-bit unsigned</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>B, UB</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>12b, 34B, 34ub</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Short 16-bit integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>(nothing), S</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>12, 12s, 425S</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Unsigned short integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>U, US</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>12u, 12uS</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Long 32-bit integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>L</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>12l, 94L </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Unsigned long integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>UL</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>12uL, 94UL</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>64-bit integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>LL</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>12ll, 94LL</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>Unsigned 64-bit integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>ULL</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>12ull, 94uLL</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The suffix is case insensitive.</p>
+        <p>The syntax used when creating integer <a name="kanchor4714"></a>constants is shown in the following table, where <i>n</i> represents one or more digits and <i>&lt;T&gt;</i> represents the optional type suffix from the table above.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: bottom;mc-table-style: url('../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 130px;" />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Radix </p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Form</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Examples</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">Decimal</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p><i>n&lt;T&gt;</i>
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>12, 12b, 425ull</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Hexadecimal<br />(digits 0–9, A–F)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">0x<i>n&lt;T&gt;</i></td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">0x3A, 0x3AuLL</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>'<i>n</i>'x<i>&lt;T&gt;</i></p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>'3A'x, '3A'xull</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="TableStyle_Description_Body_1_0_RowSep_ColSep">Octal<br />(digits 0–7)</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">'<i>n</i>'o<i>&lt;T&gt;</i></td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">'377'o, '777777'oUL</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">"<i>n&lt;T&gt;</i></td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">"12, "12ub</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>For the Octal form with the double-quote character, be careful that you do not have another double quote at the end of your constant. Otherwise it will be interpreted as a string. It is strongly recommended that you use the <code>'<i>n</i>'o</code> syntax instead.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>To create a hexadecimal constant of type byte, be sure to use <code>ub</code> for the suffix, not <code>b</code>. Otherwise the <code>b</code> may be treated as part of your hex number. For example, <code>a = 0x5Bub</code>.</p>
+        <p><a name="kanchor4715"></a>Absolute values of integer constants are given in the following table. </p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Type</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Absolute Value Range</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Byte</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>0 – 255</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>0 – 32767</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Unsigned Integer</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>0 – 65535</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Long</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>0 – 2<sup>31</sup> - 1</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Unsigned Long</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>0 – 2<sup>32</sup> - 1</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>64-bit Long</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>0 – 2<sup>63</sup> - 1</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>Unsigned 64-bit Long</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>0 – 2<sup>64</sup> - 1</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Integers specified without one of the B, S, L, or LL specifiers are automatically promoted to an integer type capable of holding them. For example, 40000 is promoted to longword because it is too large to fit in an integer. Any numeric constant can be preceded by a plus (<code>+</code>) or minus (<code>-</code>) sign. The following table illustrates examples of both valid and invalid IDL constants.</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Unacceptable</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Reason</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Acceptable</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>256B</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Too large, limit is 255</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>255B</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>'123L</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Missing apostrophe</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>'123'L</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0x300G</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Invalid character</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>0x300F</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>'27'L</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>No radix</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>'27'oL</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>"129</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>9 is an invalid octal digit</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>"127</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Short Integers and the DEFINT32 Compile Option</h3>
+        <p>When creating short 16-bit integers (signed or unsigned), you can omit the "S" if the <a href="../../Reference Material/C/COMPILE_OPT.htm">DEFINT32 (or IDL2) compile option</a> is <i>not</i> turned on. If the DEFINT32 (or IDL2) compile option is turned on, then by default any integer constants will be 32-bits and you need to use the "S" to force IDL to create 16-bit integers. For example:</p>
+        <p class="Code">IDL&gt; help, 1234, 1234u</p>
+        <p class="Code_Indented">&lt;Expression&gt;    INT       =     1234</p>
+        <p class="Code_Indented">&lt;Expression&gt;    UINT      =     1234</p>
+        <p class="Code">IDL&gt; compile_opt DEFINT32</p>
+        <p class="Code">IDL&gt; help, 1234, 1234u</p>
+        <p class="Code_Indented">&lt;Expression&gt;    LONG      =         1234</p>
+        <p class="Code_Indented">&lt;Expression&gt;    ULONG     =         1234</p>
+        <p class="Code">IDL&gt; help, 1234s, 1234us</p>
+        <p class="Code_Indented">&lt;Expression&gt;    INT      =         1234</p>
+        <p class="Code_Indented">&lt;Expression&gt;    UINT     =         1234</p>
+        <h2 class="API"><a name="kanchor4716"></a>Floating-Point and<a name="kanchor4717"></a> Double-Precision Constants</h2>
+        <p>Floating-point and double-precision constants can be expressed in either conventional or scientific notation. Any numeric constant that includes a decimal point is a floating-point or double-precision constant.</p>
+        <p>The syntax of floating-point and double-precision constants is shown in the following table. The notation “<i>sx</i>” represents the sign and magnitude of the exponent, for example, <code>E-2</code>.</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Form</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Example </p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p><i>n</i>.</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>102.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>.<i>n</i></p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>.102</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p><i>n</i>.<i>n</i></p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>10.2</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p><i>n</i><code>E</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>10E</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p><i>n</i><code>E</code><i>sx</i>
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>10E5 </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p><i>n</i>.<code>E</code><i>sx</i></p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>10.E-3</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>.<i>n</i><code>E</code><i>sx </i></p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>.1E+12</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p><i>n</i>.<i>n</i><code>E</code><i>sx</i></p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>2.3E12</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Double-precision constants are entered in the same manner, replacing the <code>E</code> with a <code>D</code>. For example, <code>1.0D0</code>, <code>1D</code>, and <code>1.D</code> each represent a double-precision numeral 1.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The <code>nE</code> and <code>nD</code> forms are shorthand for <code>nE0</code> and <code>nD0</code>, and are usually used to indicate the <i>type</i> of the number, either single or double precision. When using these forms in expressions, be sure to leave a space after the <code>E</code> or <code>D</code> if the next term has a + or - sign.<br /><br />For example, the expression <code>1D+45</code> is evaluated as 1x10<sup>45</sup> in double precision, while <code>1D&#160;+&#160;45</code> (note the spaces) evaluates to the number 46 in double precision. Similarly, the expression <code>1D+x</code> gives an error, because there was no space after the <code>D</code>. The correct way to write this expression is <code>1D&#160;+&#160;x</code> (note the spaces).</p>
+        <h2 class="API"><a name="kanchor4718"></a>Complex Constants</h2>
+        <p>Complex constants contain a real and an imaginary part, both of which are single- or double-precision floating-point numbers. The imaginary part can be omitted, in which case it is assumed to be zero. The form of a complex constant is as follows:</p>
+        <p class="Code">COMPLEX(REAL_PART, IMAGINARY_PART)</p>
+        <p>or</p>
+        <p class="Code">COMPLEX(REAL_PART)</p>
+        <p>For example, COMPLEX(1,2) is a complex constant with a real part of one, and an imaginary part of two. COMPLEX(1) is a complex constant with a real part of one and a zero imaginary component. To extract the real part of a complex expression, use the FLOAT function. The ABS function returns the magnitude of a complex expression, and the IMAGINARY function returns the imaginary part.</p>
+        <h2 class="API"><a name="kanchor4719"></a>String Constants</h2>
+        <p>A string constant consists of zero or more characters enclosed by apostrophes (<code>'</code>) or quotes (<code>“</code>). The value of the constant is the characters appearing between the leading <a name="kanchor4720"></a>delimiter (<code>'</code>or <code>“”</code>) and the next occurrence of the <i>same</i> delimiter. <i><a name="kanchor4721"></a></i>A double apostrophe (<code>''</code>) or <a name="kanchor4722"></a>quote (<code>“”</code>) is considered to be an empty string; a string containing no characters. An apostrophe or quote can be represented within a string by two apostrophes or quotes; e.g., <code>'Don''t'</code> returns <code>Don't</code>. This syntax often can be avoided by using a different delimiter; e.g., <code>“Don't”</code> instead of <code>'Don''t'</code>. The following table illustrates valid string constants.  </p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Expression</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Resulting String</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="font-family: monospace;">
+                        <p>'Hi there' </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Hi there</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="font-family: monospace;">
+                        <p>"Hi there"</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Hi there</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="font-family: monospace;">
+                        <p>''</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p><i>Empty String</i>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="font-family: monospace;">
+                        <p>"I'm happy"</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>I'm happy</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="font-family: monospace;">
+                        <p>'I''m happy' </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>I'm happy</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="font-family: monospace;">
+                        <p>'counter'</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>counter </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep" style="font-family: monospace;">
+                        <p>"127"</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>127</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The following table illustrates invalid string constants.  </p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Unacceptable</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Reason</p>
+                    </td>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Acceptable</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>'Hi there"</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Mismatched delimiters</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd"><code>"Hi there"</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>'</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Missing delimiter</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd"><code>''</code> or <code>""</code></td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>'I'm happy'</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Apostrophe in string</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p><code>'I''m happy'</code> or <code>"I'm happy"</code></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">"127</td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>Missing quote, will be treated as octal</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">"127"</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>String constants that start with a double-quote character and a number may be incorrectly interpreted as an octal constant. If the number is followed by an operator (<code>+-*/^?:,)</code>) then this will always be treated as an octal constant, even if there is a trailing double-quote character. To avoid ambiguity, you should always use single-quote characters with strings that begin with a number.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>See <a href="String_Operations.htm">String Operations</a> for details on working with strings.</p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

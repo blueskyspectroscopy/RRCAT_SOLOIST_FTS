@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_KALMAN</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_KALMAN</span>
+        </div>
+        <h1 class="Routine">IMSL_KALMAN</h1>
+        <p>The IMSL_KALMAN procedure performs Kalman filtering and evaluates the likelihood function for the state-space model.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Routine IMSL_KALMAN is based on a recursive algorithm given by Kalman (1960), which has come to be known as the Kalman filter. The underlying model is known as the state-space model. The model is specified stage by stage where the stages generally correspond to time points at which the observations become available. The routine IMSL_KALMAN avoids many of the computations and storage requirements that would be necessary if one were to process all the data at the end of each stage in order to estimate the state vector. This is accomplished by using previous computations and retaining in storage only those items essential for processing of future observations.</p>
+        <p>The notation used here follows that of Sallas and Harville (1981). Let <i>y<sub>k</sub></i> (input in keyword <i>Y</i>) be the <i>n</i><sub>k</sub> ° 1 vector of observations that become available at time <i>k</i>. The subscript <i>k</i> is used here rather than <i>t</i>, which is more customary in time series, to emphasize that the model is expressed in stages <i>k</i> = 1, 2, ... and that these stages need not correspond to equally spaced time points. In fact, they need not correspond to time points of any kind. The observation equation for the state-space model is:</p>
+        <p>y<sub class="cSubscriptItalic">k</sub> = Z<sub class="cSubscriptItalic">k</sub>b<sub class="cSubscriptItalic">k</sub> + e<sub class="cSubscriptItalic">k</sub>   k = 1, 2, ... </p>
+        <p>Here, <i>Z<sub>k</sub></i> is an <i>n<sub>k</sub></i> ° <i>q</i> known matrix and <i>b<sub>k</sub></i> is the <i>q</i> ° 1 state vector. The state vector <i>b<sub>k</sub></i> is allowed to change with time in accordance with the state equation:
+		</p>
+        <p>b<sub class="cSubscriptItalic">k</sub>+1 = T<sub class="cSubscriptItalic">k</sub>+1 b<sub class="cSubscriptItalic">k</sub> + w<sub class="cSubscriptItalic">k</sub>+1     k = 1, 2, ... starting with <i>b<sub>1</sub></i> = μ<sub>1</sub> + <i>w<sub>1</sub></i>.</p>
+        <p>The change in the state vector from time <i>k</i> to <i>k</i> + 1 is explained in part by the transition matrix <i>T<sub>k+1</sub></i> (the identity matrix by default, or optionally input using keyword <i>T_matrix</i>), which is assumed known. It is assumed that the <i>q</i>-dimensional <i>w<sub>k</sub>s</i> (<i>k</i> = 1, 2, ... <i>K</i>) are independently distributed multivariate normal with mean vector 0 and variance-covariance matrix σ<sup>2</sup><i>Q<sub>k</sub></i>, that the <i>n<sub>k</sub></i>-dimensional <i>e</i><sub>k</sub><i>s</i> (<i>k</i> = 1, 2, ... <i>K</i>) are independently distributed multivariate normal with mean vector 0 and variance-covariance matrix σ<sup>2</sup><i>R<sub>k</sub></i>, and that the <i>w<sub>k</sub>s</i> and <i>e<sub>k</sub>s</i> are independent of each other. Here, μ<sub>1</sub> is the mean of <i>b<sub>1</sub></i> and is assumed known, σ<sup>2</sup> is an unknown positive scalar. <i>Q<sub>k+1</sub></i> (input in <i>Q</i>) and <i>R<sub>k</sub></i> (input in keyword <i>R</i>) are assumed known.</p>
+        <p>Denote the estimator of the realization of the state vector <i>b<sub>k</sub></i> given the observations <i>y<sub>1</sub></i>, <i>y<sub>2</sub></i>, ..., <i>y<sub>j</sub></i> by:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-102.jpg" />
+        </p>
+        <p>By definition, the mean squared error matrix for:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-102.jpg" />
+        </p>
+        <p>is:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-104.jpg" />
+        </p>
+        <p>At the time of the k-th invocation, we have:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-105.jpg" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-106.jpg" />
+        </p>
+        <p>which were computed from the (<i>k-1</i>)-st invocation, input in <i>b</i> and <i>Covb</i>, respectively. During the <i>k</i>-th invocation, routine IMSL_KALMAN computes the filtered estimate:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-105.jpg" />
+        </p>
+        <p>along with C<sub>k|k</sub>. These quantities are given by the update equations:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-108.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-109.jpg" />
+        </p>
+        <p>and where:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-110.jpg" />
+        </p>
+        <p>Here, <i>v</i><sub>k</sub> (stored in <i>v</i>) is the one-step-ahead prediction error, and σ<sup>2</sup><i>H</i><sub>k</sub> is the variance- covariance matrix for <i>v</i><sub>k</sub>. <i>H</i><sub>k</sub> is stored in COVV. The “start-up values” needed on the first invocation of IMSL_KALMAN are:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-111.jpg" />
+        </p>
+        <p>and C<sub>1|0</sub> = <i>Q</i><sub>1</sub> input via <i>b</i> and <i>Covb</i>, respectively. Computations for the <i>k</i>-th invocation are completed by IMSL_KALMAN computing the one-step-ahead estimate:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-112.jpg" />
+        </p>
+        <p>along with C<sub>k+1|k</sub> given by the prediction equations:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-113.jpg" />
+        </p>
+        <p>If both the filtered estimates and one-step-ahead estimates are needed at each time point, IMSL_KALMAN can be invoked twice for each time point, first without T_MATRIX and Q_MATRIX to produce:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-114.jpg" />
+        </p>
+        <p>and C<sub>k|k</sub>, and second without keywords <i>Y</i>, <i>Z</i>, and <i>R</i> to produce:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-112.jpg" />
+        </p>
+        <p>and C<sub>k+1|k</sub> (Without T_MATRIX and Q_MATRIX , prediction equations are skipped. Without keywords <i>Y</i>, <i>Z</i>, and <i>R</i>, update equations are skipped.).</p>
+        <p>Often, it is desired to the estimate of the state vector more than one-step-ahead, i.e., an estimate of:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-102.jpg" />
+        </p>
+        <p>is needed where <i>k</i> &gt; <i>j</i> + 1. At time <i>j</i>, IMSL_KALMAN is invoked with keywords <i>Y</i>, <i>Z</i>, and <i>R</i> to compute:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-117.jpg" />
+        </p>
+        <p>Subsequent invocations of IMSL_KALMAN without <i>Y</i>, <i>Z</i>, and <i>R</i> can compute:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-118.jpg" />
+        </p>
+        <p>Computations for:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-102.jpg" />
+        </p>
+        <p>and C<sub>k|j</sub> assume the variance-covariance matrices of the errors in the observation equation and state equation are known up to an unknown positive scalar multiplier, σ<sup>2</sup>. The maximum likelihood estimate of σ<sup>2</sup> based on the observations y<sub>1</sub>, y<sub>2</sub>, …, y<sub>m</sub>, is given by:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-120.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-121.jpg" />
+        </p>
+        <p><i>N</i> and <i>SS</i> are the input/output arguments <i>n</i> and <i>ss</i>.</p>
+        <p>If σ<sup>2</sup> is known, the <i>R</i><sub>k</sub><i>s</i> and <i>Q</i><sub>k</sub><i>s</i> can be input as the variance-covariance matrices exactly. The earlier discussion is then simplified by letting σ<sup>2</sup> = 1.</p>
+        <p>In practice, the matrices <i>T</i><sub>k</sub>, <i>Q</i><sub>k</sub>, and <i>R</i><sub>k</sub> are generally not completely known. They may be known functions of an unknown parameter vector θ. In this case, IMSL_KALMAN can be used in conjunction with an optimization program (see <a href="IMSL_FMINV.htm">IMSL_FMINV</a>) to obtain a maximum likelihood estimate of θ. The natural logarithm of the likelihood function for y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>m</sub> differs by no more than an additive constant from:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-122.jpg" />
+        </p>
+        <p>(Harvey 1981, page 14, equation 2.21).</p>
+        <p>Here:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-123.jpg" />
+        </p>
+        <p>(stored in <i>Alndet</i>) is the natural logarithm of the determinant of <i>V</i> where σ<sup>2</sup><i>V</i> is the variance-covariance matrix of the observations.</p>
+        <p>Minimization of -2L(θ, σ<sup>2</sup>; y<sub>1</sub>, y<sub>2</sub>, ..., ym) over all θ and σ<sup>2</sup> produces maximum likelihood estimates. Equivalently, minimization of -2Lc(θ; y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>m</sub>) where:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-124.jpg" />
+        </p>
+        <p>produces maximum likelihood estimates:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-125.jpg" />
+        </p>
+        <p>The minimization of -2Lc(θ; y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>m</sub>) instead of -2L(θ, σ<sup>2</sup>; y<sub>1</sub>, y<sub>2</sub>, ..., ym), reduces the dimension of the minimization problem by one. The two optimization problems are equivalent since:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-126.jpg" />
+        </p>
+        <p>minimizes -2L(θ, σ<sup>2</sup>; y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>m</sub>) for all θ, consequently:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-127.jpg" />
+        </p>
+        <p>can be substituted for σ<sup>2</sup> in L(θ, σ2; y<sub>1</sub>, y<sub>2</sub>, …, y<sub>m</sub>) to give a function that differs by no more than an additive constant from Lc(θ; y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>m</sub>).</p>
+        <p>The earlier discussion assumed Hk to be non-singular. If Hk is singular, a modification for singular distributions described by Rao (1973, pages 527–528) is used. The changes in the preceding discussion are as follows:</p>
+        <ol>
+            <li value="1">
+                <p>  Replace:</p>
+                <p>
+                    <img src="images/IMSL_KALMAN-128.jpg" />
+                </p>
+                <p>by a generalized inverse.</p>
+            </li>
+            <li value="2">  Replace det(<i>H</i><sub>k</sub>) by the product of the nonzero eigenvalues of <i>H</i><sub>k</sub>.</li>
+            <li value="3">
+                <p>  Replace <i>N</i> by:</p>
+                <p>
+                    <img src="images/IMSL_KALMAN-123.jpg" />
+                </p>
+            </li>
+        </ol>
+        <p>Maximum likelihood estimation of parameters in the Kalman filter is discussed by Sallas and Harville (1988) and Harvey (1981, pages 111–113).</p>
+        <h2 class="API">Example</h2>
+        <p>Routine IMSL_KALMAN is used to compute the filtered estimates and one-step- ahead estimates for a scalar problem discussed by Harvey (1981, pages 116–117). The observation equation and state equation are given by:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-130.jpg" />
+        </p>
+        <p>where the e<sub>k</sub>s are identically and independently distributed normal with mean 0 and variance σ2, the wks are identically and independently distributed normal with mean 0 and variance 4σ<sup>2</sup>, and b1 is distributed normal with mean 4 and variance 16σ<sup>2</sup>. Two invocations of IMSL_KALMAN are needed for each time point in order to compute the filtered estimate and the one-step-ahead estimate. The first invocation does not use the keywords T_MATRIX and Q_MATRIX so that the prediction equations are skipped in the computations. The update equations are skipped in the computations in the second invocation.</p>
+        <p>This example also computes the one-step-ahead prediction errors. Harvey (1981, page 117) contains a misprint for the value v4 that he gives as 1.197. The correct value of <i>v</i><sub>4</sub> = 1.003 is computed by IMSL_KALMAN.</p>
+        <p>Note that this example is in the form of an IDL Advanced Math and Stats procedure, with the output following the procedure.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO EX_KALMAN</p>
+        <p class="Code_Indented">z = 1</p>
+        <p class="Code_Indented">r = 1</p>
+        <p class="Code_Indented">q = 4</p>
+        <p class="Code_Indented">t = 1</p>
+        <p class="Code_Indented">b = 4</p>
+        <p class="Code_Indented">covb = 16</p>
+        <p class="Code_Indented">ydata = [4.4, 4, 3.5, 4.6]</p>
+        <p class="Code_Indented">n = 0</p>
+        <p class="Code_Indented">ss = 0</p>
+        <p class="Code_Indented">alndet = 0</p>
+        <p class="Code_Indented">FORMAT = '(2I4, 2F8.3, I4, 4F8.3)'</p>
+        <p class="Code_Indented">PRINT, '	k	j	b	covb	n	ss	alndet	v covv'</p>
+        <p class="Code_Indented">FOR i = 0, 3 DO BEGIN</p>
+        <p class="Code_Indented2">y = ydata(i)</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; Update</p>
+        <p class="Code_Indented2">IMSL_KALMAN, b, covb, n, ss, alndet, Y = y, Z = Z, R = r, $</p>
+        <p class="Code_Indented3">v = v, covv = covv</p>
+        <p class="Code_Indented2">PRINT, i, i, b, covb, n, ss, alndet, v, covv, $</p>
+        <p class="Code_Indented3">FORMAT = format</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented2">; Predict</p>
+        <p class="Code_Indented2">IMSL_KALMAN, b, covb, n, ss, alndet, t_matrix = t, q = q</p>
+        <p class="Code_Indented2">PRINT, i+1, i, b, covb, n, ss, alndet, v, covv, $</p>
+        <p class="Code_Indented3">FORMAT = format</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code">END </p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-print.png" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IMSL_KALMAN, <i>B, Covb, N, Ss, Alndet</i> [, <a href="#COVV" class="selected">COVV</a>=<i>array</i>] [, <a href="#Q_MATRIX" class="selected">Q_MATRIX</a>=<i>array</i>] [, <a href="#R" class="selected">R</a>=<i>array</i>] [, <a href="#T_MATRIX" class="selected">T_MATRIX</a>=<i>array</i>] [, <a href="#TOLERANCE" class="selected">TOLERANCE</a>=<i>value</i>] [, <a href="#V" class="selected">V</a>=<i>array</i>] [, <a href="#Y" class="selected">Y</a>=<i>array</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Alndet</h3>
+        <p>Named variable containing the natural log of the product of the nonzero eigenvalues of <i>P</i> where <i>P</i> * σ<sup>2</sup> is the variance-covariance matrix of the observations. Although <i>Alndet</i> is computed, IMSL_KALMAN avoids the explicit computation of <i>P</i>. alndet must be initialized to zero before the first call to IMSL_KALMAN. In the usual case when <i>P</i> is non-singular, <i>Alndet</i> is the natural log of the determinant of <i>P</i>.</p>
+        <h3 class="Argument">B</h3>
+        <p>One dimensional array of containing the estimated state vector. The input is the estimated state vector at time <i>k</i> given the observations through time <i>k</i> – 1. The output is the estimated state vector at time <i>k</i> + 1 given the observations through time <i>k</i>. On the first call to IMSL_KALMAN, the input <i>b</i> must be the prior mean of the state vector at time.</p>
+        <h3 class="Argument">Covb</h3>
+        <p>Two dimensional array of size N_ELEMENTS(b) by N_ELEMENTS(b) such that covb* σ<sup>2</sup> is the mean squared error matrix for <i>b</i>. Before the first call to IMSL_KALMAN, covb* σ2 must equal the variance-covariance matrix of the state vector.</p>
+        <h3 class="Argument">N</h3>
+        <p>Named variable containing the rank of the variance-covariance matrix for all the observations. n must be initialized to zero before the first call to IMSL_KALMAN. In the usual case when the variance-covariance matrix is non- singular, n equals the sum of the N_ELEMENTS(Y) from the invocations to IMSL_KALMAN. See the keyword section below for the definition of Y.</p>
+        <h3 class="Argument">Ss</h3>
+        <p>Named variable containing the generalized sum of squares. ss must be initialized to zero before the first call to IMSL_KALMAN. The estimate of σ<sup>2</sup> is given by:</p>
+        <p>
+            <img src="images/IMSL_KALMAN-101.jpg" />
+        </p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="COVV"></a>COVV (optional)</h3>
+        <p>Two dimensional array if size N_ELEMENTS(Y) by N_ELEMENTS(Y) containing a matrix such that Covv * σ<sup>2</sup> is the variance-covariance matrix of <i>v</i>.</p>
+        <h3 class="Keyword"><a name="Q_MATRIX"></a>Q_MATRIX (optional)</h3>
+        <p>Two dimensional array if size N_ELEMENTS(b) by N_ELEMENTS(b) matrix such that Q_matrix * σ<sup>2</sup> is the variance-covariance matrix of the error vector in the state equation. Default: There is no error term in the state equation</p>
+        <h3 class="Keyword"><a name="R"></a>R (optional)</h3>
+        <p>Two dimensional array if size N_ELEMENTS(Y) by N_ELEMENTS(Y) containing the matrix such that R * σ<sup>2</sup> is the variance-covariance matrix of errors in the observation equation. Keywords <i>Y</i>, <i>Z</i> and <i>R</i> indicate an update step and must be used together.</p>
+        <h3 class="Keyword"><a name="T_MATRIX"></a>T_MATRIX (optional)</h3>
+        <p>Two dimensional array if size N_ELEMENTS(b) by N_ELEMENTS(b) containing the transition matrix in the state equation. Default: identity matrix</p>
+        <h3 class="Keyword"><a name="TOLERANCE"></a>TOLERANCE (optional)</h3>
+        <p>Tolerance used in determining linear dependence. Default: 100*eps where eps is machine precision.</p>
+        <h3 class="Keyword"><a name="V"></a>V (optional)</h3>
+        <p>One dimensional array of length N_ELEMENTS(Y) containing the one-step-ahead prediction error.</p>
+        <h3 class="Keyword"><a name="Y"></a>Y (optional)</h3>
+        <p>One dimensional array containing the observations. Keywords <i>Y</i>, <i>Z</i> and <i>R</i> indicate an update step and must be used together.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_FMINV.htm">IMSL_FMINV</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

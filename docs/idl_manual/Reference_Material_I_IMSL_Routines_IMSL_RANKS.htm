@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_RANKS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_RANKS</span>
+        </div>
+        <h1 class="Routine">IMSL_RANKS</h1>
+        <p>The IMSL_RANKS function computes the ranks, normal scores, or exponential scores for a vector of observations.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <h3>Ties</h3>
+        <p>If the assignment RANK = IMSL_RANKS(<i>x</i>) is made, then in data without ties, the output values are the ordinary ranks (or a transformation of the ranks) of the data in <i>x</i>. If <i>x</i>(<i>i</i>) has the smallest value among the values in x and there is no other element in <i>x</i> with this value, then RANK(<i>i</i>) = 1. If both <i>x</i>(<i>i</i>) and <i>x</i>(<i>j</i>) have the same smallest value, then the output value depends on the option used to break ties. The table that follows shows the results for some of the keywords.</p>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Keyword</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Result</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>AVERAGE_TIE</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Result (<i>i</i>) = Result (<i>j</i>) = 1.5</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>HIGHEST</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Result (<i>i</i>) = Result (<i>j</i>) = 2.0</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>LOWEST</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Result (<i>i</i>) = Result (<i>j</i>) = 1.0</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>RANDOM_SPLIT</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Split	Result (<i>i</i>) = 1.0 and Result (<i>j</i>) = 2.0 or, randomly, Result (<i>i</i>) = 2.0 and Result (<i>j</i>) = 1.0</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>When the ties are resolved randomly, IMSL_RANDOM is used to generate random numbers. Different results occur from different executions of the program unless the “seed” of the random-number generator is set explicitly by use of <a href="IMSL_RANDOMOPT.htm">IMSL_RANDOMOPT</a> ( ).</p>
+        <h3>Scores</h3>
+        <p>Normal and other functions of the ranks can optionally be returned. Normal scores can be defined as the expected values, or approximations to the expected values, of order statistics from a normal distribution. The simplest approximations are obtained by evaluating the inverse cumulative normal distribution function, <a href="IMSL_NORMALCDF.htm">IMSL_NORMALCDF</a> (with the keyword INVERSE), at the ranks scaled into the open interval (0,1).</p>
+        <p>In the Blom version (Blom 1958), the scaling transformation for the rank <i>r</i><sub>i</sub> (1 ≤ <i>r</i><sub>i</sub> ≤ n, where n is the sample size) is (<i>r</i><sub>i</sub> – 3/8) / (<i>n</i> + 1/4). The Blom normal score corresponding to the observation with rank <i>r</i><sub>i</sub> is:</p>
+        <p>
+            <img src="images/IMSL_RANKS-22.jpg" />
+        </p>
+        <p>where Φ(⋅) is the normal cumulative distribution function.</p>
+        <p>Adjustments for ties are made after the normal score transformation; that is, if <i>x</i>(<i>i</i>) equals <i>x</i>(<i>j</i>) (within FUZZ) and their value is the <i>k</i>-th smallest in the data set, the Blom normal scores are determined for ranks of k and <i>k</i> + 1. Then, these normal scores are averaged or selected in the manner specified. (Whether the transformations are made first or the ties are resolved first is irrelevant, except when AVERAGE_TIE is specified.)</p>
+        <p>In the Tukey version (Tukey 1962), the scaling transformation for the rank <i>r</i><sub>i</sub> is (<i>r</i><sub>i</sub> – 1/3) / (n + 1/3). The Tukey normal score corresponding to the observation with rank <i>r</i><sub>i</sub> follows:</p>
+        <p>
+            <img src="images/IMSL_RANKS-23.jpg" />
+        </p>
+        <p>Ties are handled in the same way as for the Blom normal scores.</p>
+        <p>In the Van der Waerden version (see Lehmann 1975, p. 97), the scaling transformation for the rank <i>r</i><sub>i</sub> is <i>r</i><sub>i</sub> /(<i>n</i> + 1). The Van der Waerden normal score corresponding to the observation with rank <i>r</i><sub>i</sub> is as follows:</p>
+        <p>
+            <img src="images/IMSL_RANKS-24.jpg" />
+        </p>
+        <p>Ties are handled in the same way as for the Blom normal scores.</p>
+        <p>When option EXP_NORM_SCORES is nonzero, the output values are the expected values of the normal order statistics from a sample of size <i>n</i> = N_ELEMNTS(<i>x</i>). If the value in <i>x</i>(<i>i</i>) is the <i>k</i>-th smallest, then the value output in RANK (<i>i</i>) is E(<i>z</i><sub>k</sub>), where E(¥) is the expectation operator, and zk is the k-th order statistic in a sample of size n from a standard normal distribution. Ties are handled in the same way as for the Blom normal scores.</p>
+        <p>&#160;</p>
+        <p>Savage scores are the expected values of the exponential order statistics from a sample of size <i>n</i>. These values are called Savage scores because of their use in a test discussed by Savage (1956) and Lehmann (1975). If the value in <i>x</i>(<i>i</i>) is the <i>k</i>-th smallest, then the value output in RANK (<i>i</i>) is <i>E</i>(y<sub>k</sub>) where yk is the <i>k</i>-th order statistic in a sample of size n from a standard exponential distribution. The expected value of the <i>k</i>-th order statistic from an exponential sample of size <i>n</i> follows:</p>
+        <p>
+            <img src="images/IMSL_RANKS-25.jpg" />
+        </p>
+        <p>Ties are handled in the same way as for the Blom normal scores.</p>
+        <h2 class="API">Example</h2>
+        <p>The data for this example, from Hinkley (1977), contains 30 observations. Note that the fourth and sixth observations are tied, and the third and twentieth observations are tied.</p>
+        <p class="Code">x = [0.77, 1.74, 0.81, 1.20, 1.95, 1.20, 0.47,$</p>
+        <p class="Code">1.43, 3.37, 2.20, 3.00, 3.09, 1.51, 2.10,$</p>
+        <p class="Code">0.52, 1.62, 1.31, 0.32, 0.59, 0.81, 2.81,$</p>
+        <p class="Code">1.87, 1.18, 1.35, 4.75, 2.48, 0.96, 1.89, 0.90, 2.05]</p>
+        <p class="Code">r = IMSL_RANKS(x)</p>
+        <p class="Code">; Call IMSL_RANKS.</p>
+        <p class="Code">FOR i =	0, 29 DO PM,	i + 1, r(i), FORMAT = '(i5, f7.1)'</p>
+        <p class="Code">1	5.0</p>
+        <p class="Code">2	18.0</p>
+        <p class="Code">3	6.5</p>
+        <p class="Code">4	11.5</p>
+        <p class="Code">5	21.0</p>
+        <p class="Code">6	11.5</p>
+        <p class="Code">7	2.0</p>
+        <p class="Code">8	15.0</p>
+        <p class="Code">9	29.0</p>
+        <p class="Code">10	24.0</p>
+        <p class="Code">11	27.0</p>
+        <p class="Code">12	28.0</p>
+        <p class="Code">13	16.0</p>
+        <p class="Code">14	23.0</p>
+        <p class="Code">15	3.0</p>
+        <p class="Code">16	17.0</p>
+        <p class="Code">17	13.0</p>
+        <p class="Code">18	1.0</p>
+        <p class="Code">19	4.0</p>
+        <p class="Code">20	6.5</p>
+        <p class="Code">21	26.0</p>
+        <p class="Code">22	19.0</p>
+        <p class="Code">23	10.0</p>
+        <p class="Code">24	14.0</p>
+        <p class="Code">25	30.0</p>
+        <p class="Code">26	25.0</p>
+        <p class="Code">27	9.0</p>
+        <p class="Code">28	20.0</p>
+        <p class="Code">29	8.0</p>
+        <p class="Code">30	22.0</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_RANKS(<i>X</i> [, <a href="#AVERAGE_TIE" class="selected">AVERAGE_TIE</a>=<i>value</i>] [, <a href="#BLOM_SCORES" class="selected">BLOM_SCORES</a>=<i>value</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#EXP_NORM_SCORES" class="selected">EXP_NORM_SCORES</a>=<i>value</i>] [, <a href="#FUZZ" class="selected">FUZZ</a>=<i>value</i>] [, <a href="#HIGHEST" class="selected">HIGHEST</a>=<i>value</i>] [, <a href="#LOWEST" class="selected">LOWEST</a>=<i>value</i>] [, <a href="#RANDOM_SPLIT" class="selected">RANDOM_SPLIT</a>=<i>value</i>] [, <a href="#RANKS" class="selected">RANKS</a>=<i>value</i>] [, <a href="#SAVAGE_SCORES" class="selected">SAVAGE_SCORES</a>=<i>value</i>] [, <a href="#TUKEY_SCORES" class="selected">TUKEY_SCORES</a>=<i>value</i>] [, <a href="#VDW_SCORES" class="selected">VDW_SCORES</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A one-dimensional array containing the rank (or optionally, a transformation of the rank) of each observation.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the observations to be ranked.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="AVERAGE_TIE"></a>AVERAGE_TIE (optional)</h3>
+        <p>Average of the scores of the tied observations (default). At most, one of the following keywords can be set to a nonzero value to change the method used to assign a score to tied observations: AVERAGE_TIE, HIGHEST, LOWEST, RANDOM_SPLIT.</p>
+        <h3 class="Keyword"><a name="BLOM_SCORES"></a>BLOM_SCORES (optional)</h3>
+        <p>Blom version of normal scores. At most, one of the following keywords can be set to a nonzero value to specify the type of values returned: RANKS, BLOM_SCORES, TUKEY_SCORES, VDW_SCORES, EXP_NORM_SCORES, SAVAGE_SCORES.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="EXP_NORM_SCORES"></a>EXP_NORM_SCORES (optional)</h3>
+        <p>Expected value of normal order statistics (for tied observations, the average of the expected normal scores). At most, one of the following keywords can be set to a nonzero value to specify the type of values returned: RANKS, BLOM_SCORES, TUKEY_SCORES, VDW_SCORES, EXP_NORM_SCORES, SAVAGE_SCORES.</p>
+        <h3 class="Keyword"><a name="FUZZ"></a>FUZZ (optional)</h3>
+        <p>Value used to determine when two items are tied. If ABS(<i>x</i>(I) – <i>x</i>(J)) is less than or equal to FUZZ, then <i>x</i>(I) and <i>x</i>(J) are said to be tied. Default: 0.0</p>
+        <h3 class="Keyword"><a name="HIGHEST"></a>HIGHEST (optional)</h3>
+        <p>Highest score in the group of ties. At most, one of the following keywords can be set to a nonzero value to change the method used to assign a score to tied observations: AVERAGE_TIE, HIGHEST, LOWEST, RANDOM_SPLIT.</p>
+        <h3 class="Keyword"><a name="LOWEST"></a>LOWEST (optional)</h3>
+        <p>Lowest score in the group of ties. At most, one of the following keywords can be set to a nonzero value to change the method used to assign a score to tied observations: AVERAGE_TIE, HIGHEST, LOWEST, RANDOM_SPLIT.</p>
+        <h3 class="Keyword"><a name="RANDOM_SPLIT"></a>RANDOM_SPLIT (optional)</h3>
+        <p>Tied observations are randomly split using a random-number generator. At most, one of the following keywords can be set to a nonzero value to change the method used to assign a score to tied observations: AVERAGE_TIE, HIGHEST, LOWEST, RANDOM_SPLIT.</p>
+        <h3 class="Keyword"><a name="RANKS"></a>RANKS (optional)</h3>
+        <p>Ranks (default). At most, one of the following keywords can be set to a nonzero value to specify the type of values returned: RANKS, BLOM_SCORES, TUKEY_SCORES, VDW_SCORES, EXP_NORM_SCORES, SAVAGE_SCORES.</p>
+        <h3 class="Keyword"><a name="SAVAGE_SCORES"></a>SAVAGE_SCORES (optional)</h3>
+        <p>Savage scores (expected value of exponential order statistics). At most, one of the following keywords can be set to a nonzero value to specify the type of values returned: RANKS, BLOM_SCORES, TUKEY_SCORES, VDW_SCORES, EXP_NORM_SCORES, SAVAGE_SCORES.</p>
+        <h3 class="Keyword"><a name="TUKEY_SCORES"></a>TUKEY_SCORES (optional)</h3>
+        <p>Tukey version of normal scores. At most, one of the following keywords can be set to a nonzero value to specify the type of values returned: RANKS, BLOM_SCORES, TUKEY_SCORES, VDW_SCORES, EXP_NORM_SCORES, SAVAGE_SCORES.</p>
+        <h3 class="Keyword"><a name="VDW_SCORES"></a>VDW_SCORES (optional)</h3>
+        <p>Van der Waerden version of normal scores. At most, one of the following keywords can be set to a nonzero value to specify the type of values returned: RANKS, BLOM_SCORES, TUKEY_SCORES, VDW_SCORES, EXP_NORM_SCORES, SAVAGE_SCORES.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_NORMALCDF.htm">IMSL_NORMALCDF</a>, <a href="IMSL_RANDOMOPT.htm">IMSL_RANDOMOPT</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

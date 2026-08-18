@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: B">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>BLAS_GEMM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="B_list.htm">Routines: B</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">BLAS_GEMM</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor106"></a>BLAS_GEMM</h1>
+        <p>The BLAS_GEMM procedure updates an existing matrix by adding a multiple of the product of two other matrices, according to the following vector operation:</p>
+        <p><i>C = alpha *&#160;op(A) *&#160;op(B) +&#160;beta&#160;*&#160;C</i>
+        </p>
+        <p>where alpha and beta are scale factors, <i>A</i>, <i>B</i>, and <i>C</i> are input matrices, and <i>op(X)</i> is one of <i>X</i>, <i>X<sup>T</sup></i>, or <i>X<sup>H</sup></i>.</p>
+        <p>BLAS_GEMM is based on the following BLAS routines:</p>
+        <table style="caption-side: bottom;mc-table-style: url('../../Resources/TableStyles/Description.css');" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Output Type</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>BLAS Routine</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Float</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>sgemm</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Double</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>dgemm</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Complex</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>cgemm</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>Double complex</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>zgemm</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>BLAS_GEMM uses MKL, so it only supports output of  type float, double, complex, or dcomplex. The input arguments can be integer types, at which point they will be converted to the type of the output argument C before being multiplied.</p>
+        <p>BLAS_GEMM can be faster and use less memory than the usual IDL array notation (e.g., <code>C = C + A * B</code>) for updating existing arrays.</p>
+        <h3>The # Operator vs. MATRIX_MULTIPLY vs. BLAS_GEMM</h3>
+        <p>The following table illustrates how various operations are performed using the # operator versus the <a href="../M/MATRIX_MULTIPLY.htm">MATRIX_MULTIPLY</a> function and BLAS_GEMM procedure:</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;width: 1280px;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p># Operator</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>MATRIX_MULTIPLY Function</p>
+                    </td>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">BLAS_GEMM Procedure</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>A # B</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>MATRIX_MULTIPLY(<i>A</i>, <i>B</i>)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>TRANSPOSE(A) # B</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>MATRIX_MULTIPLY(<i>A</i>, <i>B</i>, /ATRANSPOSE)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, ATRANSPOSE=1)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>A # TRANSPOSE(B) </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>MATRIX_MULTIPLY(<i>A</i>, <i>B</i>, /BTRANSPOSE)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, BTRANSPOSE=1)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>TRANSPOSE(A) # TRANSPOSE(B)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>MATRIX_MULTIPLY(<i>A</i>, <i>B</i>, /ATRANSPOSE, /BTRANSPOSE)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, ATRANSPOSE=1, BTRANSPOSE=1)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CONJ(TRANSPOSE(A))&#160;#&#160;B</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">MATRIX_MULTIPLY(CONJ(<i>A</i>), <i>B</i>, /ATRANSPOSE)</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, ATRANSPOSE=-1)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">A # CONJ(TRANSPOSE(B))</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>MATRIX_MULTIPLY(<i>A</i>, CONJ(<i>B</i>), /BTRANSPOSE)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, BTRANSPOSE=-1)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CONJ(TRANSPOSE(A)) #TRANSPOSE(B)</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">MATRIX_MULTIPLY(CONJ(<i>A</i>), <i>B</i>, /ATRANSPOSE, /BTRANSPOSE)</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, ATRANSPOSE=-1, BTRANSPOSE=1)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">TRANSPOSE(A) # CONJ(TRANSPOSE(B))</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">MATRIX_MULTIPLY(<i>A</i>, CONJ(<i>B</i>), /ATRANSPOSE, /BTRANSPOSE)</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, ATRANSPOSE=1, BTRANSPOSE=-1)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">CONJ(TRANSPOSE(A)) # CONJ(TRANSPOSE(B))</td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">MATRIX_MULTIPLY(CONJ(<i>A</i>), CONJ(<i>B</i>), /ATRANSPOSE, /BTRANSPOSE)</td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">BLAS_GEMM(<i>A</i>, <i>B</i>, ATRANSPOSE=-1, BTRANSPOSE=-1)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>BLAS_GEMM can also be used in place of the ## operator. For example, A&#160;##&#160;B is equivalent to BLAS_GEMM(<i>B</i>, <i>A</i>), and A&#160;##&#160;TRANSPOSE(B) is equivalent to BLAS_GEMM(<i>B</i>,&#160;<i>A</i>,&#160;/ATRANSPOSE).</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">BLAS_GEMM, <i>C</i>,<i> A</i>,<i> B </i>[,&#160;ALPHA=<i>value</i>] [,&#160;BETA=<i>value</i>] [,&#160;ATRANSPOSE=<i>value</i>] [,&#160;BTRANSPOSE=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">C</h3>
+        <p>The array to be updated. <i>C</i> must be of float, double, complex, or dcomplex type. BLAS_GEMM does not change the size and type of <i>C</i>.</p>
+        <h3 class="Argument">A</h3>
+        <p>The first matrix operand in the matrix product. <i>A</i> may be any array that IDL can convert to the type of <i>C</i>. BLAS_GEMM does not change <i>A</i>, but <i>A</i> will be internally converted to the type of <i>C</i> before multiplication.</p>
+        <h3 class="Argument">B</h3>
+        <p>The second matrix operand in the matrix product. <i>B</i> may be any array that IDL can convert to the type of <i>C</i>. BLAS_GEMM does not change <i>B</i>, but <i>A</i> will be internally converted to the type of <i>C</i> before multiplication.</p>
+        <p>NOTE: Based on the values of <i>ATRANSPOSE</i>&#160;and <i>BTRANSPOSE</i>, the arguments <i>A</i>&#160;and <i>B</i> must be compatible with each other to perform matrix multiplication, as well as the output argument <i>C</i>.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">ALPHA</h3>
+        <p>An optional scaling factor to be multiplied with <i>A</i> and <i>B</i>. <i>ALPHA</i> may be any scalar that IDL can convert to the type of <i>C</i>. BLAS_GEMM does not change <i>ALPHA</i>. If <i>ALPHA</i> is not specified then a default value of 1.0 is used.</p>
+        <h3 class="Keyword">ATRANSPOSE</h3>
+        <p>Set this keyword to a positive value to multiply using the transpose of <i>A</i>. Set this keyword to a negative value to multiply using the complex conjugate transpose of <i>A</i>.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If <i>C</i> is of type float or double, then any non-zero value for <i>ATRANSPOSE</i> has the same effect of a normal transpose of <i>A</i>.</p>
+        <h3 class="Keyword">BETA</h3>
+        <p>An optional scaling factor to be multiplied with <i>C</i> before adding the matrix product of <i>A</i> and <i>B</i>. <i>BETA</i> may be any scalar that IDL can convert to the type of <i>C</i>. BLAS_GEMM does not change <i>BETA</i>. If <i>BETA</i> is not specified, then a default value of 0.0 is used.</p>
+        <h3 class="Keyword">BTRANSPOSE</h3>
+        <p>Set this keyword to a positive value to multiply using the transpose of <i>B</i>. Set this keyword to a negative value to multiply using the complex conjugate transpose of <i>B</i>.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If <i>C</i> is of type float or double, then any non-zero value for <i>BTRANSPOSE</i> has the same effect of a normal transpose of <i>B</i>.</p>
+        <h3>Thread Pool Keywords</h3>
+        <p>This routine is written to make use of IDL’s <i>thread pool</i>, which can increase execution speed on systems with multiple CPUs. The values stored in the !CPU system variable control whether IDL uses the thread pool for a given computation. In addition, you can use the thread pool keywords TPOOL_MAX_ELTS, TPOOL_MIN_ELTS, and TPOOL_NOTHREAD to override the defaults established by !CPU for a single invocation of this routine. See <a href="../../Creating IDL Programs/Appendices/tpoolkeyw.htm#tpoolkeyw_2501860834_317209">Thread Pool Keywords</a> for details.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The thread pool keywords have no effect on Mac, MKL&#160;will always use multiple cores.</p>
+        <h2 class="API">Examples</h2>
+        <p>The following examples show how to use the BLAS_GEMM procedure to perform matrix multiplication, with scaling.</p>
+        <p>Create a multidimensional array:</p>
+        <p class="Code">A = RANDOMU(1, 4, 5)</p>
+        <p>Print A:</p>
+        <p class="Code">PRINT, A</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.41702199      0.99718481      0.72032452      0.93255734</p>
+        <p class="Code">0.00011438108      0.12812445      0.30233258      0.99904054</p>
+        <p class="Code">0.14675589      0.23608898     0.092338592      0.39658073</p>
+        <p class="Code">0.18626021      0.38791075      0.34556073      0.66974604</p>
+        <p class="Code">0.39676747      0.93553907      0.53881675      0.84631091</p>
+        <p>Create another multidimensional array:</p>
+        <p class="Code">B = RANDOMU(2, 4, 5)</p>
+        <p>Print B</p>
+        <p class="Code">PRINT, B</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.43599489      0.18508208     0.025926229      0.93154085</p>
+        <p class="Code">0.54966247      0.94773060      0.43532240      0.48474911</p>
+        <p class="Code">0.42036781      0.32053643      0.33033481      0.15442668</p>
+        <p class="Code">0.20464863      0.69886267      0.61927098      0.11995054</p>
+        <p class="Code">0.29965466      0.48517591      0.26682729      0.63273776</p>
+        <p>Create an array to store the product of A&#160;and B:</p>
+        <p class="Code">C = FLTARR(4, 4)</p>
+        <p>Print C</p>
+        <p class="Code">PRINT, C</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.00000000      0.00000000      0.00000000      0.00000000</p>
+        <p class="Code">0.00000000      0.00000000      0.00000000      0.00000000</p>
+        <p class="Code">0.00000000      0.00000000      0.00000000      0.00000000</p>
+        <p class="Code">0.00000000      0.00000000      0.00000000      0.00000000</p>
+        <p>Set C&#160;equal to the product of A&#160;and B (i.e., C = TRANSPOSE(A)&#160;# B):</p>
+        <p class="Code">BLAS_GEMM, C, A, B, /ATRANSPOSE</p>
+        <p>Print C:</p>
+        <p class="Code">PRINT, C</p>
+        <p>IDL prints:</p>
+        <p class="Code">     0.40058488      0.44700462      0.28055412      0.68458325</p>
+        <p class="Code">0.96416092       1.1066610      0.64946634       1.6659660</p>
+        <p class="Code">0.75123233      0.95236725      0.53855681       1.2142065</p>
+        <p class="Code">1.5130987       2.1252096       1.2306600       2.0300713</p>
+        <p>Copy C into a temporary variable:</p>
+        <p class="Code">CPrime = C</p>
+        <p>Add the product of A&#160;and B&#160;to C (i.e., C += TRANSPOSE(A)&#160;#&#160;B):</p>
+        <p class="Code">BLAS_GEMM, C, A, B, /ATRANSPOSE, BETA=1.0</p>
+        <p>Print C:</p>
+        <p class="Code">PRINT, C</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.80116975      0.89400923      0.56110823       1.3691664</p>
+        <p class="Code">1.9283218       2.2133219       1.2989327       3.3319321</p>
+        <p class="Code">1.5024647       1.9047346       1.0771137       2.4284132</p>
+        <p class="Code">3.0261972       4.2504191       2.4613199       4.0601425</p>
+        <p>Show that C is now twice CPrime:</p>
+        <p class="Code">PRINT, C / CPrime</p>
+        <p>IDL prints:</p>
+        <p class="Code">2.0000000       2.0000000       2.0000000       1.9999999</p>
+        <p class="Code">2.0000000       2.0000000       2.0000000       2.0000000</p>
+        <p class="Code">2.0000000       2.0000002       2.0000002       2.0000002</p>
+        <p class="Code">1.9999999       2.0000000       2.0000000       2.0000000</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.8</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../M/MATRIX_MULTIPLY.htm">MATRIX MULTIPLY</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

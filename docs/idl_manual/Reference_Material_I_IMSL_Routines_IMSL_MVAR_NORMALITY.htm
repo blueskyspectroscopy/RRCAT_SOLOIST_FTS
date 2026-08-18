@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_MVAR_NORMALITY</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_MVAR_NORMALITY</span>
+        </div>
+        <h1 class="Routine">IMSL_MVAR_NORMALITY</h1>
+        <p>The IMSL_MVAR_NORMALITY function computes Mardia’s multivariate measures of skewness and kurtosis and tests for multivariate normality.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_MVAR_NORMALITY function computes Mardia’s (1970) measures b1,p and b2,p of multivariate skewness and kurtosis, respectfully, for</p>
+        <p>p = N_ELEMENTS(x(0,*)). These measures are then used in computing tests for</p>
+        <p>multivariate normality. Three test statistics, one based upon b1,p alone, one based upon b2,p alone, and an omnibus test statistic formed by combining normal scores obtained from b1,p and b2,p are computed. On the order of np3, operations are</p>
+        <p>required in computing b1,p when the method of Isogai (1983) is used, where n = N_ELEMENTS(x(*,0)). On the order of np2, operations are required in computing</p>
+        <p>b2,p.</p>
+        <p>&#160;</p>
+        <p>Let:</p>
+        <p>
+            <img src="images/IMSL_MVAR_NORMALITY-12.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_MVAR_NORMALITY-13.jpg" />
+        </p>
+        <p><i>f</i><sub>i</sub> is the frequency of the <i>i</i>-th observation, and <i>w</i><sub>i</sub> is the weight for this observation. (Weights <i>w</i><sub>i</sub> are defined such that <i>x</i><sub>i</sub> is distributed according to a multivariate normal, <i>N</i>(µ, Σ/<i>w</i><sub>i</sub>) distribution, where Σ is the covariance matrix.) Mardia’s multivariate skewness statistic is defined as:</p>
+        <p>
+            <img src="images/IMSL_MVAR_NORMALITY-14.jpg" />
+        </p>
+        <p>while Mardia’s kurtosis is given as:</p>
+        <p>
+            <img src="images/IMSL_MVAR_NORMALITY-15.jpg" />
+        </p>
+        <p>Both measures are invariant under the affine (matrix) transformation <i>AX</i> + <i>D</i>, and reduce to univariate measures when <i>p</i> = N_ELEMENTS(<i>X</i>(0,*)) = 1. Using formulas given in Mardia and Foster (1983), the approximate expected value, asymptotic standard error, and asymptotic <i>p</i>-value for <i>b</i><sub>2,p</sub>, and the approximate expected value, an asymptotic chi-squared statistic, and <i>p</i>-value for the <i>b</i><sub>1,p</sub> statistic are computed.</p>
+        <p>These statistics are all computed under the null hypothesis of a multivariate normal distribution. In addition, standard normal scores <i>W</i><sub>1</sub>(<i>b</i><sub>1,p</sub>) and <i>W</i><sub>2</sub>(<i>b</i><sub>2,p</sub>) (different from but similar to the asymptotic normal and chi-squared statistics above) are computed.</p>
+        <p>These scores are combined into an asymptotic chi-squared statistic with two degrees of freedom:</p>
+        <p>
+            <img src="images/IMSL_MVAR_NORMALITY-16.jpg" />
+        </p>
+        <p>This chi-squared statistic may be used to test for multivariate normality. A <i>p</i>-value for the chi-squared statistic is also computed.</p>
+        <h2 class="API">Example</h2>
+        <p>In the following example, 150 observations from a 5 dimensional standard normal distribution are generated via routine <a href="IMSL_RANDOM.htm">IMSL_RANDOM</a>. The skewness and kurtosis statistics are then computed for these observations.</p>
+        <p class="Code">m	=	150</p>
+        <p class="Code">n	=	5</p>
+        <p class="Code">IMSL_RANDOMOPT, set	=	123457</p>
+        <p class="Code">x	=	FLTARR(n, m)</p>
+        <p class="Code">x(*)	=	IMSL_RANDOM(m*n, /Normal)</p>
+        <p class="Code">x	=	TRANSPOSE(x)</p>
+        <p class="Code">stats = IMSL_MVAR_NORMALITY(x, Sum_Weights = sw, Sum_Freq = sf, $ </p>
+        <p class="Code">&#160;&#160;Means = means, R_Matrix = r_mat)</p>
+        <p class="Code">PRINT, 'Sum of Frequencies =', sf, FORMAT = '(A25, I4)'</p>
+        <p class="Code">PRINT, 'Sum of the weights =', sw, FORMAT = '(A25, F8.3)'</p>
+        <p class="Code">FOR i	=	0, 12 DO PM, i, stats(i), FORMAT = '(I5, F10.2)'</p>
+        <p>IDL&#160;prints:</p>
+        <p>
+            <img src="images/IMSL_MVAR_NORMALITY-17.jpg" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_MVAR_NORMALITY(<i>X</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FREQUENCIES" class="selected">FREQUENCIES</a>=<i>array</i>] [, <a href="#MEANS" class="selected">MEANS</a>=<i>variable</i>] [, <a href="#NMISSING" class="selected">NMISSING</a>=<i>variable</i>] [, <a href="#R_MATRIX" class="selected">R_MATRIX</a>=<i>variable</i>] [, <a href="#SUM_FREQS" class="selected">SUM_FREQS</a>=<i>variable</i>] [, <a href="#SUM_WEIGHTS" class="selected">SUM_WEIGHTS</a>=<i>variable</i>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of size 13 containing output statistics as shown in the following list:</p>
+        <ul>
+            <li value="1">0: estimated skewness</li>
+            <li value="2">1: expected skewness assuming a multivariate normal distribution</li>
+            <li value="3">2: asymptotic chi-squared statistic assuming a multivariate normal distribution</li>
+            <li value="4">3: probability of a greater chi-squared</li>
+            <li value="5">4: Mardia and Foster's standard normal score for skewness</li>
+            <li value="6">5: estimated kurtosis</li>
+            <li value="7">6: expected kurtosis assuming a multivariate normal distribution</li>
+            <li value="8">7: asymptotic standard error of the estimated kurtosis</li>
+            <li value="9">8: standard normal score obtained from <i>Result</i>(5) through <i>Result</i>(7)</li>
+            <li value="10">9: <i>p</i>-value corresponding to <i>Result</i>(8)</li>
+            <li value="11">10: Mardia and Foster's standard normal score for kurtosis</li>
+            <li value="12">11: Mardia's <i>S</i><sub>W</sub> statistic based upon <i>Result</i>(4) and <i>Result</i>(10)</li>
+            <li value="13">12: <i>p</i>-value for <i>Result</i>(11)</li>
+        </ul>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>2D array containing data in which:</p>
+        <ul>
+            <li value="1">N_ELEMENTS(<i>X</i>(*,0)) is the number of observations (numbers of rows of data) in <i>X</i></li>
+            <li value="2">N_ELEMENTS(<i>X</i>(0,*)) is the dimensionality of the multivariate space for which the skewness and kurtosis are to be computed (the number of variables in <i>X</i>).</li>
+        </ul>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>One-dimensional array containing the frequencies. Frequencies must be integer values. The default value is 1 for all frequencies.</p>
+        <h3 class="Keyword"><a name="MEANS"></a>MEANS (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length N_ELEMENTS(X(0,*)) containing the sample mean.</p>
+        <h3 class="Keyword"><a name="NMISSING"></a>NMISSING (optional)</h3>
+        <p>Named variable with the number of rows of data in X that contain missing values (NaN).</p>
+        <h3 class="Keyword"><a name="R_MATRIX"></a>R_MATRIX (optional)</h3>
+        <p>Named variable with an upper triangular array containing the Cholesky RTR factorization of the covariance matrix.</p>
+        <h3 class="Keyword"><a name="SUM_FREQS"></a>SUM_FREQS (optional)</h3>
+        <p>Named variable containing the sum of the frequencies of all observations used in the computations.</p>
+        <h3 class="Keyword"><a name="SUM_WEIGHTS"></a>SUM_WEIGHTS (optional)</h3>
+        <p>Named variable containing the sum of the weights times the frequencies for all observations used in the computations.</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>One-dimensional array containing the weights. Weights must be non-negative. The default value is 1 for all weights.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_SVDCOMP</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_SVDCOMP</span>
+        </div>
+        <h1>IMSL_SVDCOMP</h1>
+        <p>The IMSL_SVDCOMP function computes the singular value decomposition (<i>SVD</i>), <i>A = USV</i><sup style="font-style: italic;">T</sup>, of a real or complex rectangular matrix <i>A</i>. An estimate of the rank of <i>A</i> also can be computed.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_SVDCOMP function computes the singular value decomposition of a real or complex matrix <i>A</i>. It reduces the matrix <i>A</i> to a bidiagonal matrix <i>B</i> by pre- and post-multiplying Householder transformations, then, it computes singular value decomposition of <i>B</i> using the implicit-shifted <i>QR</i> algorithm. An estimate of the rank of the matrix <i>A</i> is obtained by finding the smallest integer <i>k</i> such that:</p>
+        <p> <i>s</i><sub style="font-style: italic;">k,k</sub> ≤ TOL_RANK or<i> s</i><sub style="font-style: italic;">k,k</sub> ≤ TOL_RANK * ||<i>A</i>||<sub>infinity</sub></p>
+        <p>Since<i> s</i><sub style="font-style: italic;">i + 1</sub><i>, </i><sub style="font-style: italic;">i + 1</sub><i> ≤ s </i><sub style="font-style: italic;">i,i</sub> , it follows that all the <i>s </i><sub style="font-style: italic;">i,i</sub> satisfy the same inequality for <i>i = k</i>, ..., min(<i>m, n</i>) – 2. The rank is set to the value <i>k</i>. If <i>A = USV<sup>T</sup></i>, its generalized inverse is <i>A</i><sup style="font-style: italic;">+</sup> = <i>VS</i><sup style="font-style: italic;">+</sup><i>U</i><sup style="font-style: italic;">T</sup>. Here, <i>S</i><sup style="font-style: italic;">+</sup> = diag (<i>s</i><sup style="font-style: italic;">–1</sup><i>  <![CDATA[ ]]></i><sub style="font-style: italic;">0,0</sub><i>,..., s</i><sup style="font-style: italic;">–1</sup><i> <sub>i,i</sub>, 0, ..., 0</i>). Only singular values that are not negligible are reciprocated. If the keyword INVERSE is specified, the function first computes the singular value decomposition of the matrix <i>A</i>, then computes the generalized inverse. The IMSL_SVDCOMP function fails if the <i>QR</i> algorithm does not converge after 30 iterations.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example computes the singular values of a 6-by-4 real matrix.</p>
+        <p class="Code">RM, a, 6, 4</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the matrix.</p>
+        <p class="Code">row 0: 1 2 1 4</p>
+        <p class="Code">row 1: 3 2 1 3</p>
+        <p class="Code">row 2: 4 3 1 4</p>
+        <p class="Code">row 3: 2 1 3 1</p>
+        <p class="Code">row 4: 1 5 2 2</p>
+        <p class="Code">row 5: 1 2 2 3</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_SVDCOMP and output the results.</p>
+        <p class="Code">singvals = IMSL_SVDCOMP(a)</p>
+        <p class="Code">PM, singvals</p>
+        <p class="Code_Indented">11.4850</p>
+        <p class="Code_Indented">3.26975</p>
+        <p class="Code_Indented">2.65336</p>
+        <p class="Code_Indented">2.08873</p>
+        <h3>Example 2</h3>
+        <p>This example computes the singular value decomposition of the 6-by-4 real matrix <i>A</i>. Matrices <i>U</i> and <i>V</i> are returned using keywords U and V.</p>
+        <p class="Code">RM, a, 6, 4</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the matrix.</p>
+        <p class="Code">row 0: 1 2 1 4</p>
+        <p class="Code">row 1: 3 2 1 3</p>
+        <p class="Code">row 2: 4 3 1 4</p>
+        <p class="Code">row 3: 2 1 3 1</p>
+        <p class="Code">row 4: 1 5 2 2</p>
+        <p class="Code">row 5: 1 2 2 3</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_SVDCOMP with keywords U and V and output the results.</p>
+        <p class="Code">singvals = IMSL_SVDCOMP(a, U = u, V = v)</p>
+        <p class="Code">PM, singvals, Title = 'Singular values', Format = '(f12.6)'</p>
+        <p class="Code">Singular values</p>
+        <p class="Code_Indented">11.485018</p>
+        <p class="Code_Indented">3.269752</p>
+        <p class="Code_Indented">2.653356</p>
+        <p class="Code_Indented">2.088730</p>
+        <p class="Code">PM, u, Title = 'Left singular vectors, U', Format = '(4f12.6)'</p>
+        <p class="Code">Left singular vectors, U</p>
+        <p class="Code">-0.3804755863D, -0.1196709926D, -0.4390828244D,  0.5653995859D</p>
+        <p class="Code">-0.4037537132D, -0.3451108371D,  0.0565761853D, -0.2147755765D</p>
+        <p class="Code">-0.5451204862D, -0.4292648935D, -0.0513926928D, -0.4321441628D</p>
+        <p class="Code">-0.2647842940D,  0.0683195253D,  0.8838608674D,  0.2152536982D</p>
+        <p class="Code">-0.4463101123D,  0.8168276233D, -0.1418996751D, -0.3212695843D</p>
+        <p class="Code">-0.3546286566D,  0.1021473992D,  0.0043184440D,  0.5458002219D</p>
+        <p class="Code">PM, v, Title = 'Right singular vectors, V', Format = '(4f12.6)'</p>
+        <p class="Code">Right singular vectors, V</p>
+        <p class="Code">-0.4442941288D, -0.5555312578D,  0.4353789667D, -0.5517543874D</p>
+        <p class="Code">-0.5580672382D,  0.6542987401D, -0.2774569005D, -0.4283360652D</p>
+        <p class="Code">-0.3243861032D,  0.3513606456D,  0.7320995334D,  0.4851284633D</p>
+        <p class="Code">-0.6212385538D, -0.3739303104D, -0.4444019542D,  0.5260662366</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_SLOWCONVERGENT_MATRIX: Convergence cannot be reached after 30 iterations.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_SVDCOMP(<i>A</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#INVERSE" class="selected">INVERSE</a>=<i>variable</i>] [, <a href="#RANK" class="selected">RANK</a>=<i>variable</i>] [, <a href="#TOL_RANK" class="selected">TOL_RANK</a>=<i>variable</i>] [, <a href="#U" class="selected">U</a>=<i>variable</i>] [, <a href="#V" class="selected">V</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array containing ordered singular values of <i>A</i>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">A</h3>
+        <p>Two-dimensional matrix containing the coefficient matrix. Element <i>A (i, j)</i> contains the <i>j</i>-th coefficient of the <i>i</i>-th equation.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="INVERSE"></a>INVERSE (optional)</h3>
+        <p>Named variable into which the generalized inverse of the matrix <i>A</i> is stored.</p>
+        <h3 class="Keyword"><a name="RANK"></a>RANK (optional)</h3>
+        <p>Named variable into which an estimate of the rank of <i>A</i> is stored.</p>
+        <h3 class="Keyword"><a name="TOL_RANK"></a>TOL_RANK (optional)</h3>
+        <p>Named variable containing the tolerance used to determine when a singular value is negligible and replaced by the value zero. If TOL_RANK &gt; 0, then a singular value<i> s</i><sub style="font-style: italic;">i,i</sub> is considered negligible if <i>s</i><sub style="font-style: italic;">i,i</sub> ≤ TOL_RANK. If TOL_RANK &lt; 0, then a singular value <i>s</i><sub style="font-style: italic;">i,i</sub> is considered negligible if<i> s</i><sub style="font-style: italic;">i,i</sub> ≤ TOL_RANK * ||<i>A</i>||<sub>infinity</sub>.</p>
+        <p>In this case, |TOL_RANK| should be an estimate of relative error or uncertainty in the data.</p>
+        <h3 class="Keyword"><a name="U"></a>U (optional)</h3>
+        <p>Named variable into which the left-singular vectors of <i>A</i> are stored.</p>
+        <h3 class="Keyword"><a name="V"></a>V (optional)</h3>
+        <p>Named variable into which the right-singular vectors of <i>A</i> are stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_CHNNDFAC.htm">IMSL_CHNNDFAC</a>, <a href="IMSL_CHNNDSOL.htm">IMSL_CHNNDSOL</a>, <a href="#">IMSL_LINLSQ</a>, <a href="IMSL_QRFAC.htm">IMSL_QRFAC</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

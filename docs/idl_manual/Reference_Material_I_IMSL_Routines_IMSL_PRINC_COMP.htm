@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_PRINC_COMP</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_PRINC_COMP</span>
+        </div>
+        <h1 class="Routine">IMSL_PRINC_COMP</h1>
+        <p>The IMSL_PRINC_COMP function computes principal components.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_PRINC_COMP function finds the principal components of a set of variables from a sample covariance or correlation matrix. The characteristic roots, characteristic vectors, standard errors for the characteristic roots, and the correlations of the principal component scores with the original variables are computed. Principal components obtained from correlation matrices are the same as principal components obtained from standardized variables (to unit variance).</p>
+        <p>The principal component scores are the elements of the vector <i>y</i> = Γ<sup>T</sup><i>x</i>, where Γ is the matrix whose columns are the characteristic vectors (eigenvectors) of the sample covariance (or correlation) matrix and <i>x</i> is the vector of observed (or standardized) random variables. The variances of the principal component scores are the characteristic roots (eigenvalues) of the covariance (correlation) matrix.</p>
+        <p>Asymptotic variances for the characteristic roots were first obtained by Girschick (1939) and are given more recently by Kendall et al. (1983, p. 331). These variances are computed either for covariance matrices or for correlation matrices.</p>
+        <p>The correlations of the principal components with the observed (or standardized) variables are given in the matrix correlations. When the principal components are obtained from a correlation matrix, Correlations is the same as the matrix of unrotated factor loadings obtained for the principal components model for factor analysis.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>In this example, principal components are computed for a nine-variable covariance matrix.</p>
+        <p class="Code">covariances = $</p>
+        <p class="Code">[[1.0, 0.523, 0.395, 0.471, 0.346, 0.426, 0.576, 0.434, 0.639], $</p>
+        <p class="Code">[0.523, 1.0,  0.479, 0.506, 0.418, 0.462, 0.547, 0.283, 0.645], $</p>
+        <p class="Code">[0.395, 0.479, 1.0, 0.355, 0.27,  0.254, 0.452, 0.219, 0.504], $</p>
+        <p class="Code">[0.471, 0.506, 0.355, 1.0,  0.691, 0.791, 0.443, 0.285, 0.505], $</p>
+        <p class="Code">[0.346, 0.418, 0.27, 0.691, 1.0,  0.679, 0.383, 0.149, 0.409], $</p>
+        <p class="Code">[0.426, 0.462, 0.254, 0.791, 0.679, 1.0,  0.372, 0.314, 0.472], $</p>
+        <p class="Code">[0.576, 0.547, 0.452, 0.443, 0.383, 0.372, 1.0,  0.385, 0.68], $</p>
+        <p class="Code">[0.434, 0.283, 0.219, 0.285, 0.149, 0.314, 0.385, 1.0,  0.47], $</p>
+        <p class="Code">[0.639, 0.645, 0.504, 0.505, 0.409, 0.472, 0.68, 0.47, 1.0]]</p>
+        <p class="Code">values = IMSL_PRINC_COMP(covariances)</p>
+        <p class="Code">PM, values, Title = 'Eigenvalues:'</p>
+        <p>Result:</p>
+        <p class="Code">Eigenvalues:</p>
+        <p class="Code_Indented">4.67692</p>
+        <p class="Code_Indented">1.26397</p>
+        <p class="Code_Indented">0.844450</p>
+        <p class="Code_Indented">0.555027</p>
+        <p class="Code_Indented">0.447076</p>
+        <p class="Code_Indented">0.429125</p>
+        <p class="Code_Indented">0.310241</p>
+        <p class="Code_Indented">0.277006</p>
+        <p class="Code_Indented">0.196197</p>
+        <h3>Example 2</h3>
+        <p>In this example, principal components are computed for a nine-variable correlation matrix. This example uses the same data as the first example.</p>
+        <p class="Code">values = IMSL_PRINC_COMP(covariances, /CORR_MATRIX, $ EIGENVECTORS	= ev, $</p>
+        <p class="Code">STDEV	= stdev, $ DF	= 100, $ CUM_PERCENT	= cp, $ CORRELATIONS	= a)</p>
+        <p class="Code">PM, [[values],[ev]], TITLE = 'Eigenvalue Eigenvector:', $</p>
+        <p class="Code_Indented">FORMAT = '(f7.2, 2x, 9f7.2)'</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_PRINC_COMP_Print1.png" />
+        </p>
+        <p class="Code">PM, a, Title = 'Matrix A:', FORMAT = '(9f7.2)' </p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_PRINC_COMP_Print2.png" />
+        </p>
+        <p class="Code">PM, [[values], [stdev], [cp]], Title = 'Eigenvalue	STD	PCT', $</p>
+        <p class="Code_Indented">FORMAT = '(3(3x,F5.2))'</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_PRINC_COMP_Print3.png" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_100_DF: Because the number of degrees of freedom in Covariances and Df is less than or equal to zero, 100 degrees of freedom will be used.</p>
+        <p>STAT_COV_NOT_NONNEG_DEF: Keyword Eigenvectors(#) = #. One or more eigenvalues much less than zero are computed. The matrix Covariances is not nonnegative definite. In order to continue computations of Eigenvectors and Correlations, these eigenvalues are treated as zero.</p>
+        <p>STAT_FAILED_TO_CONVERGE: Iteration for the eigenvalue failed to converge in 100 iterations before deflating.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_PRINC_COMP(<i>Covariances</i> [, /<a href="#COV_MATRIX" class="selected">COV_MATRIX</a>] [, /<a href="#CORR_MATRIX" class="selected">CORR_MATRIX</a>] [, <a href="#CORRELATIONS" class="selected">CORRELATIONS</a>=<i>variable</i>] [, <a href="#CUM_PERCENT" class="selected">CUM_PERCENT</a>=<i>variable</i>] [, <a href="#DF" class="selected">DF</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#EIGENVECTORS" class="selected">EIGENVECTORS</a>=<i>variable</i>] [, <a href="#STDEV" class="selected">STDEV</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array containing the eigenvalues of covariances ordered from largest to smallest.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">covariances</h3>
+        <p>Two-dimensional square matrix containing the covariance or correlation matrix.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="COV_MATRIX"></a>COV_MATRIX (optional)</h3>
+        <p>If present and nonzero, treats the input matrix covariances as a covariance matrix. The keywords COV_MATRIX and CORR_MATRIX cannot be used together. Default: 1</p>
+        <h3 class="Keyword"><a name="CORR_MATRIX"></a>CORR_MATRIX (optional)</h3>
+        <p>If present and nonzero, treats the input matrix covariances as a correlation matrix. The keywords COV_MATRIX and CORR_MATRIX cannot be used together.</p>
+        <h3 class="Keyword"><a name="CORRELATIONS"></a>CORRELATIONS (optional)</h3>
+        <p>Named variable into which the one-dimensional array of length containing the correlations of the principal components (the columns) with the observed/standardized variables (the rows) is stored. If COV_MATRIX is present and nonzero, the correlations are with the observed variables; otherwise, the correlations are with the standardized variables (to a variance of 1.0). In the principal component model for factor analysis, matrix CORRELATIONS is the matrix of unrotated factor loadings.</p>
+        <h3 class="Keyword"><a name="CUM_PERCENT"></a>CUM_PERCENT (optional)</h3>
+        <p>Named variable into which the one-dimensional array containing the cumulative percent of the total variances explained by each principal component is stored.</p>
+        <h3 class="Keyword"><a name="DF"></a>DF (optional)</h3>
+        <p>Named variable into which the number of degrees of freedom in covariances is stored. The keywords DF and STDEV must be used together.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="EIGENVECTORS"></a>EIGENVECTORS (optional)</h3>
+        <p>Named variable into which the two-dimensional array containing the eigenvectors of covariances, stored columnwise, is stored. Each vector is normalized to have Euclidean length equal to the value 1. Also, the sign of each vector is set so that the largest component in magnitude (the first of the largest if ties exist) is made positive.</p>
+        <h3 class="Keyword"><a name="STDEV"></a>STDEV (optional)</h3>
+        <p>Named variable into which the one-dimensional array containing the estimated asymptotic standard errors of the eigenvalues is stored. The keywords DF and STDEV must be used together.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

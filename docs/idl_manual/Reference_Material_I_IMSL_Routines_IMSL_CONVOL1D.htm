@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CONVOL1D</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CONVOL1D</span>
+        </div>
+        <h1 class="Routine">IMSL_CONVOL1D</h1>
+        <p>The IMSL_CONVOL1D function computes the discrete convolution of two one-dimensional arrays.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Let <i>n</i><sub>x</sub> be the length of <i>x</i>, and <i>n</i><sub>y</sub> denote the length of <i>y</i>. If the keyword PERIODIC is set, then <i>n</i><sub>z</sub> = max{<i>n</i><sub>x</sub>, <i>n</i><sub>y</sub>}, otherwise <i>n</i><sub>z</sub> is set to the smallest whole number, <i>n</i><sub>z</sub> ≥ <i>n</i><sub>x</sub> + <i>n</i><sub>y</sub> – 1, of the form:</p>
+        <p>
+            <img src="images/IMSL_CONVOL1D-25.jpg" />
+        </p>
+        <p>The arrays <i>x</i> and <i>y</i> are then zero-padded to a length <i>n</i><sub>z</sub>. Then, we compute:</p>
+        <p>
+            <img src="images/IMSL_CONVOL1D-26.jpg" />
+        </p>
+        <p>where the index on <i>x</i> is interpreted as a nonnegative number between 0 and <i>n</i><sub>z</sub> – 1.</p>
+        <p>The technique used to compute the <i>z</i><sub>i</sub>’s is based on the fact that the (complex discrete) Fourier transform maps convolution into multiplication. Thus, the Fourier transform of <i>z</i> is given by:</p>
+        <p>
+            <img src="images/IMSL_CONVOL1D-27.jpg" />
+        </p>
+        <p>where the following equation is true:</p>
+        <p>
+            <img src="images/IMSL_CONVOL1D-28.jpg" />
+        </p>
+        <p>The technique used here to compute the convolution is to take the discrete Fourier transform of x and y, multiply the results together component-wise, and then take the inverse transform of this product. It is very important to make sure that nz is the product of small primes if PERIODIC is set. If <i>n</i><sub>z</sub> is a product of small primes, then the computational effort will be proportional to <i>n</i><sub>z</sub> log (<i>n</i><sub>z</sub>). If PERIODIC is not set, then nz is chosen to be a product of small primes.</p>
+        <p>We point out that if <i>x</i> and <i>y</i> are not complex, then no complex transforms of <i>x</i> or <i>y</i> are taken, since a real transforms can simulate the complex transform above. Such a strategy is six times faster and requires less space than when using the complex transform.</p>
+        <h2 class="API">Example</h2>
+        <p>This example computes simple moving-average digital filter plots of 5-point and 25- point moving-average filters of noisy data. Results are shown in the figures that follow the example.</p>
+        <p class="Code">PRO Convol1d_ex1</p>
+        <p class="Code_Indented">IMSL_RANDOMOPT, SET = 1234579L</p>
+        <p class="Code_Indented">; Set the random number seed. </p>
+        <p class="Code_Indented">ny = 100</p>
+        <p class="Code_Indented">t = FINDGEN(ny)/(ny-1)</p>
+        <p class="Code_Indented">y = SIN(2*!PI*t) + .5*IMSL_RANDOM(ny, /Uniform) -.25</p>
+        <p class="Code_Indented">; Define a 1-period sine wave with added noise.</p>
+        <p class="Code_Indented">win=0</p>
+        <p class="Code_Indented">FOR nfltr = 5, 25, 20 DO BEGIN</p>
+        <p class="Code_Indented2">nfltr_str = strcompress(nfltr,/Remove_All)</p>
+        <p class="Code_Indented2">fltr = fltarr(nfltr)</p>
+        <p class="Code_Indented2">fltr(*) = 1./nfltr</p>
+        <p class="Code_Indented2">; Define the NFLTR-point moving average array.</p>
+        <p class="Code_Indented2">z = IMSL_CONVOL1D(fltr, y, /Periodic)</p>
+        <p class="Code_Indented2">; Convolve filter and signal, using keyword Periodic.</p>
+        <p class="Code_Indented2">WINDOW, win++</p>
+        <p class="Code_Indented2">PLOT, y, LINESTYLE = 1, TITLE = nfltr_str + $</p>
+        <p class="Code_Indented3">'-point Moving Average'</p>
+        <p class="Code_Indented2">OPLOT, shift(z, -nfltr/2)</p>
+        <p class="Code_Indented">ENDFOR</p>
+        <p class="Code">END</p>
+        <p>
+            <img src="images/transform01.gif" />
+        </p>
+        <p>
+            <img src="images/transform02.gif" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CONVOL1D(<i>X, Y</i> [, <a href="#DIRECT" class="selected">DIRECT</a>=<i>value</i>] [, <a href="#PERIODIC" class="selected">PERIODIC</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A one-dimensional array containing the discrete convolution of x and y.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DIRECT"></a>DIRECT (optional)</h3>
+        <p>If present and nonzero, causes the computations to be done by the direct method instead of the FFT method regardless of the size of the vectors passed in.</p>
+        <h3 class="Keyword"><a name="PERIODIC"></a>PERIODIC (optional)</h3>
+        <p>If present and nonzero, then a <i>circular convolution</i> is computed.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

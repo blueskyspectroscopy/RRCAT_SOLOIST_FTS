@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CONTINGENCY</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CONTINGENCY</span>
+        </div>
+        <h1 class="Routine">IMSL_CONTINGENCY</h1>
+        <p>The IMSL_CONTINGENCY function performs a chi-squared analysis of a two-way contingency table.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CONTINGENCY function computes statistics associated with an <i>r</i> by <i>c</i> contingency table. The function computes the chi-squared test of independence, expected values, contributions to chi-squared, row and column marginal totals, some measures of association, correlation, prediction, uncertainty, the McNemar test for symmetry, a test for linear trend, the odds and the log odds ratio, and the kappa statistic (if the appropriate keywords are selected).</p>
+        <h3>Notation</h3>
+        <p>Let <i>x</i><sub>ij</sub> denote the observed cell frequency in the <i>ij</i> cell of the table and <i>n</i> denote the total count in the table. Let p<sub>ij</sub> = p<sub>i</sub>¥p¥<sub>j</sub> denote the predicted cell probabilities under the null hypothesis of independence, where p<sub>i</sub>¥ and p¥<sub>j</sub> are the row and column marginal relative frequencies. Next, compute the expected cell counts as <i>e</i><sub>ij</sub> = <i>np</i><sub>ij</sub>.</p>
+        <p>Also required in the following are <i>a</i><sub>uv</sub> and <i>b</i><sub>uv</sub> for <i>u</i>, where <i>ν</i> = 1, ..., <i>n</i>. Let (<i>r<sub>s</sub></i>, <i>c<sub>s</sub></i>) denote the row and column response of observation <i>s</i>. Then, a<sub>uv</sub> = 1, 0, or –1, depending on whether <i>r</i><sub>u</sub> &lt; <i>r</i><sub>v</sub> , <i>r</i><sub>u</sub> = <i>r</i><sub>v</sub> , or <i>r<sub>u</sub></i> &gt; <i>rv</i>. The <i>b<sub>uv</sub></i> similarly defined in terms of the <i>c<sub>s</sub></i> variables.</p>
+        <h3>Chi-squared Statistic</h3>
+        <p>For each cell in the table, the contribution to <span style="font-family: 'Cambria Math'">χ</span><sup>2</sup> is given as (<i>x</i><sub>ij</sub> – <i>e</i><sub>ij</sub>)2/<i>e</i><sub>ij</sub>. The Pearson chi-squared statistic (denoted <i>χ</i><sup>2</sup>) is computed as the sum of the cell contributions to chi-squared. It has (<i>r</i> – 1) (<i>c</i> – 1) degrees of freedom and tests the null hypothesis of indendence, i.e., H<sub>0</sub>:<i>p</i><sub>ij</sub> = p<sub>i</sub>¥p¥<sub>j</sub>. The null hypothesis is rejected if the computed value of <i>χ</i>2 is too large.</p>
+        <p>The maximum likelihood equivalent of <i>χ</i><sup>2</sup>, G<sup>2</sup> is computed as follows:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONTINGENCY-09.jpg" />
+        </p>
+        <p>G<sup>2</sup> is asymptotically equivalent to <i>χ</i><sup>2</sup> and tests the same hypothesis with the same degrees of freedom.</p>
+        <h3>Measures Related to Chi-squared (Phi, Contingency Coefficient, and Cramer’s V)</h3>
+        <p>There are three measures related to chi-squared that do not depend on sample size:</p>
+        <p>phi: <img src="images/IMSL_CONTINGENCY-10.jpg" class="VertCenter" /></p>
+        <p>contingency coefficient: <img src="images/IMSL_CONTINGENCY-11.jpg" class="VertCenter" /></p>
+        <p>Cramer’s V: <img src="images/IMSL_CONTINGENCY-11.jpg" class="VertCenter" /></p>
+        <p>&#160;</p>
+        <p>Since these statistics do not depend on sample size and are large when the hypothesis of independence is rejected, they can be thought of as measures of association and can be compared across tables with different sized samples. While both <i>P</i> and <i>V</i> have a range between 0.0 and 1.0, the upper bound of <i>P</i> is actually somewhat less than 1.0 for any given table (see Kendall and Stuart 1979, p. 587). The significance of all three statistics is the same as that of the <i>χ</i>2 statistic, <a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a>.</p>
+        <p>The distribution of the χ2 statistic in finite samples approximates a chi-squared distribution. To compute the exact mean and standard deviation of the χ2 statistic, Haldane (1939) uses the multinomial distribution with fixed-table marginals. The exact mean and standard deviation generally differ little from the mean and standard deviation of the associated chi-squared distribution.</p>
+        <h3>Standard Errors and p-values for Some Measures of Association</h3>
+        <p>In Columns 1 through 4 of statistics, estimated standard errors and asymptotic p- values are reported. Estimates of the standard errors are computed in two ways. The first estimate, in Column 1 of the array <i>table_stats</i>, is asymptotically valid for any value of the statistic. The second estimate, in Column 2 of the array, is only correct under the null hypothesis of no association. The <i>z</i>-scores in Column 3 of statistics are computed using this second estimate of the standard errors. The <i>p</i>-values in column 4 are computed from this <i>z</i>-score. See Brown and Benedetti (1977) for a discussion and formulas for the standard errors in Column 2.</p>
+        <h3>Measures of Association for Ranked Rows and Columns</h3>
+        <p>The measures of association, φ, <i>P</i>, and <i>V</i>, do not require any ordering of the row and column categories. The IMSL_CONTINGENCY function also computes several measures of association for tables in which the row and column categories correspond to ranked observations. Two of these tests, the product moment correlation and the Spearman correlation, are correlation coefficients computed using assigned scores for the row and column categories. The cell indices are used for the product-moment correlation, while the average of the tied ranks of the row and column marginals is used for the Spearman rank correlation. Other scores are possible.</p>
+        <p>Gamma, Kendall’s τ<sub>b</sub>, Stuart’s τ<sub>c</sub>, and Somers’ <i>D</i> are measures of association that are computed like a correlation coefficient in the numerator. In all these measures, the numerator is computed as the "covariance" between the <i>a</i><sub>uv</sub> variables and <i>b</i><sub>uv</sub> variables defined above, i.e., as follows:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONTINGENCY-13.jpg" />
+        </p>
+        <p>Recall that <i>a</i><sub>uv</sub> and <i>b</i><sub>uv</sub> can take values –1, 0, or 1. Since the product <i>a</i><sub>uv</sub><i>b</i><sub>uv</sub>= 1 only if <i>a</i><sub>uv</sub> and <i>b</i><sub>uv</sub> are both 1 or both –1, it is easy to show that this "covariance" is twice the total number of agreements minus the number of disagreements, where a disagreement occurs when <i>a</i><sub>uv</sub><i>b</i><sub>uv</sub> = –1.</p>
+        <p>Kendall’s τ<sub>b</sub> is computed as the correlation between <i>a</i><sub>uv</sub> and <i>b</i><sub>uv</sub> variables (see Kendall and Stuart 1979, p. 593). In a rectangular table (<i>r</i> ≠ <i>c</i>), Kendall’s τ<sub>b</sub> cannot be 1.0 (if all marginal totals are positive). For this reason, Stuart suggested a modification to the denominator of τ in which the denominator becomes the largest possible value of the "covariance." This maximizing value is approximately <i>n</i><sup>2</sup><i>m</i> / (<i>m</i> – 1), where <i>m</i> = <i>min</i>(<i>r</i>, <i>c</i>). Stuart’s τ<sub>c</sub> uses this approximate value in its denominator. For large <i>n</i>:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONTINGENCY-14.jpg" /><![CDATA[                     ]]></p>
+        <p>Gamma can be motivated in a slightly different manner. Because the "covariance" of the <i>a</i><sub>uv</sub> variables and the <i>b</i><sub>uv</sub> variables can be thought of as twice the number of agreements minus the disagreements, 2(<i>A</i> – <i>D</i>), where <i>A</i> is the number of agreements and <i>D</i> is the number of disagreements, Gamma is motivated as the probability of agreement minus the probability of disagreement, given that either agreement or disagreement occurred. This is shown as γ = (<i>A</i> – <i>D</i>)/(<i>A</i> + <i>D</i>).</p>
+        <p>Two definitions of Somers’ <i>D</i> are possible, one for rows and a second for columns. Somers’ <i>D</i> for rows can be thought of as the regression coefficient for predicting auv from buv. Moreover, Somer’s <i>D</i> for rows is the probability of agreement minus the probability of disagreement, given that the column variable, <i>b</i><sub>uv</sub>, is not 0. Somers’ <i>D</i> for columns is defined in a similar manner.</p>
+        <p>A discussion of all of the measures of association in this section can be found in Kendall and Stuart (1979, p. 592).</p>
+        <h3>Measures of Prediction and Uncertainty</h3>
+        <p><b>Optimal Prediction Coefficients</b>: The measures in this section do not require any ordering of the row or column variables. They are based entirely upon probabilities. Most are discussed in Bishop et al. 1975, p. 385.</p>
+        <p>Consider predicting (or classifying) the column for a given row in the table. Under the null hypothesis of independence, choose the column with the highest column marginal probability for all rows. In this case, the probability of misclassification for any row is 1 minus this marginal probability. If independence is not assumed, then within each row, choose the column with the highest row-conditional probability. The probability of misclassification for the row becomes 1 minus this conditional probability.</p>
+        <p>Define the optimal prediction coefficient λ<sub>c|r</sub> for predicting columns from rows as the proportion of the probability of misclassification that is eliminated because the random variables are not independent. It is estimated by:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONTINGENCY-15.jpg" />
+        </p>
+        <p>where <i>m</i> is the index of the maximum estimated probability in the row (<i>p</i><sub>im</sub>) or row margin (<i>p</i><sub>¥m</sub>). A similar coefficient is defined for predicting the rows from the columns. The symmetric version of the optimal prediction λ is obtained by summing the numerators and denominators of <i>λ</i><sub>r | c</sub> and <i>λ</i><sub>c|r</sub>, then dividing. Standard errors for these coefficients are given in Bishop et al. (1975, p. 388).</p>
+        <p>A problem with the optimal prediction coefficients λ is that they vary with the marginal probabilities. One way to correct this is to use row-conditional probabilities. The optimal prediction λ<sup>*</sup> coefficients are defined as the corresponding λ coefficients in which first the row (or column) marginals are adjusted to the same number of</p>
+        <p>observations. This yields:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONTINGENCY-16.jpg" />
+        </p>
+        <p>where <i>i</i> indexes the rows, <i>j</i> indexes the columns, and <i>p</i><sub>j|i</sub> is the (estimated) probability of column <i>j</i> given row <i>i</i>. λ<sup>*</sup><sub>r|c</sub> is similarly defined.</p>
+        <p><b>Goodman and Kruskal τ</b>: A second kind of prediction measure attempts to explain the proportion of the explained variation of the row (column) measure given the column (row) measure. Define the total variation in the rows as follows:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-17.jpg" />
+        </p>
+        <p>Note that this is 1 / (2<i>n</i>) times the sums of squares of the <i>a</i><sub>uv</sub> variables.</p>
+        <p>With this definition of variation, the Goodman and Kruskal τ coefficient for rows is computed as the reduction of the total variation for rows accounted for by the columns, divided by the total variation for the rows. To compute the reduction in the total variation of the rows accounted for by the columns, note that the total variation for the rows within column <i>j</i> is defined as follows:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-18.jpg" />
+        </p>
+        <p>The total variation for rows within columns is the sum of the <i>q</i><sub>j</sub> variables. Consistent with the usual methods in the analysis of variance, the reduction in the total variation is given as the difference between the total variation for rows and the total variation for rows within the columns.</p>
+        <p>Goodman and Kruskal’s τ for columns is similarly defined. See Bishop et al. (1975, p. 391) for the standard errors.</p>
+        <p>&#160;</p>
+        <p><b>Uncertainty Coefficients</b>: The uncertainty coefficient for rows is the increase in the log-likelihood that is achieved by the most general model over the independence model, divided by the marginal log-likelihood for the rows. This is given by the following equation:</p>
+        <p>&#160;</p>
+        <p>The uncertainty coefficient for columns is similarly defined. The symmetric uncertainty coefficient contains the same numerator as <i>U</i><sub>r|c</sub> and <i>U</i><sub>c|r</sub> but averages the denominators of these two statistics. Standard errors for <i>U</i> are given in Brown (1983).</p>
+        <p><b>Kruskal-Wallis</b>: The Kruskal-Wallis statistic for rows is a one-way analysis-of-variance-type test that assumes the column variable is monotonically ordered. It tests the null hypothesis that no row populations are identical, using average ranks for the column variable. The Kruskal-Wallis statistic for columns is similarly defined. Conover (1980) discusses the Kruskal-Wallis test.</p>
+        <p><b>Test for Linear Trend</b>: When there are two rows, it is possible to test for a linear trend in the row probabilities if it is assumed that the column variable is monotonically ordered. In this test, the probabilities for row 1 are predicted by the column index using weighted simple linear regression. This slope is given by:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-20.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-21.jpg" />
+        </p>
+        <p>is the average column index. An asymptotic test that the slope is zero may then be obtained (in large samples) as the usual regression test of zero slope.</p>
+        <p>In two-column data, a similar test for a linear trend in the column probabilities is computed. This test assumes that the rows are monotonically ordered.</p>
+        <p><b>Kappa</b>: Kappa is a measure of agreement computed on square tables only. In the kappa statistic, the rows and columns correspond to the responses of two judges. The judges agree along the diagonal and disagree off the diagonal. Let:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-22.jpg" />
+        </p>
+        <p>denote the probability that the two judges agree, and let</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-23.jpg" />
+        </p>
+        <p>denote the expected probability of agreement under the independence model. Kappa is then given by (<i>p</i><sub>0</sub> – <i>p</i><sub>c</sub>)/(1 – <i>p</i>c).</p>
+        <p><b>McNemar Tests</b>: The McNemar test is a test of symmetry in a square contingency table. In other words, it is a test of the null hypothesis <i>H</i><sub>0</sub>:<i>θ</i><sub>ij</sub> = <i>θ</i><sub>ji</sub>. The multiple degrees-of-freedom version of the McNemar test with <i>r</i>(<i>r</i> – 1)/2 degrees of freedom is computed as follows:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-24.jpg" />
+        </p>
+        <p>The single degree-of-freedom test assumes that the differences, <i>x</i><sub>ij</sub> – <i>x</i><sub>ji</sub>, are all in one direction. The single degree-of-freedom test is more powerful than the multiple degrees-of-freedom test when this is the case. The test statistic is given as follows:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-25.jpg" />
+        </p>
+        <p>The exact probability can be computed by the binomial distribution.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The following example, taken from Kendall and Stuart (1979), involves the distance vision in the right and left eyes. Output contains only the <i>p</i>-value.</p>
+        <p class="Code">table = [[821,116,72,43], [112,494,151,34], [85,145,583,106], [35,27,87,331]]</p>
+        <p class="Code">PRINT, 'P-Value	', IMSL_CONTINGENCY(table)</p>
+        <h3>Example 2</h3>
+        <p>The following example, which illustrates the use of Kappa and McNemar tests, uses the same distance vision data as the previous example. The available statistics are obtained using keywords. First, a procedure is defined to output the results.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, chi_sq_test, lrt, expected, chi_sq_contrib, $</p>
+        <p class="Code">&#160;&#160;chi_sq_stats, table_stats</p>
+        <p class="Code">PRINT, 'Pearson Chi_Squared Statistics:'</p>
+        <p class="Code">PM, chi_sq_test(0), Title = 'Degrees of Freedom' </p>
+        <p class="Code">PM, chi_sq_test(1), Title = 'Chi-Squared'</p>
+        <p class="Code">PM, chi_sq_test(2), Title = 'P-Value' </p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PRINT, 'Likelihood Ratio G-Squared ' + 'Statistics:'</p>
+        <p class="Code">PM, lrt(0), Title = 'Degrees of Freedom' </p>
+        <p class="Code">PM, lrt(1), Title = 'G-Squared'</p>
+        <p class="Code">PM, lrt(2), Title = 'P-Value'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PM, expected, Title = 'Expected Values:' </p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PM, chi_sq_contrib, Title = 'Contributions to Chi-squared:' </p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PM, chi_sq_stats, Title = 'Chi-square Statistics:'</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PM, table_stats, Title = 'Table Statistics:' </p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">table = [[821,116,72,43], [112,494,151,34], [85,145,583,106], [35,27,87,331]]</p>
+        <p class="Code">p_value = IMSL_CONTINGENCY(table, $ </p>
+        <p class="Code">&#160;&#160;Chi_Sq_Test	= chi_sq_test, $ </p>
+        <p class="Code">&#160;&#160;Lrt	= lrt, $</p>
+        <p class="Code">&#160;&#160;Expected	= expected, $ </p>
+        <p class="Code">&#160;&#160;Chi_Sq_Contrib = chi_sq_contrib, $ </p>
+        <p class="Code">&#160;&#160;Chi_Sq_Stats	= chi_sq_stats, $ </p>
+        <p class="Code">&#160;&#160;Table_Stats	= table_stats)</p>
+        <p class="Code">print_results, chi_sq_test, lrt, expected, chi_sq_contrib, $</p>
+        <p class="Code">&#160;&#160;chi_sq_stats, table_stats</p>
+        <p>IDL&#160;prints:</p>
+        <p>
+            <img src="images/IMSL_CONTINGENCY-26.jpg" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_DF_GT_30: The degrees of freedom for <a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a> are greater than 30. The exact mean, standard deviation, and the normal distribution function should be used.</p>
+        <p>STAT_EXP_VALUES_TOO_SMALL: Some expected values are less than #. Some asymptotic <i>p</i>-values may not be good.</p>
+        <p>STAT_PERCENT_EXP_VALUES_LT_5: Twenty percent of the expected values are calculated less than 5.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CONTINGENCY(<i>Table</i> [, <a href="#CHI_SQ_CONTRIB" class="selected">CHI_SQ_CONTRIB</a>=<i>variable</i>] [, <a href="#CHI_SQ_STATS" class="selected">CHI_SQ_STATS</a>=<i>variable</i>] [, <a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#EXPECTED" class="selected">EXPECTED</a>=<i>variable</i>] [, <a href="#LRT" class="selected">LRT</a>=<i>variable</i>] [, <a href="#TABLE_STATS" class="selected">TABLE_STATS</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>Pearson chi-squared <i>p</i>-value for independence of rows and columns.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Table</h3>
+        <p>Two-dimensional array containing the observed counts in the contingency table.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CHI_SQ_CONTRIB"></a>CHI_SQ_CONTRIB (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size (<i>N_rows</i>+1) by (<i>N_columns</i>+1) containing the contributions for each cell in the table. The contributions to chi-squared for each cell in the table is in the first <i>N_rows</i> rows and <i>N_columns</i> columns. The last row and column contain the total contribution to chi- squared for that row or column.</p>
+        <h3 class="Keyword"><a name="CHI_SQ_STATS"></a>CHI_SQ_STATS (optional)</h3>
+        <p>Named variable in the form of an array of length 5 containing chi-squared statistics associated with this contingency table. The last three elements are based on Pearson’s chi-squared statistic (see <a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a>). The chi-squared statistics are given as follows:</p>
+        <ul>
+            <li value="1">0: Exact mean</li>
+            <li value="2">1: Exact standard deviation</li>
+            <li value="3">2: Phi</li>
+            <li value="4">3: Contingency coefficient</li>
+            <li value="5">4: Cramer’s V</li>
+        </ul>
+        <h3 class="Keyword"><a name="CHI_SQ_TEST"></a>CHI_SQ_TEST (optional)</h3>
+        <p>Named variable in the form of a three-element array containing statistics associated with the chi-squared tests. The first element contains the degrees of freedom for the chi-squared tests associated with the table, the second element contains the Pearson chi-squared test statistic, and the third element contains the probability of a larger Pearson chi-squared, <i>p</i>-value.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="EXPECTED"></a>EXPECTED (optional)</h3>
+        <p>Named variable in the form of a two-dimensional array of size (<i>N_rows</i>+1) by (<i>N_columns</i>+1) containing the expected values of each cell in the table is stored, where <i>N_rows</i>=(N_ELEMENTS(<i>Table</i>(*,0)) and <i>N_columns</i>=(N_ELEMENTS(<i>Table</i>(0,*)). The expected values are computed under the null hypothesis and stored in the first <i>N_rows</i> rows and <i>N_columns</i> columns. The marginal totals are in the last row and column.</p>
+        <h3 class="Keyword"><a name="LRT"></a>LRT (optional)</h3>
+        <p>Named variable into which the three-element array containing statistics associated with the likelihood ratio G-squared tests is stored. The first element contains the degrees of freedom for the chi-squared tests associated with the table, the second element contains the likelihood ratio <i>G</i><sup>2</sup> (chi-squared), and the third element contains the probability of a larger <i>G</i><sup>2</sup>.</p>
+        <h3 class="Keyword"><a name="TABLE_STATS"></a>TABLE_STATS (optional)</h3>
+        <p>Named variable into which a two-dimensional array of size 23 x 5 containing statistics associated with this table is stored. Each row corresponds to a statistic, as shown in the following table.</p>
+        <table class="TableStyle_Description" style="mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Row</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Statistics</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Gamma</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Kendall’s τ<sub>b</sub></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Stuart’s τ<sub>c</sub></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Somers’ <i>D</i> for rows (given columns)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Somers’ <i>D</i> for columns (given rows)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>product moment correlation</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>6</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Spearman rank correlation</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>7</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Goodman and Kruskal τ for rows (given columns)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>8</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Goodman and Kruskal τ for columns (given rows)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>9</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>uncertainty coefficient <i>U</i> (symmetric)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>10</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>uncertainty <i>U<sub>r | c</sub></i> (rows)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>11</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>uncertainty <i>U <sub>c | r</sub></i> (columns)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>12</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>optimal prediction λ (symmetric)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>13</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>optimal prediction λ <sub><i>r  | c</i></sub> (rows)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>14</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>optimal prediction λ <sub><i>c | r</i></sub> (columns)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>15</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>optimal prediction λ <sub><i>r  | c</i></sub> (rows)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>16</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>optimal prediction λ <sub><i>c | r</i></sub> (columns)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>17</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>test for linear trend in row probabilities if <i>N_rows</i> = 2. If <i>N_rows</i> is</p>
+                        <p>not 2, a test for linear trend in column probabilities if <i>N_columns</i> = 2.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>18</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Kruskal-Wallis test for no-row effect</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>19</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Kruskal-Wallis test for no-column effect</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>20</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>kappa (square tables only)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>21</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>McNemar test of symmetry (square tables only)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>22</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>McNemar one degree of freedom test of symmetry (square tables only)</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>If a statistic cannot be computed or if some value is not relevant for the computed statistic, the entry is NaN (Not a Number). The columns are as follows:</p>
+        <ul>
+            <li value="1">0: Estimated statistic</li>
+            <li value="2">1: Standard error for any parameter value</li>
+            <li value="3">2: Standard error under the null hypothesis</li>
+            <li value="4">3: <i>t</i>-value for testing the null hypothesis</li>
+            <li value="5">4: <i>p</i>-value of the test in column 3</li>
+        </ul>
+        <p>In the McNemar tests, Column 0 contains the statistic, Column 1 contains the chi-squared degrees of freedom, Column 3 contains the exact <i>p</i>-value (1 degree of freedom only), and Column 4 contains the chi-squared asymptotic <i>p</i>-value. The Kruskal-Wallis test is the same except no exact <i>p</i>-value is computed.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

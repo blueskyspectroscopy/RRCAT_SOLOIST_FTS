@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IDLml Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLmllfCrossEntropy</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IDLml Routines.htm">IDLml Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLmllfCrossEntropy</span>
+        </div>
+        <h1 class="ClassRoutine">IDLmllfCrossEntropy</h1>
+        <p>In machine learning, a loss function is a mathematical function that must be minimized in order to achieve convergence. Choosing the proper loss function is an important step in designing your neural network. The IDLmllfCrossEntropy (Cross Entropy) loss function is best used with classification; it does not perform well with regression. It is implemented with the following formula:</p>
+        <p class="indent">
+            <img src="../../../Resources/Images/IDLmllfCrossEntropy.png" />
+        </p>
+        <p>where <i>x</i> is the calculated output of the model and <i>y</i> is the predicted output or truth.</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">Compile_opt idl2</p>
+        <p class="Code">LossFunction = IDLmllfCrossEntropy()</p>
+        <p class="Code">Print, LossFunction(Findgen(10)/9.0, Fltarr(10))</p>
+        <p class="Code">&#160;</p>
+        <p>Typically, you will pass an object of this class to a neural network model definition:</p>
+        <p class="Code">Classifier = IDLmlFeedForwardNeuralNetwork([3, 7, 1],</p>
+        <p class="Code">LOSS_FUNCTION=IDLmllfCrossEntropy()</p>
+        <h2 class="API">Syntax</h2>
+        <p>Kernel = IDLmllfCrossEntropy()</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLmllfHuber.htm">IDLmllfHuber</a>, <a href="IDLmllfLogCosh.htm">IDLmllfLogCosh</a>, <a href="IDLmllfMeanAbsoluteError.htm">IDLmllfMeanAbsoluteError</a>, <a href="IDLmllfMeanSquaredError.htm">IDLmllfMeanSquaredError</a><![CDATA[
+        ]]></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

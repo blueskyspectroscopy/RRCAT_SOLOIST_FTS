@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Environment|Setting Preferences">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About IDL System Preferences</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Concepts.htm">Environment</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="Setting Preferences.htm">Setting Preferences</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">About IDL System Preferences</span>
+        </div>
+        <h1>About IDL System Preferences</h1>
+        <p><i>System Preferences<a name="kanchor4554"></a></i> are internal values that control various aspects of IDL and supply initial values for system variables. Preferences can be specified from a variety of sources and persist between IDL sessions.</p>
+        <p>Each preference has a name that starts with IDL_.</p>
+        <p>IDL system preferences have two data types: string and integer (numeric).</p>
+        <p>The numeric preferences can have a minimum and/or maximum value beyond which it is not allowed to be set. In addition, a numeric preference can be discrete, meaning that the possible values are constrained to a fixed set of values. In most cases, IDL lets you reference these discrete values using  aliases. For example, many of IDL’s preferences are of an integer type called BOOLEAN, with possible values of 1 and 0. The aliases "True", "Yes", and "On" are accepted for the value 1, and "False", "No", and "Off" for 0.</p>
+        <p>The complete set of IDL system preferences are documented later, starting with&#160;<a href="prefs_general.htm">General User Environment Preferences</a>.</p>
+        <p>You can view your current preferences from within IDL by using the following command:</p>
+        <p class="Code">HELP, /PREFERENCES</p>
+        <p>The default display shows the preference names, values, and the source. For a detailed view, add the FULL keyword to <a href="../../Reference Material/H/HELP.htm#H_835179117_748700">HELP</a>.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Preferences that apply only to the IDL Workbench interface are stored separately. You can modify both workbench preferences and many IDL system preferences via the IDL Workbench Preferences dialog, but only system preferences are described here and only system preferences can be modified using the PREF_GET and PREF_SET routines.</p>
+        <h2 class="API">Understanding System Preference Sources</h2>
+        <p>A given IDL system preference can come from one of the following sources. These sources are listed in order of priority; the ones at the top will be used in preference to the ones below.</p>
+        <h3>Command Line</h3>
+        <p>You can specify system preference values from the IDL command line. There are two possible forms. The first form is specifying the preference name and value directly on the command line. For example, the following starts IDL while setting the default graphics device to PostScript:</p>
+        <p class="Code">% idl -IDL_DEVICE ps </p>
+        <p>The second form is using the <code>-pref</code> command-line option to specify an IDL preference file that IDL reads when it starts.  For example, suppose you had a file named <code>thread.pref</code> containing the following lines:</p>
+        <p class="Code">IDL_CPU_TPOOL_MAX_ELTS : 1000000</p>
+        <p class="Code">IDL_CPU_TPOOL_MIN_ELTS : 500000</p>
+        <p class="Code">IDL_CPU_TPOOL_NTHREADS : 4</p>
+        <p>Starting IDL with the following command causes these preferences to take effect:</p>
+        <p class="Code">% idl -pref=thread.pref </p>
+        <p>Preferences specified directly on the command line take precedence over those specified within a command-line preference file. The direct form is mainly useful for ad-hoc interactive use of IDL, while the preference-file form is of particular interest to those writing stand-alone applications in IDL. Using a command-line preference file lets authors of such applications control the values of preferences important to the application in a way that is user-adjustable and not hardwired into the application’s code.</p>
+        <h3>IDL Bin Directory</h3>
+        <p>Your IDL installation may include an <code>idl.pref</code> file within your <code>&lt;IDL_DIR&gt;/bin/bin.&lt;arch&gt;</code> directory. This preference file is typically used by other applications that install IDL, and want to set the IDL_PREF_DIR preference to enforce a specific subdirectory to be used for their application's preferences.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>This preference file is ignored if you specify a command-line preference file.</p>
+        <h3>Environment Variable</h3>
+        <p>Any IDL system preference can have its value defined by a system or user environment variable of the same name. For example, to set the value of the IDL_PATH preference, which supplies the initial value for the !PATH system variable, you would define an environment variable named IDL_PATH.</p>
+        <p>Under UNIX, environment variables are usually set in the user’s shell-initialization files (<code>.cshrc</code>, <code>.login</code>, <code>.profile</code>, <code>.bashrc</code>, etc.). Under Microsoft Windows, the system environment variable dialog is commonly used.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>You should always use uppercase when specifying environment-variable names.</p>
+        <h3>IDL Distribution Preference File</h3>
+        <p>Every IDL distribution contains an <code>idl.pref</code><a name="kanchor4555"></a>file within the <code>pref</code> subdirectory of the resource directory (<code>&lt;IDL_DIR&gt;/resource/pref/idl.pref</code>). The file serves as a single place where system administrators can establish global defaults for all of their IDL users.</p>
+        <h3>User Preference File</h3>
+        <p>IDL user preferences are kept in a <a name="kanchor4556"></a>file named <code>idl.pref</code>. The <a href="../../Reference Material/A/APP_USER_DIR.htm">APP_USER_DIR</a> function is used to determine the location of this file. A distinct and separate user preference file is maintained for each combination of IDL version and operating-system family (UNIX or Microsoft Windows). The path to this file is displayed by the following command:</p>
+        <p class="Code">HELP, /PREFERENCES</p>
+        <p>Although you can edit this file directly, to avoid mistakes use either the IDL Workbench dialog or the <a href="../../Reference Material/P/PREF_SET.htm">PREF_SET</a>&#160;procedure.</p>
+        <h3>IDL Default Value</h3>
+        <p>Every IDL preference has a built-in default value. You can use the following command to see the default values for all preferences:</p>
+        <p class="Code">HELP, /PREFERENCES, /FULL</p>
+        <h2 class="API">Changing Preference Values</h2>
+        <h3>IDL Workbench Preferences Dialogs</h3>
+        <p>Many IDL system preferences can be set in the IDL Workbench Preferences dialog. Changing a value in the <b>Preferences</b> dialog and clicking <b>Apply</b> is equivalent to setting the preference with the PREF_SET routine with the COMMIT keyword.</p>
+        <h3>Preference Routines</h3>
+        <p>The following routines provide user-level access to the preference system:</p>
+        <ul>
+            <li value="1"><a href="../../Reference Material/P/PREF_COMMIT.htm">PREF_COMMIT</a>: Used to commit preferences or discard pending values.</li>
+            <li value="2"><a href="../../Reference Material/P/PREF_SET.htm">PREF_SET</a>: Used to set the value of a user preference.</li>
+            <li value="3"><a href="../../Reference Material/P/PREF_GET.htm">PREF_GET</a>: Used to obtain information about a preference.</li>
+        </ul>
+        <h3>The Pending State</h3>
+        <p>IDL allows you to change the value of any preference with the <a href="../../Reference Material/P/PREF_SET.htm">PREF_SET</a> procedure. When you set a new value for a preference, the preference enters a pending state. IDL remembers the change, but continues to use the previous value until the new value is committed. To commit a preference, IDL takes the following steps:</p>
+        <ol>
+            <li value="1">Writes a user preference file.</li>
+            <li value="2">Updates its internal state to make the pending values current.</li>
+            <li value="3">Notifies the IDL internals of the  changed preference.</li>
+        </ol>
+        <p>To commit a preference you can either use <a href="../../Reference Material/P/PREF_COMMIT.htm">PREF_COMMIT</a> or <a href="../../Reference Material/P/PREF_SET.htm">PREF_SET</a> with the COMMIT&#160;keyword.</p>
+        <p>The pending state is useful for applications that allow users to change preferences, but may want to cancel such changes or commit all of the changes at once.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Pending but uncommitted changes are indicated in the <code>HELP, /PREFERENCES</code> output.</p>
+        <h3>When Committed Changes Take Effect</h3>
+        <p>Once a new preference value has been committed, the effects of the new value  can occur:</p>
+        <ul>
+            <li value="1"><b>Immediately</b>: Usually, a change to a preference results in the associated system variable changing immediately.</li>
+            <li value="2"><b>On reset</b>: Some preferences do not take effect until the next use of the <code>.reset_session</code> or <code>.full_reset_session</code> executive commands. One example of this group is the IDL_DEVICE preference, which specifies the default direct graphics device.</li>
+            <li value="3"><b>On restart</b>: A few preferences only take effect in subsequent IDL sessions. For example, changes to IDL_DLM_PATH are not seen in the current IDL session, but take effect the next time IDL is run.</li>
+        </ul>
+        <p>The output from the following command describes when changes to each preference take effect:</p>
+        <p class="Code">HELP, /PREFERENCES, /FULL</p>
+        <h2 class="API">Preference Files</h2>
+        <p>An IDL preference file <a name="kanchor4557"></a>is a simple text file in which each preference is specified on a single line. The line consists of the preference name, followed by a colon (:) character, followed by the preference value. IDL&#160;quietly ignores empty and comment lines (with the hash character).</p>
+        <p>Here is a sample preference file:</p>
+        <p class="Code"># Sample IDL preference file</p>
+        <p class="Code">&#160;</p>
+        <p class="Code"># No user information in SAVE and JOURNAL files</p>
+        <p class="Code">IDL_DATAFILE_USER_COMMENTS : 0</p>
+        <p class="Code">&#160;</p>
+        <p class="Code"># Suppress information messages (alias used)</p>
+        <p class="Code">IDL_QUIET : on</p>
+        <p class="Code">&#160;</p>
+        <p class="Code"># Buffer size = 1000 lines</p>
+        <p class="Code">IDL_RBUF_SIZE : 1000</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If you use PREF_SET or PREF_COMMIT to commit preference changes, IDL overwrites the user preference file and removes any user comments. In general it is better to modify the user preference file using the built-in routines or dialogs.</p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

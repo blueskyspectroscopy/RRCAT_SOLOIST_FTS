@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_KOLMOGOROV1</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_KOLMOGOROV1</span>
+        </div>
+        <h1 class="Routine">IMSL_KOLMOGOROV1</h1>
+        <p>The IMSL_KOLMOGOROV1 function performs a Kolmogorov-Smirnov one- sample test for continuous distributions.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_KOLMOGOROV1 function performs a Kolmogorov-Smirnov goodness- of-fit test in one sample. The hypotheses tested follow:</p>
+        <p>&#160;</p>
+        <ul>
+            <li value="1"><i>H</i><sub>0</sub> : <i>F</i> (<i>x</i>) = <i>F</i>* (<i>x</i>)&#160;&#160;&#160;&#160;&#160;<i>H</i><sub>1</sub> :<i>F</i> (<i>x</i>) ≠ <i>F</i>* (<i>x</i>)</li>
+            <li value="2"><i>H</i><sub>0</sub> : <i>F</i> (<i>x</i>) ≥ <i>F</i>* (<i>x</i>)&#160;&#160;&#160;&#160;&#160;<i>H</i><sub>1</sub> : <i>F</i> (<i>x</i>) &lt; <i>F</i>* (<i>x</i>)</li>
+            <li value="3"><i>H</i><sub>0</sub> : <i>F</i> (<i>x</i>) ≤ <i>F</i>* (<i>x</i>)&#160;&#160;&#160;&#160;&#160;<i>H</i><sub>1</sub> : <i>F</i> (<i>x</i>) &gt; <i>F</i>* (<i>x</i>)</li>
+        </ul>
+        <p>where <i>F</i> is the cumulative distribution function (CDF) of the random variable, and the theoretical CDF, <i>F</i>* , is specified via the supplied function <i>f</i>. Let <i>n</i> = N_ELEMENTS(x) − NMISSING. The test statistics for both one-sided alternatives:</p>
+        <p>
+            <img src="images/IMSL_KOLMOGOROV1-06.jpg" />
+        </p>
+        <p>and:</p>
+        <p>
+            <img src="images/IMSL_KOLMOGOROV1-07.jpg" />
+        </p>
+        <p>and the two-sided (D<sub>n</sub> = DIFFERENCES(0)) alternative are computed as well as an asymptotic <i>z</i>-score (<i>Result</i>(0)) and <i>p</i>-values associated with the one-sided (<i>Result</i>(1)) and two-sided (<i>Result</i>(2)) hypotheses. For <i>n</i> &gt; 80, asymptotic <i>p</i>-values are used (see Gibbons 1971). For <i>n</i> ≤ 80, exact one-sided <i>p</i>-values are computed according to a method given by Conover (1980, page 350). An approximate two-sided test <i>p</i>-value is obtained as twice the one-sided <i>p</i>-value. The approximation is very close for one- sided <i>p</i>-values less than 0.10 and becomes very bad as the one-sided <i>p</i>-values get larger.</p>
+        <h2 class="API">Programming Notes</h2>
+        <ol>
+            <li value="1">
+                <p>  The theoretical CDF is assumed to be continuous. If the CDF is not continuous, the statistics:</p>
+                <p>
+                    <img src="images/IMSL_KOLMOGOROV1-08.jpg" />
+                </p>
+                <p>will not be computed correctly.</p>
+            </li>
+        </ol>
+        <ol>
+            <li value="1">  Estimation of parameters in the theoretical CDF from the sample data will tend to make the <i>p</i>-values associated with the test statistics too liberal. The empirical CDF will tend to be closer to the theoretical CDF than it should be.</li>
+            <li value="2">  No attempt is made to check that all points in the sample are in the support of the theoretical CDF. If all sample points are not in the support of the CDF, the null hypothesis must be rejected.</li>
+        </ol>
+        <h2 class="API">Example</h2>
+        <p>In this example, a random sample of size 100 is generated via routine IMSL_RANDOM for the uniform (0, 1) distribution. We want to test the null hypothesis that the CDF is the standard normal distribution with a mean of 0.5 and a variance equal to the uniform (0, 1) variance (1/12).</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION l_Cdf,	x</p>
+        <p class="Code_Indented">mean	=	0.5</p>
+        <p class="Code_Indented">std	=	0.2886751</p>
+        <p class="Code_Indented">z	=	(x - mean)/std</p>
+        <p class="Code_Indented">val	=	IMSL_NORMALCDF(z) RETURN, val</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">IMSL_RANDOMOPT, set	=	123457</p>
+        <p class="Code">x	=	IMSL_RANDOM(100, /UNIFORM)</p>
+        <p class="Code">stats	=	IMSL_KOLMOGOROV1('l_cdf', x, DIFFERENCES = d, $</p>
+        <p class="Code_Indented">NMISSING = nm)</p>
+        <p class="Code">PRINT, 'D	=', d(0)</p>
+        <p class="Code">PRINT, 'D+ =', d(1)</p>
+        <p class="Code">PRINT, 'D- =', d(2)</p>
+        <p class="Code">PRINT, 'Z	=', stats(0)</p>
+        <p class="Code">PRINT, 'Prob greater D one sided =', stats(1)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">D&#160;&#160;=&#160;&#160;&#160;0.147083</p>
+        <p class="Code">D+&#160;=&#160;&#160;&#160;0.0809559</p>
+        <p class="Code">D-&#160;=&#160;&#160;&#160;0.147083</p>
+        <p class="Code">Z&#160;&#160;=&#160;&#160;&#160;1.47083</p>
+        <p class="Code">Prob greater D one sided =&#160;&#160;&#160;0.0132111</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_KOLMOGOROV1(<i>F, X</i> [, <a href="#DIFFERENCES" class="selected">DIFFERENCES</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#NMISSING" class="selected">NMISSING</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length 3 containing <i>Z</i>, p<sub>1</sub>, and p<sub>2</sub>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">F</h3>
+        <p>A scalar string specifying a user-supplied function to compute the cumulative distribution function (CDF) at a given value. Argument <i>F</i> accepts the following parameter and returns the computed function value at this point:</p>
+        <ul>
+            <li value="1"><i>y</i>: Point at which the function is to be evaluated.</li>
+            <li value="2"><i>x</i>: One-dimensional array containing the observations.</li>
+        </ul>
+        <h3 class="Argument">X</h3>
+        <p>A one-dimensional array containing the observations.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DIFFERENCES"></a>DIFFERENCES (optional)</h3>
+        <p>Named variable into which a one-dimensional array containing D<sub>n</sub>, D<sub>n</sub>, D<sub>n</sub> is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="NMISSING"></a>NMISSING (optional)</h3>
+        <p>Named variable into which the number of missing values is stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_KOLMOGOROV2.htm">IMSL_KOLMOGOROV2</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

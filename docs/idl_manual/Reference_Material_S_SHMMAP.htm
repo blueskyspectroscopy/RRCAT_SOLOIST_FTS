@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: S">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SHMMAP </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="S_list.htm">Routines: S</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">SHMMAP</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor2579"></a>SHMMAP </h1>
+        <p><a name="kanchor2580"></a>The SHMMAP procedure maps anonymous shared memory, or local disk files, into the memory address space of the currently executing IDL process. Mapped memory segments are associated with an IDL array specified by the user as part of the call to SHMMAP. The type and dimensions of the specified array determine the length of the memory segment.</p>
+        <p>The array can be of any type except pointer, object reference, or string. (Structure types are allowed as long as they do not contain any pointers, object references, or strings.) By default, the array type is single-precision floating-point; other types can be chosen by specifying the appropriate keyword.</p>
+        <p>Once such a memory segment exists, it can be tied to an actual IDL variable using the SHMVAR function, or unmapped using SHMUNMAP.</p>
+        <h3>Why Use Mapped Memory?</h3>
+        <ul>
+            <li value="1">Shared memory is often used for interprocess communication. Any process that has a shared memory segment mapped into its address space is able to "see" any changes made by any other process that has access to the same segment. Shared memory is the default for SHMMAP, unless the FILENAME keyword is specified.</li>
+            <li value="2">Memory-mapped files allow you to treat the contents of a local disk file as if it were simple memory. Reads and writes to such memory are automatically written to the file by the operating system using its standard virtual memory mechanisms, which has the potential to be faster than standard Input/Output using Read/Write system calls.</li>
+        </ul>
+        <p>SHMMAP uses the following rules, in the specified order, to determine which method to use:</p>
+        <ol>
+            <li value="1">If the FILENAME keyword is present, SHMMAP creates a memory-mapped file segment.</li>
+            <li value="2">If the SYSV keyword is used under UNIX, a System V shared memory segment is created or attached. Use of the SYSV keyword under Windows will cause an error to be issued.</li>
+            <li value="3">If none of the above options are specified, SHMMAP creates an anonymous shared memory segment. Under UNIX, this is done with Posix shared memory. Under Windows, the <code>CreateFileMapping()</code> system call is used.</li>
+        </ol>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Unlike most IDL functionality, incorrect use of SHMMAP can corrupt or crash your IDL process. You should be familiar with the memory and file mapping features of your operating system and the terminology used to describe such features.</p>
+        <h2 class="API">Example</h2>
+        <p>See Additional Examples below for more information on using SHMMAP.</p>
+        <p>Create a shared memory segment of 1000000 double-precision data elements, and then fill it with a DINDGEN ramp:</p>
+        <p class="Code">SHMMAP, 'MYSEG', /DOUBLE, 1000000<br />z = SHMVAR('MYSEG')<br />z[0] = DINDGEN(1000000)</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>When using shared memory, using the explicit subscript of the variable (z, in this case) maintains the variable’s connection with the shared memory segment. When not using shared memory, assignment without subscripting is more efficient and is recommended.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">SHMMAP [, <i>SegmentName</i>] [, <i>D<sub>1</sub></i>, ..., <i>D<sub>8</sub></i>] [,&#160;/<a href="#S_820040301_1143213" class="selected">BYTE</a>] [,&#160;/<a href="#S_820040301_1143215" class="selected">COMPLEX</a>] [,&#160;/<a href="#S_820040301_1143217" class="selected">DCOMPLEX</a>] [,&#160;/<a href="#S_820040301_1143219" class="selected">DESTROY_SEGMENT</a>] [,&#160;<a href="#S_820040301_1143226" class="selected">DIMENSION</a>=<i>value</i>] [,&#160;/<a href="#S_820040301_1143228" class="selected">DOUBLE</a>] [,&#160;<a href="#S_820040301_1143230" class="selected">FILENAME</a>=<i>value</i>] [,&#160;/<a href="#S_820040301_1143234" class="selected">FLOAT</a>] [,&#160;<a href="#S_820040301_1143237" class="selected">GET_NAME</a>=<i>value</i>] [,&#160;<a href="#S_820040301_1143240" class="selected">GET_OS_HANDLE</a>=<i>value</i>] [,&#160;/<a href="#S_820040301_1143245" class="selected">INTEGER</a>] [,&#160;/<a href="#S_820040301_1143247" class="selected">L64</a>] [,&#160;/<a href="#S_820040301_1143252" class="selected">LONG</a>] [,&#160;<a href="#S_820040301_1143254" class="selected">OFFSET</a>=<i>value</i>] [,&#160;<a href="#S_820040301_1143259" class="selected">OS_HANDLE</a>=<i>value</i>] [,&#160;/<a href="#S_820040301_1143277" class="selected">PRIVATE</a>] [,&#160;<a href="#S_820040301_1143281" class="selected">SIZE</a>=<i>value</i>] [,&#160;/<a href="#S_820040301_1143286" class="selected">SYSV</a>] [,&#160;<a href="#S_820040301_1143291" class="selected">TEMPLATE</a>=<i>value</i>] [,&#160;<a href="#S_820040301_1143293" class="selected">TYPE</a>=<i>value</i>] [,&#160;/<a href="#S_820040301_1143298" class="selected">UINT</a>] [,&#160;/<a href="#S_820040301_1143302" class="selected">UL64</a>] [,&#160;/<a href="#S_820040301_1143300" class="selected">ULONG</a>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">SegmentName</h3>
+        <p>A scalar string supplying the name by which IDL will refer to the shared memory segment. The <i>SegmentName</i> string must be a valid IDL identifier (i.e. follow the same rules as an IDL variable name). This name is only used by IDL, and does not necessarily correspond to the name used for the shared memory segment by the underlying operating system (see the <a href="#S_820040301_1143259" class="selected">OS_HANDLE</a> keyword for more details).</p>
+        <p>If <i>SegmentName</i> is not specified, IDL will generate a unique name. The generated <i>SegmentName</i> can be obtained using the <a href="#S_820040301_1143237" class="selected">GET_NAME</a> keyword.</p>
+        <h3 class="Argument">D<i><sub>i</sub></i></h3>
+        <p>The dimensions of the result. The <i>D<sub>i</sub></i> arguments can be either a single array containing the dimensions or a sequence of scalar dimensions. Up to eight dimensions can be specified.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="S_820040301_1143213"></a>BYTE</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as a byte array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143215"></a>COMPLEX</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as a complex, single-precision floating-point array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143217"></a>DCOMPLEX</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as a complex, double-precision floating-point array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143219"></a>DESTROY_SEGMENT</h3>
+        <p>The UNIX anonymous shared memory mechanisms (Posix <code>shm_open()</code> and System V <code>shmget()</code>) create shared memory segments that are not removed from the operating system kernel until explicitly destroyed (or the system is rebooted). At any time, a client program can attach to such an existing segment, read or write to it, and then detach.</p>
+        <p>For UNIX anonymous shared memory (Posix or System V), the default behavior is for IDL to destroy any shared memory segments it created when the segments are unmapped, and not to destroy segments it did not create. The DESTROY_SEGMENT keyword is used to override this default: set DESTROY_SEGMENT to 1 (one) to indicate that IDL should destroy the segment when it is unmapped, or 0 (zero) to indicate that it should not destroy it. This destruction occurs when the segment is unmapped via <a href="SHMUNMAP.htm">SHMUNMAP</a>.</p>
+        <p>The DESTROY_SEGMENT keyword is ignored under the Windows operating system. Under UNIX, it is ignored for mapped files. </p>
+        <h3 class="Keyword"><a name="S_820040301_1143226"></a>DIMENSION</h3>
+        <p>Set this keyword equal to a vector of 1 to 8 elements specifying the dimensions of the result. Setting this keyword is equivalent to specifying an array via the <i>D</i> argument.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143228"></a>DOUBLE</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as a double-precision floating-point array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143230"></a>FILENAME</h3>
+        <p>By default, SHMMAP maps anonymous shared memory. Set the FILENAME keyword equal to a string containing the path name of an existing file to create a memory-mapped file segment. A shared mapped file can serve as shared memory between unrelated processes. The primary difference between anonymous shared memory and mapped files is that mapped files require a file of the specified size to exist in the filesystem, whereas anonymous shared memory has no user-visible representation in the filesystem.</p>
+        <p>By default, files are mapped as shared, meaning that all processes that map the file will see any changes made. All changes are written back to the file by the operating system and become permanent. You must have write access to the file in order to map it as shared. </p>
+        <p>To change the default behavior, set the PRIVATE keyword. When a file is mapped privately, changes made to the file are <i>not</i> written back to the file by the operating system, and are not visible to any other processes. You do not need write access to a file in order to map it privately — read access is sufficient.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The non-private form of file mapping corresponds to the <code>MAP_SHARED</code> flag to the UNIX <code>mmap()</code> function, or the <code>PAGE_READWRITE</code> to the Windows <code>CreateFileMapping()</code> system call.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143234"></a>FLOAT</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as a single-precision floating-point array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143237"></a>GET_NAME</h3>
+        <p>If <i>SegmentName</i> is not specified, IDL automatically generates a name. Set this keyword equal to a named variable that will receive the name assigned by IDL to the memory segment.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143240"></a>GET_OS_HANDLE</h3>
+        <p>Set this keyword equal to a named variable that will receive the operating system name (or <i>handle</i>) for the memory segment. The meaning of the operating system handle depends on both the operating system and the type of memory segment used. See the description of the <a href="#S_820040301_1143259" class="selected">OS_HANDLE</a> keyword for details.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143245"></a>INTEGER</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as an integer array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143247"></a>L64</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as a 64-bit integer array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143252"></a>LONG</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as a longword integer array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143254"></a>OFFSET</h3>
+        <p>If present and non-zero, this keyword specifies an offset (in bytes) from the start of the shared memory segment or memory-mapped file that will be used as the base address for the IDL array associated with the memory segment.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Most computer hardware is not able to access arbitrary data types at arbitrary memory addresses. The specific rules differ between machines, but in many cases the address of a data object must be evenly divisible by the size of that object. IDL will issue an error if you specify an offset that is not valid for the array specified.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The actual memory-mapping primitives require offsets to be integer multiples of the virtual memory pagesize (typically a power of two such as 8K or 64K). IDL will automatically adjust the offset to point to the correct memory page, and then include an additional offset to  point to the specified byte within that page. In summary, IDL may map slightly more memory than your request would seem to require, but never more than a single page.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143259"></a>OS_HANDLE</h3>
+        <p>Set this keyword equal to the name (or <i>handle</i>) used by the underlying operating system for the memory segment. If you do not specify the OS_HANDLE keyword, SHMMAP will under some circumstances provide a default value. The specific meaning and syntax of the OS_HANDLE depends on both the operating system and the form of memory used. See the following sections for operating-system specific behavior, and Types Of Memory Segments for behavior differences based on the form of memory used.</p>
+        <h4>Posix (UNIX) Shared Memory</h4>
+        <p>Use the OS_HANDLE keyword to supply a string value containing the system global name of the shared memory segment. Such names are expected to start with a slash (<code>/</code>) character, and not to contain any other slash characters. You can think of this as mimicking the syntax for a file in the root directory of the system, although no such file is created. See your system documentation for the <code>shm_open()</code> system call for specific details. If you do not supply the OS_HANDLE keyword, SHMMAP will create one for you by prepending a slash character to the value given by the <i>SegmentName</i>argument.</p>
+        <h4>UNIX System V Shared Memory</h4>
+        <p>Use the OS_HANDLE keyword to supply an integer value containing the system global identifier of an existing shared memory segment to attach to the process. If you do not supply the OS_HANDLE keyword, then SHMMAP creates a new memory segment. The identifier for this segment is available via the <a href="#S_820040301_1143240" class="selected">GET_OS_HANDLE</a> keyword.</p>
+        <h4>Windows Anonymous Shared Memory</h4>
+        <p>Use the OS_HANDLE keyword to supply a global system name for the mapping object underlying the anonymous shared memory. If the OS_HANDLE keyword is not specified, SHMMAP uses the value of the <i>SegmentName</i> argument.</p>
+        <h4>UNIX Memory-Mapped Files</h4>
+        <p>The OS_HANDLE keyword has no meaning for UNIX memory-mapped files and is quietly ignored.</p>
+        <h4>Windows Memory-Mapped Files</h4>
+        <p>Use the OS_HANDLE keyword to supply a global system name for the mapping object underlying the mapped file. Use of the OS_HANDLE will ensure that every process accessing the shared file will see a coherent view of its contents, and is thus recommended for Windows memory-mapped files. If you do not supply the OS_HANDLE handle keyword for a memory-mapped file, no global name is passed to the Windows operating system, and a unique mapping object for the file will be created.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143277"></a>PRIVATE</h3>
+        <p>Set this keyword to specify that a private file mapping is required. In a private file mapping, any changes written to the mapped memory are visible only to the process that makes them, and such changes are not written back to the file. This keyword is ignored unless the FILENAME keyword is also present.</p>
+        <p>Mapping a file as shared requires that you have write access to the file, but a private mapping requires only read access. Use PRIVATE to map files for which you do not have write access, or when you want to ensure that the original file will not be altered by your process.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Under UNIX, the private form of file mapping corresponds to the MAP_PRIVATE flag to the <code>mmap()</code> system call. Under Windows, the non-private form corresponds to the <code>PAGE_WRITECOPY</code> option to the Windows <code>CreateFileMapping()</code> system call. When your process alters data within a page of privately mapped memory, the operating system performs a <i>copy on write</i>operation in which the contents of that page are copied to a new memory page visible only to your process. This private memory usually comes from anonymous swap space or the system pagefile. Hence, private mapped files require more system resources than shared mappings. <br /><br />It is possible for some processes to use private mappings to a given file while others use a public mapping to the same file. In such cases, the private mappings will see changes made by the public processes up until the moment the private process itself makes a change to the page. The pagesize granularity and timing issues between such processes can make such scenarios very difficult to control. Avoid combining simultaneous shared and private mappings to the same file.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143281"></a>SIZE</h3>
+        <p>Set this keyword equal to a <code>size</code> vector specifying the type and dimensions to be associated with the memory segment. The format of a size vector is given in the description of the <a href="SIZE.htm#S_820040301_678885">SIZE</a> function.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143286"></a>SYSV</h3>
+        <p>Under UNIX, the default form of anonymous memory is Posix shared memory, (<code>shm_open()</code> and <code>shm_unlink()</code>). Specify the SYSV keyword to use System V shared memory (<code>shmget()</code>, <code>shmctl()</code>, and <code>shmdt()</code>) instead.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143291"></a>TEMPLATE</h3>
+        <p>Set this keyword equal to an IDL variable that has the desired type and dimensions to be associated with the memory segment. The actual data contents of the variable are ignored.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143293"></a>TYPE</h3>
+        <p>Set this keyword to specify the type code for the memory segment. See the description of the <a href="SIZE.htm#S_820040301_678885">SIZE </a>function for a list of IDL type codes.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143298"></a>UINT</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as an unsigned integer array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143300"></a>ULONG</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as an unsigned longword integer array.</p>
+        <h3 class="Keyword"><a name="S_820040301_1143302"></a>UL64</h3>
+        <p>Set this keyword to specify that the memory segment should be treated as an unsigned 64-bit integer array.</p>
+        <h2 class="API">Types Of Memory Segments</h2>
+        <p>SHMMAP is a relatively direct interface to the shared memory and file mapping primitives provided by the underlying operating system.</p>
+        <h3>UNIX</h3>
+        <p>In modern UNIX systems, the <code>mmap()</code> system call forms the primary basis for both file mapping and anonymous shared memory.</p>
+        <h4>UNIX Memory-Mapped Files</h4>
+        <p>To memory map a file under UNIX, you open the file using the <code>open()</code> system call, and then map it using <code>mmap()</code>. Once the file is mapped, you can close the file, and the mapping remains in place until explicitly unmapped, or until the process exits or calls <code>exec()</code> to run a different program.</p>
+        <p>If more than one process maps a file at the same time using the <code>MAP_SHARED</code> flag to <code>mmap()</code>, then those processes will be able to see each others’ changes. Hence, memory-mapped files are one form of shared memory.</p>
+        <h4>Posix Shared Memory</h4>
+        <p>Posix shared memory uses the <code>shm_open()</code> and <code>ftruncate()</code> system calls to create a memory segment that can be accessed via a file descriptor. This descriptor is then used with the <code>mmap()</code> system call to map the memory segment. In this case no scratch file is required (the disk space comes from the system swap space). Posix shared memory segments exist in the operating system until explicitly destroyed (using the <code>shm_unlink()</code> system call). Posix shared memory allows the caller to supply the name of the segment, which makes it easy for multiple processes to map the same segment.</p>
+        <p>Posix shared memory is the default for SHMMAP on all UNIX platforms.</p>
+        <h4>UNIX System V Shared Memory</h4>
+        <p>For System V IPC shared memory, the <code>shmget()</code> function is used to create a shared memory segment. The operating system assigns each such segment a unique integer ID when it is created. Once a shared memory segment exists, the <code>shmdt()</code> function can be used to map it into the address space of any process that knows the identifier. This segment persists in the OS kernel until it is explicitly destroyed via the <code>shmctl()</code> function, or until the system is rebooted. This is true even if there are no processes currently mapped to the segment. Note that this can create a problem since shared memory segments that are not explicitly destroyed can cause memory leaks in the operating system. Hence, it is important to properly destroy such segments when they are no longer required.</p>
+        <p>Although System V shared memory is available on all UNIX platforms, there are some limitations on its utility:</p>
+        <ul>
+            <li value="1">Many systems place extremely small limits on the size allowed for such memory segments. These limits are often kernel parameters that can only be adjusted by the system administrator.</li>
+            <li value="2">The caller does not have the option of naming the shared memory segment. Instead, the operating system assigns an arbitrary number, which means that processes that want to map such a segment have to use some form of interprocess communication to find the correct identifier.</li>
+        </ul>
+        <p>Unless you have a specific requirement to use System V shared memory, we recommend that you use the default Posix shared memory.</p>
+        <h4>Microsoft Windows</h4>
+        <p>Under Microsoft Windows, the <code>CreateFileMapping()</code> system call is used for shared memory as well as memory-mapped files. To map a file, IDL opens the file and then passes the handle for that file to <code>CreateFileMapping()</code>. To create a region of anonymous mapped memory, IDL passes a special file handle (<code>0xffffffff</code>) to <code>CreateFileMapping()</code>. In this case, the disk space used to back the shared memory is taken from the system pagefile. <code>CreateFileMapping()</code> accepts an optional parameter (<code>lpname</code>), which if present, is used to give the resulting memory mapping object a system global name. If you specify such a name (via the OS_HANDLE keyword), and a mapping object with that name already exists, you will receive a handle to the existing mapping object. Otherwise, <code>CreateFileMapping()</code> creates a new mapping object for the file. Hence, to create anonymous (no file) shared memory between unrelated processes, IDL calls <code>CreateFileMapping()</code> with the special <code>0xffffffff</code> file handle, and specifies a global name for it.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span> To get coherent access to a memory-mapped file, every process should specify the same OS_HANDLE value to ensure that they use the same mapping object. With coherent access, all processes see exactly the same memory at exactly the same time because they are all mapping the same physical page of memory. If you are using read-only access to a mapped file, you need not be concerned with coherent access.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Under Windows, when attaching to an existing memory object by providing the global segment name, IDL is not able to verify that the memory segment returned by the operating system is large enough to satisfy the IDL array specified to SHMMAP for its type and size. If the segment is not large enough, the IDL program will crash when it attempts to access memory addresses beyond the end of the segment. Hence, the IDL user must ensure that such pre-existing memory segments are long enough for the specified IDL array.</p>
+        <p>The Windows operating system automatically destroys a mapping object when the last process with an open handle to it closes that handle. To continue to use the shared memory, be sure to keep at least one process open that is using the shared memory segment.</p>
+        <h2 class="API">Reference Counts And Memory Segment Lifecycle</h2>
+        <p>You can see a list of all current IDL memory segments using:</p>
+        <p class="Code">HELP,/SHARED_MEMORY</p>
+        <p>To access a current segment, it must be tied to an IDL variable using the SHMVAR function. IDL maintains a reference count of the number of variables currently accessing each memory segment, and does not allow a memory segment to be removed from the IDL process as long as variables that reference it still exist. </p>
+        <p>SHMMAP will not allow you to create a new memory segment with the same <i>SegmentName</i>as an existing segment. One way to ensure that segment names are unique is to not provide the <i>SegmentName</i> argument when calling SHMMAP. In this case, SHMMAP will automatically choose a unique name, which can be obtained using the GET_NAME keyword. </p>
+        <p>The SHMUNMAP procedure is used to remove a memory segment from the IDL session, and, depending upon the segment, it may remove the memory segment from the system.  If no variables from the current IDL session are accessing the segment, the segment is removed immediately. If variables in the current IDL session are still referencing the segment, the segment is marked for removal when the last such variable drops its reference. Once SHMUNMAP is called on a memory segment, no additional calls to SHMVAR are allowed for it within the current IDL session; this means that a segment marked by SHMUNMAP as <i>UnmapPending</i> cannot be used for new variables within the current IDL session. </p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>IDL has no way to determine whether a process other than itself is accessing a shared memory segment. As a result, it is possible for IDL to destroy a memory segment that is in use by another process. The specific details depend on the type of memory segment, and the options used with SHMMAP when the segment was loaded. When creating applications that use shared memory, you should ensure that all applications that use the segment communicate regarding their use of the shared memory and act in a manner that avoids this pitfall.</p>
+        <h2 class="API">Additional Examples</h2>
+        <h4>Anonymous Shared Memory</h4>
+        <p>Create a shared memory segment and let IDL choose the segment name:</p>
+        <p class="Code">SHMMAP, /DOUBLE, DIMENSION=[1000000], GET_NAME=segname</p>
+        <p class="Code">z = SHMVAR(segname)</p>
+        <p class="Code">z[0] = DINDGEN(1000000)</p>
+        <p class="Code">HELP,/SHARED_MEMORY</p>
+        <p>IDL prints:</p>
+        <p class="Code">IDL_SHM_10428_0 DOUBLE    = &lt;WindowsAnonymous(IDL_SHM_10428_0), Offset(0), Refcnt(1)&gt; Array[1000000]</p>
+        <p>Later, when we are finished with the segment, we unmap it and delete the variable. Notice that IDL does not free the segment until the last variable has been deleted:</p>
+        <p class="Code">SHMUNMAP, segname</p>
+        <p class="Code">HELP,/SHARED_MEMORY</p>
+        <p>IDL prints:</p>
+        <p class="Code">IDL_SHM_10428_0 DOUBLE    = &lt;WindowsAnonymous(IDL_SHM_10428_0), Offset(0), UnmapPending, Refcnt(1)&gt; Array[1000000]</p>
+        <p>Now we delete the last reference:</p>
+        <p class="Code">z = 0</p>
+        <p class="Code">HELP,/SHARED_MEMORY</p>
+        <p>IDL prints nothing.</p>
+        <h4>Memory-Mapped File</h4>
+        <p>Create the same shared memory segment as the previous example, but use a temporary file instead of anonymous shared memory. Note that for efficiency we use POINT_LUN and just write out a single byte to ensure that the file is the correct length and is initialized to all zeroes:</p>
+        <p class="Code">filename = FILEPATH('idl_scratch', /TMP)</p>
+        <p class="Code">OPENW, unit, filename, /GET_LUN</p>
+        <p class="Code">POINT_LUN, unit, 1000000 - 1</p>
+        <p class="Code">WRITEU, unit, 0b</p>
+        <p class="Code">FREE_LUN, unit</p>
+        <p class="Code">SHMMAP, /DOUBLE, DIMENSION=[1000000], GET_NAME=segname, $</p>
+        <p class="Code_Indented">FILENAME=filename, OS_HANDLE='idl_scratch'</p>
+        <p class="Code">z = SHMVAR(segname)</p>
+        <p>Later, when we are finished with the segment, we release it and delete the file:</p>
+        <p class="Code">z = 0</p>
+        <p class="Code">SHMUNMAP, segname</p>
+        <p class="Code">FILE_DELETE,filename</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>5.6</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.0</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Added FILENAME and PRIVATE keywords</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="SHMDEBUG.htm">SHMDEBUG</a>, <a href="SHMUNMAP.htm">SHMUNMAP</a>, <a href="SHMVAR.htm">SHMVAR</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

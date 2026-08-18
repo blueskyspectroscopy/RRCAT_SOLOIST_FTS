@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: C|CDF Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>CDF_EPOCH_COMPARE</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../C_list.htm">Routines: C</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../CDF_Routines.htm">CDF Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">CDF_EPOCH_COMPARE</span>
+        </div>
+        <h1 class="Routine">CDF_EPOCH_COMPARE</h1>
+        <p>The <a name="kanchor197"></a>CDF_EPOCH_COMPARE function <a name="kanchor198"></a>compares two epoch (date and time) values.</p>
+        <p>Values can be scalars or an array of values. The epoch can be in any of the CDF formats, CDF_EPOCH, CDF_EPOCH16 or CDF_TIME_TT2000, as returned from one of the following routines:</p>
+        <ul>
+            <li value="1">CDF_EPOCH, /COMPUTE</li>
+            <li value="2">CDF_EPOCH16, /COMPUTE</li>
+            <li value="3">CDF_TT2000, /COMPUTE</li>
+            <li value="4">CDF_VARGET</li>
+            <li value="5">CDF_VARGET1</li>
+        </ul>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If the first epoch and base epoch are in different formats, they will be automatically converted before comparison. The base epoch and end epoch (if present) must be in the same time format.</p>
+        <p>If the base epoch is a scalar, it is used to compare with all values in the first epoch. If the base epoch is an array, the corresponding element in the source and base epoch array is compared. If a third argument, <i>EndEpoch</i>, is provided, the <i>BaseEpoch</i> and <i>EndEpoch</i> are used as the starting and ending epoch that the source epoch will be checked against.</p>
+        <h2 class="API">Examples</h2>
+        <p class="Code">; For CDF_EPOCH data type</p>
+        <p class="Code">CDF_VARGET, id, "Epoch", ep, REC_COUNT=1000,/ZVARIABLE</p>
+        <p class="Code">CDF_EPOCH, base, 2005,6,1,10,18,17,2,/COMPUTE</p>
+        <p class="Code">ret= CDF_EPOCH_COMPARE(ep,base)</p>
+        <p class="Code">HELP, ret</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; For CDF_TIME_TT2000 data type</p>
+        <p class="Code">CDF_VARGET, id2, "Epoch", ep2, REC_COUNT=1000,/ZVARIABLE</p>
+        <p class="Code">CDF_TT2000, base2, 2005,6,1,10,18,17,2,3,4,/COMPUTE</p>
+        <p class="Code">ret2= CDF_EPOCH_COMPARE(ep2,base2)</p>
+        <p class="Code">HELP, ret2</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; For CDF_EPOCH data type</p>
+        <p class="Code">CDF_VARGET, id3, "Epoch", ep3, REC_COUNT=1000,/ZVARIABLE</p>
+        <p class="Code">CDF_EPOCH, starting, 2005,6,1,10,18,17,2,/COMPUTE</p>
+        <p class="Code">CDF_EPOCH, ending, 2005,6,10,10,18,17,2,/COMPUTE</p>
+        <p class="Code">ret3= CDF_EPOCH_COMPARE(ep3,starting,ending)</p>
+        <p class="Code">HELP, ret3</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = CDF_EPOCH_COMPARE(<i>Epoch</i>, <i>BaseEpoch</i>)</p>
+        <p>or</p>
+        <p class="Syntax"><i>Result</i> = CDF_EPOCH_COMPARE(<i>Epoch</i>, <i>BaseEpoch</i>, <i>EndEpoch</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>If the function uses two arguments, the return value is a scalar or an array of integer values (1, 0, or -1):</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">Result</th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p> 1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>if <i>epoch</i> &gt; <i>BaseEpoch</i></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p> 0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>if <i>epoch</i> = <i>BaseEpoch</i></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>-1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>if <i>epoch</i> &lt; <i>BaseEpoch</i></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>If the function uses three arguments, the return value is a scalar value or an array of integer values (1 or 0):</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">Result</th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd"><i>BaseEpoch</i> ≤ <i>epoch</i> ≤ <i>EndEpoch</i></td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Otherwise</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Epoch</h3>
+        <p>A scalar or array of epoch value(s).</p>
+        <h3 class="Argument">BaseEpoch</h3>
+        <p>A scalar or array of epoch value(s).</p>
+        <h3 class="Argument"> EndEpoch</h3>
+        <p>A scalar or array of epoch value(s) of the same dimensions as <i>BaseEpoch</i>. </p>
+        <h2 class="API">Keywords</h2>
+        <p>   None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;caption-side: top;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.6</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Automatic conversion between different epoch data types.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="CDF_EPOCH.htm">CDF_EPOCH</a>, <a href="CDF_EPOCH16.htm">CDF_EPOCH16</a>, <a href="CDF_TT2000.htm">CDF_TT2000</a>, <a href="CDF_VARGET.htm">CDF_VARGET</a>, <a href="CDF_VARGET1.htm">CDF_VARGET1</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

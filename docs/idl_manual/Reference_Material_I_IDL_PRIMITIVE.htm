@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDL_PRIMITIVE</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <h1 class="ClassRoutine"><a name="kanchor6058"></a>IDL_PRIMITIVE</h1>
+        <p>The IDL_PRIMITIVE function creates a new IDL_PRIMITIVE. An IDL_PRIMITIVE is a container for IDL&#160;primitive data types including any mixture of scalars, arrays, <a href="../L/LIST.htm">lists</a>, <a href="../H/HASH.htm">hashes</a>, and other dictionaries. IDL_PRIMITIVE&#160;is typically used with <a href="../../IDLTask/Reference/IDLParameterPrimitive.htm">IDLParameterPrimitive</a> to allow an <a href="../../IDLTask/IDLTask.htm">IDLTask</a> that defines a parameter as type PRIMITIVE&#160;to preserve the structure of the data to pass through dehydration without modification. IDL&#160;Task Engine uses dehydration with json serialization to communicate via stdio. In most cases you want hydration to perserve data types and use of HASH&#160;and LIST&#160;is recommended. There are some scenarios where the key-value structure is important and you want to use IDL_PRIMITIVE.&#160;PRIMITIVE&#160;type does not guarentee reversiblity on hydration. </p>
+        <h2 class="API">Examples</h2>
+        <h4>Create an IDL_PRIMITIVE containing a HASH and access value.</h4>
+        <p class="Code">mydata = HASH("one", 1.0, "blue", [255,0,0], "Pi", !DPI)</p>
+        <p class="Code">primitive = IDL_PRIMITIVE(mydata)</p>
+        <p class="Code">PRINT, primitive.VALUE</p>
+        <p>IDL prints:</p>
+        <p class="Code">one:        1.0000000</p>
+        <p class="Code">blue:      255       0       0</p>
+        <p class="Code">Pi:        3.1415926535897931</p>
+        <h4>Compare IDL_PRIMITIVE&#160;dehydration vs. HASH&#160;dehydration.</h4>
+        <p class="Code">mydata = HASH("one", 1.0, "blue", [255,0,0], "Pi", !DPI)</p>
+        <p class="Code">primitive = IDL_PRIMITIVE(mydata)</p>
+        <p class="Code">PRINT, primitive.Dehydrate(), /IMPLIED_PRINT</p>
+        <p>IDL prints:</p>
+        <p class="Code">{</p>
+        <p class="Code_Indented">"one": 1.0000000,</p>
+        <p class="Code_Indented">"blue": [255, 0, 0],</p>
+        <p class="Code_Indented">"Pi": 3.1415926535897931</p>
+        <p class="Code">}</p>
+        <p data-mc-conditions="">Now try IDL_PRIMITIVE dehydration:</p>
+        <p class="Code">mydata = HASH("one", 1.0, "blue", [255,0,0], "Pi", !DPI)</p>
+        <p class="Code">PRINT, mydata.Dehydrate(), /IMPLIED_PRINT</p>
+        <p>IDL prints:</p>
+        <p class="Code">{</p>
+        <p class="Code_Indented2">"fold_case": false,</p>
+        <p class="Code_Indented2">"elements": {</p>
+        <p class="Code_Indented3">"one": {</p>
+        <p class="Code_Indented3">"type": "FLOAT",</p>
+        <p class="Code_Indented3">"dehydratedForm": 1.0000000</p>
+        <p class="Code_Indented3">},</p>
+        <p class="Code_Indented3">"blue": {</p>
+        <p class="Code_Indented3">"type": "INT",</p>
+        <p class="Code_Indented3">"dehydratedForm": [255, 0, 0]</p>
+        <p class="Code_Indented3">},</p>
+        <p class="Code_Indented3">"Pi": {</p>
+        <p class="Code_Indented3">"type": "DOUBLE",</p>
+        <p class="Code_Indented3">"dehydratedForm": 3.1415926535897931</p>
+        <p class="Code_Indented3">}</p>
+        <p class="Code_Indented2">}</p>
+        <p class="Code">}</p>
+        <h3>Methods</h3>
+        <ul>
+            <li value="1"><a href="#Dehydrate" class="selected">IDL_Primitive::Dehydrate( )</a>
+            </li>
+            <li value="2"><a href="#Hydrate" class="selected">IDL_Primitive::Hydrate( <i>Value</i> )</a>
+            </li>
+            <li value="3"><a href="#IsPrimitive" class="selected">IDL_Primitive::IsPrimitive( <i>Value</i> )</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDL_Primitive(<i>Value</i>)</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Value</h3>
+        <p>
+			The value for the IDL_Primitive to contain including any mixture of scalars, arrays, lists, hashes, and other dictionaries.
+		</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Properties</h2>
+        <p>You can retrieve the following properties using either "dot" notation or the ::GetProperty method.</p>
+        <h3 class="Property"><a name="VALUE"></a>VALUE</h3>
+        <p>This property contains the value IDL_PRIMITIVE contains.</p>
+        <h1 class="ObjMethod"><a name="Dehydrate"></a>IDL_Primitive::Dehydrate</h1>
+        <p>The IDL_Primitive::Dehydrate method is a pass through of the value it contains.</p>
+        <h2 class="API">Examples</h2>
+        <p class="Code">mydata = HASH("one", 1.0, "blue", [255,0,0], "Pi", !DPI)</p>
+        <p class="Code">primitive = IDL_PRIMITIVE(mydata)</p>
+        <p class="Code">PRINT, primitive.Dehydrate(), /IMPLIED_PRINT</p>
+        <p>IDL prints:</p>
+        <p class="Code">{</p>
+        <p class="Code_Indented">"one": 1.0000000,</p>
+        <p class="Code_Indented">"blue": [255, 0, 0],</p>
+        <p class="Code_Indented">"Pi": 3.1415926535897931</p>
+        <p class="Code">}</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax" style="font-style: normal;"><i>Result</i> = IDL_Primitive.Dehydrate( )</p>
+        <h2 class="API">Return Value </h2>
+        <p>Returns the value contained by IDL_Primitive.</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Hydrate"></a>IDL_Primitive::Hydrate</h1>
+        <p>The IDL_Primitive::Hydrate static method takes a value and creates an IDL_Primitive instance. </p>
+        <h2 class="API">Examples</h2>
+        <p><b>Test if HASH is valid for IDL_Primtive.</b>
+        </p>
+        <p class="Code">mydata = HASH("one", 1.0, "blue", [255,0,0], "Pi", !DPI)</p>
+        <p class="Code">myprimitive = IDL_Primitive.Hydrate(mydata)</p>
+        <p class="Code">help, myprimitive</p>
+        <p>IDL prints:</p>
+        <p class="Code">MYPRIMITIVE     OBJREF    = &lt;ObjHeapVar2469(IDL_PRIMITIVE)&gt;</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax" style="font-style: normal;"><i>Result</i> = IDL_Primitive.Hydrate( <i>Value</i>)</p>
+        <h2 class="API">Return Value </h2>
+        <p>Returns an IDL_Primitive instance.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Value</h3>
+        <p>
+		The value for the IDL_Primitive to contain.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="IsPrimitive"></a>IDL_Primitive::IsPrimitive</h1>
+        <p>The IDL_Primitive::IsPrimitive static method is used to validate if the value is a IDL&#160;primitive type. It is useful if you do not want to handle a potential error on the creation of an IDL_Primitive.</p>
+        <h2 class="API">Examples</h2>
+        <p><b>Test if HASH is valid for IDL_Primtive.</b>
+        </p>
+        <p class="Code">mydata = HASH("one", 1.0, "blue", [255,0,0], "Pi", !DPI)</p>
+        <p class="Code">PRINT, IDL_Primitive.IsPrimitive(mydata)</p>
+        <p>IDL prints:</p>
+        <p class="Code_Indented">1</p>
+        <p><b>Test if a structure is valid for IDL_Primtive.</b>
+        </p>
+        <p class="Code">mydata = {a:0}</p>
+        <p class="Code">PRINT, IDL_Primitive.IsPrimitive(mydata)</p>
+        <p>IDL prints:</p>
+        <p class="Code_Indented">0</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax" style="font-style: normal;"><i>Result</i> = IDL_Primitive.IsPrimitive( <i>Value</i>)</p>
+        <h2 class="API">Return Value </h2>
+        <p>Returns a boolean if value is primitive or not.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Value</h3>
+        <p>
+			The value to verify if is of a primitive type.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table class="TableStyle_VersionTable" style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.6</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../../IDLTask/Reference/IDLParameterPrimitive.htm">IDLParameterPrimitive</a>, <a href="../../IDLTask/IDLTask.htm">IDLTask</a>, <a href="../../IDLTask/TaskEngine/RunIDLAnalyticsCommandLine.htm">IDL&#160;Task Engine</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

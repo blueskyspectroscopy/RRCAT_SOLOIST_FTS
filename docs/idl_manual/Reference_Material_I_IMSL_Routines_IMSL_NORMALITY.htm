@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_NORMALITY</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_NORMALITY</span>
+        </div>
+        <h1 class="Routine">IMSL_NORMALITY</h1>
+        <p>The IMSL_NORMALITY function performs a test for normality.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Three methods are provided for testing normality: the Chi-Squared test, the Shapiro- Wilk W test, and the Lilliefors test.</p>
+        <h2 class="API">Chi-Squared Test</h2>
+        <p>This function computes the chi-squared statistic, its <i>p</i>-value, and the degrees of freedom of the test. The keyword NCAT finds the number of intervals into which the observations are to be divided. The intervals are equi-probable except for the first and last interval which are infinite in length. If more flexibility is desired for the specification of intervals, the same test can be performed with a call to <a href="IMSL_CHISQTEST.htm">IMSL_CHISQTEST</a> using the optional arguments described for that function.</p>
+        <h2 class="API">Shapiro-Wilk <i>W</i> Test</h2>
+        <p>D’Agostino and Stevens (1986, p. 406) refer to the Shapiro-Wilk <i>W</i> test as the best omnibus tests of normality. The function is based on the approximations and code given by Royston (1982a, b, c). It can be used in samples as large as 2,000 or as small as 3. In the Shapiro and Wilk test, <i>W</i> is given by:</p>
+        <p>
+            <img src="images/IMSL_NORMALITY-03.jpg" />
+        </p>
+        <p>where <i>x</i>(<sub>i</sub>) is the <i>i</i>-th smallest order statistic and:</p>
+        <p>
+            <img src="images/IMSL_NORMALITY-04.jpg" />
+        </p>
+        <p>is the sample mean. Royston (1982) gives approximations and tabled values that can be used to compute the coefficients <i>a</i><sub>i</sub>, <i>i</i> = 1, ..., <i>n</i>, and obtains the significance level of the <i>W</i> statistic.</p>
+        <h2 class="API">Lilliefors Test</h2>
+        <p>This function computes Lilliefors test and its <i>p</i>-values for a normal distribution in which both the mean and variance are estimated. The one-sample, two-sided Kolmogorov-Smirnov statistic <i>D</i> is first computed. The <i>p</i>-values are then computed using an analytic approximation given by Dallal and Wilkinson (1986). Because Dallal and Wilkinson give approximations in the range (0.01, 0.10) if the computed probability of a greater <i>D</i> is less than 0.01, a note is issued and the <i>p</i>-value is set to 0.50. Note that because parameters are estimated, <i>p</i>-values in Lilliefors test are not the same as in the Kolmogorov-Smirnov Test.</p>
+        <p>Observations should not be tied. If tied observations are found, an informational message is printed. A general reference for the Lilliefors test is Conover (1980). The original reference for the test for normality is Lilliefors (1967).</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The following example is taken from Conover (1980, pp. 195, 364). The data consists of 50 two-digit numbers taken from a telephone book. The <i>W</i> test fails to reject the null hypothesis of normality at the .05 level of significance.</p>
+        <p class="Code">x = [23,	36,	54,	61,	73,	23,	37,	54,	61,	73,	$</p>
+        <p class="Code_Indented">24,	40,	56,	62,	74,	27,	42,	57,	63,	75,	$</p>
+        <p class="Code_Indented">29,	43,	57,	64,	77,	31,	43,	58,	65,	81,	$</p>
+        <p class="Code_Indented">32,	44,	58,	66,	87,	33,	45,	58,	68,	89,	$</p>
+        <p class="Code_Indented">33,	48,	58,	68,	93,	35,	48,	59,	70,	97]</p>
+        <p class="Code">p = IMSL_NORMALITY(x)</p>
+        <p class="Code">PRINT, 'P-Value = ', p</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">P-Value =	0.230858</p>
+        <h3>Example 2</h3>
+        <p>The following example uses the same data as the previous example. Here, the Shapiro-Wilk <i>W</i> statistic is output.</p>
+        <p class="Code">p = IMSL_NORMALITY(x, SHAPIRO_WILK = sw)</p>
+        <p class="Code">PRINT, 'p-Value	= ', p</p>
+        <p class="Code">PRINT, 'Shapiro Wilk W Statistic = ', sw</p>
+        <p>IDL prints:</p>
+        <p class="Code">p-Value&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;=&#160;0.230858</p>
+        <p class="Code">Shapiro Wilk W Statistic&#160;=&#160;0.964217</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_ALL_OBS_TIED: All observations in <i>x</i> are tied.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_NEED_AT_LEAST_5: All but # elements of <i>x</i> are missing. At least five nonmissing observations are necessary to continue.</p>
+        <p>STAT_NEG_IN_EXPONENTIAL: In testing the exponential distribution, an invalid element in <i>x</i> is found (<i>x</i>[ ] = #). Negative values are not possible in exponential distributions.</p>
+        <p>STAT_NO_VARIATION_INPUT: There is no variation in the input data. All nonmissing observations are tied.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_NORMALITY(<i>X</i> [, <a href="#CHISQ" class="selected">CHISQ</a>=<i>variable</i>] [, <a href="#DF" class="selected">DF</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#LILLIEFORS" class="selected">LILLIEFORS</a>=<i>variable</i>] [, <a href="#NCAT" class="selected">NCAT</a>=<i>value</i>] [, <a href="#SHAPIRO_WILK" class="selected">SHAPIRO_WILK</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The p-value for the Shapiro-Wilk W test or the Lilliefors test for normality. The
+Shapiro-Wilk test is the default. If the Lilliefors test is used, probabilities less than
+0.01 are reported as 0.01, and probabilities greater than 0.10 for the normal distribution are reported as 0.5; otherwise, an approximate probability is computed.
+</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the observations.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CHISQ"></a>CHISQ (optional)</h3>
+        <p>Specifies a variable into which the chi-square statistic is stored. The keywords NCAT, DF, and CHISQ must be used together and indicate that the chi-squared goodness-of-fit test is to be performed.</p>
+        <h3 class="Keyword"><a name="DF"></a>DF (optional)</h3>
+        <p>Specifies a variable into which the degrees of freedom for the test are stored. The keywords NCAT, DF, and CHISQ must be used together and indicate that the chi- squared goodness-of-fit test is to be performed.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="LILLIEFORS"></a>LILLIEFORS (optional)</h3>
+        <p>Named variable into which the maximum absolute difference between the empirical and the theoretical distributions is stored. If Lilliefors is present, then Lilliefors test is performed.</p>
+        <h3 class="Keyword"><a name="NCAT"></a>NCAT (optional)</h3>
+        <p>An integer specifying number of cells into which the observations are to be tallied. The keywords NCAT, DF, and CHISQ must be used together and indicate that the chi- squared goodness-of-fit test is to be performed.</p>
+        <h3 class="Keyword"><a name="SHAPIRO_WILK"></a>SHAPIRO_WILK (optional)</h3>
+        <p>Named variable into which the Shapiro-Wilk W statistic is stored. If Shapiro_Wilk is present, then the Shapiro-Wilk W test is performed. Default: Shapiro-Wilk W test is performed</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_CHISQTEST.htm">IMSL_CHISQTEST</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_PDE_MOL</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_PDE_MOL</span>
+        </div>
+        <h1 class="Routine">IMSL_PDE_MOL</h1>
+        <p>The IMSL_PDE_MOL function solves a system of partial differential equations of the form ut = f(x, t, u, ux, uxx) using the method of lines. The solution is represented with cubic Hermite polynomials.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Let <i>M</i> = <i>npde</i>, <i>N</i> = nx and <i>x</i><sub>i</sub><i> = xbreak</i>(<i>i</i>). The routine IMSL_PDE_MOL uses the method of lines to solve the partial differential equation system:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-33.jpg" />
+        </p>
+        <p>with the initial conditions:</p>
+        <p>u<sub>k</sub> = u<sub>k</sub>(x, t) at t = t<sub>0</sub>, where t<sub>0</sub> = t(0)</p>
+        <p>and the boundary conditions:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-34.jpg" />
+        </p>
+        <p>for <i>k</i> = 1, ..., <i>M</i>.</p>
+        <p>Cubic Hermite polynomials are used in the x variable approximation so that the trial solution is expanded in the series:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-35.jpg" />
+        </p>
+        <p>where φi(x) and ψi(x) are standard basis functions for cubic Hermite polynomials with the knots <i>x<sub>1</sub></i> &lt; <i>x<sub>2</sub></i> &lt; ... &lt; <i>x</i><sub style="font-style: italic">N</sub><i>. </i>These are piecewise cubic polynomials with continuous first derivatives. At the breakpoints, they satisfy:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-36.jpg" />
+        </p>
+        <p>According to the collocation method, the coefficients of the approximation are obtained so that the trial solution satisfies the differential equation at the two Gaussian points in each subinterval:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-37.jpg" />
+        </p>
+        <p>&#160;</p>
+        <p>for <i>j</i> = 1, ..., N. The collocation approximation to the differential equation is:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-38.jpg" />
+        </p>
+        <p>for <i>k</i> = 1, ..., <i>M</i> and <i>j</i> = 1, ..., 2(<i>N</i> − 1).</p>
+        <p>This is a system of 2<i>M</i>(<i>N</i> - 1) ordinary differential equations in 2<i>M</i> <i>N</i> unknown coefficient functions, <i>a</i><sub>i,k</sub><i> and b</i><sub>i,k</sub><i>. </i>This system can be written in the matrix-vector form as <i>A</i> <i>dc</i>/<i>dt</i> = <i>F</i> (<i>t</i>, <i>y</i>) with <i>c</i>(<i>t</i><sub>0</sub>) = <i>c</i><sub>0</sub> where <i>c</i> is a vector of coefficients of length 2<i>M</i> <i>N</i> and <i>c</i><sub>0</sub> holds the initial values of the coefficients. The last 2<i>M</i> equations are obtained by differentiating the boundary conditions:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-39.jpg" />
+        </p>
+        <p>for <i>k</i> = 1, ..., <i>M</i>.</p>
+        <p>The initial conditions <i>u</i><sub>k</sub>(<i>x</i>, <i>t</i><sub>0</sub>) must satisfy the boundary conditions. Also, the <span style="font-family: Symbol; font-style: normal" class="cSymbol">g</span><sub style="font-style: italic">k</sub>(<i>t</i>) must be continuous and have a smooth derivative, or the boundary conditions will not be properly imposed for <i>t</i> &gt; <i>t</i><sub>0</sub>.</p>
+        <p>If <span style="font-family: Symbol; font-style: normal">a</span><sub style="font-style: italic">k</sub> = <span style="font-family: Symbol; font-style: normal" class="cSymbol">b</span><sub style="font-style: italic">k</sub> = <i>0,</i> it is assumed that no boundary condition is desired for the<i> k</i>-th unknown at the left endpoint. A similar comment holds for the right endpoint. Thus, collocation is done at the endpoint. This is generally a useful feature for systems of first-order partial differential equations.
+		</p>
+        <p>If the number of partial differential equations is <i>M</i> = 1 and the number of breakpoints is <i>N</i> = 4, then:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-40.jpg" />
+        </p>
+        <p>The vector c is:</p>
+        <p>c = [a<sub>1</sub>, b<sub>1</sub>, a<sub>2</sub>, b<sub>2</sub>, a<sub>3</sub>, b<sub>3</sub>, a<sub>4</sub>, b<sub>4</sub>]<sup>T</sup></p>
+        <p>and the right-side <i>F</i> is:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-41.jpg" />
+        </p>
+        <p>If <i>M</i> &gt; 1, then each entry in the above matrix is replaced by an <i>M</i> x <i>M</i> diagonal matrix. The element <span style="font-family: Symbol; vertical-align: baseline">a</span><sub>1</sub> is replaced by diag(<span style="font-family: Symbol; vertical-align: baseline">a</span><sub>1</sub>,<sub>1</sub>, ..., <span style="font-family: Symbol; vertical-align: baseline">a</span><sub>1</sub>,<sub>M</sub><i> ). </i>The elements<i>  <![CDATA[ ]]></i><span style="font-family: Symbol">a</span><sub>N</sub><i>, </i>β<sub>1</sub> and β<sub>N</sub> are handled in the same manner. The<i>  <![CDATA[ ]]></i><span style="font-family: Symbol">f</span><sub>i</sub>(<i>p</i><sub>j</sub>)<i> and </i><span style="font-family: Symbol; font-style: normal" class="cSymbol">y</span><sub>i</sub>(<i>p</i><sub>j</sub>)<i>  <![CDATA[ ]]></i>elements are replaced by <span style="font-family: Symbol">f</span><sub>i</sub>(<i>p</i><sub>j</sub>)<i>I</i><sub>M</sub><i> and </i><span style="font-family: Symbol; font-style: normal" class="cSymbol">y</span><sub>i</sub>(<i>p</i><sub>j</sub><i>)I</i><sub>M</sub><i>  <![CDATA[ ]]></i>where<i> I</i><sub>M</sub><i>  <![CDATA[ ]]></i>is the identity matrix of order<i> M</i>. See Madsen and Sincovec (1979) for further details about discretization errors and Jacobian matrix structure.
+		</p>
+        <p>The input array y contains the values of the a<sub>k,i</sub>. The initial values of the b<sub>k,i</sub> are obtained by using the cubic spline routine <a href="IMSL_CSINTERP.htm">IMSL_CSINTERP</a> to construct functions:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-42.jpg" />
+        </p>
+        <p>such that:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-43.jpg" />
+        </p>
+        <p>The IDL Advanced Math and Stats routine <a href="IMSL_SPVALUE.htm">IMSL_SPVALUE</a> is used to approximate the values:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-44.jpg" />
+        </p>
+        <p>There is an optional use of IMSL_PDE_MOL that allows the user to provide the initial values of b<sub>k,i</sub>.</p>
+        <p>The order of matrix <i>A</i> is 2<i>MN</i> and its maximum bandwidth is 6<i>M</i> − 1. The band structure of the Jacobian of <i>F</i> with respect to c is the same as the band structure of <i>A</i>. This system is solved using a modified version of <a href="IMSL_ODE.htm">IMSL_ODE</a>. Some of the linear solvers were removed. Numerical Jacobians are used exclusively. The algorithm is unchanged. Gear’s BDF method is used as the default because the system is typically stiff.</p>
+        <p>Four examples of PDEs are now presented that illustrate how users can interface their problems with IMSL_PDE_MOL. The examples are small and not indicative of the complexities that most practitioners will face in their applications.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This equation solves the normalized linear diffusion PDE, <i>u</i><sub>t</sub><i> = u</i><sub>xx</sub><i>, 0</i> ≤ <i>x</i> ≤ 1, <i>t</i> &gt; <i>t</i><sub>0</sub>. The initial values are <i>t</i><sub>0</sub> = 0, <i>u</i>(<i>x</i>, <i>t</i><sub>0</sub>) = <i>u</i><sub>0</sub> = 1. There is a "zero-flux" boundary condition at <i>x</i> = 1, namely <i>u</i><sub>x</sub><i>(</i>1<i>, t</i>) = 0, (<i>t</i> &gt; <i>t</i><sub>0</sub>). The boundary value of <i>u</i>(0, <i>t</i>) is abruptly changed from <i>u</i><sub>0</sub> to the value <i>u</i><sub>1</sub> = 0.1. This transition is completed by <i>t</i>&#160;=&#160;<i>t</i><sub>d</sub>&#160;= 0.09. </p>
+        <p>Due to restrictions in the type of boundary conditions successfully processed by IMSL_PDE_MOL, it is necessary to provide the derivative boundary value function <span style="font-family: Symbol" class="cSymbol">g</span><span style="font-family: Symbol">¢</span> at <i>x</i> = 0 and at <i>x</i> = 1. The function <span style="font-family: Symbol" class="cSymbol">g</span> at <i>x</i> = 0 makes a smooth transition from the value <i>u</i><sub>0</sub> at <i>t</i> = <i>t</i><sub>0</sub> to the value <i>u</i><sub>1</sub> at <i>t</i> = <i>t</i><sub>d</sub>. The transition phase for <span style="font-family: Symbol" class="cSymbol">g</span><span style="font-family: Symbol">¢</span> is computed by evaluating a cubic interpolating polynomial. For this purpose, the function subprogram <a href="IMSL_SPVALUE.htm">IMSL_SPVALUE</a>. The interpolation is performed as a first step in the user-supplied procedure <i>f_bc</i>. The function and derivative values <span style="font-family: Symbol" class="cSymbol">g</span>(<i>t</i><sub>0</sub>) = <i>u</i><sub>0</sub>, <span style="font-family: Symbol" class="cSymbol">g</span><span style="font-family: Symbol">¢</span>(<i>t</i><sub>0</sub>) = 0, <span style="font-family: Symbol" class="cSymbol">g</span>(<i>t</i><sub>d</sub>) = <i>u</i><sub>1</sub>, and <span style="font-family: Symbol" class="cSymbol">g</span><span style="font-family: Symbol">¢</span>(<i>t</i><sub>d</sub>) = 0, are used as input to routine <a href="IMSL_CSINTERP.htm">IMSL_CSINTERP</a> to obtain the coefficients evaluated by IMSL_SPVALUE. Notice that <span style="font-family: Symbol" class="cSymbol">g</span><span style="font-family: Symbol">¢</span>(<i>t</i>) = 0, <i>t</i> &gt; <i>t</i><sub>d</sub>. The evaluation routine IMSL_SPVALUE will not yield this value so logic in the procedure <i>f_bc</i> assigns <span style="font-family: Symbol" class="cSymbol">g</span><span style="font-family: Symbol">¢</span>(<i>t</i>)&#160;=&#160;0, <i>t</i>&#160;&gt;&#160;<i>t</i><sub>d</sub>.
+		</p>
+        <p>Save the following code as <code>pde_mol_example1</code>, then compile and run:</p>
+        <p class="Code">FUNCTION f_ut,	npde,	x,	t,	u,	ux,	uxx</p>
+        <p class="Code_Indented">; Define the PDE</p>
+        <p class="Code_Indented">ut	=	uxx RETURN, ut</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO f_bc,	npde,	x,	t,	alpha, beta, gammap</p>
+        <p class="Code_Indented">COMMON ex1_pde, first, ppoly first	=	1</p>
+        <p class="Code_Indented">alpha		=		FLTARR(npde) beta	=	FLTARR(npde)</p>
+        <p class="Code_Indented">gammap	 =	 FLTARR(npde) delta		=		0.09</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Compute interpolant first time only</p>
+        <p class="Code_Indented">IF (first EQ 1) THEN BEGIN</p>
+        <p class="Code_Indented2">first	=	0</p>
+        <p class="Code_Indented2">ppoly	=	IMSL_CSINTERP([0.0,	delta],	[1.0,	0.1], $</p>
+        <p class="Code_Indented3">ileft = 1,	left = 0.0,	iright = 1,	right = 0.0)</p>
+        <p class="Code_Indented">ENDIF</p>
+        <p class="Code_Indented">; Define the boundary conditions.</p>
+        <p class="Code_Indented">IF (x EQ 0.0) THEN	BEGIN</p>
+        <p class="Code_Indented2">alpha(0)	 =		1.0</p>
+        <p class="Code_Indented2">beta(0)	=	0.0</p>
+        <p class="Code_Indented2">gammap(0)	=	0.0</p>
+        <p class="Code_Indented2">&#160;</p>
+        <p class="Code_Indented2">; If in the boundary layer, compute nonzero gamma prime</p>
+        <p class="Code_Indented2">IF (t LE delta) THEN gammap(0)	=	$</p>
+        <p class="Code_Indented3">IMSL_SPVALUE(t,	ppoly,	xderiv	 =	1)</p>
+        <p class="Code_Indented2">END ELSE BEGIN</p>
+        <p class="Code_Indented2">; These are for x	=	1</p>
+        <p class="Code_Indented3">alpha(0)	=	0.0</p>
+        <p class="Code_Indented3">beta(0)	=		1.0</p>
+        <p class="Code_Indented3">gammap(0)	=	0.0</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code_Indented">RETURN</p>
+        <p class="Code">END</p>
+        <p class="Code">PRO pde_mol_example1</p>
+        <p class="Code_Indented">COMMON ex1_pde, first, ppoly</p>
+        <p class="Code_Indented">npde	=	1</p>
+        <p class="Code_Indented">nx	=	8 nstep	=	10</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Set breakpoints and initial conditions</p>
+        <p class="Code_Indented">xbreak	=	FINDGEN(nx)/(nx - 1)</p>
+        <p class="Code_Indented">y	=	FLTARR(npde, nx)</p>
+        <p class="Code_Indented">y(*)	=	1.0</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Initialize the solver</p>
+        <p class="Code_Indented">t	=	FINDGEN(nstep)/(nstep) + 0.1</p>
+        <p class="Code_Indented">t	=	[0.0, t*t]</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Solve the problem</p>
+        <p class="Code_Indented">res	=	IMSL_PDE_MOL(t, y,	xbreak,	'f_ut',	'f_bc')</p>
+        <p class="Code_Indented">num = INDGEN(8) + 1</p>
+        <p class="Code_Indented">FOR i = 1, 10 DO BEGIN</p>
+        <p class="Code_Indented2">PRINT,	'solution at t = ',	t(i)</p>
+        <p class="Code_Indented2">PRINT, num, FORMAT = '(8I7)'</p>
+        <p class="Code_Indented2">PM,	res(0,	*,	i), FORMAT = '(8F7.4)'</p>
+        <p class="Code_Indented">ENDFOR</p>
+        <p class="Code">END</p>
+        <p>IDL Prints:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL_print1.png" />
+        </p>
+        <h3>Example 2</h3>
+        <p>This example solves Problem C from Sincovec and Madsen (1975). The equation is of diffusion-convection type with discontinuous coefficients. This problem illustrates a simple method for programming the evaluation routine for the derivative, <i>u</i><sub>t</sub>. Note that the weak discontinuities at x = 0.5 are not evaluated in the expression for <i>u</i><sub>t</sub>. The results are shown in the figure that follows. The problem is defined as:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-45.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-46.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-47.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-48.jpg" />
+        </p>
+        <p>Save the following code as <code>pde_mol_example2</code>, then compile and run:</p>
+        <p class="Code">FUNCTION f_ut,	npde,	x,	t,	u,	ux,	uxx</p>
+        <p class="Code_Indented">; Define the PDE</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">ut	=	FLTARR(npde)</p>
+        <p class="Code_Indented">IF (x LE 0.5) THEN BEGIN</p>
+        <p class="Code_Indented2">d	=	5.0</p>
+        <p class="Code_Indented2">v	=	1000.0</p>
+        <p class="Code_Indented">END ELSE BEGIN</p>
+        <p class="Code_Indented2">d	=	1.0</p>
+        <p class="Code_Indented2">v	=	1.0</p>
+        <p class="Code_Indented">END</p>
+        <p class="Code_Indented">ut(0)	=	d*uxx(0) - v*ux(0)</p>
+        <p class="Code_Indented">RETURN, ut</p>
+        <p class="Code">END</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code">PRO f_bc,	npde,	x,	t,	alpha, beta, gammap</p>
+        <p class="Code_Indented">; Define the Boundary Conditions</p>
+        <p class="Code_Indented">alpha	=	FLTARR(npde)</p>
+        <p class="Code_Indented">beta	=		FLTARR(npde)</p>
+        <p class="Code_Indented">gammap	=	 FLTARR(npde) alpha(0)		=	1.0</p>
+        <p class="Code_Indented">beta(0)	=		0.0</p>
+        <p class="Code_Indented">gammap(0)	=	0.0</p>
+        <p class="Code_Indented">RETURN</p>
+        <p class="Code">END</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code">PRO pde_mol_example2</p>
+        <p class="Code_Indented">npde	=	1</p>
+        <p class="Code_Indented">nx	=	100 nstep	=	10</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Set breakpoints and initial conditions</p>
+        <p class="Code_Indented">xbreak	=	FINDGEN(nx)/(nx - 1)</p>
+        <p class="Code_Indented">y	=	FLTARR(npde, 100)</p>
+        <p class="Code_Indented">y(*)	=	0.0 y(0)	=	1.0</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Initialize the solver</p>
+        <p class="Code_Indented">mach	=	IMSL_MACHINE(/FLOAT)</p>
+        <p class="Code_Indented">tol	=	SQRT(mach.MAX_REL_SPACE)</p>
+        <p class="Code_Indented">hinit	=	0.01*tol</p>
+        <p class="Code_Indented">PRINT, 'tol = ', tol, ' and hinit = ', hinit</p>
+        <p class="Code_Indented">t	=	[0.0, FINDGEN(nstep)/(nstep)	+	0.1]</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Solve the problem</p>
+        <p class="Code_Indented">res	=	IMSL_PDE_MOL(t,	y,	xbreak,	'f_ut',	'f_bc', $</p>
+        <p class="Code_Indented2">tolerance	=	tol,	hinit	=	hinit)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Plot results at current ti=ti+1</p>
+        <p class="Code_Indented">PLOT, xbreak, res(0,*,10), psym = 3, yrange=[0 , 1.25], $</p>
+        <p class="Code_Indented2">title = 'Solution at t = 1.0'</p>
+        <p class="Code">END</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-06.jpg" />
+        </p>
+        <h3>Example 3</h3>
+        <p>n this example, using IMSL_PDE_MOL, the linear normalized diffusion PDE <i>u</i><sub>t</sub><i>&#160;=&#160;u</i><sub>xx</sub><i>  <![CDATA[ ]]></i>is solved but with an optional use that provides values of the derivatives, <i>u</i><sub>x</sub><i>, </i>of the initial data. Due to errors in the numerical derivatives computed by spline interpolation, more precise derivative values are required when the initial data is<i> u</i>(<i>x</i>,&#160;0) = 1 + cos[(2<i>n</i> - 1)π<i>x</i>], <i>n</i> &gt; 1. The boundary conditions are "zero flux" conditions <i>u</i><sub>x</sub>(0, <i>t</i>) = <i>u</i><sub>x</sub><i>(1, t</i>) = 0 for <i>t</i>&#160;&gt;&#160;0. Note that the initial data is compatible with these end conditions since the derivative function:
+		</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-48.jpg" />
+        </p>
+        <p>vanishes at <i>x</i> = 0 and <i>x</i> = 1.</p>
+        <p>This optional usage signals that the derivative of the initial data is passed by the user.</p>
+        <p>Save the following code as <code>pde_mol_example3</code>, then compile and run:</p>
+        <p class="Code">FUNCTION f_ut,	npde,	x,	t,	u,	ux,	uxx</p>
+        <p class="Code_Indented">; Define the PDE</p>
+        <p class="Code_Indented">ut	=	fltARR(npde)</p>
+        <p class="Code_Indented">ut(0)	=	uxx(0) RETURN, ut</p>
+        <p class="Code">END</p>
+        <p class="Code">PRO f_bc,	npde,	x,	t,	alpha, beta, gammap</p>
+        <p class="Code_Indented">; Define the boundary conditions</p>
+        <p class="Code_Indented">alpha	=	FLTARR(npde)</p>
+        <p class="Code_Indented">beta	=		FLTARR(npde)</p>
+        <p class="Code_Indented">gammap	=	 FLTARR(npde)</p>
+        <p class="Code_Indented">alpha(0)		=	0.0</p>
+        <p class="Code_Indented">beta(0)	=		1.0</p>
+        <p class="Code_Indented">gammap(0)	=	0.0</p>
+        <p class="Code_Indented">RETURN</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO pde_mol_example3</p>
+        <p class="Code">npde	=	1</p>
+        <p class="Code_Indented">nx	=	10 nstep	=	10</p>
+        <p class="Code_Indented">arg	=	9.0*!Pi</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Set breakpoints and initial conditions</p>
+        <p class="Code_Indented">xbreak	=	FINDGEN(nx)/(nx - 1)</p>
+        <p class="Code_Indented">y	=	FLTARR(npde,	nx)</p>
+        <p class="Code_Indented">y(0, *)	=	1.0 + COS(arg*xbreak)</p>
+        <p class="Code_Indented">di	=	y</p>
+        <p class="Code_Indented">di(0, *)	=	-arg*SIN(arg*xbreak)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Initialize the solver</p>
+        <p class="Code_Indented">mach	=	IMSL_MACHINE(/FLOAT)</p>
+        <p class="Code_Indented">tol = SQRT(mach.MAX_REL_SPACE)</p>
+        <p class="Code_Indented">t	=	[FINDGEN(nstep + 1)*(nstep*0.001)/(nstep)]</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Solve the problem</p>
+        <p class="Code_Indented">res		=	IMSL_PDE_MOL(t,	y,	xbreak,	'f_ut',	'f_bc', $</p>
+        <p class="Code_Indented2">Tolerance = tol,	Deriv_Init = di)</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Print results at every other ti=ti+1</p>
+        <p class="Code_Indented">FOR i = 2, 10, 2 DO BEGIN</p>
+        <p class="Code_Indented2">PRINT,	'solution at t = ',	t(i)</p>
+        <p class="Code_Indented2">PM,	res(0, *, i), FORMAT = '(10F10.4)'</p>
+        <p class="Code_Indented2">PRINT,	'derivative at t = ',	t(i)</p>
+        <p class="Code_Indented2">PM,	di(0, *, i)</p>
+        <p class="Code_Indented2">PRINT</p>
+        <p class="Code_Indented">ENDFOR</p>
+        <p class="Code">END</p>
+        <p>IDL Prints:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL_print2.png" />
+        </p>
+        <h3>Example 4</h3>
+        <p>In this example, consider the linear normalized hyperbolic PDE, <i>u</i><sub>tt</sub><i> = u</i><sub>xx</sub><i>, </i>the "vibrating string" equation. This naturally leads to a system of first order PDEs. Define a new dependent variable<i> u</i><sub>t</sub><i> = v</i>. Then, <i>v</i><sub>t</sub><i> = u</i><sub>xx</sub> is the second equation in the system. Take as initial data<i> u</i>(<i>x</i>, 0) = sin(π<i>x</i>) and <i>u</i><sub>t</sub><i>(x</i>, 0) = <i>v</i>(<i>x</i>, 0) = 0. The ends of the string are fixed so <i>u</i>(0, <i>t</i>) = <i>u</i>(1, <i>t</i>) = <i>v</i>(0,&#160;<i>t</i>) = <i>v</i>(1, <i>t</i>) = 0. The exact solution to this problem is <i>u</i>(<i>x</i>, <i>t</i>) = sin(π<i>x</i>) cos(π<i>t</i>). Residuals are computed at the output values of <i>t</i> for 0 &lt; <i>t</i> ≤ 2. Output is obtained at 200 steps in increments of 0.01.</p>
+        <p>Even though the sample code IMSL_PDE_MOL gives satisfactory results for this PDE, be aware that for nonlinear problems, “shocks” can develop in the solution. The appearance of shocks may cause the code to fail in unpredictable ways. See Courant and Hilbert (1962), pp 488-490, for an introductory discussion of shocks in hyperbolic systems.</p>
+        <p>Save the following code as <code>pde_mol_example4</code>, then compile and run:</p>
+        <p class="Code">FUNCTION f_ut,	npde,	x,	t,	u,	ux,	uxx</p>
+        <p class="Code_Indented">; Define the PDE</p>
+        <p class="Code_Indented">ut	=	FLTARR(npde)</p>
+        <p class="Code_Indented">ut(0)	=	u(1)</p>
+        <p class="Code_Indented">ut(1)	=	uxx(0)</p>
+        <p class="Code_Indented">RETURN, ut</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO f_bc,	npde,	x,	t,	alpha, beta, gammap</p>
+        <p class="Code_Indented">; Define the boundary conditions</p>
+        <p class="Code_Indented">alpha	=	FLTARR(npde)</p>
+        <p class="Code_Indented">beta	=	FLTARR(npde)</p>
+        <p class="Code_Indented">gammap	=	FLTARR(npde)</p>
+        <p class="Code_Indented">alpha(0)		=	 1</p>
+        <p class="Code_Indented">alpha(1)		=	 1</p>
+        <p class="Code_Indented">beta(0)	=	0</p>
+        <p class="Code_Indented">beta(1)	=	0</p>
+        <p class="Code_Indented">gammap(0)	 =	0</p>
+        <p class="Code_Indented">gammap(1)	 =	0</p>
+        <p class="Code_Indented">RETURN</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO pde_mol_example4</p>
+        <p class="Code_Indented">npde	=	2</p>
+        <p class="Code_Indented">nx	=	10</p>
+        <p class="Code_Indented">nstep	=	200</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Set breakpoints and initial conditions</p>
+        <p class="Code_Indented">xbreak	=	FINDGEN(nx)/(nx - 1)</p>
+        <p class="Code_Indented">y	=	FLTARR(npde,	nx)</p>
+        <p class="Code_Indented">y(0, *)	=	SIN(!Pi*xbreak)</p>
+        <p class="Code_Indented">y(1, *)	=	0 di	=	y</p>
+        <p class="Code_Indented">di(0, *)	=	!Pi*COS(!Pi*xbreak)</p>
+        <p class="Code_Indented">di(1, *)	=	0.0</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Initialize the solver</p>
+        <p class="Code_Indented">mach	=	IMSL_MACHINE(/FLOAT)</p>
+        <p class="Code_Indented">tol	=	SQRT(mach.MAX_REL_SPACE)</p>
+        <p class="Code_Indented">t	=	[0.0, 0.01 + FINDGEN(nstep)*2.0/(nstep)]</p>
+        <p class="Code_Indented">&#160;</p>
+        <p class="Code_Indented">; Solve the problem</p>
+        <p class="Code_Indented">u	=	IMSL_PDE_MOL(t,	y,	xbreak,		'f_ut',	'f_bc', $</p>
+        <p class="Code_Indented2">Tolerance	=	tol,	Deriv_Init	=	di)</p>
+        <p class="Code_Indented">err	=	0.0</p>
+        <p class="Code_Indented">pde_error	=	FLTARR(nstep)</p>
+        <p class="Code_Indented">FOR j	=	1,	N_ELEMENTS(t) - 1 DO BEGIN</p>
+        <p class="Code_Indented2">FOR i = 0, nx - 1 DO BEGIN</p>
+        <p class="Code_Indented2">err = (err) &gt; (u(0, i, j) - $</p>
+        <p class="Code_Indented3">SIN(!Pi*xbreak(i))*COS(!Pi*t(j)))</p>
+        <p class="Code_Indented2">ENDFOR</p>
+        <p class="Code_Indented">ENDFOR</p>
+        <p class="Code_Indented">PRINT, 'Maximum error in u(x, t) = ', err</p>
+        <p class="Code">END</p>
+        <p>IDL Prints:</p>
+        <p class="Code">Maximum error in u(x, t) =	0.000626385</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_PDE_MOL(<i>T, Y, Xbreak, F_Ut, F_Bc, Gammap</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DERIV_INIT" class="selected">DERIV_INIT</a>=<i>array</i>] [, <a href="#HINIT" class="selected">HINIT</a>=<i>value</i>] [, <a href="#TOLERANCE" class="selected">TOLERANCE</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>Three-dimensional array of size <i>npde</i> by <i>nx</i> by N_ELEMENTS(<i>t</i>) containing the approximate solutions for each specified value of the independent variable.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">T</h3>
+        <p>One-dimensional array containing values of independent variable. Element <i>t</i>(0) should contain the initial independent variable value (the initial time, <i>t</i><sub>0</sub>) and the remaining elements of <i>t</i> should be values of the independent variable at which a solution is desired.</p>
+        <h3 class="Argument">Y</h3>
+        <p>Two-dimensional array of size <i>npde</i> by <i>nx</i> containing the initial values, where <i>npde</i> is the number of differential equations and <i>nx</i> is the number of mesh points or lines. It must satisfy the boundary conditions.</p>
+        <h3 class="Argument">Xbreak</h3>
+        <p>One-dimensional array of length <i>nx</i> containing the breakpoints for the cubic Hermite splines used in the <i>x</i> discretization. The points in xbreak must be strictly increasing. The values <i>Xbreak</i>(0) and <i>Xbreak</i>(<i>nx</i> − 1) are the endpoints of the interval.</p>
+        <h3 class="Argument">F_Ut</h3>
+        <p>Scalar string specifying an user-supplied function to evaluate ut. Function f_ut accepts the following arguments:</p>
+        <ul>
+            <li value="1"><b><i>npde</i>:</b> Number of equations.</li>
+            <li value="2"><b><i>x</i>:</b> Space variable, <i>x</i>.</li>
+            <li value="3"><b><i>t</i>:</b> Time variable, <i>t</i>.</li>
+            <li value="4"><b><i>u</i>:</b> One-dimensional array of length npde containing the dependent values, <i>u</i>.</li>
+            <li value="5"><b><i>ux</i>:</b> One-dimensional array of length npde containing the first derivatives, <i>ux</i>.</li>
+            <li value="6"><b><i>uxx</i>:</b> One-dimensional array of length npde containing the second derivative, <i>uxx</i>.</li>
+        </ul>
+        <p>The return value of this function is an one-dimensional array of length npde containing the computed derivatives <i>u</i><sub>t</sub>.</p>
+        <h3 class="Argument">F_Bc</h3>
+        <p>Scalar string specifying user-supplied procedure to evaluate boundary conditions. The boundary conditions accepted by IMSL_PDE_MOL are:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-30.jpg" />
+        </p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>You must supply the values α<sub>k</sub> and β<sub>k</sub>, which determine the values γ<sub>k</sub>. Since γ<sub>k</sub> can depend on t values, γ<sub>k</sub>' also are required.</p>
+        <ul>
+            <li value="1"><b><i>npde</i>:</b> Number of equations. (Input)</li>
+            <li value="2"><b><i>x</i>:</b> Space variable, <i>x</i>. (Input)</li>
+            <li value="3"><b><i>t</i>:</b> Time variable, <i>t</i>. (Input)</li>
+            <li value="4"><b><i>alpha</i>:</b> Named variable into which an one-dimensional array of length npde containing the αk values is stored. (Output)</li>
+            <li value="5"><b><i>beta</i></b> Named variable into which an one-dimensional array of length npde containing the βk values is stored. (Output)</li>
+        </ul>
+        <h3 class="Argument">Gammap</h3>
+        <p>Named variable into which an one-dimensional array of length <i>npde</i> containing the derivatives is stored. (Output):</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-31.jpg" />
+        </p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="DERIV_INIT"></a>DERIV_INIT (optional)</h3>
+        <p>Two-dimensional array that supplies the derivative values <i>u</i><sub>x</sub>(<i>x</i>, <i>t</i>(0)). This derivative information is input as:</p>
+        <p>
+            <img src="images/IMSL_PDE_MOL-32.jpg" />
+        </p>
+        <p>Default: Derivatives are computed using cubic spline interpolation</p>
+        <h3 class="Keyword"><a name="HINIT"></a>HINIT (optional)</h3>
+        <p>Initial step size in the t integration. This value must be nonnegative. If HINIT is zero, an initial step size of 0.001|<i>t</i><sub>i+1</sub><i> - t</i><sub>i</sub><i>|</i> will be arbitrarily used. The step will be applied in the direction of integration. Default: 0.0</p>
+        <h3 class="Keyword"><a name="TOLERANCE"></a>TOLERANCE (optional)</h3>
+        <p>Differential equation error tolerance. An attempt to control the local error in such a way that the global relative error is proportional to TOLERANCE. Default: 100.0*ε, where ε is machine epsilon.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_CSINTERP.htm">IMSL_CSINTERP</a>, <a href="IMSL_SPVALUE.htm">IMSL_SPVALUE</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

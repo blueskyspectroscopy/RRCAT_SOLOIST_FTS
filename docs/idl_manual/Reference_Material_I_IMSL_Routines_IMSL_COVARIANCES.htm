@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_COVARIANCES</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_COVARIANCES</span>
+        </div>
+        <h1 class="Routine">IMSL_COVARIANCES</h1>
+        <p>The IMSL_COVARIANCES function computes the sample variance-covariance or correlation matrix.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_COVARIANCES function computes estimates of correlations, covariances, or sum of squares and crossproducts for a data matrix <i>x</i>. The means, (corrected) sum of squares, and (corrected) sums of crossproducts are computed using the method of provisional means.</p>
+        <p>Let:</p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-01.jpg" />
+        </p>
+        <p>denote the mean based on i observations for the <i>k</i>-th variable, <i>f</i><sub>i</sub> and <i>w</i><sub>i</sub> denote the frequency and weight of the <i>i</i>-th observation, respectively, and let <i>c</i><sub>jki</sub> denote the sum of crossproducts (or sum of squares if <i>j</i> = <i>k</i>) based on <i>i</i> observations. Then, the method of provisional means finds new means and sums of crossproducts shown in the example below.</p>
+        <p>The means and crossproducts are initialized as:</p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-03.jpg" />
+        </p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-05.jpg" />
+        </p>
+        <p>where <i>p</i> denotes the number of variables. Letting <i>x</i><sub>k, i + 1</sub> denote the <i>k</i>-th variable on observation <i>i</i> + 1, each new observation leads to the following updates for:</p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-06.jpg" />
+        </p>
+        <p>and <i>c</i><sub>jki</sub> using update constant <i>r</i><sub>i + 1</sub>:</p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-07.jpg" />
+        </p>
+        <h3>Syntax Notes</h3>
+        <p>The IMSL_COVARIANCES function uses the following definition of a sample mean:</p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-08.jpg" />
+        </p>
+        <p>where <i>n</i><sub>r</sub> is the number of cases. The formula below defines the sample covariance, <i>s</i><sub>jk</sub>, between variables <i>j</i> and <i>k</i>.</p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-09.jpg" />
+        </p>
+        <p>The sample correlation between variables <i>j</i> and <i>k</i>, <i>r</i><sub>jk</sub>, is defined below:</p>
+        <p>
+            <img src="images/IMSL_COVARIANCES-10.jpg" />
+        </p>
+        <h3>Example</h3>
+        <p>This example illustrates the use of IMSL_COVARIANCES for the first 50 observations in the Fisher iris data (Fisher 1936). Note that the first variable is constant over the first 50 observations.</p>
+        <p class="Code">x = IMSL_STATDATA(3)</p>
+        <p class="Code">x = x(0:49, *)</p>
+        <p class="Code">cov = IMSL_COVARIANCES(x)</p>
+        <p class="Code">; Call IMSL_COVARIANCES. PM, cov</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.00000	0.00000	0.00000	0.00000	0.00000</p>
+        <p class="Code">0.00000	0.124249	0.0992163	0.0163551	0.0103306</p>
+        <p class="Code">0.00000	0.0992163	0.143690	0.0116980	0.00929796</p>
+        <p class="Code">0.00000	0.0163551	0.0116980	0.0301592	0.00606939</p>
+        <p class="Code">0.00000	0.0103306	0.00929796	0.00606939	0.0111061</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_CONSTANT_VARIABLE: Correlations are requested, but the observations on one or more variables are constant. The corresponding correlations are set to NaN.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_COVARIANCES(<i>x</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#VAR_COVAR" class="selected">VAR_COVAR</a>=<i>value</i>] [, <a href="#CORRECTED_SSCP" class="selected">CORRECTED_SSCP</a>=<i>value</i>] [, <a href="#CORRELATION" class="selected">CORRELATION</a>=<i>value</i>] [, <a href="#STDEV_CORRELATION" class="selected">STDEV_CORRELATION</a>=<i>value</i>] [, <a href="#FREQUENCIES" class="selected">FREQUENCIES</a>=<i>array</i>] [, <a href="#INCIDENCE_MAT" class="selected">INCIDENCE_MAT</a>=<i>variable</i>] [, <a href="#MISSING_VAL" class="selected">MISSING_VAL</a>=<i>value</i>] [, <a href="#MEANS" class="selected">MEANS</a>=<i>variable</i>] [, <a href="#NMISSING" class="selected">NMISSING</a>=<i>variable</i>] [, <a href="#NOBS" class="selected">NOBS</a>=<i>variable</i>] [, <a href="#SUM_WEIGHTS" class="selected">SUM_WEIGHTS</a>=<i>variable</i>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>If no keywords are used, IMSL_COVARIANCES returns a two-dimensional matrix containing the sample variance-covariance matrix of the observations in which value in element (<i>i</i>, <i>j</i>) corresponds to the sample covariance between the <i>i</i>-th and <i>j</i>-th variable.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">x</h3>
+        <p>Two-dimensional matrix containing the data. The data value for the <i>i</i>-th observation of the <i>j</i>-th variable should be in <i>x</i>(<i>i,j</i>).</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="VAR_COVAR"></a>VAR_COVAR (optional)</h3>
+        <p>Variance-covariance matrix (default). Use only one of the following keywords to specify the type of matrix to be computed: VAR_COVAR, CORRECTED_SSCP, CORRELATION, STDEV_CORRELATION.</p>
+        <h3 class="Keyword"><a name="CORRECTED_SSCP"></a>CORRECTED_SSCP (optional)</h3>
+        <p>Corrected sum-of-squares and crossproducts matrix. Use only one of the following keywords to specify the type of matrix to be computed: VAR_COVAR, CORRECTED_SSCP, CORRELATION, STDEV_CORRELATION.</p>
+        <h3 class="Keyword"><a name="CORRELATION"></a>CORRELATION (optional)</h3>
+        <p>Correlation matrix. Use only one of the following keywords to specify the type of matrix to be computed: VAR_COVAR, CORRECTED_SSCP, CORRELATION, STDEV_CORRELATION.</p>
+        <h3 class="Keyword"><a name="STDEV_CORRELATION"></a>STDEV_CORRELATION (optional)</h3>
+        <p>Correlation matrix, except for diagonal elements which are standard deviations. Use only one of the following keywords to specify the type of matrix to be computed: VAR_COVAR, CORRECTED_SSCP, CORRELATION, STDEV_CORRELATION.</p>
+        <h3 class="Keyword"><a name="FREQUENCIES"></a>FREQUENCIES (optional)</h3>
+        <p>Array containing the vector of frequencies for the observation. Default: all observations have a frequency of 1.</p>
+        <h3 class="Keyword"><a name="INCIDENCE_MAT"></a>INCIDENCE_MAT (optional)</h3>
+        <p>Named variable into which the incidence matrix is stored. If MISSING_VAL is 0, the number of valid observations is returned through this keyword; otherwise, the <i>nvar</i> x <i>nvar</i> matrix (where <i>nvar</i> is the number of variables in <i>x</i>) contains the number of pairs of valid observations used in calculating the crossproducts for covariance.</p>
+        <h3 class="Keyword"><a name="MISSING_VAL"></a>MISSING_VAL (optional)</h3>
+        <p>Scalar integer which defines the method used to exclude missing values in <i>x</i> from the computations, where NaN is interpreted as the missing value code. The methods are as follows:</p>
+        <ul>
+            <li value="1">0: The exclusion is listwise. (The entire row of <i>x</i> is excluded if any of the values of the row is equal to the missing value code.)</li>
+            <li value="2">1: Raw crossproducts are computed from all valid pairs and means, and variances are computed from all valid data on the individual variables. Corrected crossproducts, covariances, and correlations are computed using these quantities.</li>
+            <li value="3">2: Raw crossproducts, means, and variances are computed as in the case of MISSING_VAL = 1. However, corrected crossproducts and covariances are computed only from the valid pairs of data. Correlations are computed using these covariances and the variances from all valid data.</li>
+            <li value="4">3: Raw crossproducts, means, variances, and covariances are computed as in the case of MISSING_VAL = 2. Correlations are computed using these covariances, but the variances used are computed from the valid pairs of data.</li>
+        </ul>
+        <h3 class="Keyword"><a name="MEANS"></a>MEANS (optional)</h3>
+        <p>Named variable into which array containing the means of variables in <i>x</i> is stored. The <i>i</i>-th components of the array correspond to <i>x</i>(*, <i>i</i>).</p>
+        <h3 class="Keyword"><a name="NMISSING"></a>NMISSING (optional)</h3>
+        <p>Specifies a variable into which the total number of observations that contain any missing values (NaN) is stored.</p>
+        <h3 class="Keyword"><a name="NOBS"></a>NOBS (optional)</h3>
+        <p>Named variable into which the sum of the frequencies is stored. If MISSING_VAL is 0, observations with missing values are not included in Nobs; otherwise, all observations are included except for observations with missing values for the weight or the frequency.</p>
+        <h3 class="Keyword"><a name="SUM_WEIGHTS"></a>SUM_WEIGHTS (optional)</h3>
+        <p>Specifies a variable into which the sum of the weights of all observations is stored. If keyword MISSING_VAL is equal to 0, observations with missing values are not included in Sum_weights. Otherwise, all observations are included except for observations with missing values for the weight or the frequency.</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>Array containing the vector of weights for the observation. Default: all observations have equal weights of 1.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_NORM1SAMP</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_NORM1SAMP</span>
+        </div>
+        <h1 class="Routine">IMSL_NORM1SAMP</h1>
+        <p>The IMSL_NORM1SAMP function computes statistics for mean and variance inferences using a sample from a normal population.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Statistics for mean and variance inferences using a sample from a normal population are computed, including confidence intervals and tests for both mean and variance. The definitions of mean and variance are given below. The summation in each case is over the set of valid observations, based on the presence of missing values in the data.</p>
+        <p>Mean, return value:</p>
+        <p>
+            <img src="images/IMSL_NORM1SAMP-10.jpg" />
+        </p>
+        <p>Standard deviation:</p>
+        <p>
+            <img src="images/IMSL_NORM1SAMP-11.jpg" />
+        </p>
+        <p>The t statistic for the two-sided test concerning the population mean is given by:</p>
+        <p>
+            <img src="images/IMSL_NORM1SAMP-12.jpg" />
+        </p>
+        <p>where <i>s</i> and <img src="images/IMSL_NORM1SAMP-13.jpg" /> are given above. This quantity has a T distribution with <i>n</i> – 1 degrees of freedom. The chi-squared statistic for the two-sided test concerning the population variance is given by:</p>
+        <p>
+            <img src="images/IMSL_NORM1SAMP-14.jpg" />
+        </p>
+        <p>where s is given above. This quantity has a χ<sup>2</sup> distribution with <i>n</i> – 1 degrees of freedom.</p>
+        <h2 class="API">Examples</h2>
+        <h3 class="Keyword">Example 1 (optional)</h3>
+        <p>This example uses data from Devore (1982, p. 335), which is based on data published in the Journal of Materials. There are 15 observations; the mean is the only output.</p>
+        <p class="Code">x = [26.7, 25.8, 24.0, 24.9, 26.4, $</p>
+        <p class="Code_Indented">25.9, 24.4, 21.7, 24.1, 25.9, $</p>
+        <p class="Code_Indented">27.3, 26.9, 27.3, 24.8, 23.6]</p>
+        <p class="Code">PRINT, 'Sample Mean = ', IMSL_NORM1SAMP(x)</p>
+        <p>IDL prints:</p>
+        <p class="Code">Sample Mean = 25.3133</p>
+        <h3>Example 2</h3>
+        <p>This example uses the same data as the initial example. The hypothesis H0: µ = 20.0 is tested. The extremely large t value and the correspondingly small p-value provide strong evidence to reject the null hypothesis. First, a procedure to print the results is defined.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, mean, stdev, $</p>
+        <p class="Code_Indented">ci_mean, t_test</p>
+        <p class="Code_Indented">PM, mean, Title = 'Sample Mean:'</p>
+        <p class="Code_Indented">PM, stdev, Title = 'Sample Standard Deviation:'</p>
+        <p class="Code_Indented">PM, '(', ci_mean(0), ci_mean(1), ')', $</p>
+        <p class="Code_Indented2">Title = '95% CI for the mean:' PM, ' '</p>
+        <p class="Code_Indented">PM, ' df = ', t_test(0), Title = 't-test statistics:'</p>
+        <p class="Code_Indented">PM, '	t	= ', t_test(1)</p>
+        <p class="Code_Indented">PM, '	p-value = ', t_test(2)</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">x = [26.7, 25.8, 24.0, 24.9, 26.4, 25.9, 24.4,$</p>
+        <p class="Code_Indented">21.7, 24.1, 25.9, 27.3, 26.9, 27.3, 24.8, 23.6]</p>
+        <p class="Code">mean = IMSL_NORM1SAMP(x, Stdev = stdev, Ci_Mean	= ci_mean, $</p>
+        <p class="Code_Indented">T_Null_Hyp = 40.0, T_Test	= t_test)</p>
+        <p class="Code">print_results, mean, stdev, ci_mean, t_test</p>
+        <p>IDL prints:</p>
+        <p class="Code">Sample Mean:</p>
+        <p class="Code_Indented">25.3133</p>
+        <p class="Code">Sample Standard Deviation:</p>
+        <p class="Code_Indented">1.57882</p>
+        <p class="Code">95% CI for the mean:</p>
+        <p class="Code">(&#160;&#160;&#160;&#160;&#160;24.4390&#160;&#160;&#160;&#160;&#160;26.1877)</p>
+        <p class="Code">t-test statistics:</p>
+        <p class="Code">df&#160;&#160;&#160;&#160;&#160;&#160;=&#160;&#160;&#160;&#160;&#160;14.0000</p>
+        <p class="Code">t&#160;&#160;&#160;&#160;&#160;&#160;&#160;=&#160;&#160;&#160;&#160;-36.0277</p>
+        <p class="Code">p-value&#160;=&#160;&#160;&#160;&#160;&#160;&#160;0.00000</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_NORM1SAMP(x [, <a href="#CHI_SQ_NULL_HYP" class="selected">CHI_SQ_NULL_HYP</a>=<i>value</i>] [, <a href="#CI_MEAN" class="selected">CI_MEAN</a>=<i>variable</i>] [, <a href="#CI_VAR" class="selected">CI_VAR</a>=<i>variable</i>] [, <a href="#CHI_SQ_TEST" class="selected">CHI_SQ_TEST</a>=<i>variable</i>] [, <a href="#CONF_MEAN" class="selected">CONF_MEAN</a>=<i>value</i>] [, <a href="#CONF_VAR" class="selected">CONF_VAR</a>=<i>value</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#STDEV" class="selected">STDEV</a>=<i>variable</i>] [, <a href="#T_NULL_HYP" class="selected">T_NULL_HYP</a>=<i>value</i>] [, <a href="#T_TEST" class="selected">T_TEST</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The mean of the sample.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the observed values.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CHI_SQ_NULL_HYP"></a>CHI_SQ_NULL_HYP (optional)</h3>
+        <p>Null hypothesis value for the chi-squared test for the variance. Default: 1.0</p>
+        <h3 class="Keyword"><a name="CI_MEAN"></a>CI_MEAN (optional)</h3>
+        <p>Named variable into which the two-element array containing the lower confidence limit for the mean, and the upper confidence limit for the mean is stored.</p>
+        <h3 class="Keyword"><a name="CI_VAR"></a>CI_VAR (optional)</h3>
+        <p>Named variable into which the two-element array containing lower and upper confidence limits for the variance is stored.</p>
+        <h3 class="Keyword"><a name="CHI_SQ_TEST"></a>CHI_SQ_TEST (optional)</h3>
+        <p>Named variable into which the three-element array containing statistics associated with the chi-squared test is stored. The first element contains the degrees of freedom associated with the chi-squared test for variances, the second element contains the test statistic, and the third element contains the probability of a larger chi-squared value. The chi-squared test is a test of the hypothesis σ<sup>2</sup> = σ<sup>2</sup><sub>0</sub>, where σ<sup>2</sup><sub>0</sub> is the null hypothesis value as described in CHI_SQ_NULL_HYP.</p>
+        <h3 class="Keyword"><a name="CONF_MEAN"></a>CONF_MEAN (optional)</h3>
+        <p>Confidence level (in percent) for two-sided interval estimate of the mean. The keyword CONF_MEAN must be between 0.0 and 100.0 and is often 90.0, 95.0, or 99.0. For a one-sided confidence interval with confidence level c (at least 50 percent), set CONF_MEAN = 100.0 – 2.0 x (100.0 – c). Default: 95-percent confidence interval is computed.</p>
+        <h3 class="Keyword"><a name="CONF_VAR"></a>CONF_VAR (optional)</h3>
+        <p>Confidence level (in percent) for two-sided interval estimate of the variances. The keyword CONF_VAR must be between 0.0 and 100.0 and is often 90.0, 95.0, or 99.0. For a one-sided confidence interval with confidence level <i>c</i> (at least 50 percent), set CONF_VAR = 100.0 – 2.0 x (100.0 – c). Default: 95-percent confidence interval is computed.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="STDEV"></a>STDEV (optional)</h3>
+        <p>Named variable into which the standard deviation of the first sample is stored.</p>
+        <h3 class="Keyword"><a name="T_NULL_HYP"></a>T_NULL_HYP (optional)</h3>
+        <p>Null hypothesis value for the t test. Default: 0.0</p>
+        <h3 class="Keyword"><a name="T_TEST"></a>T_TEST (optional)</h3>
+        <p>Named variable into which the three-element array containing statistics associated with the t test is stored. The first element contains the degrees of freedom associated with the t test for the mean, the second element contains the test statistic, and the third element contains the probability of a larger t in absolute value. The t test is a test of the hypothesis μ = μ<sub>0</sub>, where μ<sub>0</sub> is the null hypothesis value as described in T_NULL_HYP.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_NORM2SAMP.htm">IMSL_NORM2SAMP</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

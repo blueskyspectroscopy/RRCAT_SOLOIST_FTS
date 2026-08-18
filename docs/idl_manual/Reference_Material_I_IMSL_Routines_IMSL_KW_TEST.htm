@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_KW_TEST</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_KW_TEST</span>
+        </div>
+        <h1 class="Routine">IMSL_KW_TEST</h1>
+        <p>The IMSL_KW_TEST function performs a Kruskal-Wallis test1 for identical population medians.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_KW_TEST function generalizes the Wilcoxon two-sample test computed by <a href="IMSL_WILCOXON.htm">IMSL_WILCOXON</a> to more than two populations. It computes a test statistic for testing that the population distribution functions in each of K populations are identical. Under appropriate assumptions, this is a nonparametric analogue of the one-way analysis of variance. Since more than two samples are involved, the alternative is taken as the analogue of the usual analysis of variance alternative, namely that the populations are not identical.</p>
+        <p>The calculations proceed as follows: All observations are ranked regardless of the population to which they belong. Average ranks are used for tied observations (observations within Fuzz of each other). Missing observations (observations equal to NaN, not a number) are not included in the ranking. Let Ri denote the sum of the</p>
+        <p>ranks in the <i>i</i>-th population. The test statistic H is defined as:</p>
+        <p>
+            <img src="images/IMSL_KW_TEST-02.jpg" />
+        </p>
+        <p>where <i>N</i> is the total of the sample sizes, <i>n</i><sub>i</sub> is the number of observations in the <i>i</i>-th sample, and S2 is computed as the (bias corrected) sample variance of the <i>R</i><sub>i</sub>.</p>
+        <p>The null hypothesis is rejected when <i>Result</i>(3) (or <i>Result</i>(1)) is less than the significance level of the test. If the null hypothesis is rejected, then the procedures given in Conover (1980, page 231) may be used for multiple comparisons. The IMSL_KW_TEST function computes asymptotic probabilities using the chi-squared distribution when the number of groups is 6 or greater, and a Beta approximation (see Wallace 1959) when the number of groups is 5 or less. Tables yielding exact probabilities in small samples may be obtained from Owen (1962).</p>
+        <h2 class="API">Example</h2>
+        <p>The following example is taken from Conover (1980, page 231). The data represents the yields per acre of four different methods for raising corn. Since <i>H</i> = 25.5, the four methods are clearly different. The warning error is always printed when the Beta approximation is used, unless printing for warning errors is turned off.</p>
+        <p class="Code">y = [83.0, 91.0, 94.0, 89.0, 89.0, 96.0, 91.0, 92.0, 90.0, $</p>
+        <p class="Code_Indented">91.0, 90.0, 81.0, 83.0, 84.0, 83.0, 88.0, 91.0, 89.0, $</p>
+        <p class="Code_Indented">84.0, 101.0, 100.0, 91.0, 93.0, 96.0, 95.0, 94.0, 78.0, $</p>
+        <p class="Code_Indented">82.0, 81.0, 77.0, 79.0, 81.0, 80.0, 81.0]</p>
+        <p class="Code">n	=	[9, 10, 7, 8]</p>
+        <p class="Code">fuzz	=	0.001</p>
+        <p class="Code">rlabel	=	['H (no ties)	=', $</p>
+        <p class="Code_Indented">'Prob (no ties)	=', $</p>
+        <p class="Code_Indented">'H (ties)	=', $</p>
+        <p class="Code_Indented">'Prob (ties)	=']</p>
+        <p class="Code">s = IMSL_KW_TEST(n, y, Fuzz = fuzz)</p>
+        <p class="Code">FOR i	=	0, 3 DO PM, rlabel(i), s(i), FORMAT = '(A18, F6.2)'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">H (no ties)&#160;&#160;&#160;&#160;= 25.46</p>
+        <p class="Code">Prob (no ties)&#160;= 0.00</p>
+        <p class="Code">H (ties)&#160;&#160;&#160;&#160;&#160;&#160;&#160;= 25.63</p>
+        <p class="Code">Prob (ties)&#160;&#160;&#160;&#160;= 0.00</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_KW_TEST(<i>N, Y</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FUZZ" class="selected">FUZZ</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length 4 containing the Kruskal-Wallis statistics.
+
+</p>
+        <ul>
+            <li value="1">0: Kruskal-Wallis H statistic.
+
+</li>
+            <li value="2">1: Asymptotic probability of a larger H under the null hypothesis of identical population medians.
+
+</li>
+            <li value="3">2: H corrected for ties.
+</li>
+            <li value="4">	3: Asymptotic probability of a larger H (corrected for ties) under the null hypothesis of identical populations.</li>
+        </ul>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N</h3>
+        <p>One-dimensional array containing the number of responses for each of the groups.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array of length N_ELEMENTS(<i>n</i>) that contains the responses for each of the groups. <i>Y</i> must be sorted by group, with the <i>n</i>(0) observations in group 1 coming first, the <i>n</i>(1) observations in group two coming second, and so on.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="FUZZ"></a>FUZZ (optional)</h3>
+        <p>Nonnegative constant used to determine ties in <i>y</i>. If (after sorting)
+|<i>y</i>(<i>i</i>) – <i>y</i>(<i>i</i> + 1)| is less than or equal to FUZZ, then a tie is counted. Default: 0.0
+</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_WILCOXON.htm">IMSL_WILCOXON</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

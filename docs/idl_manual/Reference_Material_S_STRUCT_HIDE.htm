@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: S">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>STRUCT_HIDE </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="S_list.htm">Routines: S</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">STRUCT_HIDE</span>
+        </div>
+        <h1 class="Routine"><a name="S_820040301_1073597"></a><a name="S_820040301_43869"></a>STRUCT_HIDE </h1>
+        <p><a name="kanchor2683"></a>The IDL HELP procedure displays information on all known structures or object classes when used with the STRUCTURES or OBJECTS keywords. Although this is usually the desired behavior, authors of large vertical applications or library routines may wish to prevent IDL from displaying information on structures or objects that are not part of their public interface, but which exist solely in support of the internal implementation. The STRUCT_HIDE procedure is used to mark such structures or objects as hidden. Items so marked are not displayed by <code>HELP, /STRUCTURE</code> unless the user sets the FULL keyword, but are otherwise unaltered.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>STRUCT_HIDE is primarily intended for use with named structures or objects. Although it can be safely used with anonymous structures, there is no visible benefit to doing so as anonymous structures are hidden by default.</p>
+        <p class="Tip" data-mc-autonum="&lt;b&gt;Tip: &lt;/b&gt;"><span class="autonumber"><span><b>Tip: </b></span></span>Authors of objects will often place a call to STRUCT_HIDE in the _&#160;_DEFINE procedure that defines the structure.</p>
+        <h2 class="API">Examples</h2>
+        <p>This example shows how a structure can be hidden if an application designer doesn’t want end-users to be able to see it, but variables are not hidden. To create a named structure called <code>bullwinkle</code> and prevent it from appearing in the HELP procedure’s default output, do the following.</p>
+        <p class="Code">; Define a variable containing the named structure:<br />tmp = { bullwinkle, moose:1, squirrel:0 }<br />; IDL returns BULLWINKLE in addition to the other system variables.<br />HELP, /STRUCTURE, /BRIEF<br />; Next, specifically hide the structure using <br />; the STRUCT_HIDE procedure.<br />STRUCT_HIDE, tmp<br />; This time IDL returns the system variables but <br />; not the BULLWINKLE structure.<br />HELP, /STRUCTURE, /BRIEF<br />; IDL returns the variable tmp showing that it is <br />; a named structure called BULLWINKLE.<br />HELP, tmp</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">STRUCT_HIDE, <i>Arg<sub>1</sub></i> [, <i>Arg<sub>2</sub></i>, ..., <i>Arg<sub>n</sub></i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Arg<i><sub>1</sub></i>, ..., Arg<i><sub>n</sub></i></h3>
+        <p>If an argument is a variable of one of the following types, its underlying structure and/or object definition is marked as being hidden from the HELP procedure’s default output:</p>
+        <ul>
+            <li value="1">Structure</li>
+            <li value="2">Pointer that refers to a heap variable of structure type</li>
+            <li value="3">Object Reference</li>
+        </ul>
+        <p>Any arguments that are not one of these types are quietly ignored. No change is made to the value of any argument.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>5.3</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../C/COMPILE_OPT.htm">COMPILE_OPT</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

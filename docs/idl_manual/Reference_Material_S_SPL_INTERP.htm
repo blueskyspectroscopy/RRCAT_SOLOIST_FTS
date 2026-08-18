@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: S">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SPL_INTERP </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="S_list.htm">Routines: S</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">SPL_INTERP</span>
+        </div>
+        <h1 class="Routine"><a name="S_820040301_51839"></a><a name="kanchor2637"></a><a name="S_820040301_65579"></a>SPL_INTERP </h1>
+        <p><a name="kanchor2638"></a><a name="kanchor2639"></a>Given the arrays <i>X</i> and <i>Y</i>, which tabulate a function (with the <i>X<sub>i</sub></i> in ascending order), and given the array <i>Y<sub>2</sub></i>, which is the output from SPL_INIT, and given an input value of <i>X<sub>2</sub></i>, the SPL_INTERP function returns a cubic-spline interpolated value for the given value of <i>X<sub>I</sub></i>. </p>
+        <h2 class="API">Examples</h2>
+        <p>To create a spline interpolation over a tabulated set of data, [<i>X<sub>i</sub></i>, <i>Y<sub>i</sub></i>], first create the tabulated data. In this example, <i>X<sub>i</sub></i> will be in the range [0.0, 2π] and <i>Y<sub>i</sub></i> in the range [sin(0.0), sin(2π)].</p>
+        <p class="Code">X = (FINDGEN(21)/20.0) * 2.0 * !PI<br />Y = SIN(X)<br /><br />; Calculate interpolating cubic spline:<br />Y2 = SPL_INIT(X, Y)<br /><br />; Define the X values P at which we desire interpolated Y values:<br />X2= FINDGEN(11)/11.0 * !PI<br /><br />; Calculate the interpolated Y values corresponding to X2[i]:<br />result = SPL_INTERP(X, Y, Y2, X2)<br /><br />PRINT, result</p>
+        <p>IDL prints:</p>
+        <p class="Code">&#160;0.00000&#160;&#160;0.281733&#160;&#160;0.540638&#160;&#160;0.755739&#160;&#160;0.909613&#160;&#160;0.989796</p>
+        <p class="Code">&#160;0.989796&#160;&#160;0.909613&#160;&#160;0.755739&#160;&#160;0.540638&#160;&#160;0.281733</p>
+        <p>The exact solution vector is sin(X<i><sub>2</sub></i>).</p>
+        <p>To interpolate a line in the XY plane, see SPLINE_P.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = SPL_INTERP( <i>X</i>, <i>Y</i>, <i>Y2</i>, <i>X2</i> [,&#160;/<a href="#S_820040301_51859" class="selected">DOUBLE</a>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>Returns either single- or double-precision floating result of the same structure as <i>X<sub>2</sub></i>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>An input array that specifies the tabulated points in ascending order.</p>
+        <h3 class="Argument">Y</h3>
+        <p>An input array that specifies the values of the tabulate function corresponding to <i>X<sub>i</sub></i>.</p>
+        <h3 class="Argument">Y2</h3>
+        <p>The output from SPL_INIT for the specified <i>X</i> and <i>Y</i>.</p>
+        <h3 class="Argument">X2</h3>
+        <p>The input value for which an interpolated value is desired. <i>X</i> can be scalar or an array of values. The result of SPL_INTERP will have the same structure.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="S_820040301_51859"></a><a name="S_820040301_51859_Keywords_SPL_INTERP__"></a>DOUBLE</h3>
+        <p>Set this keyword to force the computation to be done in double-precision arithmetic.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>4.0</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Resources and References</h2>
+        <p>SPL_INTERP is based on the routine <code>splint</code> described in section 3.3 of <i>Numerical Recipes in C: The Art of Scientific Computing</i> (Second Edition), published by Cambridge University Press, and is used by permission.</p>
+        <h2 class="API">See Also</h2>
+        <p><a href="SPL_INIT.htm#S_820040301_126854">SPL_INIT</a>, <a href="SPLINE.htm#S_820040301_758519">SPLINE</a>, <a href="SPLINE_P.htm#S_820040301_758542">SPLINE_P</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

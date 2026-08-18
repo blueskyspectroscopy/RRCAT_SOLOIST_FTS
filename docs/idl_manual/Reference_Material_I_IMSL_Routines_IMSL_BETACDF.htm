@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_BETACDF</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_BETACDF</span>
+        </div>
+        <h1>IMSL_BETACDF</h1>
+        <p>The IMSL_BETACDF function evaluates the beta probability distribution function.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_BETACDF function evaluates the distribution function of a beta random variable with arguments <i>Pin</i> and <i>Qin</i>. This function is sometimes called the incomplete beta ratio and is denoted by <i>I<sub>x</sub>(p, q)</i>, where <i>p = Pin</i> and <i>q = Qin</i>. It is given by:</p>
+        <p>
+            <img src="images/IMSL_BETACDF1.svg" />
+        </p>
+        <p>where Γ(·) is the gamma function. The value of the distribution function by <i>I</i><sub style="font-style: italic;">x</sub><i>(p, q)</i> is the probability that the random variable takes a value less than or equal to <i>x</i>.</p>
+        <p>The integral in the expression above is called the incomplete beta function and is denoted by <i>β</i><sub style="font-style: italic;">x</sub><i>(p, q)</i>. The constant in the expression is the reciprocal of the beta function (the incomplete function evaluated at 1) and is denoted by <i>β</i><sub style="font-style: italic;">x</sub><i>(p, q)</i>.</p>
+        <p>If the keyword INVERSE is specified, the IMSL_BETACDF function evaluates the inverse distribution function of a beta random variable with arguments <i>Pin</i> and <i>Qin</i>.</p>
+        <p>With <i>P = x</i>, <i>p = pin</i> and <i>q = qin</i>, it returns <i>x</i> such that:</p>
+        <p>
+            <img src="images/IMSL_BETACDF2.svg" />
+        </p>
+        <p>where Γ(·) is the gamma function. The probability that the random variable takes a value less than or equal to <i>x</i> is <i>P</i>.</p>
+        <p>The BETCDF function uses the method of Bosten and Battiste (1974).</p>
+        <h2 class="API">Example</h2>
+        <p>Suppose <i>X</i> is a beta random variable with parameters 12 and 12 (<i>X</i> has a symmetric distribution). This example finds the probability that <i>X</i> is less than 0.6 and the probability that <i>X</i> is between 0.5 and 0.6. (Since <i>X</i> is a symmetric beta random variable, the probability that it is less than 0.5 is 0.5.)</p>
+        <p class="Code">p = IMSL_BETACDF(.6, 12, 12)</p>
+        <p class="Code">; Call IMSL_BETACDF to compute first probability and output results.</p>
+        <p class="Code">PM, p, Title = 'The probability that X is less than ' + $</p>
+        <p class="Code_Indented">'0.6 is:', FORMAT= '(f8.4)'</p>
+        <p>IDL prints:</p>
+        <p class="Code">The probability that X is less than 0.6 is: 0.8364</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">p = p - IMSL_BETACDF(.5, 12, 12)</p>
+        <p class="Code">; Call IMSL_BETACDF and use the previously computed</p>
+        <p class="Code">; probability to determine the next probability.</p>
+        <p class="Code">PM, p, FORMAT = '(f8.4)', title = 'The probability that X ' + $</p>
+        <p class="Code_Indented">'is between 0.5 and 0.6 is:'</p>
+        <p>IDL prints:</p>
+        <p class="Code">The probability that X is between 0.5 and 0.6 is: 0.3364</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_BETACDF(<i>x</i>, <i>pin</i>, <i>qin</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, /<a href="#INVERSE" class="selected">INVERSE</a>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The probability that a beta random variable takes on a value less than or equal to <i>X</i>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Pin</h3>
+        <p>First beta distribution argument. <i>Pin</i> must be positive.</p>
+        <h3 class="Argument">Qin</h3>
+        <p>Second beta distribution argument. <i>Qin</i> must be positive.</p>
+        <h3 class="Argument">X</h3>
+        <p>Argument for which the beta probability distribution function is to be evaluated. If INVERSE is specified, argument <i>X</i> represents the probability for which the inverse of the Beta distribution function is to be evaluated. In this case, <i>X</i> must be in the open interval (0.0, 1.0).</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="INVERSE"></a>INVERSE (optional)</h3>
+        <p>If present and nonzero, evaluates the inverse of the Beta distribution function. If INVERSE is specified, argument <i>X</i> represents the probability for which the inverse of the Beta distribution function is to be evaluated. In this case, <i>X</i> must be in the open interval (0.0, 1.0).</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_BETA.htm">IMSL_BETA</a>, <a href="IMSL_BETAI.htm">IMSL_BETAI</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

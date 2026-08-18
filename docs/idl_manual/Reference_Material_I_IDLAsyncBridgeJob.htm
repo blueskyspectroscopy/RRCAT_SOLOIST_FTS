@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLAsyncBridgeJob</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLAsyncBridgeJob</span>
+        </div>
+        <h1 class="ObjClass">IDLAsyncBridgeJob</h1>
+        <p>The IDLAsyncBridgeJob class represents a unit of work to be done at some point in the future inside an <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge.htm">IDL_IDLBridge</a>. This class allows you to specify a single IDL command to be executed inside the bridge when this job is run. It also allows you to specify an optional IDL command to be executed inside the bridge when it is first initialized. Submitting these to an <a href="IDLAsyncQueue.htm">IDLAsyncQueue</a> will allow them to be performed as resources become available.</p>
+        <h2 class="API">Superclasses</h2>
+        <ul>
+            <li value="1"><a href="IDLAsyncJob.htm">IDLAsyncJob</a>
+            </li>
+        </ul>
+        <h2 class="API">Examples</h2>
+        <p class="Code">; Use S3 folder for a dataset covering Boulder, CO, taken April 4, 2017</p>
+        <p class="Code">folderUrl = 'https://s3-us-west-2.amazonaws.com/landsat-pds/L8/033/032/LC80330322017104LGN00'</p>
+        <p class="Code">; Dataset name is same as folder name, and is root of all files</p>
+        <p class="Code">datasetName = File_BaseName(folderUrl)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; List of suffixes to apply to dataset name for all files needed to</p>
+        <p class="Code">; comprise a full Landsat 8 dataset.  Band 8 is the panchromatic band,</p>
+        <p class="Code">; which is the largest, so start downloading it first.</p>
+        <p class="Code">suffixes = [ '_B8.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B1.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B2.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B3.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B4.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B5.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B6.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B7.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B9.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B10.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_B11.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_BQA.TIF', $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'_MTL.txt' ]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; create a folder in the temp folder for the local files</p>
+        <p class="Code">localFolder = FilePath(datasetName, /TMP)</p>
+        <p class="Code">if (~File_Test(localFolder)) then File_MkDir, localFolder</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct IDLAsyncJoin object to use for waiting on all jobs to complete</p>
+        <p class="Code">oJoin = IDLAsyncJoin()</p>
+        <p class="Code">; construct IDLAsyncQueue to manage parallel execution of jobs</p>
+        <p class="Code">oQueue = IDLAsyncQueue(CONCURRENCY=6)</p>
+        <p class="Code">; create object array to hold all jobs</p>
+        <p class="Code">jobs = ObjArr(N_Elements(suffixes))</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define compound command to execute in the bridge.</p>
+        <p class="Code">; This command creates an IDLnetURL object, then calls its Get() method,</p>
+        <p class="Code">; passing in the remote URL and local filename to use.  The command must</p>
+        <p class="Code">; also delete the IDLnetURL variable to avoid an error when the</p>
+        <p class="Code">; IDLAsyncBridgeJob tries to call IDL_IDLBridge::GetVar() on an object</p>
+        <p class="Code">; variable.</p>
+        <p class="Code">; An alternate command that works using a procedure is:</p>
+        <p class="Code">;   bridgeCmd = 'download_S3_URL, S3_URL=s3Url, LOCAL_FILE=localFile'</p>
+        <p class="Code">bridgeCmd = 'u = IDLnetURL() &amp; !null = u.Get(URL=s3Url, FILE=localFile) &amp; Obj_Destroy, u &amp; delvar, u'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; construct a unique job for each remote file to download</p>
+        <p class="Code">foreach suf, suffixes, i do begin</p>
+        <p class="Code">&#160;&#160;&#160;&#160;file = datasetName + suf</p>
+        <p class="Code">&#160;&#160;&#160;&#160;remote = folderUrl + '/' + file</p>
+        <p class="Code">&#160;&#160;&#160;&#160;local = FilePath(file, ROOT=localFolder)</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; construct IDLAsyncBridgeJob to execute compound command,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;; passing in required variables and join object</p>
+        <p class="Code">&#160;&#160;&#160;&#160;jobs[i] = IDLAsyncBridgeJob(bridgeCmd, $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;s3Url=remote, $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;localFile=local, $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JOIN=oJoin)</p>
+        <p class="Code">endforeach</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">tic</p>
+        <p class="Code">; submit all the jobs to the queue for execution</p>
+        <p class="Code">oQueue.SubmitJob, jobs</p>
+        <p class="Code">; wait for all jobs to be done</p>
+        <p class="Code">oJoin.WaitForJoin</p>
+        <p class="Code">toc</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncBridgeJob(<i>Command</i> [, JOIN=<i>IDLAsyncJoin</i>] [, Variables=<i>Value</i>])</p>
+        <p class="Syntax">You can pass in one or more input variables to the bridge before executing COMMAND. The keyword used will be the name of the variable in the bridge. Note that objects must be dehydrated before passing in here, as <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__SetVar.htm">IDL_IDLBridge::SetVar</a> will not handle them correctly.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Command</h3>
+        <p>The value used for the <a href="#COMMAND" class="selected">COMMAND</a> property.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">JOIN (optional)</h3>
+        <p>An <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a> object that is passed to the IDLAsyncJob base class Init() method for handling.</p>
+        <p>&#160;</p>
+        <p>Specify keywords using the names of the variables you want to send to the bridge.</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1">IDLAsyncBridgeJob inherits all methods from <a href="IDLAsyncJob.htm#Methods">IDLAsyncJob</a>.</li>
+            <li value="2">IDLAsyncBridgeJob()</li>
+            <li value="3"><a href="#GetReturnValue" class="selected">IDLAsyncBridgeJob::GetReturnValue</a>
+            </li>
+            <li value="4"><a href="#OnStart" class="selected">IDLAsyncBridgeJob::OnStart</a>
+            </li>
+        </ul>
+        <h2 class="API"><a name="Properties"></a>Properties</h2>
+        <p>IDLAsyncBridgeJob inherits all properties from <a href="IDLAsyncJob.htm#Properties">IDLAsyncJob</a>.</p>
+        <h3 class="Property"><a name="COMMAND"></a>COMMAND (Get, Init)</h3>
+        <p>A scalar string of IDL code to be executed inside the bridge when this job is executed. Make sure that the command does not create any objects, as <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__GetVar.htm">IDL_IDLBridge::GetVar</a> will not handle them correctly. Either dehydrate and serialize output objects, or use <a href="../D/DELVAR.htm">DELVAR</a> to delete them.</p>
+        <h3 class="Property">INIT_COMMAND (optional)</h3>
+        <p>A scalar string of IDL code to be executed inside the bridge when it is initialized.</p>
+        <h1 class="ObjMethod"><a name="GetReturnValue"></a>IDLAsyncBridgeJob::GetReturnValue</h1>
+        <p>The IDLAsyncBridgeJob::GetReturnValue method is an override of the IDLAsyncJob interface method. This procedure retrieves one or more named variables from the bridge after the remote work has finished executing. Note that remote objects must be dehydrated before being requested here, as <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__GetVar.htm">IDL_IDLBridge::GetVar</a> will not handle them correctly. If the variable name is unknown, or the job has not successfully completed execution, then the value passed into this method is unchanged.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncBridgeJob.GetReturnValue [, Variables=<i>Value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>Specify keywords using the names of the variables you are retrieving from the bridge.</p>
+        <h3 class="Keyword">ERROR</h3>
+        <p>If the job fails, this will contain the error message generated by executing COMMAND inside the bridge.</p>
+        <p> If the job succeeds, this will be an empty string, unless the COMMAND resulted in an ERROR variable being generated in the bridge, in which case it will have the appropriate value.</p>
+        <h1 class="ObjMethod"><a name="OnStart"></a>IDLAsyncBridgeJob::OnStart</h1>
+        <p>The IDLAsyncBridgeJob::OnStart method is an implementation override of the IDLAsyncJob callback invoked on this job by the Start event handler. The basic sequence of operations follows: </p>
+        <ul>
+            <li value="1">Create the IDL_IDLBridge.</li>
+            <li value="2">Call <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__Execute.htm">IDL_IDLBridge::Execute</a> with the INIT_COMMAND, if it was set.</li>
+            <li value="3">Iterate over the variables passed as keywords into Init() and call <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__SetVar.htm">IDL_IDLBridge::SetVar</a> on each.</li>
+            <li value="4">Set up the callback for bridge events.</li>
+            <li value="5">Call IDL_IDLBridge::Execute with COMMAND.</li>
+            <li value="6">Handle bridge events, to invoke the OnDone callback on itself.</li>
+            <li value="7">If the bridge is successful in executing COMMAND, then all remote variables that were not passed into this object on construction are retrieved from the bridge, and it is destroyed to release any licenses it used. These remote variables must not be objects, as IDL_IDLBridge::GetVar will not handle them correctly.</li>
+        </ul>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncBridgeJob.OnStart</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLAsyncJob.htm">IDLAsyncJob</a>, <a href="IDLAsyncJoin.htm">IDLAsyncJoin</a>, <a href="IDLAsyncQueue.htm">IDLAsyncQueue</a>, <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__SetVar.htm">IDL_IDLBridge::SetVar</a>, <a href="../../Object Classes/Miscellaneous/IDL_IDLBridge__Execute.htm">IDL_IDLBridge::Execute</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

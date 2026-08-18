@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_FMINV</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_FMINV</span>
+        </div>
+        <h1 class="Routine">IMSL_FMINV</h1>
+        <p>The IMSL_FMINV function minimizes a function <i>f</i>(<i>x</i>) of <i>n</i> variables using a quasi-Newton method.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_FMINV function uses a quasi-Newton method to find the minimum of a function <i>f</i>(<i>x</i>) of <i>n</i> variables. The problem is stated below:</p>
+        <p>
+            <img src="images/IMSL_FMINV-21.jpg" />
+        </p>
+        <p>Given a starting point <i>x</i><sub>c</sub>, the search direction is computed according to the formula:</p>
+        <p class="indent"><i>d</i> = –<i>B</i><sup>–1</sup><i>g</i><sub>c</sub></p>
+        <p>where <i>B</i> is a positive definite approximation of the Hessian and <i>g</i><sub>c</sub> is the gradient evaluated at <i>x</i><sub>c</sub>.</p>
+        <p>A line search is then used to find a new point:</p>
+        <p class="indent"><i>x</i><sub>n</sub> = <i>x</i><sub>c</sub> + λ d, λ &gt; 0 </p>
+        <p>such that:</p>
+        <p class="indent"><i>f</i>(<i>x</i><sub>n</sub>) ≤  <i>f</i>(<i>x</i><sub>c</sub>) α <i>g</i><sup>T</sup><i>d</i></p>
+        <p>where α ∈ (0, 0.5 ) .</p>
+        <p>Finally, the optimality condition:</p>
+        <p class="indent">|| <i>g</i>(<i>x</i>) || ≤ ε</p>
+        <p>is checked, where ε is a gradient tolerance.</p>
+        <p>When optimality is not achieved, <i>B</i> is updated according to the BFGS formula:</p>
+        <p>
+            <img src="images/IMSL_FMINV-23.jpg" />
+        </p>
+        <p>where <i>s</i> = <i>x</i><sub>n</sub> – <i>x</i><sub>c</sub> and <i>y</i> = <i>g</i><sub>n</sub> – <i>g</i><sub>c</sub>. Another search direction is then computed to begin the next iteration. For more details, see Dennis and Schnabel (1983, Appendix A).</p>
+        <p>In this implementation, the first stopping criterion for IMSL_FMINV occurs when the norm of the gradient is less than the given gradient tolerance TOL_GRAD. The second stopping criterion for IMSL_FMINV occurs when the scaled distance between the last two steps is less than the step tolerance TOL_STEP.</p>
+        <p>Since by default, a finite-difference method is used to estimate the gradient for some single-precision calculations, an inaccurate estimate of the gradient may cause the algorithm to terminate at a noncritical point. In such cases, high-precision arithmetic is recommended or keyword GRAD is used to provide more accurate gradient evaluation.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The function <i>f</i>(<i>x</i>) = 100 (<i>x</i><sub>2</sub> – <i>x</i><sub>1</sub><sup>2</sup>)<sup>2</sup> + (1 – <i>x</i><sub>1</sub>)<sup>2</sup> is minimized.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the function. </p>
+        <p class="Code">FUNCTION f, x</p>
+        <p class="Code">xn = x</p>
+        <p class="Code">xn(0) = x(1) - x(0)^2 xn(1) = 1 - x(0)</p>
+        <p class="Code">RETURN, 100 * xn(0)^2 + xn(1)^2</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_FMINV to compute the minimum. </p>
+        <p class="Code">xmin = IMSL_FMINV('f', 2)</p>
+        <p class="Code">PM, xmin, Title = 'Solution:'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Solution:</p>
+        <p class="Code">0.999986</p>
+        <p class="Code">0.999971</p>
+        <p>Continue:</p>
+        <p class="Code">PM, f(xmin), Title = 'Function value:'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Function value:</p>
+        <p class="Code">2.09543e-10</p>
+        <h3>Example 2</h3>
+        <p>The function <i>f</i>(<i>x</i>) = 100 (<i>x</i><sub>2</sub> – <i>x</i><sub>1</sub><sup>2</sup>)<sup>2</sup> + (1 – <i>x</i><sub>1</sub>)<i>2</i> is minimized with the initial guess <i>x</i> = ( –1.2, 1.0). In the following plot, the asterisk marks the minimum. The results are shown in the plot below.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the function. </p>
+        <p class="Code">FUNCTION f, x</p>
+        <p class="Code">xn = x</p>
+        <p class="Code">xn(0) = x(1) - x(0)^2 xn(1) = 1 - x(0)</p>
+        <p class="Code">RETURN, 100 * xn(0)^2 + xn(1)^2</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the gradient function. </p>
+        <p class="Code">FUNCTION grad, x</p>
+        <p class="Code">g = x</p>
+        <p class="Code">g(0) = -400 * (x(1) - x(0)^2) * x(0) - 2 * (1 - x(0))</p>
+        <p class="Code">g(1) = 200 * (x(1) - x(0)^2) RETURN, g</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">xmin = IMSL_FMINV('f', 2, grad = 'grad',$ </p>
+        <p class="Code">&#160;&#160;XGuess = [-1.2, 1.0], Tol_Grad = .0001)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_FMINV with the gradient function, an initial guess,</p>
+        <p class="Code">; and a scaled gradient tolerance. </p>
+        <p class="Code">x = 4 * FINDGEN(100)/99 - 2</p>
+        <p class="Code">y = x</p>
+        <p class="Code">surf = FLTARR(100, 100)</p>
+        <p class="Code">FOR i = 0, 99 DO FOR j = 0, 99 do $</p>
+        <p class="Code">&#160;&#160;surf(i, j) = f([x(i), y(j)])</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">&#160;&#160;; Evaluate function f on 100 x 100 grid for use in CONTOUR. </p>
+        <p class="Code">&#160;&#160;str = '(' + STRCOMPRESS(xmin(0)) + ',' + $ </p>
+        <p class="Code">&#160;&#160;STRCOMPRESS(xmin(1)) + ',' + STRCOMPRESS(f(xmin)) + ')'</p>
+        <p class="Code">&#160;&#160;!P.Charsize = 1.5</p>
+        <p class="Code">&#160;&#160;CONTOUR, surf, x, y, Levels = [20*FINDGEN(6), $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;500 + FINDGEN(7)*500], /C_Annotation, $ </p>
+        <p class="Code">&#160;&#160;&#160;&#160;Title='!18Rosenbrock Function!C' + 'Minimum Point:!C' + $ </p>
+        <p class="Code">&#160;&#160;&#160;&#160;str, Position = [.1, .1, .8, .8]</p>
+        <p class="Code">; Call CONTOUR. Customize the contour plot, including the title</p>
+        <p class="Code">; of the plot.</p>
+        <p class="Code">OPLOT, [xmin(0)], [xmin(1)], Psym = 2, Symsize = 2</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Plot the solution as an asterisk.</p>
+        <p>Result:</p>
+        <p>
+            <img src="images/optimize03.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Informational Errors</h3>
+        <p>MATH_STEP_TOLERANCE: Scaled step tolerance satisfied. Current point may be an approximate local solution, but it is also possible that the algorithm is making very slow progress and is not near a solution or that TOL_STEP is too big.</p>
+        <h3>Warning Errors</h3>
+        <p>MATH_REL_FCN_TOLERANCE: Relative function convergence. Both the actual and predicted relative reductions in the function are less than or equal to the relative function convergence tolerance.</p>
+        <p>MATH_TOO_MANY_ITN: Maximum number of iterations exceeded.</p>
+        <p>MATH_TOO_MANY_FCN_EVAL: Maximum number of function evaluations exceeded.</p>
+        <p>MATH_TOO_MANY_GRAD_EVAL: Maximum number of gradient evaluations exceeded.</p>
+        <p>MATH_UNBOUNDED: Five consecutive steps have been taken with the maximum step length.</p>
+        <p>MATH_NO_FURTHER_PROGRESS: Last global step failed to locate a point lower than the current <i>x</i> value.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_FALSE_CONVERGENCE: Iterates appear to converge to a noncritical point. It is possible that incorrect gradient information is used, or the function is discontinuous, or the other stopping tolerances are too tight.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_FMINV(<i>f</i>, <i>n</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#GRAD" class="selected">GRAD</a>=<i>string</i>] [, <a href="#FSCALE" class="selected">FSCALE</a>=<i>string</i>] [, <a href="#FVALUE" class="selected">FVALUE</a>=<i>variable</i>] [, <a href="#IHESS" class="selected">IHESS</a>=parameter] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#MAX_EVALS" class="selected">MAX_EVALS</a>=<i>value</i>] [, <a href="#MAX_GRAD" class="selected">MAX_GRAD</a>=<i>value</i>] [, <a href="#MAX_STEP" class="selected">MAX_STEP</a>=<i>value</i>] [, <a href="#N_DIGIT" class="selected">N_DIGIT</a>=<i>value</i>] [, <a href="#TOL_GRAD" class="selected">TOL_GRAD</a>=<i>value</i>] [, <a href="#TOL_RFCN" class="selected">TOL_RFCN</a>=<i>value</i>] [, <a href="#TOL_STEP" class="selected">TOL_STEP</a>=<i>value</i>] [, <a href="#XGUESS" class="selected">XGUESS</a>=<i>array</i>] [, <a href="#XSCALE" class="selected">XSCALE</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The minimum point <i>x</i> of the function. If no value can be computed, NaN is returned.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">f</h3>
+        <p>Scalar string specifying a user-supplied function to evaluate the function to be minimized. Function f accepts the point at which the function is evaluated and returns the computed function value at the point.</p>
+        <h3 class="Argument">n</h3>
+        <p>Number of variables.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="GRAD"></a>GRAD (optional)</h3>
+        <p>Scalar string specifying a user-supplied function to compute the gradient. The GRAD function accepts the point at which the gradient is evaluated and returns the computed gradient at the point.</p>
+        <h3 class="Keyword"><a name="FSCALE"></a>FSCALE (optional)</h3>
+        <p>Scalar containing the function scaling. The keyword FSCALE is used mainly in scaling the gradient. See the TOL_GRAD keyword for more detail. The default value is 1.0.</p>
+        <h3 class="Keyword"><a name="FVALUE"></a>FVALUE (optional)</h3>
+        <p>Name of a variable into which the value of the function at the computed solution is stored.</p>
+        <h3 class="Keyword"><a name="IHESS"></a>IHESS (optional)</h3>
+        <p>Hessian initialization parameter. If IHESS is zero, the Hessian is initialized to the identity matrix; otherwise, it is initialized to a diagonal matrix containing <i>max</i>(<i>f</i>(<i>t</i>), <i>f</i><sub>s</sub>) * <i>s</i><sub>i</sub> on the diagonal, where <i>t</i> = XGUESS, <i>f</i><sub>s</sub> = FSCALE, and <i>s</i> = XSCALE. The default value is 0.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum number of iterations. The default value is 100.</p>
+        <h3 class="Keyword"><a name="MAX_EVALS"></a>MAX_EVALS (optional)</h3>
+        <p>Maximum number of function evaluations. The default value is 100 400.</p>
+        <h3 class="Keyword"><a name="MAX_GRAD"></a>MAX_GRAD (optional)</h3>
+        <p>Maximum number of gradient evaluations. The default value is 100 400.</p>
+        <h3 class="Keyword"><a name="MAX_STEP"></a>MAX_STEP (optional)</h3>
+        <p>Maximum allowable step size. Default: 1000*<i>max</i>(ε1, ε2), where:</p>
+        <p>
+            <img src="images/IMSL_FMINV-17.jpg" />
+        </p>
+        <p>ε<sub>2</sub> = || <i>s</i> ||2, <i>s</i> = XSCALE, and <i>t</i> = XGUESS</p>
+        <h3 class="Keyword"><a name="N_DIGIT"></a>N_DIGIT (optional)</h3>
+        <p>Number of good digits in function. Default: machine dependent.</p>
+        <h3 class="Keyword"><a name="TOL_GRAD"></a>TOL_GRAD (optional)</h3>
+        <p>Scaled gradient tolerance.</p>
+        <p>The <i>i</i>-th component of the scaled gradient at x is calculated as:</p>
+        <p>
+            <img src="images/IMSL_FMINV-18.jpg" />
+        </p>
+        <p>where:</p>
+        <ul>
+            <li value="1"><i>g</i>  = ∇f(x)</li>
+            <li value="2"><i>s</i> = XSCALE</li>
+            <li value="3"><i>f</i><sub>s</sub> = FSCALE</li>
+        </ul>
+        <p>Default: ε<sup>1/2</sup> (ε<sup>1/3</sup> in double), where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="TOL_RFCN"></a>TOL_RFCN (optional)</h3>
+        <p>Relative function tolerance. The default is TOL_RFCN = <i>max</i>(10<sup>–10</sup>, ε <sup>2/3</sup>),   <i>max</i>(10<sup>–20</sup>, ε <sup>2/3</sup>) in double.</p>
+        <h3 class="Keyword"><a name="TOL_STEP"></a>TOL_STEP (optional)</h3>
+        <p>Scaled step tolerance.</p>
+        <p>The <i>i</i>-th component of the scaled step between two points x and y is computed as:</p>
+        <p>
+            <img src="images/IMSL_FMINV-20.jpg" />
+        </p>
+        <p>where <i>s</i> = XSCALE. Default: ε <sup>2/3</sup></p>
+        <h3 class="Keyword"><a name="XGUESS"></a>XGUESS (optional)</h3>
+        <p>Array with <i>n</i> components containing an initial guess of the computed solution. Default: XGUESS (*) = 0.</p>
+        <h3 class="Keyword"><a name="XSCALE"></a>XSCALE (optional)</h3>
+        <p>Array with <i>n</i> components containing the scaling vector for the variables. The keyword XSCALE is used mainly in scaling the gradient and the distance between</p>
+        <p>two points (see the keywords TOL_GRAD and TOL_STEP for more detail). Default: XSCALE (*) = 1.0.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IDLml Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLmlPartition</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IDLml Routines.htm">IDLml Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLmlPartition</span>
+        </div>
+        <h1 class="ClassRoutine">IDLmlPartition</h1>
+        <p>The IDLmlPartition function partitions data so that it can be separated into two or more groups.</p>
+        <h2 class="API">Examples</h2>
+        <p>Example 1 splits two arrays into two groups, one with 80% of the elements, the other with 20%:</p>
+        <p class="Code">Features = randomu(seed, 3, 1000)</p>
+        <p class="Code">Values = randomu(seed, 1000)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Part = IDLmlPartition({train:80, test:20}, features, values)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; These should be 80% of the total</p>
+        <p class="Code">Print, n_elements(part.train.features)</p>
+        <p class="Code">Print, n_elements(part.train.values)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; These should be 20% of the total</p>
+        <p class="Code">Print, n_elements(part.test.features)</p>
+        <p class="Code">Print, n_elements(part.test.values)</p>
+        <p>&#160;</p>
+        <p>Example 2 splits two arrays into three groups, one with 60% of the elements, one with 30%, and one with 10%:</p>
+        <p class="Code">Features = randomu(seed, 3, 1000)</p>
+        <p class="Code">Values = randomu(seed, 1000)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Part = IDLmlPartition({a:0.6, b:0.3, c:0.1}, features, values)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; This should be 60% of the total</p>
+        <p class="Code">Print, n_elements(part.a.features)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; This should be 30% of the total</p>
+        <p class="Code">Print, n_elements(part.b.features)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; This should be 10% of the total</p>
+        <p class="Code">Print, n_elements(part.c.features)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; This should be 60% of the total</p>
+        <p class="Code">Print, n_elements(part.a.values)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; This should be 30% of the total</p>
+        <p class="Code">Print, n_elements(part.b.values)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; This should be 10% of the total</p>
+        <p class="Code">Print, n_elements(part.c.values)</p>
+        <p>&#160;</p>
+        <p>Example 3 splits two arrays into three groups of equal size:</p>
+        <p class="Code">Attributes = randomu(seed, 3, 1000)</p>
+        <p class="Code">Values = randomu(seed, 1000)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Part = IDLmlPartition({group1:1, group2:1, group3:1}, attributes, values)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; These should be 33.3% of the total</p>
+        <p class="Code">Print, n_elements(part.group1.attributes)</p>
+        <p class="Code">Print, n_elements(part.group2.attributes)</p>
+        <p class="Code">Print, n_elements(part.group3.attributes)</p>
+        <p class="Code">Print, n_elements(part.group1.values)</p>
+        <p class="Code">Print, n_elements(part.group2.values)</p>
+        <p class="Code">Print, n_elements(part.group3.values)</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLmlPartition(<i>Partitions</i>, <i>Features</i>, <i>Values</i> [, PARTITION_OFFSET=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>This function returns a dictionary of dictionaries, where the first level of keys is defined by the keys of the <i>Partitions</i> argument, and the second level of keys is defined by the names of the variables passed as arguments. For example, <code>partition = IDLmlPartition({a:60, b:30, c:10}, feats, vals)</code> will return a nested dictionary with the following keys: <code>partition.a.feats, partition.a.vals, partition.b.feats, partition.b.vals, partition.c.feats, and partition.c.vals</code>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Features</h3>
+        <p>Specify an array of features of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <p>If you pass in a scalar number for this argument, the function will return      the actual indices so you can do the partition yourself.</p>
+        <h3 class="Argument">Partitions</h3>
+        <p>Specify how to partition both features and values. You can use a structure, a dictionary, or an array of numbers. The number of keys in the definition will determine the number of partitions. The keys of the definition will determine the names of the partitions. The values of the definition will determine the relative sizes of the partitions. For example, <code>{train:0.8, test:0.2}</code> will split the dataset into two groups, one named ‘train’, the other named ‘test’, with a relative size of 80% and 20%, respectively.</p>
+        <h3 class="Argument">Values (optional)</h3>
+        <p>Specify an array of values of size <i>m</i>, where <i>m</i> is the number of examples.</p>
+        <p>If the <i>Features</i> argument is a scalar number, the <i>Values</i> argument is optional.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">PARTITION_OFFSET (optional)</h3>
+        <p>Set this keyword to return an array to the indices where the partitions are being made.</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLmlShuffle.htm">IDLmlShuffle</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_POLYREGRESS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_POLYREGRESS</span>
+        </div>
+        <h1 class="Routine">IMSL_POLYREGRESS</h1>
+        <p>The IMSL_POLYREGRESS function performs a polynomial least-squares regression.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_POLYREGRESS function computes estimates of the regression coefficients in a polynomial (curvilinear) regression model. In addition to the computation of the fit, IMSL_POLYREGRESS computes some summary statistics. Sequential sum of squares attributable to each power of the independent variable (returned by using Ssq_Poly) are computed. These are useful in assessing the importance of the higher order powers in the fit. Draper and Smith (1981, pp. 101–102) and Neter and Wasserman (1974, pp. 278–287) discuss the interpretation of the sequential sum of squares.</p>
+        <p>The statistic R2 is the percentage of the sum of squares of y about its mean explained by the polynomial curve. Specifically:</p>
+        <p>
+            <img src="images/IMSL_POLYREGRESS-066.jpg" />
+        </p>
+        <p>where <i>w</i><sub>i</sub> is the weight.</p>
+        <p>
+            <img src="images/IMSL_POLYREGRESS-067.jpg" />
+        </p>
+        <p>is the fitted y value at <i>x</i><sub>i</sub> and</p>
+        <p>
+            <img src="images/IMSL_POLYREGRESS-068.jpg" />
+        </p>
+        <p>is the mean of <i>y</i>. This statistic is useful in assessing the overall fit of the curve to the data. <i>R</i><sup>2</sup> must be between 0% and 100%, inclusive. <i>R</i><sup>2</sup> = 100% indicates a perfect fit to the data.</p>
+        <p>Estimates of the regression coefficients in a polynomial model are computed using orthogonal polynomials as the regressor variables. This reparameterization of the polynomial model in terms of orthogonal polynomials has the advantage that the loss of accuracy resulting from forming powers of the x-values is avoided. All results are returned to you for the original model (power form).</p>
+        <p>The IMSL_POLYREGRESS function is based on the algorithm of Forsythe (1957). A modification to Forsythe’s algorithm suggested by Shampine (1975) is used for computing the polynomial coefficients. A discussion of Forsythe’s algorithm and Shampine’s modification appears in Kennedy and Gentle (1980, pp. 342–347).</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>A polynomial model is fitted to data discussed by Neter and Wasserman (1974, pp. 279–285). The data set contains the response variable y measuring coffee sales (in hundred gallons) and the number of self-service coffee dispensers. Responses for fourteen similar cafeterias are in the data set. The results are shown the figure that follows.</p>
+        <p class="Code">x = [0, 0, 1, 1, 2, 2, 4, 4, 5, 5, 6, 6, 7, 7]</p>
+        <p class="Code">y = [508.1, 498.4, 568.2, 577.3, 651.7, 657.0, 755.3, 758.9, $</p>
+        <p class="Code_Indented">787.6, 792.1, 841.4, 831.8, 854.7, 871.4]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the data vectors. coefs = IMSL_POLYREGRESS(x, y, 2)</p>
+        <p class="Code">PM, Coefs, Title = 'Least-Squares Polynomial Coefficients'</p>
+        <p class="Code">Least-Squares Polynomial Coefficients</p>
+        <p class="Code_Indented">503.346</p>
+        <p class="Code_Indented">78.9413</p>
+        <p class="Code_Indented">-3.96949</p>
+        <p class="Code">x2 = 9 * FINDGEN(100)/99 - 1</p>
+        <p class="Code">PLOT, x2, coefs(0) + coefs(1) * x2 + coefs(2) * x2^2</p>
+        <p class="Code">OPLOT, x, y, Psym = 1</p>
+        <p>
+            <img src="images/regress03.gif" />
+        </p>
+        <h3>Example 2</h3>
+        <p>This example is a continuation of the initial example. Here, a procedure is called and defined to output the coefficients and analysis of variance table.</p>
+        <p class="Code">PRO print_results, coefs, anova_table</p>
+        <p class="Code">; The following procedure prints coefficients and the analysis of</p>
+        <p class="Code">; variance table.</p>
+        <p class="Code">coef_labels = ['intercept', 'linear', 'quadratic']</p>
+        <p class="Code">PM, coef_labels, coefs, Title = $</p>
+        <p class="Code_Indented">'Least-Squares Polynomial Coefficients',$</p>
+        <p class="Code_Indented">FORMAT = '(3a20, /,3f20.4, //)'</p>
+        <p class="Code">anova_labels = ['degrees of freedom for regression', $</p>
+        <p class="Code_Indented">'degrees of freedom for error', $</p>
+        <p class="Code_Indented">'total (corrected) degrees of freedom', $</p>
+        <p class="Code_Indented">'sum of squares for regression', $</p>
+        <p class="Code_Indented">'sum of squares for error', $</p>
+        <p class="Code_Indented">'total (corrected) sum of squares', $</p>
+        <p class="Code_Indented">'regression mean square', $</p>
+        <p class="Code_Indented">'error mean square', 'F-statistic', $</p>
+        <p class="Code_Indented">'p-value', 'R-squared (in percent)', $</p>
+        <p class="Code_Indented">'adjusted R-squared (in percent)', $</p>
+        <p class="Code_Indented">'est. standard deviation of model error', $</p>
+        <p class="Code_Indented">'overall mean of y', 'coefficient of variation (in percent)'] </p>
+        <p class="Code">FOR i = 0, 14 DO PM, anova_labels(i), $</p>
+        <p class="Code_Indented">anova_table(i), FORMAT = '(a40, f20.2)'</p>
+        <p class="Code">END</p>
+        <p class="Code">x = [0, 0, 1, 1, 2, 2, 4, 4, 5, 5, 6, 6, 7, 7]</p>
+        <p class="Code">y = [508.1, 498.4, 568.2, 577.3, 651.7, $</p>
+        <p class="Code_Indented">657.0, 755.3, 758.9, 787.6, 792.1, 841.4, 831.8, 854.7, 871.4]</p>
+        <p class="Code">; Define the data vectors.</p>
+        <p class="Code">Coefs = IMSL_POLYREGRESS(x, y, 2, Anova_Table = anova_table)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_POLYREGRESS with keyword Anova_Table. print_results, coefs, anova_table</p>
+        <p class="Code">; Call the procedure defined above to output the results.</p>
+        <p class="Code">Least-Squares Polynomial Coefficients</p>
+        <p class="Code">intercept	linear	quadratic</p>
+        <p class="Code">503.3459	78.9413	-3.9695</p>
+        <p>
+            <img src="images/IMSL_POLYREGRESS_Print1.png" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_CONSTANT_YVALUES: The y values are constant. A zero order polynomial is fit. High order coefficients are set to zero.</p>
+        <p>STAT_FEW_DISTINCT_XVALUES: There are too few distinct x values to fit the desired degree polynomial. High order coefficients are set to zero.</p>
+        <p>STAT_PERFECT_FIT: A perfect fit was obtained with a polynomial of degree less than degree. High order coefficients are set to zero.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_NONNEG_WEIGHT_REQUEST_2: All weights must be nonnegative.</p>
+        <p>STAT_ALL_OBSERVATIONS_MISSING: Each (x, y) point contains NaN. There are no valid data.</p>
+        <p>STAT_CONSTANT_XVALUES: The x values are constant.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_POLYREGRESS(<i>X, Y, Degree</i> [, <a href="#ANOVA_TABLE" class="selected">ANOVA_TABLE</a>=<i>variable</i>] [, <a href="#DF_PURE_ERROR" class="selected">DF_PURE_ERROR</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#PREDICT_INFO" class="selected">PREDICT_INFO</a>=<i>variable</i>] [, <a href="#RESIDUAL" class="selected">RESIDUAL</a>=<i>variable</i>] [, <a href="#SSQ_LOF" class="selected">SSQ_LOF</a>=<i>variable</i>] [, <a href="#SSQ_POLY" class="selected">SSQ_POLY</a>=<i>variable</i>] [, <a href="#SSQ_PURE_ERROR" class="selected">SSQ_PURE_ERROR</a>=<i>variable</i>] [, <a href="#WEIGHTS" class="selected">WEIGHTS</a>=<i>array</i>] [, <a href="#XMEAN" class="selected">XMEAN</a>=<i>variable</i>] [, <a href="#XVARIANCE" class="selected">XVARIANCE</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>An array of size degree + 1 containing the coefficients of the fitted polynomial.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Degree</h3>
+        <p>Degree of the polynomial.</p>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the independent variable.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array containing the dependent variable.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ANOVA_TABLE"></a>ANOVA_TABLE (optional)</h3>
+        <p>Named variable into which the analysis of variance table is stored. The analysis of variance statistics are as follows:</p>
+        <ul>
+            <li value="1">0: Degrees of freedom for the model</li>
+            <li value="2">1: Degrees of freedom for error</li>
+            <li value="3">2: Total (corrected) degrees of freedom</li>
+            <li value="4">3: Sum of squares for the model</li>
+            <li value="5">4: Sum of squares for error</li>
+            <li value="6">5: Total (corrected) sum of squares</li>
+            <li value="7">6: Model mean square</li>
+            <li value="8">7: Error mean square</li>
+            <li value="9">8: Overall <i>F</i>-statistic</li>
+            <li value="10">9: <i>p</i>-value</li>
+            <li value="11">10: R<sup>2</sup> (in percent)</li>
+            <li value="12">11: Adjusted R<sup>2</sup> (in percent)</li>
+            <li value="13">12: Estimate of the standard deviation</li>
+            <li value="14">13: Overall mean of <i>y</i></li>
+            <li value="15">14: Coefficient of variation (in percent)</li>
+        </ul>
+        <h3 class="Keyword"><a name="DF_PURE_ERROR"></a>DF_PURE_ERROR (optional)</h3>
+        <p>Named variable into which the degrees of freedom for pure error is stored.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="PREDICT_INFO"></a>PREDICT_INFO (optional)</h3>
+        <p>Named variable into which the one-dimensional byte array containing information needed by <a href="IMSL_POLYPREDICT.htm">IMSL_POLYPREDICT</a> is stored. The data contained in this array is in an encrypted format and should not be altered before it is used in subsequent calls to IMSL_POLYPREDICT.</p>
+        <h3 class="Keyword"><a name="RESIDUAL"></a>RESIDUAL (optional)</h3>
+        <p>Named variable into which the array containing the residuals is stored.</p>
+        <h3 class="Keyword"><a name="SSQ_LOF"></a>SSQ_LOF (optional)</h3>
+        <p>Named variable into which the array containing the lack-of-fit statistics is stored.</p>
+        <p>Elements (<i>i</i>, *) correspond to <i>x</i><sup> i+1</sup>, <i>i</i> = 0, ..., (<i>degree</i> – 1), and the contents of the array are described in the table that follows.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Element	</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>(<i>i</i>, 0)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>degrees of freedom</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>(<i>i</i>, 1)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>lack-of-fit sum of squares</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>(<i>i</i>, 2)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p><i>F</i>-statistic for testing lack-of-fit for a polynomial model of degree <i>i</i></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>(<i>i</i>, 3)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p><![CDATA[	]]><i>p</i>-value for the test</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="SSQ_POLY"></a>SSQ_POLY (optional)</h3>
+        <p>Named variable into which the array containing the sequential sum of squares and other statistics are stored.</p>
+        <p>Elements (<i>i</i>, *) correspond to <i>x</i><sup>i+1</sup>, <i>i</i> = 0, ..., (<i>degree</i> – 1), and the contents of the array are described in the table that follows:</p>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">Element	</th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>(<i>i</i>, 0)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>degrees of freedom</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>(<i>i</i>, 1)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>sum of squares</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>(<i>i</i>, 2)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p><i>F</i>-statistic</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>(<i>i</i>, 3)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p><![CDATA[	]]><i>p</i>-value</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="SSQ_PURE_ERROR"></a>SSQ_PURE_ERROR (optional)</h3>
+        <p>Named variable into which the sum of squares for pure error is stored.</p>
+        <h3 class="Keyword"><a name="WEIGHTS"></a>WEIGHTS (optional)</h3>
+        <p>Array containing the vector of weights for the observation. If this option is not specified, all observations have equal weights of 1.</p>
+        <h3 class="Keyword"><a name="XMEAN"></a>XMEAN (optional)</h3>
+        <p>Named variable into which the mean of <i>x</i> is stored.</p>
+        <h3 class="Keyword"><a name="XVARIANCE"></a>XVARIANCE (optional)</h3>
+        <p>Named variable into which the variance of <i>x</i> is stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_POLYPREDICT.htm">IMSL_POLYPREDICT</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

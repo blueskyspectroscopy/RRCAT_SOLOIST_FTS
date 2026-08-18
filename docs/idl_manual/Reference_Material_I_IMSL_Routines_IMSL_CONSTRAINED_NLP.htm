@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CONSTRAINED_NLP</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CONSTRAINED_NLP</span>
+        </div>
+        <h1 class="Routine">IMSL_CONSTRAINED_NLP</h1>
+        <p>The IMSL_CONSTRAINED_NLP function solves a general nonlinear programming problem using a sequential equality constrained quadratic programming method.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CONSTRAINED_NLP function provides an interface to a licensed version of subroutine DONLP2, a code developed by Peter Spellucci (1998). It uses a sequential equality constrained quadratic programming method with an active set technique, and an alternative usage of a fully regularized mixed constrained subproblem in case of nonregular constraints (for example, linear dependent gradients in the "working sets"). It uses a slightly modified version of the Pantoja-Mayne update for the Hessian of the Lagrangian, variable dual scaling and an improved Armjijo-type stepsize algorithm. Bounds on the variables are treated in a gradient-projection manner. Details may be found in the following two papers:</p>
+        <ul>
+            <li value="1">Spellucci, P. "An SQP Method for General Nonlinear Programs Using Only Equality Constrained Subproblems." <i>Mathematical Programming</i> 82 (1998): 413-448.</li>
+            <li value="2">Spellucci, P. "A New Technique for Inconsistent Problems in the SQP Method." <i>Mathematical Methods of Operations Research</i> 47 (1998): 355-500. Published by Physica Verlag, Heidelberg, Germany.</li>
+        </ul>
+        <p>The problem is stated as follows:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONSTRAINED_NLP-47.jpg" />
+        </p>
+        <p>subject to:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONSTRAINED_NLP-50.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONSTRAINED_NLP-53.jpg" />
+        </p>
+        <p class="indent">
+            <img src="images/IMSL_CONSTRAINED_NLP-54.jpg" />
+        </p>
+        <p>Although default values are provided for input keywords, it may be necessary to adjust these values for some problems. Through the use of keywords, IMSL_CONSTRAINED_NLP allows for several parameters of the algorithm to be adjusted to account for specific characteristics of problems. The DONLP2 <i>Users Guide</i> provides detailed descriptions of these parameters as well as strategies for maximizing the performance of the algorithm. The DONLP2 <i>Users Guide</i> is available in the <code>manuals</code> subdirectory of the main product installation directory. In addition, the following are guidelines to consider when using IMSL_CONSTRAINED_NLP.</p>
+        <ul>
+            <li value="1">A good initial starting point is very problem-specific and should be provided by the calling program whenever possible. For more details, see the keyword XGUESS.</li>
+            <li value="2">Gradient approximation methods can have an effect on the success of IMSL_CONSTRAINED_NLP. Selecting a higher order approximation method may be necessary for some problems. For more details, see the keyword DIFFTYPE.</li>
+            <li value="3">If a two-sided constraint:
+        
+        <p class="indent"><img src="images/IMSL_CONSTRAINED_NLP-55.jpg" /></p><p>is transformed into two constraints:</p><p class="indent"><img src="images/IMSL_CONSTRAINED_NLP-56.jpg" /></p><p>then choose:</p><p class="indent"><img src="images/IMSL_CONSTRAINED_NLP-57.jpg" /></p><p>Or at least try to provide an estimate for that value. This will increase the efficiency of the algorithm. For more details, see the keyword DEL0.</p></li>
+            <li value="4">The parameter <i>ierr</i> provided in the interface to the user supplied function <i>f</i> can be very useful in cases when evaluation is requested at a point that is not possible or reasonable. For example, if evaluation at the requested point would result in a floating point exception, then setting <i>ierr</i> to 1 and returning without performing the evaluation will avoid the exception. IMSL_CONSTRAINED_NLP will then reduce the stepsize and try the step again. Note, if <i>ierr</i> is set to 1 for the initial guess, then an error is issued.</li>
+        </ul>
+        <h2 class="API">Example</h2>
+        <p>The problem:</p>
+        <p class="indent"><i>min F(x) = (x<sub>1</sub> – 2)<sup>2</sup> + (x<sub>2</sub> – 1)<sup>2</sup></i>
+        </p>
+        <p>subject to:</p>
+        <p class="indent"><i>g<sub>1</sub>(x) = x<sub>1</sub> – 2x<sub>2</sub> + 1 = 0</i>
+        </p>
+        <p class="indent"><i>g</i><sub style="font-style: italic;">2</sub><i>(x) = – x</i><sup style="font-style: italic;">2</sup><i>/4 – x</i><sup style="font-style: italic;">2</sup><sub style="font-style: italic;">2</sub><i> + 1 ≥ 0</i>
+        </p>
+        <p>is solved first with finite difference gradients, then with analytic gradients.</p>
+        <p class="Code">PRO Nlp_grad, x, iact, result</p>
+        <p class="Code_Indented">CASE iact OF</p>
+        <p class="Code_Indented2">0:result = [ 2 * (x(0) - 2.), 2 * (x(1)-1.)]</p>
+        <p class="Code_Indented2">1:result = [1., -2. ]</p>
+        <p class="Code_Indented2">2:result = [-0.5*x(0), -2.0*x(1)]</p>
+        <p class="Code_Indented">ENDCASE</p>
+        <p class="Code_Indented">RETURN</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRO Nlp_fcn, x, iact, result, ierr</p>
+        <p class="Code_Indented">tmp1 = x(0)-2.</p>
+        <p class="Code_Indented">tmp2 = x(1) - 1.</p>
+        <p class="Code_Indented">CASE iact OF</p>
+        <p class="Code_Indented2">0:result = tmp1^2 + tmp2^2</p>
+        <p class="Code_Indented2">1:result = x(0) -2.*x(1) + 1.</p>
+        <p class="Code_Indented2">2:result = -(x(0)^2)/4. - x(1)^2 + 1.</p>
+        <p class="Code_Indented">ENDCASE</p>
+        <p class="Code_Indented">ierr = 0</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Ex #1, Finite difference gradients</p>
+        <p class="Code">ans1 = IMSL_CONSTRAINED_NLP('nlp_fcn', 2, 2, MEQ = 1)</p>
+        <p class="Code">PM, ans1, title='X with finite difference gradient'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Ex #2, Analytic gradients</p>
+        <p class="Code">ans2 = IMSL_CONSTRAINED_NLP('nlp_fcn', 2, 2, MEQ = 1, $ </p>
+        <p class="Code_Indented">GRAD = 'nlp_grad')</p>
+        <p class="Code">PM, ans2, title='X with Analytic gradient'</p>
+        <p>IDL prints:</p>
+        <p class="Code">X with finite difference gradient</p>
+        <p class="Code_Indented">0.822877</p>
+        <p class="Code_Indented">0.911439</p>
+        <p class="Code">X with Analytic gradient</p>
+        <p class="Code_Indented">0.822877</p>
+        <p class="Code_Indented">0.911438</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CONSTRAINED_NLP (<i>f</i>, <i>m</i>, <i>n</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DEL0" class="selected">DEL0</a>=<i>value</i>] [, <a href="#DELMIN" class="selected">DELMIN</a>=<i>string</i>] [, <a href="#DIFFTYPE" class="selected">DIFFTYPE</a>=<i>value</i>] [, <a href="#EPSDIF" class="selected">EPSDIF</a>=<i>value</i>] [, <a href="#EPSFCN" class="selected">EPSFCN</a>=<i>value</i>] [, <a href="#GRAD" class="selected">GRAD</a>=<i>value</i>] [, <a href="#IBTYPE" class="selected">IBTYPE</a>=<i>string</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#MEQ" class="selected">MEQ</a>=<i>value</i>] [, <a href="#OBJ" class="selected">OBJ</a>=<i>value</i>] [, <a href="#SCFMAX" class="selected">SCFMAX</a>=<i>string</i>] [, <a href="#SMALLW" class="selected">SMALLW</a>=<i>string</i>] [, <a href="#TAU0" class="selected">TAU0</a>=<i>value</i>] [, <a href="#TAUBND" class="selected">TAUBND</a>=<i>value</i>] [, <a href="#XGUESS" class="selected">XGUESS</a>=<i>array</i>] [, <a href="#XLB" class="selected">XLB</a>=<i>variable</i>] [, <a href="#XSCALE" class="selected">XSCALE</a>=vector] [, <a href="#XUB" class="selected">XUB</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The solution of the nonlinear programming problem.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">f</h3>
+        <p>Scalar string specifying a user-supplied procedure to evaluate the objective function and constraints at a given point. The input parameters are:</p>
+        <ul>
+            <li value="1"><i>x</i>: One dimensional array at which the objective function or a constraint is evaluated.</li>
+            <li value="2"><i>iact</i>: Integer indicating whether evaluation of the objective function is requested or evaluation of a constraint is requested. If <i>iact</i> is zero, then an objective function evaluation is requested. If <i>iact</i> is nonzero then the value of <i>iact</i> indicates the index of the constraint to evaluate.</li>
+            <li value="3"><i>result</i>: If <i>iact</i> is zero, then <i>Result</i> is the computed objective function at the point <i>x</i>. If <i>iact</i> is nonzero, then <i>Result</i> is the requested constraint value at the point <i>x</i>.</li>
+            <li value="4"><i>ierr</i>: Integer variable. On input, <i>ierr</i> is set to 0. If an error or other undesirable condition occurs during evaluation, then <i>ierr</i> should be set to 1. Setting <i>ierr</i> to 1 will result in the step size being reduced and the step being tried again. (If <i>ierr</i> is set to 1 for XGUESS, then an error is issued.)</li>
+        </ul>
+        <h3 class="Argument">m</h3>
+        <p>Total number of constraints.</p>
+        <h3 class="Argument">n</h3>
+        <p>Number of variables.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="DEL0"></a>DEL0 (optional)</h3>
+        <p>In the initial phase of minimization, a constraint is considered binding if:</p>
+        <p>
+            <img src="images/IMSL_CONSTRAINED_NLP-44.jpg" />
+        </p>
+        <p>Good values are between .01 and 1.0. If DEL0 is too small, then identification of the correct set of binding constraints may be delayed. Conversely, if DEL0 is too large, then the method will often escape to the full regularized SQP method. This method uses individual slack variables for any active constraint, which is quite costly. For well-scaled problems, DEL0 = 1.0 is reasonable. The default value is 0.5* <i>TAU0</i>.</p>
+        <h3 class="Keyword"><a name="DELMIN"></a>DELMIN (optional)</h3>
+        <p>Scalar which defines allowable constraint violations of the final accepted result. Constraints are satisfied if |g<sub>i</sub>(<i>x</i>)| is less than or equal to DELMIN, and g<sub>i</sub>(<i>x</i>) is greater than or equal to (-DELMIN), respectively. The default value is <i>min</i>(<i>DEL0</i>/10, <i>max</i>(<i>EPSDIF</i>, <i>min</i>(<i>DEL0</i>/10, <i>max</i>(1.E-6* <i>DEL0</i>, <i>SMALLW</i>)).</p>
+        <h3 class="Keyword"><a name="DIFFTYPE"></a>DIFFTYPE (optional)</h3>
+        <p>Type of numerical differentiation to be used. The default value is 1.</p>
+        <ul>
+            <li value="1">1: Use a forward difference quotient with discretization stepsize 0.1(<i>EPSFCN<sup>1/2</sup></i>) component-wise relative.</li>
+            <li value="2">2: Use the symmetric difference quotient with discretization stepsize 0.1(<i>EPSFCN<sup>1/3</sup></i>) component-wise relative.</li>
+            <li value="3">3: Use the sixth order approximation computing a Richardson extrapolation of three symmetric difference quotient values. This uses a discretization stepsize 0.01(<i>EPSFCN<sup>1/7</sup></i>).</li>
+        </ul>
+        <p>This keyword is not valid if the keyword GRAD is supplied.</p>
+        <h3 class="Keyword"><a name="EPSDIF"></a>EPSDIF (optional)</h3>
+        <p>Relative precision in gradients. The default value is the machine precision. This keyword is not valid if the keyword GRAD is supplied.</p>
+        <h3 class="Keyword"><a name="EPSFCN"></a>EPSFCN (optional)</h3>
+        <p>Relative precision of the function evaluation routine. The default value is the machine precision. This keyword is not valid if the keyword GRAD is supplied.</p>
+        <h3 class="Keyword"><a name="GRAD"></a>GRAD (optional)</h3>
+        <p>Scalar string specifying a user-supplied procedure to evaluate the gradients at a given point. The procedure specified by GRAD has the following parameters:</p>
+        <ul>
+            <li value="1"><i>x</i>: One dimensional array at which the gradient of the objective function or gradient of a constraint is evaluated.</li>
+            <li value="2"><i>iact</i>: Integer indicating whether evaluation of the gradient of the objective function is requested or evaluation of gradient of a constraint is requested. If <i>iact</i> is zero, then an objective function evaluation is requested. If <i>iact</i> is nonzero then the value if <i>iact</i> indicates the index of the constraint to evaluate.</li>
+            <li value="3"><i>result</i>: If <i>iact</i> is zero, then <i>Result</i> is the computed gradient of the objective function at the point <i>x</i>. If <i>iact</i> is nonzero, then <i>Result</i> is the gradient of the requested constraint value at the point <i>x</i>.</li>
+        </ul>
+        <h3 class="Keyword"><a name="IBTYPE"></a>IBTYPE (optional)</h3>
+        <p>Scalar indicating the types of bounds on variables.</p>
+        <ul>
+            <li value="1">0: User supplies all the bounds.</li>
+            <li value="2">1: All variables are non-negative.</li>
+            <li value="3">2: All variables are nonpositive.</li>
+            <li value="4">3: User supplies only the bounds on first variable; all other variables have the same bounds.</li>
+            <li value="5">Default: no bounds are enforced</li>
+        </ul>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum number of iterations allowed. The default value is 200.</p>
+        <h3 class="Keyword"><a name="MEQ"></a>MEQ (optional)</h3>
+        <p>Number of equality constraints. The default value is <i>m</i>.</p>
+        <h3 class="Keyword"><a name="OBJ"></a>OBJ (optional)</h3>
+        <p>Name of a variable into which a scalar containing the value of the objective function at the computed solution is stored.</p>
+        <h3 class="Keyword"><a name="SCFMAX"></a>SCFMAX (optional)</h3>
+        <p>Scalar containing the bound for the internal automatic scaling of the objective function. The default value is 1.0e4.</p>
+        <h3 class="Keyword"><a name="SMALLW"></a>SMALLW (optional)</h3>
+        <p>Scalar containing the error allowed in the multipliers. For example, a negative multiplier of an inequality constraint is accepted (as zero) if its absolute value is less than SMALLW. The default value is <i>exp</i>(2*<i>log</i>(<i>eps</i>/3)) where <i>eps</i> is the machine precision.</p>
+        <h3 class="Keyword"><a name="TAU0"></a>TAU0 (optional)</h3>
+        <p>A universal bound describing how much the unscaled penalty-term may deviate from zero. IMSL_CONSTRAINED_NLP assumes that within the region described by:</p>
+        <p class="indent">
+            <img src="images/IMSL_CONSTRAINED_NLP-45.jpg" />
+        </p>
+        <p>all functions may be evaluated safely. The initial guess, however, may violate these requirements. In that case, an initial feasibility improvement phase is run by IMSL_CONSTRAINED_NLP until such a point is found. A small TAU0 value diminishes the efficiency of IMSL_CONSTRAINED_NLP because the iterations will closely follow the boundary of the feasible set. Conversely, a large TAU0 value may degrade the reliability of the code. The default value is 1.0.</p>
+        <h3 class="Keyword"><a name="TAUBND"></a>TAUBND (optional)</h3>
+        <p>Amount by which bounds may be violated during numerical differentiation. Bounds are violated by TAUBND (at most) only if a variable is on a bound and finite differences are taken for gradient evaluations. This keyword is not valid if the keyword GRAD is supplied. The default value is 1.0.</p>
+        <h3 class="Keyword"><a name="XGUESS"></a>XGUESS (optional)</h3>
+        <p>Array with <i>n</i> components containing an initial guess of the computed solution. The default value is X, with the smallest value of ||X||<sub>2</sub>  that satisfies the bounds.</p>
+        <h3 class="Keyword"><a name="XLB"></a>XLB (optional)</h3>
+        <p>Named variable containing a one-dimensional array with <i>n</i> components, containing the lower bounds on the variables. (Input, if IBTYPE = 0; Output, if IBTYPE = 1 or 2; Input/Output, if IBTYPE = 3). If there is no lower bound on a variable, the corresponding XLB value should be set to negative machine infinity. The default is that no lower bounds are enforced on the variables.</p>
+        <h3 class="Keyword"><a name="XSCALE"></a>XSCALE (optional)</h3>
+        <p>Vector of length <i>n</i> setting the internal scaling of the variables. The initial value given and the objective function and gradient evaluations however are always in the original unscaled variables. The first internal variable is obtained by dividing values <i>x</i>(<i>I</i>) by XSCALE(<i>I</i>). This keyword is not valid if the keyword GRAD is supplied. In the absence of other information, set all entries to 1.0. Default: XSCALE(*) = 1.0.</p>
+        <h3 class="Keyword"><a name="XUB"></a>XUB (optional)</h3>
+        <p>Named variable containing a one-dimensional array with <i>n</i> components, containing the upper bounds on the variables. (Input, if IBTYPE = 0; Output, if IBTYPE = 1 or 2; Input/Output, if IBTYPE = 3). If there is no upper bound on a variable, the corresponding XUB value should be set to positive machine infinity. The default is that no upper bounds are enforced on variables.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDL_Integer</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I/I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDL_Integer Class</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor1516"></a><a name="IDL_Integer"></a>IDL_Integer</h1>
+        <p>The IDL_Integer class contains static methods that are available for integers. In addition, because IDL_Integer is a subclass of IDL_Number, all of the <a href="IDL_Number.htm">IDL_Number</a> and <a href="IDL_Variable.htm">IDL_Variable</a> methods are also available.</p>
+        <h2 class="API">Superclasses</h2>
+        <p><a href="IDL_Number.htm">IDL_Number</a>
+        </p>
+        <h3>IDL_Integer</h3>
+        <ul>
+            <li value="1"><a href="#BitLength" class="selected">BitLength</a>: Returns the number of bits in the current value, ignoring leading zero bits.</li>
+            <li value="2"><a href="#BitGet" class="selected">BitGet</a>: Returns the requested bit associated with the current value.</li>
+            <li value="3"><a href="#BitSet" class="selected">BitSet</a>: Returns a scalar or array of values after setting the bits on the current value.</li>
+            <li value="4"><a href="#BitShift" class="selected">BitShift</a>: Returns a scalar or array of values after shifting the bits on the current value.</li>
+            <li value="5"><a href="#ToASCII" class="selected">ToASCII</a>: Converts the current number to an ASCII string.</li>
+            <li value="6"><a href="#ToBinary" class="selected">ToBinary</a>: Converts the current number to a binary string.</li>
+            <li value="7"><a href="#ToHex" class="selected">ToHex</a>: Converts the current number to a hex string.</li>
+            <li value="8"><a href="#ToOctal" class="selected">ToOctal</a>: Converts the current number to an octal string.</li>
+        </ul>
+        <h1 class="ObjMethod"><a name="kanchor1517"></a><a name="BitLength"></a>IDL_Integer::BitLength</h1>
+        <p>The IDL_Integer::BitLength method returns the number of bits in the scalar or array, ignoring any leading zero bits. </p>
+        <h2 class="API">Examples</h2>
+        <p class="Code">num = [0, 1, 2, 7, 16385]</p>
+        <p class="Code">PRINT, num.BitLength( )</p>
+        <p>IDL prints:</p>
+        <p class="Code">0&#160; 1&#160; 2&#160; 3&#160; 15</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.BitLength(  )</p>
+        <h2 class="API">Return Value</h2>
+        <p>A scalar byte or a byte array of the same dimensions as the variable. Each element in the <i>Result</i> will contain the number of bits in the corresponding value.</p>
+        <h2 class="API">Arguments</h2>
+        <p>None.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None.</p>
+        <h1 class="ObjMethod"><a name="kanchor1518"></a><a name="BitGet"></a>IDL_Integer::BitGet</h1>
+        <p>The IDL_Integer::BitGet method returns a byte array of the variable.</p>
+        <h2 class="API">Examples</h2>
+        <p>Print the 3rd bit value of each element of an array:</p>
+        <p class="Code">num = INDGEN(8)</p>
+        <p class="Code">PRINT, num.BitGet(&#160;3 )</p>
+        <p>IDL prints:</p>
+        <p class="Code">0 0 0 0 1 1 1 1</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.BitGet( <i>Location</i> )</p>
+        <h2 class="API">Return Value</h2>
+        <p>A byte array containing the bit value of each element of the variable.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Location</h3>
+        <p>A scalar integer designating the location of the requested bit.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None.</p>
+        <h1 class="ObjMethod"><a name="kanchor1519"></a><a name="BitSet"></a>IDL_Integer::BitSet</h1>
+        <p>The IDL_Integer::BitSet method returns the variable after setting the bit or bit values.</p>
+        <h2 class="API">Examples</h2>
+        <p>Print the value of a variable after setting the bits on each element:</p>
+        <p class="Code">num = [0, 0, 0, 0]</p>
+        <p class="Code">PRINT, num.BitSet([1, 2, 3, 4])</p>
+        <p>IDL prints:</p>
+        <p class="Code">1 2 4 8</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.BitSet(  <i>Location</i> [, /CLEAR] [, /FLIP])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The scalar or array of values of the variable after their bits have been set.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Location</h3>
+        <p>The location of which bit to set.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">CLEAR</h3>
+        <p>Set this keyword to clear the bits specified by <i>Location</i>.</p>
+        <h3 class="Keyword">FLIP</h3>
+        <p>Set this keyword to flip the bits specified by <i>Location</i>.</p>
+        <h1 class="ObjMethod"><a name="kanchor1520"></a><a name="BitShift"></a>IDL_Integer::BitShift</h1>
+        <p>The IDL_Integer::BitShift method returns a scalar or array after a bit shift operation.</p>
+        <h2 class="API">Examples</h2>
+        <p>Print the value of a number after shifting the bit:</p>
+        <p class="Code">num = [1, 10, 100]</p>
+        <p class="Code">; [ShiftRightOnePosition, ShiftLeftFivePositions, NoShift]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">PRINT, num.BitShift( [-1, 5, 0] )</p>
+        <p class="Code">PRINT, num.BitShift(&#160;[-1, 5, 0], /CIRCULAR )</p>
+        <p>IDL prints:</p>
+        <p class="Code">0     320     100</p>
+        <p class="Code">-32768     320     100</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.BitShift( <i>Direction</i> [, /CIRCULAR] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>The value of the scalar or array after the bit shift operation.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Direction</h3>
+        <p>A scalar or array containing the number of bit positions and the direction of the shift.</p>
+        <p>If the element of <i>Direction</i> is positive, the related element of the array is left-shifted that many bit positions, with 0 bits filling vacated positions.</p>
+        <p>If the element of <i>Direction</i> is negative, the related element of the array is right-shifted that many bit positions, with 0 bits filling vacated positions.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">CIRCULAR</h3>
+        <p>Set this keyword to  shift the number circularly (i.e., shifting right a value of 1 would return -32768).</p>
+        <h1 class="ObjMethod"><a name="kanchor1521"></a><a name="ToASCII"></a>IDL_Integer::ToASCII</h1>
+        <p>The IDL_Integer::ToASCII method returns a string containing the ASCII representation of a number or array of numbers.</p>
+        <h2 class="API">Examples</h2>
+        <p>Print the ASCII string value of an array:</p>
+        <p class="Code">num = [72, 101, 108, 108, 111]</p>
+        <p class="Code">PRINT, num.ToASCII(&#160;)</p>
+        <p>IDL prints:</p>
+        <p class="Code">Hello</p>
+        <p>Print the ASCII string values of a two-dimensional array:</p>
+        <p class="Code">num = [[73,68,76], $</p>
+        <p class="Code_Indented2">[105,115,32], $</p>
+        <p class="Code_Indented2">[102,117,110]]</p>
+        <p class="Code">HELP, num.ToASCII(&#160;)</p>
+        <p class="Code">PRINT, num.ToASCII(&#160;), /IMPLIED</p>
+        <p>IDL prints:</p>
+        <p class="Code">&lt;Expression&gt;    STRING    = Array[3]</p>
+        <p class="Code">IDL</p>
+        <p class="Code">is</p>
+        <p class="Code">fun</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.ToASCII(  )</p>
+        <h2 class="API">Return Value</h2>
+        <p>A scalar string or string array containing the ASCII values.</p>
+        <p>If <i>var</i> is a scalar or 1-dimensional array then the result will be a scalar string with all of the ASCII characters concatenated together. If <i>var</i> is a multi-dimensional array then the result will be a string array of one less dimension, where the characters in the first dimension have been concatenated (see the examples above).</p>
+        <h2 class="API">Arguments</h2>
+        <p>None.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None.</p>
+        <h1 class="ObjMethod"><a name="kanchor1522"></a><a name="ToBinary"></a>IDL_Integer::ToBinary</h1>
+        <p>The IDL_Integer::ToBinary method returns a string containing the binary representation of the number.</p>
+        <h2 class="API">Examples</h2>
+        <p>Print the hex value of a number:</p>
+        <p class="Code">num = [65385, 976]</p>
+        <p class="Code">PRINT, num.ToBinary( ), /IMPLIED</p>
+        <p class="Code">PRINT, num.ToBinary( WIDTH=16 ), /IMPLIED</p>
+        <p>IDL prints:</p>
+        <p class="Code">1111111101101001</p>
+        <p class="Code">1111010000</p>
+        <p class="Code">1111111101101001</p>
+        <p class="Code">0000001111010000</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.ToBinary(  [WIDTH=<i>value</i>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>A scalar string or string array containing the binary representation. If <i>var</i> is an array then the result will be a string array of the same dimensions as the input.</p>
+        <h2 class="API">Arguments</h2>
+        <p>None.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">WIDTH</h3>
+        <p>Set the WIDTH to an integer in the range 0–255 indicating the number of digits in the result.  If the binary representation is smaller than the width, then the result will be padded with 0's at the front. If WIDTH=0 or is not specified, then no zero padding is used.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If the binary representation is larger than the width, then the result will be filled with asterisks (*) instead of the number.</p>
+        <h1 class="ObjMethod"><a name="kanchor1523"></a><a name="ToHex"></a>IDL_Integer::ToHex</h1>
+        <p>The IDL_Integer::ToHex method returns a string containing the hex value of the number.</p>
+        <h2 class="API">Examples</h2>
+        <p>Print the hex value of a number:</p>
+        <p class="Code">num = [65385, 976]</p>
+        <p class="Code">PRINT, num.ToHex( ), /IMPLIED</p>
+        <p class="Code">PRINT, num.ToHex( WIDTH=8 ), /IMPLIED</p>
+        <p>IDL prints:</p>
+        <p class="Code">FF69</p>
+        <p class="Code">3D0</p>
+        <p class="Code">0000FF69</p>
+        <p class="Code">000003D0</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.ToHex(   [/LOWER] [, WIDTH=<i>value</i>]  )</p>
+        <h2 class="API">Return Value</h2>
+        <p>A scalar string or string array containing the hex values. If <i>var</i> is an array then the result will be a string array of the same dimensions as the input.</p>
+        <h2 class="API">Arguments</h2>
+        <p>None.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">LOWER</h3>
+        <p>Set this keyword to use lowercase characters for the hexadecimal digits. The default is uppercase characters.</p>
+        <h3 class="Keyword">WIDTH</h3>
+        <p>Set the WIDTH to an integer in the range 0–255 indicating the number of digits in the result.  If the hex representation is smaller than the width, then the result will be padded with 0's at the front. If WIDTH=0 or is not specified, then no zero padding is used.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If the hex representation is larger than the width, then the result will be filled with asterisks (*) instead of the number.</p>
+        <h1 class="ObjMethod"><a name="kanchor1524"></a><a name="ToOctal"></a>IDL_Integer::ToOctal</h1>
+        <p>The IDL_Integer::ToOctal method returns a string containing the octal value of the number.</p>
+        <h2 class="API">Examples</h2>
+        <p>Print the octal value of a number:</p>
+        <p class="Code">num = [65385, 976]</p>
+        <p class="Code">PRINT, num.ToOctal( ), /IMPLIED</p>
+        <p class="Code">PRINT, num.ToOctal( WIDTH=8 ), /IMPLIED</p>
+        <p>IDL prints:</p>
+        <p class="Code">177551</p>
+        <p class="Code">1720</p>
+        <p class="Code">00177551</p>
+        <p class="Code">00001720</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = var.ToOctal(    [WIDTH=<i>value</i>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>A scalar string or string array containing the octal values. If <i>var</i> is an array then the result will be a string array of the same dimensions as the input.</p>
+        <h2 class="API">Arguments</h2>
+        <p>None.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">WIDTH</h3>
+        <p>Set the WIDTH to an integer in the range 0–255 indicating the number of digits in the result.  If the octal representation is smaller than the width, then the result will be padded with 0's at the front. If WIDTH=0 or is not specified, then no zero padding is used.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If the octal representation is larger than the width, then the result will be filled with asterisks (*) instead of the number.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>8.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.6</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Add WIDTH keyword to ToBinary and ToOctal. Add LOWER and WIDTH keywords to ToHex.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../Functional List of IDL Routines/Variable_Functions_List.htm">Static Methods and Attributes</a>, <a href="Variable Attributes.htm">Variable Attributes</a>, <a href="IDL_Number.htm">IDL_Number</a>, <a href="IDL_Pointer.htm">IDL_Pointer</a>, <a href="IDL_String.htm">IDL_String</a>, <a href="IDL_Variable.htm#IDL_Variable">IDL_Variable</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

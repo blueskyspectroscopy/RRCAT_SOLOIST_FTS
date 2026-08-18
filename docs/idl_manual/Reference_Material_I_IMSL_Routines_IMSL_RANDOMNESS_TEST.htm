@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_RANDOMNESS_TEST</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_RANDOMNESS_TEST</span>
+        </div>
+        <h1 class="Routine">IMSL_RANDOMNESS_TEST</h1>
+        <p>The IMSL_RANDOMNESS_TEST function performs a test for randomness.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <h3>Runs Up Test</h3>
+        <p>The IMSL_RANDOMNESS_TEST function performs one of four different tests for randomness. Input keyword Runs_Counts computes statistics for the runs up test. Runs tests are used to test for cyclical trend in sequences of random numbers. If the runs down test is desired, each observation should first be multiplied by –1 to change its sign, and Runs_Counts used with the modified vector of observations.</p>
+        <p>Runs_Counts first tallies the number of runs up (increasing sequences) of each desired length. For i = 1, ..., r – 1, where <i>r</i> = <i>N_Run</i>, RUNS_COUNTS(<i>i</i>) contains the number of runs of length i. RUNS_COUNTS(<i>N_Run</i>) contains the number of runs of length <i>N_Run</i> or greater. As an example of how runs are counted, the sequence (1, 2, 3, 1) contains 1 run up of length 3, and one run up of length 1.</p>
+        <p>After tallying the number of runs up of each length, RUNS_COUNTS computes the expected values and the covariances of the counts according to methods given by Knuth (1981, pages 65(67). Let <i>R</i> denote a vector of length <i>N_Run</i> containing the number of runs of each length so that the <i>i</i>-th element of R, ri, contains the count of the runs of length i. Let ΣR denote the covariance matrix of R under the null hypothesis of randomness, and let µR denote the vector of expected values for R under this null hypothesis, then an approximate chi-squared statistic with <i>N_Run</i> degrees of freedom is given as:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST-17.jpg" />
+        </p>
+        <p>In general, the larger the value of each element of µR, the better the chi-squared approximation.</p>
+        <h3>Pairs Test</h3>
+        <p>Pairs_Counts computes the pairs test (or the Good’s serial test) on a hypothesized sequence of uniform (0,1) pseudorandom numbers. The test proceeds as follows. Subsequent pairs (X(i), X(i + Pairs_Lag)) are tallied into a k x k matrix, where <i>k</i> = <i>N_Run</i>. In this tally, element (<i>j, m</i>) of the matrix is incremented, where:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST-18.jpg" />
+        </p>
+        <p>where l = Pairs_Lag, and the notation	represents the greatest integer function, Y    is the greatest integer less than or equal to Y, where Y is a real number. If l = 1, then i = 1, 3, 5, ..., n – 1. If l &gt; 1, then i = 1, 2, 3, ..., n – l, where n is the total number of pseudorandom numbers input on the current usage of Pairs_Counts (i.e., n = N_ELEMENTS(x)).</p>
+        <p>Given the tally matrix in Pairs_Counts, chi-squared is computed as:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST-21.jpg" />
+        </p>
+        <p>where e = Σoij/k2, and oij is the observed count in cell (i, j) (oij = Pairs_Counts (i, j)). Because pair statistics for the trailing observations are not tallied on any call, You should use Pairs_Counts with N_ELEMENTS(x) as large as possible. For Pairs_Lag &lt; 20 and N_ELEMENTS(x) = 2000, little power is lost.</p>
+        <h3>d<sup>2</sup> Test</h3>
+        <p>DSQUARE_COUNTS computes the d2 test for succeeding quadruples of hypothesized pseudorandom uniform (0, 1) deviates. The d2 test is performed as follows. Let X1, X2, X3, and X4 denote four pseudorandom uniform deviates, and consider:</p>
+        <p>D2 = (X3 – X1)2 + (X4 – X2)2</p>
+        <p>The probability distribution of D2 is given as:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST-22.jpg" />
+        </p>
+        <p>when D2 ≤1, where π denotes the value of pi. If D2 &gt; 1, this probability is given as:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST-23.jpg" />
+        </p>
+        <p>See Gruenberger and Mark (1951) for a derivation of this distribution.</p>
+        <p>&#160;</p>
+        <p>For each succeeding set of 4 pseudorandom uniform numbers input in x, d2 and the cumulative probability of d2 (Pr(D2 ≤ d2)) are computed. The resulting probability is tallied into one of <i>k</i> = <i>N_Run</i> equally spaced intervals.</p>
+        <p>Let n denote the number of sets of four random numbers input (n = the total number of observations/4). Then, under the null hypothesis that the numbers input are random uniform (0, 1) numbers, the expected value for each element in DSQUARE_COUNTS is e = n/k. An approximate chi-squared statistic is computed as:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST-24.jpg" />
+        </p>
+        <p>where oi = DSQUARE_COUNTS(<i>i</i>) is the observed count. Thus, χ2 has k – 1 degrees of freedom, and the null hypothesis of pseudorandom uniform (0, 1) deviates is rejected if χ2 is too large. As n increases, the chi-squared approximation becomes better. A useful generalization is that e &gt; 5 yields a good chi-squared approximation.</p>
+        <h3>Triplets Test</h3>
+        <p>DCUBE_COUNTS computes the triplets test on a sequence of hypothesized pseudorandom uniform(0, 1) deviates. The triplets test is computed as follows: Each set of three successive deviates, X1, X2, and X3, is tallied into one of m3 equal sized</p>
+        <p>cubes, where <i>m</i> = <i>N_Run</i>. Let i = [mX1] + 1, j = [mX2] + 1, and k = [mX3] + 1. For the</p>
+        <p>triplet (X1, X2, X3), DCUBE_COUNTS(<i>i, j, k</i>) is incremented.</p>
+        <p>Under the null hypothesis of pseudorandom uniform(0, 1) deviates, the m3 cells are equally probable and each has expected value e = n/m3, where n is the number of triplets tallied. An approximate chi-squared statistic is computed as:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST-25.jpg" />
+        </p>
+        <p>where <i>o</i><sub>ijk</sub> = DCUBE_COUNTS(<i>i, j, k</i>).</p>
+        <p>The computed chi-squared has m3– 1 degrees of freedom, and the null hypothesis of pseudorandom uniform (0, 1) deviates is rejected if χ2 is too large.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The following example illustrates the use of the runs test on 104 pseudo-random uniform deviates. In the example, 2000 deviates are generated for each use of RUNS_COUNTS. Since the probability of a larger chi-squared statistic is 0.1872, there is no strong evidence to support rejection of this null hypothesis of randomness.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, n_run, num, rc, re, cov, chisq, df, p</p>
+        <p class="Code_Indented">PRINT, '&#160;&#160;runs_count' </p>
+        <p class="Code_Indented">PRINT, num + 1, FORMAT = '(6I5)' </p>
+        <p class="Code_Indented">PRINT, rc, FORMAT = '(6I5)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, '&#160;&#160;&#160;&#160;runs_expect' </p>
+        <p class="Code_Indented">PRINT, num + 1, FORMAT = '(6I7)' </p>
+        <p class="Code_Indented">PRINT, re, FORMAT = '(6F7.1)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, '&#160;&#160;&#160;&#160;covariances' </p>
+        <p class="Code_Indented">PRINT, num + 1, FORMAT = '(7X, 6I8)'</p>
+        <p class="Code_Indented">FOR i	=	0, n_run - 1 DO $</p>
+        <p class="Code_Indented">PRINT, num(i) + 1, cov(i, *), FORMAT = '(I8, 6F8.1)' PRINT</p>
+        <p class="Code_Indented">PRINT, 'chisq	=', chisq PRINT, 'df	=', df PRINT, 'pvalue =', p</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">nran	=	10000 n_run	 =		6</p>
+        <p class="Code">num	=	INDGEN(n_run)</p>
+        <p class="Code">IMSL_RANDOMOPT, set	=	123457</p>
+        <p class="Code">x	=	IMSL_RANDOM(nran, /Uniform)</p>
+        <p class="Code">p	=	IMSL_RANDOMNESS_TEST(x, n_run, Runs_Counts = rc, $</p>
+        <p class="Code_Indented">Covariances = cov, Chisq = chisq, Df = df, Runs_Expect = re)</p>
+        <p class="Code">print_results, n_run, num, rc,re,cov,chisq, df, p</p>
+        <p>Result:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST_print1.png" />
+        </p>
+        <h3>Example 2</h3>
+        <p>The following example illustrates the calculations of the Pairs_Counts statistics when a random sample of size 104 is used and the Pairs_Lag is 1. The results are not significant.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, n_run, num, pc, expect, chisq, df, p</p>
+        <p class="Code_Indented">PRINT, '&#160;&#160;&#160;&#160;&#160;pairs_count'</p>
+        <p class="Code_Indented">PRINT, num + 1, FORMAT = '(5X, 10I5)'</p>
+        <p class="Code_Indented">FOR i	=	0, n_run - 1 DO $</p>
+        <p class="Code_Indented2">PRINT, num(i) + 1, pc(i, *), FORMAT = '(I5, 10I5)' PRINT</p>
+        <p class="Code_Indented">PRINT, 'expect	=', expect</p>
+        <p class="Code_Indented">PRINT, 'chisq	=', chisq</p>
+        <p class="Code_Indented">PRINT, 'df	=', df</p>
+        <p class="Code_Indented">PRINT, 'pvalue	=', p</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">nran	=	10000 n_run	 =		10</p>
+        <p class="Code">num	=	INDGEN(n_run)</p>
+        <p class="Code">lag	=	5</p>
+        <p class="Code">IMSL_RANDOMOPT, set	=	123467</p>
+        <p class="Code">x	=	IMSL_RANDOM(nran, /Uniform)</p>
+        <p class="Code">p	=	IMSL_RANDOMNESS_TEST(x, n_run, Pairs_Counts = pc, $</p>
+        <p class="Code_Indented">Pairs_Lag = lag, Chisq = chisq, $</p>
+        <p class="Code_Indented">Df = df, Expect = expect)</p>
+        <p class="Code">print_results, n_run, num, pc, expect, chisq, df, p</p>
+        <p>Result:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST_print2.png" />
+        </p>
+        <h3>Example 3</h3>
+        <p>In the following example, 2000 observations generated using the routine IMSL_RANDOM are input to DSQUARE_COUNTS in one call. In the example, the null hypothesis of a uniform distribution is not rejected.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, n_run, num, dc, expect, chisq, df, p</p>
+        <p class="Code_Indented">PRINT, '&#160;&#160;&#160;&#160;&#160;dsquare_counts'</p>
+        <p class="Code_Indented">PRINT, num + 1, FORMAT = '(6I5)'</p>
+        <p class="Code_Indented">PRINT, dc, FORMAT = '(6I5)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, 'expect	=', expect</p>
+        <p class="Code_Indented">PRINT, 'chisq	=', chisq</p>
+        <p class="Code_Indented">PRINT, 'df	=', df</p>
+        <p class="Code_Indented">PRINT, 'pvalue	=', p</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">nran	=	2000 n_run	 =		6</p>
+        <p class="Code">num	=	INDGEN(n_run) IMSL_RANDOMOPT, set	=	123457</p>
+        <p class="Code">x	=	IMSL_RANDOM(nran, /Uniform)</p>
+        <p class="Code">p	=	IMSL_RANDOMNESS_TEST(x, n_run, Chisq = chisq, Df = df, $</p>
+        <p class="Code_Indented">Expect = expect, Dsquare_Counts = dc)</p>
+        <p class="Code">print_results, n_run, num, dc, expect, chisq, df, p</p>
+        <p>Result:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST_print3.png" />
+        </p>
+        <h3>Example 4</h3>
+        <p>In the following example, 2001 deviates generated by the routine IMSL_RANDOM are input to DCUBE_COUNTS, and tabulated in 27 equally sized cubes. In the example, the null hypothesis is not rejected.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, n_run, num, dc, expect, chisq, df, p</p>
+        <p class="Code_Indented">FOR j	=	0, n_run - 1 DO BEGIN</p>
+        <p class="Code_Indented2">PRINT, ' dcube_counts'</p>
+        <p class="Code_Indented2">PRINT, num + 1, FORMAT = '(5X, 3I5)'</p>
+        <p class="Code_Indented">FOR i	=	0, n_run - 1 DO $</p>
+        <p class="Code_Indented2">PRINT, num(i) + 1, dc(j, i, *), FORMAT = '(I5, 3I5)'</p>
+        <p class="Code_Indented3">PRINT</p>
+        <p class="Code_Indented">ENDFOR</p>
+        <p class="Code_Indented">PRINT, 'expect =', expect PRINT, 'chisq	=', chisq PRINT, 'df	=', df PRINT, 'pvalue =', p</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">nran	=	2001 n_run	 =		3</p>
+        <p class="Code">num	=	INDGEN(n_run)</p>
+        <p class="Code">IMSL_RANDOMOPT, set	=	123457</p>
+        <p class="Code">x	=	IMSL_RANDOM(nran, /Uniform)</p>
+        <p class="Code">p	=	IMSL_RANDOMNESS_TEST(x, n_run, Chisq = chisq, Df = df, $</p>
+        <p class="Code_Indented">Expect = expect, Dcube_Counts = dc)</p>
+        <p class="Code">print_results, n_run, num, dc, expect, chisq, df, p</p>
+        <p>Result:</p>
+        <p>
+            <img src="images/IMSL_RANDOMNESS_TEST_print4.png" />
+        </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_RANDOMNESS_TEST(<i>X, N_Run</i> [, <a href="#COVARIANCES" class="selected">COVARIANCES</a>=<i>variable</i>] [, <a href="#DCUBE_COUNTS" class="selected">DCUBE_COUNTS</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DSQUARE_COUNTS" class="selected">DSQUARE_COUNTS</a>=<i>variable</i>] [, <a href="#EXPECT" class="selected">EXPECT</a>=<i>variable</i>] [, <a href="#PAIRS_COUNTS" class="selected">PAIRS_COUNTS</a>=<i>variable</i>] [, <a href="#PAIRS_LAG" class="selected">PAIRS_LAG</a>=<i>value</i>] [, <a href="#RUNS_COUNTS" class="selected">RUNS_COUNTS</a>=<i>variable</i>] [, <a href="#RUNS_EXPECT" class="selected">RUNS_EXPECT</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The probability of a larger chi-squared statistic for testing the null hypothesis of a uniform distribution.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N_Run</h3>
+        <p>Length of longest run for which tabulation is desired. For keywords PAIRS_COUNTS, DSQUARE_COUNTS, and DCUBE_COUNTS, <i>N_Run</i> stands for the number of equiprobable cells into which the statistics are to be tabulated.</p>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the data.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="COVARIANCES"></a>COVARIANCES (optional)</h3>
+        <p>Named variable into which an array of size N_ELEMENTS(<i>x</i>) by N_ELEMENTS(<i>x</i>) containing the variances and covariances of the counts is stored. The keywords RUNS_COUNTS and COVARIANCES must be used together.</p>
+        <p>Use one of the options listed below to specify which test is to perform.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Keyword</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Test to Perform</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>RUNS_COUNTS with COVARIANCES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Runs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>PAIRS_COUNTS with PAIRS_LAG </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Pairs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>DSQUARE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>d<sup>2</sup> Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>DCUBE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Triplets Test</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="DCUBE_COUNTS"></a>DCUBE_COUNTS (optional)</h3>
+        <p>Named variable into which an array of length <i>N_Run</i> by <i>N_Run</i> by <i>N_Run</i> containing the tabulations for the triplets test is stored. The keywords RUNS_COUNTS, PAIRS_COUNTS, DSQUARE_COUNTS, and DCUBE_COUNTS cannot be used together.</p>
+        <p><i>Chisq</i>: Named variable into which the Chi-squared statistic for testing the null hypothesis of a uniform distribution is stored.</p>
+        <p><i>Df</i>: Named variable into which the degrees of freedom for chi-squared is stored.</p>
+        <p>Use one of the options listed below to specify which test is to perform.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Keyword</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Test to Perform</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>RUNS_COUNTS with COVARIANCES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Runs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>PAIRS_COUNTS with PAIRS_LAG </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Pairs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>DSQUARE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>d<sup>2</sup> Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>DCUBE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Triplets Test</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="DSQUARE_COUNTS"></a>DSQUARE_COUNTS (optional)</h3>
+        <p>Named variable into which an array of length <i>N_Run</i> containing the tabulations for the d<sup>2</sup> test is stored. The keywords DSQUARE_COUNTS, RUNS_COUNTS, PAIRS_COUNTS, and DCUBE_COUNTS cannot be used together.</p>
+        <p>Use one of the options listed below to specify which test is to perform.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Keyword</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Test to Perform</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>RUNS_COUNTS with COVARIANCES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Runs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>PAIRS_COUNTS with PAIRS_LAG </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Pairs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>DSQUARE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>d<sup>2</sup> Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>DCUBE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Triplets Test</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="EXPECT"></a>EXPECT (optional)</h3>
+        <p>Named variable into which the expected number of counts for each cell is stored. This keyword is optional only if one of the keywords PAIRS_COUNTS, DSQUARE_COUNTS, or DCUBE_COUNTS is used. The keywords RUNS_COUNTS and EXPECT cannot be used together.</p>
+        <h3 class="Keyword"><a name="PAIRS_COUNTS"></a>PAIRS_COUNTS (optional)</h3>
+        <p>Named variable into which an array of size <i>N_Run</i> by <i>N_Run</i> containing the count of the number of pairs in each cell is stored. The lag to be used in computing the pairs statistic is stored in PAIRS_LAG. PAIRS (X(<i>i</i>), X(<i>i</i> + PAIRS_LAG)) for <i>i</i> = 0, ..., <i>N</i> – PAIRS_LAG – 1 are tabulated, where <i>N</i> is the total sample size. The keywords RUNS_COUNTS, PAIRS_COUNTS, DSQUARE_COUNTS, and DCUBE_COUNTS cannot be used together.</p>
+        <p>Use one of the options listed below to specify which test is to perform.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Keyword</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Test to Perform</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>RUNS_COUNTS with COVARIANCES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Runs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>PAIRS_COUNTS with PAIRS_LAG </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Pairs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>DSQUARE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>d<sup>2</sup> Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>DCUBE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Triplets Test</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="PAIRS_LAG"></a>PAIRS_LAG (optional)</h3>
+        <p>The lag to be used in computing the pairs statistic. The keywords PAIRS_LAG and PAIRS_COUNTS must be used together.</p>
+        <h3 class="Keyword"><a name="RUNS_COUNTS"></a>RUNS_COUNTS (optional)</h3>
+        <p>Named variable into which an array of size N_ELEMENTS(<i>x</i>) containing the counts of the number of runs up each length is stored. The Runs Test is the default test to return the counts and covariances; the RUNS_COUNTS keyword must be used, and RUNS_COUNTS and COVARIANCES must be used together. The keywords RUNS_COUNTS, PAIRS_COUNTS, DSQUARE_COUNTS, and DCUBE_COUNTS cannot be used together.</p>
+        <p>Use one of the options listed below to specify which test is to perform.</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Keyword</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Test to Perform</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>RUNS_COUNTS with COVARIANCES</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Runs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>PAIRS_COUNTS with PAIRS_LAG </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Pairs Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>DSQUARE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>d<sup>2</sup> Test</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>DCUBE_COUNTS</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Triplets Test</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="Keyword"><a name="RUNS_EXPECT"></a>RUNS_EXPECT (optional)</h3>
+        <p>Named variable into which an array of length <i>N_Run</i> containing the expected number of runs of each length is expected is stored. This keyword is optional if RUNS_COUNTS is used.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_RANDOM.htm">IMSL_RANDOM</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IDLml Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLmlTestClassifier</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IDLml Routines.htm">IDLml Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLmlTestClassifier</span>
+        </div>
+        <h1 class="ObjClass">IDLmlTestClassifier</h1>
+        <p>The IDLmlTestClassifier function computes a confusion matrix and other metrics that indicate how well a model trained as a classifier performed against the test data.</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">read_seeds_example_data, data, labels, $</p>
+        <p class="Code_Indented"> N_ATTRIBUTES=nAttributes, N_EXAMPLES=nExamples, $</p>
+        <p class="Code_Indented"> N_LABELS=nLabels, UNIQUE_LABELS=uniqueLabels</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">IDLmlShuffle, data, labels</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Normalizer = IDLmlVarianceNormalizer(data)</p>
+        <p class="Code">Normalizer.Normalize, data</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Part = IDLmlPartition({train:80, test:20}, data, labels)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Classifier = IDLmlSoftmax(nAttributes, uniqueLabels)</p>
+        <p class="Code">For i=0, 100 do loss = Classifier.Train(part.train['data'], $</p>
+        <p class="Code_Indented">LABELS=part.train['labels'])</p>
+        <p class="Code">confMatrix= IDLmlTestClassifier(Classifier, part.test['data'], $</p>
+        <p class="Code_Indented">part.test['labels'], ACCURACY=accuracy)</p>
+        <p class="Code">Print, 'Model accuracy:', accuracy </p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLmlTestClassifier(<i>Model</i>, <i>Features</i>, <i>Labels</i> [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Model</h3>
+        <p>An object that inherits IDLmlModel and has been trained to classify data.</p>
+        <h3 class="Argument">Features</h3>
+        <p>Specify an array of features of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <h3 class="Argument">Labels</h3>
+        <p>An array of size <i>m</i>, where <i>m</i> is the number of examples containing the actual labels associated with the features.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">ACCURACY (optional)</h3>
+        <p>Set this keyword to a variable that will contain the overall accuracy of the confusion matrix. The overall accuracy is calculated by  summing the number of correctly classified values and dividing by the total number of values. The correctly classified values are located along the upper-left to lower-right diagonal of the confusion matrix. The total number of values is the number of values in either the truth or predicted-value arrays.</p>
+        <h3 class="Keyword">COLUMN_TOTALS (optional)</h3>
+        <p>Set this keyword to a variable that will contain the column totals in the confusion matrix, which corresponds to the number of truth values in each class.</p>
+        <h3 class="Keyword">COMMISSION (optional)</h3>
+        <p>Set this keyword to a variable that will contain the errors of commission from the confusion matrix. Errors of commission represent the fraction of values that were predicted to be in a class but do not belong to that class. They are a measure of false positives. Errors of commission are shown in the rows of the confusion matrix, except for the values along the diagonal. The result is an array with one value per class.</p>
+        <h3 class="Keyword">F1 (optional)</h3>
+        <p>Set this keyword to a variable that will contain the F1 score, which is the harmonic mean of the Precision and Recall values.</p>
+        <h3 class="Keyword">KAPPA (optional)</h3>
+        <p>Set this keyword to a variable that will contain the kappa coefficient. The kappa coefficient measures the agreement between classification and truth values. A kappa value of 1 represents perfect agreement, while a value of 0 represents no agreement.</p>
+        <h3 class="Keyword">OMISSION (optional)</h3>
+        <p>Set this keyword to a variable that will contain the errors of omission. Errors of omission represent the fraction of values that belong to a class but were predicted to be in a different class. They are a measure of false negatives. Errors of omission are shown in the columns of the confusion matrix, except for the values along the main diagonal. The result is an array with one value per class.</p>
+        <h3 class="Keyword">PRECISION (optional)</h3>
+        <p>Set this keyword to a variable that will contain the precision value, representing the probability that a value predicted to be in a certain class really is that class. The probability is based on the fraction of correctly predicted values to the total number of values predicted to be in a class. The result is an array with one value per class.</p>
+        <h3 class="Keyword">RECALL (optional)</h3>
+        <p>Set this keyword to a variable that will contain the recall value from the confusion matrix, as an array with one value per class.</p>
+        <h3 class="Keyword">ROW_TOTALS (optional)</h3>
+        <p>Set this keyword to an array of size <i>m</i>, where <i>m</i> is the number of examples containing the actual scores associated with the features. Use this keyword to pass the actual scores associated with the features if you want to calculate the loss.</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLmlSoftmax.htm">IDLmlSoftmax</a>, <a href="IDLmlSupportVectorMachineClassification.htm">IDLmlSupportVectorMachineClassification</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

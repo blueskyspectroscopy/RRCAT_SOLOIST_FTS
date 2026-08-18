@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_WILCOXON</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_WILCOXON</span>
+        </div>
+        <h1 class="Routine">IMSL_WILCOXON</h1>
+        <p>The IMSL_WILCOXON function performs a Wilcoxon rank sum test or a Wilcoxon signed rank test.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <h2 class="API">If Two Positional Arguments are Supplied</h2>
+        <p>The IMSL_WILCOXON function performs the Wilcoxon rank sum test for identical population distribution functions. The Wilcoxon test is a linear transformation of the Mann-Whitney U test. If the difference between the two populations can be attributed solely to a difference in location, then the Wilcoxon test becomes a test of equality of the population means (or medians) and is the nonparametric equivalent of the two- sample t-test. The IMSL_WILCOXON function obtains ranks in the combined sample after first eliminating missing values from the data. The rank sum statistic is then computed as the sum of the ranks in the x1 sample.</p>
+        <p>Three methods for handling ties are used. (A tie is counted when two observations are within FUZZof each other.) Method 1 uses the largest possible rank for tied observations in the smallest sample, while Method 2 uses the smallest possible rank for these observations. Thus, the range of possible rank sums is obtained. Method 3 for handling tied observations between samples uses the average rank of the tied observations. Asymptotic standard normal scores are computed for the W score (based on a variance that has been adjusted for ties) when average ranks are used (see Conover 1980, p. 217). The probability associated with the two-sided alternative is then computed.</p>
+        <h3>Hypothesis Tests</h3>
+        <p>In each of the tests listed below, the first line gives the hypothesis (and its alternative) under the assumptions 1 to 3 below, while the second line gives the hypothesis when assumption 4 is also true. The rejection region is the same for both hypotheses and is given in terms of Method 3 for handling ties. Another output statistic should be used, (Stats(0) or Stats (3)), if another method for handling ties is desired.</p>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Test</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Null Hypothesis</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Alternative Hypothesis</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Action</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="padding: 0px;">
+                        <p><i>H</i><sub>0</sub> : <i>Pr</i>(X1 &lt; X2) = 0.5</p>
+                        <p><i>H</i><sub>0</sub> : <i>E</i>(X1) = <i>E</i>(X2)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="padding: 0px;">
+                        <p><i>H</i><sub>1</sub> : <i>Pr</i>(X1 &lt; X2) ≠ 0.5</p>
+                        <p>(<i>H</i><sub>1</sub> : <i>E</i>(X1) ≠ <i>E</i>(X2))</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Reject if STATS (6) is less than the significance level of the test. Alternatively, reject the null hypothesis if STATS is too large or too small.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="padding: 0px;">
+                        <p><i>H</i><sub>0</sub> : <i>Pr</i>(X1 &lt; X2) ≤ 0.5</p>
+                        <p><i>H</i><sub>0</sub> : <i>E</i>(X1) ≥ <i>E</i>(X2)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="padding: 0px;">
+                        <p><i>H</i><sub>1</sub> : <i>Pr</i>(X1 &lt; X2) &gt; 0.5</p>
+                        <p><i>H</i><sub>1</sub> : <i>E</i>(X1) &lt; <i>E</i>(X2)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Reject if STATS (6) too small.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep" style="padding: 0px;">
+                        <p><i>H</i><sub>0</sub> : <i>Pr</i>(X1 &lt; X2) ≥ 0.5</p>
+                        <p><i>H</i><sub>0</sub> : <i>E</i>(X1) ≤ <i>E</i>(X2)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep" style="padding: 0px;">
+                        <p><i>H</i><sub>1</sub> : <i>Pr</i>(X1 &lt; X2) &lt; 0.5</p>
+                        <p><i>H</i><sub>1</sub> : E(X1) &gt; <i>E</i>(X2)</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>Reject if STATS (6) too large.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>	Assumptions</h3>
+        <ol>
+            <li value="1"><![CDATA[  ]]><i>X1</i> and <i>X2</i> contain random samples from their respective populations.</li>
+            <li value="2">  All observations are mutually independent.</li>
+            <li value="3">  The measurement scale is at least ordinal (i.e., an ordering less than, greater than, or equal to exists among the observations).</li>
+            <li value="4">  If <i>f</i>(<i>x</i>) and <i>g</i>(<i>y</i>) are the distribution functions of <i>x</i> and <i>y</i>, then <i>g</i>(y) = <i>f</i>(x + <i>c</i>) for some constant <i>c</i> (i.e., the distribution of y is, at worst, a translation of the distribution of <i>x</i>).</li>
+        </ol>
+        <p>Tables of critical values of the W statistic are given in the references for small samples.</p>
+        <h2 class="API">If One Positional Argument is Supplied</h2>
+        <p>The IMSL_WILCOXON function performs a Wilcoxon signed rank test of symmetry about zero. In one sample, this test can be viewed as a test that the population median is zero. In matched samples, a test that the medians of the two populations are equal can be computed by first computing difference scores. These difference scores would then be used as input to IMSL_WILCOXON. A general reference for the methods used is Conover (1980).</p>
+        <p>Routine IMSL_WILCOXON computes statistics for two methods for handling zero and tied observations. In the first method, observations within FUZZ of zero are not counted, and the average rank of tied observations is used. (Observations within Fuzz of each other are said to be tied.) In the second method, observations within FUZZ of zero are randomly assigned a positive or negative sign, and the ranks of tied observations are randomly permuted.</p>
+        <p>The W+ and W– statistics are computed as the sums of the ranks of the positive observations and the sum of the ranks of the negative observations, respectively. Asymptotic probabilities are computed using standard methods (see, e.g., Conover 1980, page 282).</p>
+        <h3>Hypothesis Tests</h3>
+        <p>The W+ and W– statistics may be used to test the following hypotheses about the median, <i>M</i>. In deciding whether to reject the null hypothesis, use the bracketed statistic if method 2 for handling ties is preferred. Possible null hypotheses and alternatives are given as follows:</p>
+        <p><i>H</i><sub>0</sub> : M ≤  0</p>
+        <p><i>H</i><sub>1</sub> : M &gt; 0</p>
+        <p>Reject if <i>stats</i>(0) [or stats(4)] is too large.</p>
+        <p><i>H</i><sub>0</sub> : M ≥ 0</p>
+        <p><i>H</i><sub>1</sub> : M &lt; 0</p>
+        <p>Reject if <i>stats</i>(1) [or stats(5)] is too large.</p>
+        <p><i>H</i><sub>0</sub> : M = 0</p>
+        <p><i>H</i><sub>1</sub> : M ≠ 0</p>
+        <p>Reject if <i>stats</i>(2) [or stats(6)] is too small. Alternatively, if an asymptotic test is desired, reject if 2*<i>stats</i>(3) [or 2*<i>stats</i>(7)] is less than the significance level.</p>
+        <p>Tabled values of the test statistic can be found in the references. If possible, tabled values should be used. If the number of nonzero observations is too large, then the asymptotic probabilities computed by IMSL_WILCOXON can be used.</p>
+        <h3>Assumptions</h3>
+        <p>The assumptions required for the hypothesis tests are as follows:</p>
+        <ol>
+            <li value="1">1.   The distribution of each Xi is symmetric.</li>
+            <li value="2">2.   The <i>X</i><sub>i</sub> are mutually independent.</li>
+            <li value="3">3.   All <i>X</i><sub>i</sub>’s have the same median.</li>
+            <li value="4">4.   An ordering of the observations exists (i.e., <i>X</i><sub>1</sub> &gt; <i>X</i><sub>2</sub> and <i>X</i><sub>2</sub> &gt; <i>X</i><sub>3</sub> implies that <i>X</i><sub>1</sub> &gt; <i>X</i><sub>3</sub>).</li>
+        </ol>
+        <p>If other assumptions are made, related hypotheses that are more (or less) restrictive can be tested.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>The following example is taken from Conover (1980, p. 224). It involves the mixing time of two mixing machines using a total of 10 batches of a certain kind of batter, five batches for each machine. The null hypothesis is not rejected at the 5-percent level of significance. The warning error is always printed when one or more ties are detected.</p>
+        <p class="Code">x1 = [7.3, 6.9, 7.2, 7.8, 7.2]</p>
+        <p class="Code">x2 = [7.4, 6.8, 6.9, 6.7, 7.1]</p>
+        <p class="Code">p = IMSL_WILCOXON(x1, x2, Stats = stats) PRINT, 'p-Value = ', p</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">p-Value =	0.141238</p>
+        <h3>Example 2</h3>
+        <p>The following example uses the same data as the previous example. Now, all the statistics are output in the array STATS. First, a procedure is defined to output the results.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, stats</p>
+        <p class="Code_Indented">PRINT, 'Wilcoxon W Statistic .....', stats(0)</p>
+        <p class="Code_Indented">PRINT, '2*E(W) - W ...............', stats(1)</p>
+        <p class="Code_Indented">PRINT, 'P-Value .....................', stats(2)</p>
+        <p class="Code_Indented">PRINT, 'Adjusted Wilcoxon Statistic..', stats(3)</p>
+        <p class="Code_Indented">PRINT, 'Adjusted 2*E(W) - W .........', stats(4)</p>
+        <p class="Code_Indented">PRINT, 'Adjusted P-Value ............', stats(5)</p>
+        <p class="Code_Indented">PRINT, 'W Statistics for Averaged Ranks ..', stats(6)</p>
+        <p class="Code_Indented">PRINT, 'Std Error of W (Averaged Ranks) ..', stats(7)</p>
+        <p class="Code_Indented">PRINT, 'Std Normal Score of W (Averaged Ranks)..', stats(8)</p>
+        <p class="Code_Indented">PRINT, 'Two-Sided P-Value of W (Averaged Ranks) ..', stats(9)</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">x1 = [7.3, 6.9, 7.2, 7.8, 7.2]</p>
+        <p class="Code">x2 = [7.4, 6.8, 6.9, 6.7, 7.1]</p>
+        <p class="Code">p = IMSL_WILCOXON(x1, x2, Stats = stats)</p>
+        <p class="Code">print_results, stats</p>
+        <p class="Code">&#160;</p>
+        <p class="Code_Indented">Wilcoxon W Statistic .................... 34.0000</p>
+        <p class="Code_Indented">2*E(W) - W .............................. 21.0000</p>
+        <p class="Code_Indented">P-Value ................................ 0.110072</p>
+        <p class="Code_Indented">Adjusted Wilcoxon Statistic ............. 35.0000</p>
+        <p class="Code_Indented">Adjusted 2*E(W) - W ..................... 20.0000</p>
+        <p class="Code_Indented">Adjusted P-Value ...................... 0.0745036</p>
+        <p class="Code_Indented">W Statistics for Averaged Ranks ......... 34.5000</p>
+        <p class="Code_Indented">Std Error of W (Averaged Ranks) ......... 4.75803</p>
+        <p class="Code_Indented">Std Normal Score of W (Averaged Ranks)... 1.47120</p>
+        <p class="Code_Indented">Two-Sided P-Value of W (Averaged Ranks). 0.141238</p>
+        <h3>Example 3</h3>
+        <p>This example illustrates the application of the Wilcoxon signed rank test to a test on a difference of two matched samples (matched pairs) {X1 = 223, 216, 211, 212, 209, 205, 201; and X2 = 208, 205, 202, 207, 206, 204, 203}. A test that the median difference is 10.0 (rather than 0.0) is performed by subtracting 10.0 from each of the differences prior to calling IMSL_WILCOXON. As can be seen from the output, the null hypothesis is rejected. The warning error will always be printed when the number of observations is 50 or less unless printing is turned off for warning errors.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO output_results, stats</p>
+        <p class="Code">PRINT, 'Statistic&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Method 1&#160;&#160;Method2'</p>
+        <p class="Code">PRINT, 'W+ ....................', stats(0), stats(4)</p>
+        <p class="Code">PRINT, 'W- ....................', stats(1), stats(5)</p>
+        <p class="Code">PRINT, 'Standardized Minimum...', stats(2), stats(6)</p>
+        <p class="Code">PRINT, 'p-value ...............', stats(3), stats(7)</p>
+        <p class="Code">PRINT</p>
+        <p class="Code">PRINT, 'Number of zeros .......', stats(8)</p>
+        <p class="Code">PRINT, 'Number of ties ........', stats(9)</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">x = [-25.0, -21.0, -19.0, -15.0, -13.0, -11.0, -8.0]</p>
+        <p class="Code">p = IMSL_WILCOXON(x, Fuzz = 0.0001, Stats = stats)</p>
+        <p class="Code">OUTPUT_RESULTS, stats</p>
+        <p>IDL prints:</p>
+        <p class="Code">Statistic&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Method 1&#160;&#160;&#160;&#160;Method 2</p>
+        <p class="Code">W+ .......................0.00000&#160;&#160;&#160;&#160;&#160;0.00000</p>
+        <p class="Code">W- ......................28.0000&#160;&#160;&#160;&#160;&#160;28.0000</p>
+        <p class="Code">Standardized Minimum ... -2.36643&#160;&#160;&#160;&#160;-2.36643</p>
+        <p class="Code">p-value ................. 0.00898023&#160;&#160;0.00898024</p>
+        <p class="Code">Number of zeros ..........0.00000</p>
+        <p class="Code">Number of ties ...........0.00000</p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_AT_LEAST_ONE_TIE: At least one tie is detected between the samples.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_ALL_X_Y_MISSING: Each element of x1 and/or x2 is a missing NaN (Not a Number) value.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_WILCOXON( <i>X1</i> [ , <i>X2</i> ] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FUZZ" class="selected">FUZZ</a>=<i>value</i>] [, <a href="#STATS" class="selected">STATS</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>If a Wilcoxon rank sum test is performed, returns the two-sided p-value for the Wilcoxon rank sum statistic that is computed with average ranks used in the case of ties.</p>
+        <p>If a Wilcoxon signed rank test is performed, returns an array of length two containing the following values:</p>
+        <ul>
+            <li value="1">The asymptotic probability of not exceeding the standardized (to an asymptotic variance of 1.0) minimum of (W+, W–) using method 1 under the null hypothesis that the distribution is symmetric about 0.0.</li>
+            <li value="2">And, the asymptotic probability of not exceeding the standardized (to an asymptotic variance of 1.0) minimum of (W+, W–) using method 2 under the null hypothesis that the distribution is symmetric about 0.0.</li>
+        </ul>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X1</h3>
+        <p>One-dimensional array containing the first sample.</p>
+        <h3 class="Argument">X2 (optional)</h3>
+        <p>One-dimensional array containing the second sample.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="FUZZ"></a>FUZZ (optional)</h3>
+        <p>Nonnegative constant used to determine ties in computing ranks in the combined samples. A tie is declared when two observations in the combined sample are within Fuzz of each other. Default: 100 x ε x max { |xi 1|, |xj 2|}, where ε is machine precision for a Wilcoxon rank sum test, and FUZZ = 0.0 for a Wilcoxon signed rank test.</p>
+        <h3 class="Keyword"><a name="STATS"></a>STATS (optional)</h3>
+        <p>Named variable into which one-dimensional array of length 10 containing the statistics shown below is stored. If a Wilcoxon rank sum test is performed:</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Row</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Statistics</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Wilcoxon W statistic (the sum of the ranks of the x observations) adjusted for ties in such a manner that W is as small as possible</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>2 x E (W) – W, where E (W)is the expected value of W</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Probability of obtaining a statistic less than or equal to min {W, 2 x E (W) – W}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>W statistic adjusted for ties in such a manner that W is as large as possible</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>2 x E (W) – W, where E (W) is the expected value of W, adjusted for ties in such a manner that W is as large as possible</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Probability of obtaining a statistic less than or equal to min {W, 2 x E (W) – W}, adjusted for ties in such a manner that W is as large as possible</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>6</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>W statistic with average ranks used in case of ties</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>7</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Estimated standard error of Stats (6) under the null hypothesis of no difference</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>8</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Standard normal score associated with Stats (6)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>9</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Two-sided p-value associated with Stats (6)</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>If a Wilcoxon signed rank test is performed:</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Row</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Statistics</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>The positive rank sum, W+, using method 1.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The absolute value of the negative rank sum, W–, using method 1.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>The standardized (to anasymptotic variance of 1.0) minimum of (W+, W–) using method 1.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The asymptotic probability of not exceeding stats(2) under the null hypothesis that the distribution is symmetric about 0.0.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>The positive rank sum, W+, using method 2.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The absolute value of the negative rank sum, W–, using method 2.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>6</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>The standardized (to an asymptotic variance of 1.0) minimum of (W+, W–) using method 2.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>7</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>The asymptotic probability of not exceeding stats(6) under the null hypothesis that the distribution is symmetric about 0.0.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>8</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>The number of zero observations.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>9</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>The total number of observations that are tied, and that are not within fuzz of zero.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

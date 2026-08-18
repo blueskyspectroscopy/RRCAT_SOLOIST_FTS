@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_NCTRENDS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_NCTRENDS</span>
+        </div>
+        <h1 class="Routine">IMSL_NCTRENDS</h1>
+        <p>The IMSL_NCTRENDS function performs the Noether test for cyclical trend (Noether 1956) for a sequence of measurements.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p> In this test, the observations are first divided into sets of three consecutive observations. Each set is then inspected, and if the set is monotonically increasing or decreasing, the count variable is made incremental.</p>
+        <p>The count variables, <a href="#NSTAT" class="selected">NSTAT</a>(1), NSTAT(2), and NSTAT(3), differ in the manner in which ties are handled. A tie can occur in a set (of size three) only if the middle element is tied with either of the two ending elements. Tied ending elements are not considered. In NSTAT(1), tied middle observations are eliminated, and a new set of size 3 is obtained by using the next observation in the sample. In NSTAT(2), the original set of size three is used, and tied middle observations are counted as nonmonotonic. In NSTAT(3), tied middle observations are counted as monotonic.</p>
+        <p>The probabilities of occurrence of the counts are obtained from the binomial distribution with <i>p</i> = 1/3, where <i>p</i> is the probability that a random sample of size three from a continuous distribution is monotonic. The binomial sample size is, of course, the number of sequences of size three found (adjusted for ties).</p>
+        <p>Hypothesis test:</p>
+        <p class="indent"><i>H</i><sub>0</sub> : <i>q</i> = <i>Pr</i>(<i>X</i>i &gt; <i>X</i><sub>i - 1</sub> &gt; <i>X</i><sub>i - 2</sub>) + <i>Pr</i>(<i>X</i><sub>i</sub> &lt; <i>X</i><sub>i - 1</sub> &lt; <i>X</i><sub>i - 2</sub>) ≤ 1/3	</p>
+        <p class="indent"><i>H</i><sub>1</sub>: <i>q</i> &gt; 1/3</p>
+        <p>Reject if <i>Result</i>(0)—or <i>Result</i>(1) or <i>Result</i>(2) depending on the method used for handling ties—is less than the significance level of the test.</p>
+        <p>Assumption: The observations are independent and are from a continuous distribution.</p>
+        <h2 class="API">Example</h2>
+        <p>A test for cyclical trend in a sequence of 1000 randomly generated observations is performed. Because of the sample used, there are no ties and all three test statistics yield the same result.</p>
+        <p class="Code">IMSL_RANDOMOPT, set	=	123457</p>
+        <p class="Code">x	=	IMSL_RANDOM(1000, /Uniform)</p>
+        <p class="Code">pval	=	IMSL_NCTRENDS(x, Nstat = nstat)</p>
+        <p class="Code">PM, pval</p>
+        <p class="Code">PM, nstat</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.697881</p>
+        <p class="Code">0.697881</p>
+        <p class="Code">0.697881</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">333</p>
+        <p class="Code">107</p>
+        <p class="Code">107</p>
+        <p class="Code">107</p>
+        <p class="Code">0</p>
+        <p class="Code">0</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_NCTRENDS(<i>X</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#FUZZ" class="selected">FUZZ</a>=<i>value</i>] [, <a href="#NMISSING" class="selected">NMISSING</a>=<i>variable</i>] [, <a href="#NSTAT" class="selected">NSTAT</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length 3 containing the probabilities of NSTAT(1) or more, NSTAT(2) or more, or NSTAT(3) or more monotonic sequences. If NSTAT(0) is less than 1, <i>Result</i>(0) is set to NaN (not a number).</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the data in chronological order.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="FUZZ"></a>FUZZ (optional)</h3>
+        <p>Nonnegative constant used to determine ties in computing ranks in the combined samples. A tie is declared when two observations in the combined sample are within FUZZ of each other. The default value is 0.0.</p>
+        <h3 class="Keyword"><a name="NMISSING"></a>NMISSING (optional)</h3>
+        <p>Named variable containing the number of missing values in <i>x</i>.</p>
+        <h3 class="Keyword"><a name="NSTAT"></a>NSTAT (optional)</h3>
+        <p>Named variable into which the one-dimensional array of length 6 containing the statistics below is stored:</p>
+        <ul>
+            <li value="1">NSTAT(0): The number of consecutive sequences of length three used to detect cyclical trend when tying middle elements are eliminated from the sequence, and the next consecutive observation is used.</li>
+            <li value="2">NSTAT(1): The number of monotonic sequences of length three in the set defined by NSTAT(0).</li>
+            <li value="3">NSTAT(2): The number of nonmonotonic sequences where tied threesomes are counted as nonmonotonic.</li>
+            <li value="4">NSTAT(3): he number of monotonic sequences where tied threesomes are counted as monotonic.</li>
+            <li value="5">NSTAT(4): The number of middle observations eliminated because they were tied in forming the NSTAT(0) sequences.</li>
+            <li value="6">NSTAT(5): The number of tied sequences found in forming the NSTAT(2) and NSTAT(3) sequences. A sequence is called a tied sequence if the middle element is tied with either of the two other elements.</li>
+        </ul>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

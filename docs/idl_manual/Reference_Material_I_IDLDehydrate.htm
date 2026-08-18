@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLDehydrate</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <h1 class="Routine"><a name="kanchor6056"></a>IDLDehydrate</h1>
+        <p>The IDLDehydrate function takes its input argument and transforms it into IDL&#160;primitives or collections of IDL&#160;primitives. This is useful for storage and transmission of object state. It is used by IDL&#160;Task Engine to provide output in a serialized form. IDL&#160;primitives are the numeric and string types. The return value of this function can be passed into the <a href="IDLHydrate.htm">IDLHydrate</a> function to create a clone of the input. </p>
+        <p>All <a href="../../Creating IDL Programs/Components of the IDL Language/IDL_Data_Types.htm">IDL&#160;Data Types</a> are supported by IDLDehydrate, except for <code>Null</code>, <code>Structure</code>, and <code>Pointer</code>. Any Object that implements a Dehydrate function method  is supported  as well.</p>
+        <p>IDLDehydrate returns the following based on input:</p>
+        <ul>
+            <li value="1">Scalar or array IDL primitive input return the same value, except for COMPLEX&#160;and DCOMPLEX input.</li>
+            <li value="2">COMPLEX&#160;and DCOMPLEX&#160;input generate a Hash that separates the real and imaginary components into separate arrays.</li>
+            <li value="3">Scalar object input causes the class's Dehydrate static function method, which must return a Hash the represents the object. </li>
+            <li value="4">Object array input generates a List that contains the Hash returned by the object's Dehydrate function method.</li>
+        </ul>
+        <h2 class="API">Examples</h2>
+        <h4>Dehydrate a scalar number</h4>
+        <p class="Code">PRINT, IDLDehydrate(!DPI), /IMPLIED</p>
+        <p>IDL Prints:</p>
+        <p class="Code">3.1415926535897931</p>
+        <h4>Dehydrate a scalar complex number</h4>
+        <p class="Code">PRINT, IDLDehydrate(COMPLEX(1, 2)), /IMPLIED</p>
+        <p>IDL Prints:</p>
+        <p class="Code">{</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"imaginary": 2.0000000,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"real": 1.0000000</p>
+        <p class="Code">}</p>
+        <h4>Dehydrate a list</h4>
+        <p class="Code">value = LIST('one', 2.0, 3, 4L, COMPLEX(7))</p>
+        <p class="Code">PRINT, IDLDehydrate(value), /IMPLIED</p>
+        <p>IDL Prints:</p>
+        <p class="Code">{</p>
+        <p class="Code">&#160;&#160;&#160;&#160;"elements": [</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"type": "STRING",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"dehydratedForm": "one"</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"type": "FLOAT",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"dehydratedForm": 2.0000000</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"type": "INT",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"dehydratedForm": 3</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"type": "LONG",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"dehydratedForm": 4</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"type": "COMPLEX",</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"dehydratedForm": {</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"imaginary": 0.00000000,</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"real": 7.0000000</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="Code">&#160;&#160;&#160;&#160;]</p>
+        <p class="Code">}</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> =  IDLDehydrate(<i>value</i> [, ERROR=error])</p>
+        <h2 class="API">Return Value </h2>
+        <p>Returns a scalar IDL&#160;primitive value, an array of IDL&#160;primitive values, a Hash of IDL&#160;primitive values, or a List of Hashes of IDL&#160;primitive values.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Value</h3>
+        <p>The <i>value</i> argument can be of any IDL data type including <a href="../../Creating IDL Programs/Components of the IDL Language/The_Null_Variable.htm">!NULL</a>. If an object input must implement the Dehydrate function method to be supported by this routine.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">ERROR</h3>
+        <p>Set this keyword to a named variable that will contain any error message issued during execution. If no error occurs, the ERROR variable will be set to an empty string (<code>''</code>).</p>
+        <p>When this keyword is not set and an error occurs, the function returns to the caller and execution halts. In this case, the error message is contained within !ERROR_STATE&#160;and can be caught using IDL's CATCH&#160;routine.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.5.2</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLHydrate.htm">IDLHydrate</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

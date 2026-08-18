@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_BSKNOTS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_BSKNOTS</span>
+        </div>
+        <h1 class="Routine">IMSL_BSKNOTS</h1>
+        <p>The IMSL_BSKNOTS function computes the knots for a spline interpolant.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>Given the data points <i>x</i> = <i>Xdata</i>, the order of the spline <i>k = </i>ORDER, and the number <i>n</i> = N_ELEMENTS <i>(Xdata</i>) of elements in <i>Xdata</i>, the default action of IMSL_BSKNOTS returns a knot sequence that is appropriate for interpolation of data on <i>x</i> by splines of order <i>k</i> (the default order is <i>k</i> = 4). The knot sequence is contained in its <i>n</i> + <i>k</i> elements. If <i>k</i> is even and it is assumed that the entries in the input vector <i>x</i> are increasing, then the resulting knot sequence <b>t</b> is returned as follows:</p>
+        <p><b>t</b><sub style="font-style: italic;">i</sub> = x<sub style="font-style: italic;">0   </sub>for &#160;<i>i</i> = 0, ..., <i>k</i> – 1</p>
+        <p><b>t</b><sub style="font-style: italic;">i</sub> = x<sub style="font-style: italic;">i – k/2 – 1   </sub>for &#160;<i>i</i> = <i>k</i>, ..., <i>n</i> – 1 (1)</p>
+        <p><b>t</b><sub style="font-style: italic;">i</sub> = x<sub style="font-style: italic;">n – 1   </sub>for &#160;<i>i</i> = <i>n</i>, ..., <i>n</i> + <i>k</i> – 1</p>
+        <p>There is some discussion concerning this selection of knots in de&#160;Boor (1978, p. 211). If <i>k</i> is odd, then <b>t</b> is returned as follows:</p>
+        <p>
+            <img src="images/IMSL_BSKNOTS-51.jpg" />
+        </p>
+        <p>It is not necessary to sort the values in <i>Xdata.</i></p>
+        <p>If keyword OPTIMUM is set, then the knot sequence returned minimizes the constant <i>c</i> in the error estimate:</p>
+        <p>|| <i>f – s</i> || ≤ <i>c</i> || <i>f </i><sup>(</sup><sup style="font-style: italic" class="cSuperscriptItalic">k</sup><sup>)</sup> || </p>
+        <p>where<i> f </i>&#160;is any function in <i>C</i><sup class="cSuperscriptItalic">k</sup> and <i>s</i> is the spline interpolant to <i>f</i> at the abscissa <i>x </i>with knot sequence <b>t</b>.</p>
+        <p>The algorithm is based on a routine described by de Boor (1978, p. 204), which in turn is based on a theorem of Micchelli et al<i>.</i> (1976).</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>In this example, knots for a cubic spline are generated and printed. Notice that the knots are stacked at the endpoints; also, the second and next-to-last data points are not knots.</p>
+        <p class="Code">x = FINDGEN(6)</p>
+        <p class="Code">knots = IMSL_BSKNOTS(x)</p>
+        <p class="Code">PM, knots, FORMAT = '(f5.2)'</p>
+        <p>IDL prints:</p>
+        <p class="Code">&#160;&#160;&#160;0.00</p>
+        <p class="Code">&#160;&#160;&#160;0.00</p>
+        <p class="Code">&#160;&#160;&#160;0.00</p>
+        <p class="Code">&#160;&#160;&#160;0.00</p>
+        <p class="Code">&#160;&#160;&#160;2.00</p>
+        <p class="Code">&#160;&#160;&#160;3.00</p>
+        <p class="Code">&#160;&#160;&#160;5.00</p>
+        <p class="Code">&#160;&#160;&#160;5.00</p>
+        <p class="Code">&#160;&#160;&#160;5.00</p>
+        <p class="Code">&#160;&#160;&#160;5.00</p>
+        <h3>Example 2</h3>
+        <p>This example compares the default knots with the knots returned using keyword OPTIMIZE as shown in the figure that follows. The order is changed from the default value of 4 to 3.</p>
+        <p class="Code">x = FINDGEN(11)/10</p>
+        <p class="Code">; Define the abscissa values. f = FLTARR(11)</p>
+        <p class="Code">; Define the function values. f(0:3) = .25</p>
+        <p class="Code">f(4:7) = .5</p>
+        <p class="Code">f(8:10) = .25</p>
+        <p class="Code">sp1 = IMSL_BSINTERP(x, f)</p>
+        <p class="Code">; Compute the default spline.</p>
+        <p class="Code">knots2 = IMSL_BSKNOTS(x, /OPTIMUM, ORDER = 3)</p>
+        <p class="Code">; Compute the optimum knots of order 3.</p>
+        <p class="Code">sp2 = IMSL_BSINTERP(x, f, XKNOTS = knots2, XORDER = 3)</p>
+        <p class="Code">; Compute the spline of order 3, with the optimum knots.</p>
+        <p class="Code">x2 = FINDGEN(100)/99</p>
+        <p class="Code">; Evaluate the two splines for plotting.</p>
+        <p class="Code">sp1eval = IMSL_SPVALUE(x2, sp1) </p>
+        <p class="Code">sp2eval = IMSL_SPVALUE(x2, sp2) </p>
+        <p class="Code">PLOT, x2, sp1eval, Linestyle = 2</p>
+        <p class="Code">; Plot the results. OPLOT, x2, sp2eval</p>
+        <p class="Code">OPLOT, x, f, PSYM = 6</p>
+        <p class="Code">XYOUTS, .25, .18, 'With optimum knots:', CHARSIZE = 1.5</p>
+        <p class="Code">OPLOT, [.65, .75], [.188, .188]</p>
+        <p class="Code">XYOUTS, .25, .135, 'With default knots:', CHARSIZE = 1.5</p>
+        <p class="Code">OPLOT, [.65, .75], [.143, .143], LINESTYLE = 2</p>
+        <p class="Code">XYOUTS, .3, .09, 'Original data', CHARSIZE = 1.5</p>
+        <p class="Code">OPLOT, [.70], [.098], PSYM = 6</p>
+        <p>
+            <img src="images/interp07.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_NO_CONV_NEWTON: Newton’s method iteration did not converge.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_DUPLICATE_XDATA_VALUES: The xdata values must be distinct.</p>
+        <p>MATH_ILL_COND_LIN_SYS: Interpolation matrix is singular. The xdata values may be too close together.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_BSKNOTS(<i>Xdata</i> [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#ORDER" class="selected">ORDER</a>=<i>value</i>] [, /<a href="#OPTIMUM" class="selected">OPTIMUM</a>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A one-dimensional array containing the computed knots.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Xdata</h3>
+        <p>One-dimensional array containing the abscissas of the interpolation problem.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Integer value used to set the maximum number of iterations of Newton’s method. To use this keyword, the keyword OPTIMUM must also be set. Default: 10.</p>
+        <h3 class="Keyword"><a name="ORDER"></a>ORDER (optional)</h3>
+        <p>Order of the spline subspace for which the knots are desired. Default: 4, i.e., cubic splines.</p>
+        <h3 class="Keyword"><a name="OPTIMUM"></a>OPTIMUM (optional)</h3>
+        <p>If present and nonzero, knots that satisfy an optimal criterion are computed. </p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

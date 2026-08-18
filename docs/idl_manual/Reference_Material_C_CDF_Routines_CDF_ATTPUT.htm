@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: C|CDF Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>CDF_ATTPUT</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../C_list.htm">Routines: C</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../CDF_Routines.htm">CDF Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">CDF_ATTPUT</span>
+        </div>
+        <h1 class="Routine">CDF_ATTPUT</h1>
+        <p>The <a name="kanchor181"></a>CDF_ATTPUT procedure writes an attribute entry to a Common Data Format file, or attaches an attribute to a CDF variable. If the specified entry already exists, it is overwritten.</p>
+        <h2 class="API">Examples</h2>
+        <p class="Code">Id= CDF_CREATE('foo', /SUN_ENCODING, /HOST_DECODING, $</p>
+        <p class="Code">&#160;&#160;&#160;/ROW_MAJOR)&#160;&#160;&#160;; no dimensions.</p>
+        <p class="Code">dummy= CDF_VARCREATE(id, 'Var1', /CDF_INT4, /REC_VARY)</p>
+        <p class="Code">v2= CDF_VARCREATE(id, 'Var2', /CDF_FLOAT, /REC_NOVARY)</p>
+        <p class="Code">dummy= CDF_ATTCREATE(id, 'Title', /VARIABLE)</p>
+        <p class="Code">global_dummy = CDF_ATTCREATE(id,'Date',/GLOBAL)</p>
+        <p class="Code">dummy= CDF_ATTCREATE(id, 'Att2', /VARIABLE)</p>
+        <p class="Code">CDF_ATTPUT, id, 'Title', 'Var1', 'Temperature at surface'</p>
+        <p class="Code">CDF_ATTPUT, id, 'Title', v2, 'Time of recording'</p>
+        <p class="Code">CDF_ATTPUT, id, 'Date',1,'July 4, 1996'</p>
+        <p class="Code">CDF_ATTPUT, id, 'Att2', 'Var2', FINDGEN(10)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Rename the "Att2" attribute to "Attribute2":</p>
+        <p class="Code">CDF_ATTRENAME, Id, 'Att2', 'Attribute2'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Verify the attribute number (zero-based) of Attribute2</p>
+        <p class="Code">PRINT, CDF_ATTNUM(id, 'Attribute2')</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Close the CDF file. This file is used in the CDF_ATTGET example.</p>
+        <p class="Code">CDF_CLOSE, id</p>
+        <p>Also see <a href="#AddExamp" class="selected">Additional Examples</a> below.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">CDF_ATTPUT, <i>Id</i>, <i>Attribute</i>, <i>EntryNum</i>, <i>Value</i> [,&#160;/<a href="#CDF_BYTE" class="selected">CDF_BYTE</a>] [,&#160;/<a href="#CDF_CHAR" class="selected">CDF_CHAR</a>] [,&#160;/<a href="#CDF_DOUBLE" class="selected">CDF_DOUBLE</a>] [, /<a href="#CDF_EPOC" class="selected">CDF_EPOCH</a>] [,&#160;/<a href="#CDF_FLOAT" class="selected">CDF_FLOAT</a>] [,&#160;/<a href="#CDF_INT1" class="selected">CDF_INT1</a>] [,&#160;/<a href="#CDF_INT2" class="selected">CDF_INT2</a>] [,&#160;/<a href="#CDF_INT4" class="selected">CDF_INT4</a>] [,&#160;/<a href="#CDF_INT8" class="selected">CDF_INT8</a>] [,&#160;/<a href="#CDF_LONG_EPOCH" class="selected">CDF_LONG_EPOCH</a>] [,&#160;/<a href="#CDF_REAL4" class="selected">CDF_REAL4</a>] [,&#160;/<a href="#CDF_REAL8" class="selected">CDF_REAL8</a>] [,&#160;/<a href="#CDF_TIME_TT2000" class="selected">CDF_TIME_TT2000</a>] [,&#160;/<a href="#CDF_UCHAR" class="selected">CDF_UCHAR</a>] [,&#160;/<a href="#CDF_UINT1" class="selected">CDF_UINT1</a>] [,&#160;/<a href="#CDF_UINT2" class="selected">CDF_UINT2</a>] [,&#160;/<a href="#CDF_UINT4" class="selected">CDF_UINT4</a>] [,&#160;/<a href="#ZVARIABLE" class="selected">ZVARIABLE</a>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Id</h3>
+        <p>The CDF ID, returned from a previous call to CDF_OPEN or CDF_CREATE.</p>
+        <h3 class="Argument">Attribute</h3>
+        <p>A string containing either the name or number of the attribute to be written.</p>
+        <h3 class="Argument">EntryNum</h3>
+        <p>The entry number. If the attribute is variable in scope, this is either the name or number of the variable the attribute is to be associated with. If the attribute is global in scope, this is the actual gEntry. It is the user’s responsibility to keep track of valid gEntry numbers. Normally gEntry numbers will begin with 0 or 1 and will increase up to MAXGENTRY (as reported in the GET_ATTR_INFO structure returned by <a href="CDF_CONTROL.htm">CDF_CONTROL</a>), but this is not required.</p>
+        <h3 class="Argument">Value</h3>
+        <p>The value(s) to be written.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CDF_BYTE"></a>CDF_BYTE</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type byte or type int and you want to force the CDF datatype to this type. The default for IDL type byte is CDF_UINT1.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If this keyword is set and <i>Value</i> is type int then the value must be in the range -128 to +127.</p>
+        <h3 class="Keyword"><a name="CDF_CHAR"></a>CDF_CHAR</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type string and you want to force the CDF datatype to this type. This is the default for IDL type string.</p>
+        <h3 class="Keyword"><a name="CDF_DOUBLE"></a>CDF_DOUBLE</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type double and you want to force the CDF datatype to this type. This is the default for IDL type double.</p>
+        <h3 class="Keyword"><a name="CDF_EPOC"></a>CDF_EPOCH</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type long64 or double and you want to force the CDF datatype to this type. The default for IDL type long64 is CDF_INT8 while for IDL&#160;type double the default is CDF_DOUBLE.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If CDF_EPOCH is set and <i>Value</i> is IDL type int64, then the CDF datatype will actually be CDF_TIME_TT2000.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If CDF_EPOCH is set and <i>Value</i> is IDL&#160;type dcomplex, then the CDF datatype will actually be CDF_EPOCH16.</p>
+        <h3 class="Keyword"><a name="CDF_FLOAT"></a>CDF_FLOAT</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type float and you want to force the CDF datatype to this type. This is the default for IDL type float.</p>
+        <h3 class="Keyword"><a name="CDF_INT1"></a>CDF_INT1</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type byte or type int and you want to force the CDF datatype to this type. The default for IDL type byte is CDF_UINT1.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If this keyword is set and <i>Value</i> is type int then the value must be in the range -128 to +127.</p>
+        <h3 class="Keyword"><a name="CDF_INT2"></a>CDF_INT2</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type int and you want to force the CDF datatype to this type. This is the default for IDL type int.</p>
+        <h3 class="Keyword"><a name="CDF_INT4"></a>CDF_INT4</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type long and you want to force the CDF datatype to this type. This is the default for IDL type long.</p>
+        <h3 class="Keyword"><a name="CDF_INT8"></a>CDF_INT8</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type long64 and you want to force the CDF datatype to this type. This is the default for IDL type long64.</p>
+        <h3 class="Keyword"><a name="CDF_LONG_EPOCH"></a>CDF_LONG_EPOCH</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type dcomplex and you want to force the CDF datatype to CDF_EPOCH16. This is the default for IDL type dcomplex.</p>
+        <h3 class="Keyword"><a name="CDF_REAL4"></a>CDF_REAL4</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type float and you want to force the CDF datatype to this type. The default for IDL type float is CDF_FLOAT.</p>
+        <h3 class="Keyword"><a name="CDF_REAL8"></a>CDF_REAL8</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type double and you want to force the CDF datatype to this type. The default for IDL type double is CDF_DOUBLE.</p>
+        <h3 class="Keyword"><a name="CDF_TIME_TT2000"></a>CDF_TIME_TT2000</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type long64 and you want to force the CDF datatype to this type. The default for IDL type long64 is CDF_INT8.</p>
+        <h3 class="Keyword"><a name="CDF_UCHAR"></a>CDF_UCHAR</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type string and you want to force the CDF datatype to this type. The default for IDL type string is CDF_CHAR.</p>
+        <h3 class="Keyword"><a name="CDF_UINT1"></a>CDF_UINT1</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type byte and you want to force the CDF datatype to this type. This is the default for IDL type byte.</p>
+        <h3 class="Keyword"><a name="CDF_UINT2"></a>CDF_UINT2</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type unsigned int and you want to force the CDF datatype to this type. This is the default for IDL type unsigned int.</p>
+        <h3 class="Keyword"><a name="CDF_UINT4"></a>CDF_UINT4</h3>
+        <p>Set this keyword if your <i>Value</i> is IDL type unsigned long and you want to force the CDF datatype to this type. This is the default for IDL type unsigned long.</p>
+        <h3 class="Keyword"><a name="ZVARIABLE"></a>ZVARIABLE</h3>
+        <p>If <i>EntryNum</i> is a variable ID (as opposed to a variable name) and the variable is a zVariable, set this flag to indicate that the variable ID is a zVariable ID. The default is to assume that <i>EntryNum</i> is an rVariable ID. Note: the <i>Attribute</i> must have a scope of VARIABLE_SCOPE.</p>
+        <h2 class="API">CDF Type and IDL Type Keywords</h2>
+        <table style="caption-side: bottom;margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">CDF Type</th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>IDL&#160;Type and Keyword</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CDF_BYTE</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">Byte with /CDF_BYTE</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>CDF_CHAR</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">String (default)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>CDF_DOUBLE</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">Double (default)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>CDF_EPOCH</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Double with /CDF_EPOCH</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>CDF_EPOCH16</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Dcomplex (default), or dcomplex with /CDF_EPOCH</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">CDF_FLOAT</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">Float (default)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CDF_INT1</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">Byte with /CDF_INT1</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>CDF_INT4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">Long (default)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CDF_INT8</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">Long64 (default)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">CDF_REAL4</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">Float with /CDF_REAL4</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CDF_REAL8</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Double with /CDF_REAL8</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>CDF_TIME_TT2000</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Long64 with /CDF_EPOCH or /CDF_TIME_TT2000</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CDF_UCHAR</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">String with /CDF_UCHAR</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">CDF_UINT1</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Byte (default)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">CDF_UINT2</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">Unsigned int (default)</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">CDF_UINT4</td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Unsigned long (default)</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API"><a name="AddExamp"></a>Additional Example</h2>
+        <p>The following example uses the Global attribute “MODS” to keep track of the modification history of a CDF file named <code>mods.cdf</code>.</p>
+        <p class="Code">id = CDF_CREATE('mods.cdf', /CLOBBER)</p>
+        <p class="Code">cid = CDF_ATTCREATE(id, 'MODS', /GLOBAL_SCOPE)</p>
+        <p class="Code">CDF_ATTPUT, id, cid, 0, 'Original Version'</p>
+        <p class="Code">CDF_CLOSE, id</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Next, reopen the CDF file and make modifications:</p>
+        <p class="Code">id = CDF_OPEN('mods.cdf')</p>
+        <p class="Code">CDF_CONTROL, id, ATTRIBUTE='MODS', GET_ATTR_INFO=ginfo</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Use CDF_CONTROL to get the MAXGENTRY used.</p>
+        <p class="Code">CDF_ATTPUT, id, cid, ginfo.maxgentry+1,'Second Version'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Insert the new gEntry at MAXGENTRY+1.</p>
+        <p class="Code">CDF_CLOSE, id</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Reopen the CDF file again and make more modifications:</p>
+        <p class="Code">id = CDF_OPEN('mods.cdf')</p>
+        <p class="Code">CDF_CONTROL, id, ATTRIBUTE='MODS', GET_ATTR_INFO=ginfo</p>
+        <p class="Code">CDF_ATTPUT, id, cid, ginfo.maxgentry+1, 'Third Version'</p>
+        <p class="Code">CDF_CLOSE, id</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">;Reopen the CDF file again and make a modification in the</p>
+        <p class="Code">;MAXGENTRY + 2 spot (skipping an entry number).</p>
+        <p class="Code">id = CDF_OPEN('mods.cdf')</p>
+        <p class="Code">CDF_CONTROL, id, ATTRIBUTE='MODS', GET_ATTR_INFO=ginfo</p>
+        <p class="Code">CDF_ATTPUT, id, cid, ginfo.maxgentry+2, 'Fourth Version'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Now, examine the CDF file to review its modification history.</p>
+        <p class="Code">; Since the gENTRY numbers have a gap in them, we can check each</p>
+        <p class="Code">; attribute with the CDF_ATTEXISTS function. This is a good idea </p>
+        <p class="Code">; if you do not know for certain that the attribute entries are</p>
+        <p class="Code">; serially numbered.</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">CDF_CONTROL, id, ATTRIBUTE='MODS', GET_ATTR_INFO=ginfo</p>
+        <p class="Code">&#160;&#160;FOR I=0, ginfo.maxgentry DO BEGIN</p>
+        <p class="Code">&#160;&#160;&#160;IF CDF_ATTEXISTS(id, cid, I) THEN BEGIN</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;CDF_ATTGET, id, cid, I, gatt</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;PRINT, I, gatt, FORMAT='("Attribute: MODS (gENTRY #",i1,") = ",A)'</p>
+        <p class="Code">&#160;&#160;&#160;ENDIF ELSE BEGIN</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;PRINT, I, FORMAT='("Attribute: MODS (gENTRY #",i1,") $</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;Does not exist")'</p>
+        <p class="Code">&#160;&#160;&#160;ENDELSE</p>
+        <p class="Code">&#160;&#160;ENDFOR</p>
+        <p class="Code">CDF_CLOSE, id</p>
+        <p>IDL&#160;prints:</p>
+        <p class="Code">Attribute: MODS (gENTRY #0) = Original Version</p>
+        <p class="Code">Attribute: MODS (gENTRY #1) = Second Version</p>
+        <p class="Code">Attribute: MODS (gENTRY #2) = Third Version</p>
+        <p class="Code">Attribute: MODS (gENTRY #3) Does not exist</p>
+        <p class="Code">Attribute: MODS (gENTRY #4) = Fourth Version</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColSep">
+                        <p>Pre 4.0</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">8.6.1</td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Added type keywords.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

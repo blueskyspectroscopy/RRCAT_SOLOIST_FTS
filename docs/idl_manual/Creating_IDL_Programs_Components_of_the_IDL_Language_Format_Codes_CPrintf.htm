@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Language|Miscellaneous Topics">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>C printf-Style Format Codes</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/NoLines.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Programming.htm">Language</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../MiscellaneousLanguageTopics.htm">Miscellaneous Topics</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">C printf-Style Format Codes</span>
+        </div>
+        <h1><a name="kanchor4981"></a>C printf-Style Format Codes</h1>
+        <p>The C printf-style format codes specify how data should be transferred using a format similar to that of the C <code>printf</code> function.</p>
+        <h2 class="API">Example</h2>
+        <p>Use the C printf-style to print out six numbers surrounded by curly braces:</p>
+        <p class="Code">PRINT, INDGEN(3), FORMAT = 'The values are: {%d} {%d} {%d}'</p>
+        <p>IDL prints:</p>
+        <p class="Code">The values are: {0} {1} {2}</p>
+        <h2 class="API">Syntax</h2>
+        <p>The syntax of a C printf-style format code is:</p>
+        <p class="Code">%[-][0][<i>width</i>]<i>C</i></p>
+        <p>Where:</p>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../Resources/TableStyles/NoLines.css');" class="TableStyle_NoLines" cellspacing="0">
+            <col style="width: 63px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColSep">%
+                    </td>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColEnd">
+                        <p>marks the beginning of a format code.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColSep">–</td>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColEnd">optional, specifies left justification of the output argument.</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColSep">0</td>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColEnd">optional, adds zero-padding on the left to match the width.</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColSep">
+                        <p><i>width</i>
+                        </p>
+                    </td>
+                    <td class="TableStyle_NoLines_Body_0_0_RowSep_ColEnd">
+                        <p>an optional width specification. Width specifications and default values are format-code specific, and are described with the format codes below.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_NoLines_Body_0_0_RowEnd_ColSep">
+                        <p><i>C</i>
+                        </p>
+                    </td>
+                    <td class="TableStyle_NoLines_Body_0_0_RowEnd_ColEnd">
+                        <p>is the format code. See  below.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Supported “%” Codes</h2>
+        <p>The following table lists the % format codes allowed within a <code>printf</code>-style quoted string format code, as well as their correspondence to the standard format codes that do the same thing. In addition to the format codes described in the table, the special sequence %% causes a single % character to be written to the output. This % is treated as a regular character instead of as a format code specifier. Finally, the flags and the width padding options described in Syntax are also available when using <code>printf</code>-style format codes. </p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Printf-Style</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Description</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>%%</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Insert a single % character.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>%b, %B</p>
+                        <p>%<i>w</i>b, %<i>w</i>B</p>
+                        <p>%<i>w.m</i>b, %<i>w.m</i>B</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Transfer data in binary notation, <i>w</i> is the total width, <i>m</i> is the minimum number of non-blank digits. There is no difference between the lowercase and uppercase forms.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>%d, %D</p>
+                        <p>%<i>w</i>d, %<i>w</i>D</p>
+                        <p>%<i>w.m</i>d, %<i>w.m</i>D</p>
+                        <p>%i, %I</p>
+                        <p>%<i>w</i>i, %<i>w</i>I</p>
+                        <p>%<i>w.m</i>i, %<i>w.m</i>I</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Transfer integer data, <i>w</i> is the total width, <i>m</i> is the minimum number of non-blank digits.  There is no difference between the lowercase and uppercase forms. The %d forms are identical to the %i forms and are provided for programmers familiar with C's printf.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>%e, %E</p>
+                        <p>%<i>w</i>e, %<i>w</i>E</p>
+                        <p>%<i>w.d</i>e, %<i>w.d</i>E</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Transfer data in exponential notation, <i>w</i> is the total width, <i>d</i> is the number of digits after the decimal. Either a lowercase "e" or uppercase "E" will be used depending upon the code.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>%f, %F</p>
+                        <p>%<i>w</i>f, %<i>w</i>F</p>
+                        <p>%<i>w.d</i>f, %<i>w.d</i>F</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Transfer data in floating-point notation, <i>w</i> is the total width, <i>d</i> is the number of digits after the decimal. There is no difference between the lowercase and uppercase forms.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>%g, %G</p>
+                        <p>%<i>w</i>g, %<i>w</i>G</p>
+                        <p>%<i>w.d</i>g, %<i>w.d</i>G</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Transfer data in either floating-point or exponential notation, <i>w</i> is the total width, <i>d</i> is the total number of significant digits. Use %e or %E if exponent is less than –4 or greater than or equal to the precision, otherwise use %f.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>%o, %O</p>
+                        <p>%<i>w</i>o, %<i>w</i>O</p>
+                        <p>%<i>w.m</i>o, %<i>w.m</i>O</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Transfer data in octal notation, <i>w</i> is the total width, <i>m</i> is the minimum number of non-blank digits. There is no difference between the lowercase and uppercase forms.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>%s, %S</p>
+                        <p>%<i>w</i>s, %<i>w</i>S</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Transfer character data until either a null byte (\0) or the total width <i>w</i> is reached.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>%x, %X</p>
+                        <p>%<i>w</i>x, %<i>w</i>X</p>
+                        <p>%<i>w.m</i>x, %<i>w.m</i>X</p>
+                        <p>%z, %Z</p>
+                        <p>%<i>w</i>z, %<i>w</i>Z</p>
+                        <p>%<i>w.m</i>z, %<i>w.m</i>Z</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>Transfer data in hexadecimal notation, <i>w</i> is the total width, <i>m</i> is the minimum number of non-blank digits. The lowercase %x or %z will give lowercase hexadecimal digits, while the uppercase %X or %Z will give uppercase.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">Backslash Character Escapes</h2>
+        <p>IDL supports the following "escape sequences" within the format string:</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;caption-side: bottom;" cellspacing="0" class="TableStyle_Description">
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Escape Sequence</p>
+                    </td>
+                    <td class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>ASCII code</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>\a, \A</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>BEL (7B)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>\b, \B</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Backspace (8B)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>\f, \F</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Formfeed (12B)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>\n, \N</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Linefeed (10B)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>\r, \R</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Carriage Return (13B)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>\t, \T</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Horizontal Tab (9B)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>\v, \V</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Vertical Tab (11B)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>\ooo</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Octal value <code>ooo</code> (Octal value of 1-3 digits)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>\xhh</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>Hexadecimal value <code>hh</code> (Hex value of 1-2 digits)</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If a character not specified in this table is preceded by a backslash, the backslash is removed and the character is inserted without any special interpretation. For example, you could use \% to insert a percent character, or \" to insert a double-quote character.</p>
+        <h2 class="API">Differences Between C printf and IDL printf</h2>
+        <ul>
+            <li value="1">The IDL PRINT and PRINTF procedures implicitly add an end-of-line character to the end of the line (unless suppressed by use of the $ format code). Using \n at the end of the format string to end the line is not necessary or recommended.</li>
+            <li value="2">Only the % format sequences listed above are understood by IDL. Most C <code>printf</code> functions accept more codes than these, but those codes are not supported or not necessary. For example, the C <code>printf</code>/<code>scanf</code> functions require using the %u format code to indicate an unsigned value, and also use type modifiers (h, l, ll) to indicate the size of the data being processed. IDL uses the type of the arguments being substituted into the format to determine this information. Therefore, the u, h, l, and ll codes are not required in IDL and are not accepted.</li>
+            <li value="3">The C <code>printf</code> function allows using %<i>n</i>$d notation to specify that arguments should be substituted into the format string in a different order than they are listed. IDL does not support this.</li>
+            <li value="4">The C <code>printf</code> function allows using %*d notation to indicate that the field width will be supplied by the next argument, and the argument following that supplies the actual value. IDL does not support this.</li>
+        </ul>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

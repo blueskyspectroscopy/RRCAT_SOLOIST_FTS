@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLAsyncJoin</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLAsyncJoin</span>
+        </div>
+        <h1 class="ObjClass">IDLAsyncJoin</h1>
+        <p>The IDLAsyncJoin class observes one or more <a href="IDLAsyncJob.htm">IDLAsyncJob</a> objects to know when they are done. To use this, you pass an instance of this class into the constructor of the job object. This object will not own any of the jobs it observes, and it will not prevent them from being garbage collected.</p>
+        <h2 class="API">Superclasses</h2>
+        <ul>
+            <li value="1"><a href="../../Object Classes/Miscellaneous/IDL_Object.htm">IDL_OBJECT</a>
+            </li>
+        </ul>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLAsyncJoin()</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1">IDLAsyncJoin()</li>
+            <li value="2"><a href="#Join" class="selected">IDLAsyncJoin::Join</a>
+            </li>
+            <li value="3"><a href="#OnJobDone" class="selected">IDLAsyncJoin::OnJobDone</a>
+            </li>
+            <li value="4"><a href="#OnJoin" class="selected">IDLAsyncJoin::OnJoin</a>
+            </li>
+            <li value="5"><a href="#WaitForJoin" class="selected">IDLAsyncJoin::WaitForJoin</a>
+            </li>
+        </ul>
+        <h2 class="API">Properties</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Join"></a>IDLAsyncJoin::Join</h1>
+        <p>The IDLAsyncJoin::Join method is an event handler invoked on this object when all the IDLAsyncJobs that this object is observing are done executing. This method will invoke the OnJoin callback on itself, which is to be overridden by subclasses to define the custom behavior. Do not override this method, override OnJoin.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJoin.Join</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="OnJobDone"></a>IDLAsyncJoin::OnJobDone</h1>
+        <p>The IDLAsyncJoin::OnJobDone method is a callback invoked by any job observed by this object when it finishes its execution. If all of the observed jobs have completed execution, then the Join method is invoked on this object.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJoin.OnJobDone, <i>Job</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Job</h3>
+        <p>An <a href="IDLAsyncJob.htm">IDLAsyncJob</a> object that has completed execution and can be removed from the list of running jobs. If the job is unknown to this object, it will be ignored.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="OnJoin"></a>IDLAsyncJoin::OnJoin</h1>
+        <p>The IDLAsyncJoin::OnJoin method is an abstract interface declaration of the callback invoked on this job by the Join event handler. Subclasses must override this method instead of Join.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJoin.OnJoin</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="WaitForJoin"></a>IDLAsyncJoin::WaitForJoin</h1>
+        <p>The IDLAsyncJoin::WaitForJoin method is a blocking procedure that will go into an infinite loop until all the jobs being observed have completed execution.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLAsyncJoin.WaitForJoin</p>
+        <h2 class="API">Arguments</h2>
+        <p>None</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLAsyncJob.htm">IDLAsyncJob</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CSSHAPE</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CSSHAPE</span>
+        </div>
+        <h1 class="Routine">IMSL_CSSHAPE</h1>
+        <p>The IMSL_CSSHAPE function computes a shape-preserving cubic spline.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CSSHAPE function computes a <i>C</i><sup>1</sup> cubic spline interpolant to a set of data points (<i>x</i><sub>i</sub>, <i>f</i><sub>i</sub>) for the following:</p>
+        <p><i>i</i> = 0, ..., (N_ELEMENTS(<i>Xdata</i>) – 1) = (<i>n</i> – 1)</p>
+        <p>The breakpoints of the spline are the abscissas. This computation is based on a method by Akima (1970) to combat wiggles in the interpolant. Endpoint conditions are automatically determined by the program (see Akima 1970, de Boor 1978).</p>
+        <p>If the CONCAVE keyword is set, then this function computes a cubic spline interpolant to the data. For ease of explanation, <i>x</i><sub>i</sub> &lt; <i>x</i><sub>i</sub> + 1 is assumed, although it is not necessary for the user to sort these data values. If the data are strictly convex, then the computed spline is convex, <i>C</i><sup>2</sup>, and minimizes the expression:</p>
+        <p>
+            <img src="images/IMSL_CSSHAPE-40.jpg" />
+        </p>
+        <p>over all convex <i>C</i><sup>1</sup> functions that interpolate the data. In the general case, when the data have both convex and concave regions, the convexity of the spline is consistent with the data, and the above integral is minimized under the appropriate constraints. For more information on this interpolation scheme, refer to Micchelli et al. (1985) and Irvine et al. (1986).</p>
+        <p>One important feature of the splines produced by this function is that it is not possible, a priori, to predict the number of breakpoints of the resulting interpolant. In most cases, there will be breakpoints at places other than data locations. This function should be used when it is important to preserve the convex and concave regions implied by the data.</p>
+        <p>Both methods are nonlinear, and although the interpolant is a piecewise cubic, cubic polynomials are not reproduced. (However, linear polynomials are reproduced.) This explains the theoretical error estimate below.</p>
+        <p>If the data points arise from the values of a smooth (for example, <i>C</i><sup>4</sup>) function <i>f</i>, i.e., <i>f</i><sub>i</sub> = <i>f</i>(<i>x</i><sub>i</sub>), then the error behaves in a predictable fashion. Let ξ be the breakpoint vector for either of the above spline interpolants. Then, the maximum absolute error satisfies:</p>
+        <p>
+            <img src="images/IMSL_CSSHAPE-41.jpg" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_CSSHAPE-42.jpg" />
+        </p>
+        <p>and ξm is the last breakpoint.</p>
+        <p>The returned value for this function is a structure. This structure contains all the information to determine the spline (stored as a piecewise polynomial) that is computed by this function. For example, the following code sequence evaluates this spline at <i>x</i> and returns the value in <i>y</i>:</p>
+        <p class="Code">y = IMSL_SPVALUE(x, spline)</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>In this example, a cubic spline interpolant to function values is computed. Evaluations of the computed spline are plotted along with the original data values.</p>
+        <p class="Code">x = FINDGEN(10)/9</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the abscissas. f = FLTARR(10)</p>
+        <p class="Code">f(0:4) = 0.25 f(5:9) = 0.75</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the function values. </p>
+        <p class="Code">pp = IMSL_CSSHAPE(x, f)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Compute the interpolant.</p>
+        <p class="Code">ppval = IMSL_SPVALUE(FINDGEN(100)/99, pp)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Evaluate the interpolant at 100 values in [0,1].</p>
+        <p class="Code">PLOT, FINDGEN(100)/99, ppval</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Plot the results.</p>
+        <p class="Code">OPLOT, x, f, Psym = 6</p>
+        <p>
+            <img src="images/interp03.gif" />
+        </p>
+        <h3>Example 2</h3>
+        <p>This example compares interpolants computed by <a href="IMSL_CSINTERP.htm">IMSL_CSINTERP</a> and IMSL_CSSHAPE with the keyword CONCAVE, as shown in the figure below.</p>
+        <p class="Code">x = [0, .1, .2, .3, .4, .5, .6, .8, 1]</p>
+        <p class="Code">y = [0, .9, .95, .9, .1, .05, .05, .2, 1]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the data set and compute interpolant from IMSL_CSINTERP. pp1 = IMSL_CSINTERP(x, y)</p>
+        <p class="Code">pp2 = IMSL_CSSHAPE(x, y, /Concave)</p>
+        <p class="Code">; Compute the interpolant from IMSL_CSSHAPE with keyword Concave. </p>
+        <p class="Code">&#160;</p>
+        <p class="Code">x2 = FINDGEN(100)/99</p>
+        <p class="Code">PLOT, x2, IMSL_SPVALUE(x2, pp1), Linestyle = 2</p>
+        <p class="Code">OPLOT, x2, IMSL_SPVALUE(x2, pp2) OPLOT, x, y, Psym = 6</p>
+        <p class="Code">XYOUTS, .4, .9, 'IMSL_CSINTERP', Charsize = 1.2</p>
+        <p class="Code">OPLOT, [.73, .85], [.925, .925], Linestyle = 2</p>
+        <p class="Code">XYOUTS, .4, .8, 'IMSL_CSSHAPE !cwith CONCAVE', Charsize = 1.2</p>
+        <p class="Code">OPLOT, [.73, .85], [.8, .8]</p>
+        <p class="Code">XYOUTS, .4, .6, 'Original data', Charsize = 1.2</p>
+        <p class="Code">OPLOT, [.73], [.622], Psym = 6</p>
+        <p>
+            <img src="images/interp04.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_MAX_ITERATIONS_REACHED: Maximum number of iterations has been reached. The best approximation is returned.</p>
+        <h3>Fatal Errors</h3>
+        <p>MATH_DUPLICATE_XDATA_VALUES: The <i>Xdata</i> values must be distinct.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_CSSHAPE(<i>Xdata</i>, <i>Fdata</i> [, /<a href="#CONCAVE" class="selected">CONCAVE</a>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A structure that represents the cubic spline interpolant.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Xdata</h3>
+        <p>One-dimensional array containing the abscissas of the interpolation problem.</p>
+        <h3 class="Argument">Fdata</h3>
+        <p>One-dimensional array containing the ordinates for the interpolation problem.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CONCAVE"></a>CONCAVE (optional)</h3>
+        <p>If present and nonzero, IMSL_CSSHAPE produces a cubic interpolant that preserves the concavity of the data.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX</h3>
+        <p>Allows the user to set the maximum number of iterations of Newton’s Method. To use ITMAX, the keyword CONCAVE must also be set. Default: 25.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

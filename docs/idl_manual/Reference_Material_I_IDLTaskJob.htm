@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLTaskJob</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLTaskJob</span>
+        </div>
+        <h1 class="ObjClass">IDLTaskJob</h1>
+        <p>The IDLTaskJob class is an abstract base class to provide an interface for any job that wants to run an <a href="../../IDLTask/IDLTask.htm">IDLTask</a>.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLTaskJob(<i>Task</i>)</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Task</h3>
+        <p>The IDLTask that is cloned for ownership by this job, which will execute when Start is called. Since this task is cloned, any subsequent changes to the input parameters will not be reflected in the copy owned by this job.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API"><a name="Methods"></a>Methods</h2>
+        <ul>
+            <li value="1">IDLTaskJob()</li>
+            <li value="2"><a href="#UpdateTask" class="selected">IDLTaskJob::UpdateTask</a>
+            </li>
+        </ul>
+        <h2 class="API"><a name="Properties"></a>Properties</h2>
+        <h3 class="Property">TASK (Get, Init)</h3>
+        <p>A scalar IDLTask object owned by this job.</p>
+        <h1 class="ObjMethod"><a name="UpdateTask"></a>IDLTaskJob::UpdateTask</h1>
+        <p>The IDLTaskJob::UpdateTask method updates the TASK property with the output parameters set. This method is intended to be called by subclasses as part of the OnDone callback when the <a href="../../IDLTask/IDLTask.htm">IDLTask</a> owned by this job has successfully completed execution.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IDLTaskJob.UpdateTask, <i>Task</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Task</h3>
+        <p>New value for TASK property. This should include all the appropriate output parameter values being set.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../../IDLTask/IDLTask.htm">IDLTask</a>
+        </p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

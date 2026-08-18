@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_FREQTABLE</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_FREQTABLE</span>
+        </div>
+        <h1 class="Routine">IMSL_FREQTABLE</h1>
+        <p>The IMSL_FREQTABLE function tallies observations into a one-way or two-way frequency table.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <h2 class="API">If Two Positional Arguments are Used</h2>
+        <p>The default action of IMSL_FREQTABLE is to group data into <i>nxbins</i> categories of size (max (<i>x</i>) – min (<i>x</i>))/<i>nxbins</i>. The initial interval is closed on the left and open on the right. The remaining intervals are open on the left and closed on the right. Using keywords, the types of intervals used may be changed.</p>
+        <p>If UPPER_BOUND and LOWER_BOUND are specified, two semi-infinite intervals are used as the initial and last interval. The initial interval is closed on the right and includes LOWER_BOUND as its right endpoint. The last interval is open on the left and includes all values greater than UPPER_BOUND. The remaining <i>Nxbins</i> – 2 intervals are of length (UPPER_BOUND – LOWER_BOUND)/(<i>Nxbins</i> – 2) and are open on the left and closed on the right. The argument <i>Nxbins</i> must be greater than or equal to 3 for this option.</p>
+        <p>If the keyword CLASS_MARKS is used, equally spaced class marks in ascending order must be provided in an array of length <i>Nxbins</i>. The class marks are the midpoints of each of the <i>Nxbins</i>, and each interval is taken to have the following length:</p>
+        <p class="indent">(CLASS_MARKS(1) – CLASS_MARKS(0))</p>
+        <p>The argument <i>Nxbins</i> must be greater than or equal to 2 for this option.</p>
+        <p>If the keyword CUTPOINTS is used, cutpoints (bounders) must be provided in an array of length <i>Nxbins</i>. This option allows unequal intervals. The initial interval is closed on the right and contains the initial cutpoint as its right endpoint. The last interval is open on the left and includes all values greater than the last cutpoint. The remaining <i>Nxbins</i> - 2 intervals are open on the left and closed on the right. The argument <i>Nxbins</i> must be greater than 3 for this option.</p>
+        <h2 class="API">If Four Positional Arguments are Used</h2>
+        <p>By default, <i>Nxbins</i> intervals of equal length are used. Let <i>xmin</i> and <i>xmax</i> be the minimum and maximum values in <i>x</i>, respectively, with similar meanings for <i>ymin</i> and <i>ymax</i>. Then, <i>table</i>(0, 0) is the tally of observations with the <i>x</i> value less than or equal to <i>xmin</i> + (<i>xmax</i> – <i>xmin</i>)/<i>nxbins</i>, and the y value less than or equal to <i>ymin</i>&#160;+&#160;(<i>ymax</i>–<i>ymin</i>)/<i>ny</i>.</p>
+        <p>If UPPER_BOUND and LOWER_BOUND are specified, intervals of equal lengths are used just as in the default case, except the upper and lower bounds are taken as supplied keywords <i>xmin</i> = LOWER_BOUND<i>(0)</i>, <i>xmax</i> = UPPER_BOUND<i>(0)</i>, <i>ymin</i>&#160;=&#160;LOWER_BOUND<i>(1)</i>, and <i>ymax</i> = UPPER_BOUND<i>(1)</i>, instead of the actual minima and maxima in the data. Therefore, the first and last intervals for both variables are semi-infinite in length.</p>
+        <p>If CUTPOINTS is specified, cutpoints (boundaries) must be provided. The keyword CUTPOINTS must be a one-dimensional array of length (<i>Nxbins</i> – 1) + (<i>Nybins</i>– 1) containing the cutpoints for <i>x</i> in the first (<i>Nxbins</i> –1) elements followed by the cutpoints for <i>y</i> in the final (<i>Nxbins</i> –1) elements.</p>
+        <p>If CLASS_MARKS is specified, equally spaced class marks in ascending order must be provided. The class marks are the midpoints of each interval. The keyword CLASS_MARKS must be a one-dimensional array of length (<i>Nxbins</i> + <i>Nybins</i>) containing the class marks for <i>x</i> in the first <i>Nxbins</i> elements followed by the class marks for <i>y</i> in the final <i>Nxbins</i> elements.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1: One-way Frequency Table</h3>
+        <p>The data for this example is from Hinkley (1977) and Velleman and Hoaglin (1981). Data includes measurements (in inches) of precipitation in Minneapolis/St. Paul during the month of March for 30 consecutive years.</p>
+        <p class="Code">x = [0.77, 1.74, 0.81, 1.20, 1.95, 1.20, 0.47, 1.43, 3.37, 2.20, $</p>
+        <p class="Code_Indented">3.00, 3.09, 1.51, 2.10, 0.52, 1.62, 1.31, 0.32, 0.59, 0.81, $</p>
+        <p class="Code_Indented">2.81, 1.87, 1.18, 1.35, 4.75, 2.48, 0.96, 1.89, 0.90, 2.05]</p>
+        <p class="Code">; Define the data set.</p>
+        <p class="Code">table = IMSL_FREQTABLE(x, 10)</p>
+        <p class="Code">; Call IMSL_FREQTABLE with nxbins = 10.</p>
+        <p class="Code">PRINT, '	Bin Number	Count' &amp;$</p>
+        <p class="Code_Indented">PRINT, '	----------	-----'	&amp;$</p>
+        <p class="Code_Indented">FOR i = 0, 9 DO PRINT, i + 1, table(i)</p>
+        <p>IDL prints:</p>
+        <p class="Code">Bin Number&#160;&#160;Count</p>
+        <p class="Code">----------&#160;&#160;-----</p>
+        <p class="Code">1&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;4.00000</p>
+        <p class="Code">21&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;8.00000</p>
+        <p class="Code">31&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;5.00000</p>
+        <p class="Code">41&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;5.00000</p>
+        <p class="Code">51&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;3.00000</p>
+        <p class="Code">61&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;1.00000</p>
+        <p class="Code">71&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;3.00000</p>
+        <p class="Code">81&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0.00000</p>
+        <p class="Code">91&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0.00000</p>
+        <p class="Code">101&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;1.00000</p>
+        <h3>Example 2: Two-way Frequency Table</h3>
+        <p>The data for <i>X</i> in this example is the same as in the example above. The data for <i>y</i> were created by adding small integers to <i>x</i>.</p>
+        <p class="Code">nxbins	=	5</p>
+        <p class="Code">nybins	=	6</p>
+        <p class="Code">; Define the data set.</p>
+        <p class="Code">x	=	[0.77, 1.74, 0.81, 1.20, 1.95, 1.20, 0.47, 1.43, 3.37, $</p>
+        <p class="Code_Indented">2.20, 3.00, 3.09, 1.51, 2.10, 0.52, 1.62, 1.31, 0.32, $</p>
+        <p class="Code_Indented">0.59, 0.81, 2.81, 1.87, 1.18, 1.35, 4.75, 2.48, 0.96, $</p>
+        <p class="Code_Indented">1.89, 0.90, 2.05]</p>
+        <p class="Code">y	=	[1.77, 3.74, 3.81, 2.20, 3.95, 4.20, 1.47, 3.43, 6.37, $</p>
+        <p class="Code_Indented">3.20, 5.00, 6.09, 2.51, 4.10, 3.52, 2.62, 3.31, 3.32, $</p>
+        <p class="Code_Indented">1.59, 2.81, 5.81, 2.87, 3.18, 4.35, 5.75, 4.48, 3.96, $</p>
+        <p class="Code_Indented">2.89, 2.90, 5.05]</p>
+        <p class="Code">; Default usage of IMSL_FREQTABLE</p>
+        <p class="Code">table	=	IMSL_FREQTABLE(x, nxbins, y, nybins)</p>
+        <p class="Code">PM, table, FORMAT = '(6(F8.5,	2X))', $</p>
+        <p class="Code">Title = '	counts'</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;counts</p>
+        <p class="Code">4.00000&#160;&#160;2.00000&#160;&#160;4.00000&#160;&#160;2.00000&#160;&#160;0.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;4.00000&#160;&#160;3.00000&#160;&#160;2.00000&#160;&#160;1.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;2.00000&#160;&#160;0.00000&#160;&#160;1.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;2.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;1.00000</p>
+        <p class="Code">lb	=	[1, 2]</p>
+        <p class="Code">up	=	[4, 6]</p>
+        <p class="Code">; Using user-defined bounds</p>
+        <p class="Code">table	=	IMSL_FREQTABLE(x, nxbins, y, nybins, Upper_Bound = up, $</p>
+        <p class="Code_Indented">Lower_Bound = lb)</p>
+        <p class="Code">PM, table, FORMAT = '(6(F8.5,	2X))', $</p>
+        <p class="Code">Title = '		counts'</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;counts</p>
+        <p class="Code">3.00000&#160;&#160;2.00000&#160;&#160;4.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;5.00000&#160;&#160;5.00000&#160;&#160;2.00000&#160;&#160;0.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;3.00000&#160;&#160;2.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;2.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;0.00000</p>
+        <p class="Code">cm	=	[0.5, 1.5, 2.5, 3.5, 4.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5]</p>
+        <p class="Code">; Using class-marks</p>
+        <p class="Code">table	=	IMSL_FREQTABLE(x, nxbins, y, nybins, Class_Marks = cm)</p>
+        <p class="Code">PM, table, FORMAT = '(6(F8.5,	2X))', $</p>
+        <p class="Code">Title = '	counts'</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;counts</p>
+        <p class="Code">3.00000&#160;&#160;2.00000&#160;&#160;4.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;5.00000&#160;&#160;5.00000&#160;&#160;2.00000&#160;&#160;0.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;3.00000&#160;&#160;2.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;2.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;0.00000</p>
+        <p class="Code">cp	=	[1, 2, 3, 4, 2, 3, 4, 5, 6]</p>
+        <p class="Code">; Using cutpoints</p>
+        <p class="Code">table	=	IMSL_FREQTABLE(x, nxbins, y, nybins, Cutpoints = cp)</p>
+        <p class="Code">PM, table, FORMAT = '(6(F8.5,	2X))', $</p>
+        <p class="Code">Title = '		counts'</p>
+        <p class="Code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;counts</p>
+        <p class="Code">3.00000&#160;&#160;2.00000&#160;&#160;4.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;5.00000&#160;&#160;5.00000&#160;&#160;2.00000&#160;&#160;0.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;3.00000&#160;&#160;2.00000&#160;&#160;0.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;2.00000</p>
+        <p class="Code">0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;0.00000&#160;&#160;1.00000&#160;&#160;0.00000</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_FREQTABLE(<i>X, Nxbins</i>[, <i>Y, Nybins</i>] [, <a href="#CUTPOINTS" class="selected">CUTPOINTS</a>=<i>array</i>] [, <a href="#CLASS_MARKS" class="selected">CLASS_MARKS</a>=<i>array</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#LOWER_BOUND" class="selected">LOWER_BOUND</a>=<i>value</i>] [, <a href="#UPPER_BOUND" class="selected">UPPER_BOUND</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional or two-dimensional array containing the counts.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Nxbins</h3>
+        <p>Number of intervals (bins) for <i>x</i>.</p>
+        <h3 class="Argument">Nybins (optional) </h3>
+        <p>Number of intervals (bins) for <i>y</i>.</p>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the observations for the first variable.</p>
+        <h3 class="Argument">Y (optional)</h3>
+        <p>One-dimensional array containing the observations for the second variable.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CUTPOINTS"></a>CUTPOINTS (optional)</h3>
+        <ul>
+            <li value="1">If two positional arguments are used, use this keyword to specify a one-dimensional array of length <i>Nxbins</i> containing the cutpoints to use. This option allows unequal intervals. The initial interval is closed on the right and contains the initial cutpoint as its right endpoint. The last interval is open on the left and includes all values greater than the last cutpoint. The remaining <i>Nxbins</i>− 2 intervals are open on the left and closed on the right. The argument nxbins must be greater than 3 for this option. If CUTPOINTS is used, no other keywords should be specified.</li>
+            <li value="2">If four positional arguments are used, use this keyword to specify a one-dimensional array of cutpoints (boundaries). CUTPOINTS must be a one-dimensional array of length (<i>Nxbins</i> – 1) + (<i>Nybins</i> – 1) containing the cutpoints for <i>x</i> in the first (<i>Nxbins</i> –1) elements followed by the cutpoints for <i>y</i> in the final (<i>Nybins</i> –1) elements.</li>
+        </ul>
+        <h3 class="Keyword"><a name="CLASS_MARKS"></a>CLASS_MARKS (optional)</h3>
+        <ul>
+            <li value="1">If two positional arguments are used, use this keyword to specify a one-dimensional array containing equally spaced class marks in ascending order. The class marks are the midpoints of each of the nxbins, and each interval is taken to have length (CLASS_MARKS(1) – CLASS_MARKS(0)). The argument <i>Nxbins</i> must be greater than or equal to 2 for this option. If CLASS_MARKS is used, then no other keywords should be specified.</li>
+            <li value="2">If four positional arguments are used, use this keyword to specify a one-dimensional array containing equally spaced class marks in ascending order. The class marks are the midpoints of each interval. The keyword CLASS_MARKS must be a one- dimensional array of length (<i>Nxbins</i> + <i>Nybins</i>) containing the class marks for <i>x</i> in the first <i>Nxbins</i> elements followed by the class marks for <i>y</i> in the final <i>Nybins</i> elements.</li>
+        </ul>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="LOWER_BOUND"></a>LOWER_BOUND (optional)</h3>
+        <p>If two positional arguments are used, use this keyword and the UPPER_BOUND keyword together to specify two semi-infinite intervals that are used as the initial and last interval. The LOWER_BOUND and UPPER_BOUND keywords must be used together. The initial interval is closed on the right and includes LOWER_BOUND as its right endpoint. The last interval is open on the left and includes all values greater than UPPER_BOUND. The remaining <i>Nxbins</i> − 2 intervals are of length. (UPPER_BOUND – LOWER_BOUND)/(<i>Nxbins</i> – 2) and are open on the left and closed on the right. The argument <i>Nxbins</i> must be greater than or equal to 3 for this option.</p>
+        <p>If four positional arguments are used, use this keyword with the UPPER_BOUND keyword to specify intervals of equal lengths. The LOWER_BOUND and UPPER_BOUND keywords must be used together. See the description above for details.</p>
+        <h3 class="Keyword"><a name="UPPER_BOUND"></a>UPPER_BOUND (optional)</h3>
+        <p>If two positional arguments are used, use this keyword along with the LOWER_BOUND keyword to specify two semi-infinite intervals that are used as the initial and last interval. The UPPER_BOUND and LOWER_BOUND keywords must be used together. The initial interval is closed on the right and includes LOWER_BOUND as its right endpoint. The last interval is open on the left and includes all values greater than UPPER_BOUND. The remaining <i>Nxbins</i> − 2 intervals are of length (UPPER_BOUND – LOWER_BOUND)/(<i>Nxbins</i> – 2)and are open on the left and closed on the right. LOWER_BOUND must also be specified with this keyword. The argument <i>Nxbins</i> must be greater than or equal to 3 for this option.</p>
+        <p>If four positional arguments are used, use this keyword with the LOWER_BOUND keyword to specify intervals of equal lengths. The UPPER_BOUND and LOWER_BOUND keywords must be used together. See the description above for details.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

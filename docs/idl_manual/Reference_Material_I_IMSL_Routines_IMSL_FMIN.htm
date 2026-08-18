@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_FMIN</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_FMIN</span>
+        </div>
+        <h1 class="Routine">IMSL_FMIN</h1>
+        <p>The IMSL_FMIN function finds the minimum point of a smooth function <i>f</i>(<i>x</i>) of a single variable using function evaluations and, optionally, through both function evaluations and first derivative evaluations.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_FMIN function uses a safeguarded, quadratic interpolation method to find a minimum point of a univariate function. Both the code and the underlying algorithm are based on the subroutine ZXLSF written by M.J.D. Powell at the University of Cambridge.</p>
+        <p>The IMSL_FMIN function finds the least value of a univariate function, <i>f</i>, which is specified by the function <i>f</i>. (Other required data are two points A and B that define an interval for finding a minimum point from an initial estimate of the solution, <i>x</i><sub>0</sub>, where <i>x</i><sub>0</sub> = XGUESS.) </p>
+        <p>The algorithm begins the search by moving from <i>x</i><sub>0</sub> to <i>x</i> = <i>x</i><sub>0</sub> + <i>s</i>, where <i>s</i> = STEP is an estimate of the required change in  <i>x</i> and may be positive or negative. The first two function evaluations indicate the direction to the minimum point, and the search strides out along this direction until a bracket on a minimum point is found or until <i>x</i> reaches one of the endpoints <i>a</i> or <i>b</i>. During this stage, the step length increases by a factor of between 2 and 9 per function evaluation. The factor depends on the position of the minimum point that is predicted by quadratic interpolation of the three most recent function values.</p>
+        <p>When an interval containing a solution has been found, the three points are as follows:</p>
+        <p class="indent"><i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>, with <i>x</i><sub>1</sub> &lt; <i>x</i><sub>2</sub> &lt; <i>x</i><sub>3</sub>,   <i>f</i>(<i>x</i><sub>1</sub>) ≥ <i>f</i>(<i>x</i><sub>2</sub>), and <i>f</i>(<i>x</i><sub>2</sub>) ≥ <i>f</i>(<i>x</i><sub>3</sub>)</p>
+        <p>Considered the following rules when choosing the new <i>x</i> from these three points:</p>
+        <ul>
+            <li value="1">The estimate of the minimum point that is given by quadratic interpolation of the three function values</li>
+            <li value="2">A tolerance parameter η, which depends on the closeness of | <i>f</i> | to a quadratic</li>
+            <li value="3">Whether <i>x</i><sub>2</sub> is near the center of the range between <i>x</i><sub>1</sub> and <i>x</i><sub>3</sub> or is relatively close to an end of this range</li>
+        </ul>
+        <p>In outline, the value of <i>x</i> is as near as possible to predicted minimum point, subject to being at least ε from <i>x</i><sub>2</sub> and subject to being in the longer interval between <i>x</i><sub>1</sub> and <i>x</i><sub>2</sub> or <i>x</i><sub>2</sub> and <i>x</i><sub>3</sub>, when <i>x</i><sub>2</sub> is close to <i>x</i><sub>1</sub> or <i>x</i><sub>3</sub>.</p>
+        <p>The algorithm is intended to provide fast convergence when <i>f</i>  has a positive and continuous second derivative at the minimum and to avoid gross inefficiencies in pathological cases, such as the following:</p>
+        <p class="indent"><i>f</i>(<i>x</i>) = <i>x</i> + 1.001 | <i>x</i> |</p>
+        <p>The algorithm can automatically make ε large in the pathological cases. In this case, it is usual for a new value of <i>x</i> to be at the midpoint of the longer interval that is adjacent to the least calculated function value. The midpoint strategy is used frequently when changes to <i>f</i> are dominated by computer rounding errors, which happens if the user requests an accuracy that is less than the square root of the machine precision. In such cases, the subroutine claims to have achieved the required accuracy if it decides that there is a local minimum point within distance δ of <i>x</i>, where δ = ERR_ABS, even though the rounding errors in <i>f</i> may cause the existence of other local minimum points nearby. This difficulty is inevitable in minimization routines that use only function values, so high-precision arithmetic is recommended.</p>
+        <p>If the argument grad is supplied, then the IMSL_FMIN function uses a descent method with either the secant method or cubic interpolation to find a minimum point of a univariate function. It starts with an initial guess and two endpoints. If any of the three points is a local minimum point and has least function value, the function terminates with a solution; otherwise, the point with least function value is used as the starting point.</p>
+        <p>From the starting point, for example <i>x</i><sub>c</sub>, the function value <i>f</i><sub>c</sub> = <i>f</i>(<i>x</i><sub>c</sub>), the derivative value <i>g</i><sub>c</sub> = <i>g</i>(<i>x</i><sub>c</sub>), and a new point <i>x</i><sub>n</sub>, defined by <i>x</i><sub>n</sub> = <i>x</i><sub>c</sub> – <i>g</i><sub>c</sub>, are computed. The function <i>fn</i> = <i>f</i>(<i>x</i><sub>n</sub>) and the derivative <i>g</i><sub>n</sub> = <i>g</i>(<i>x</i><sub>n</sub>) are then evaluated. If either <i>f</i><sub>n</sub> ≥ <i>f</i><sub>c</sub> or <i>g</i><sub>n</sub> has the opposite sign of <i>g</i><sub>c</sub>, then a minimum point exists between <i>x</i><sub>c</sub> and <i>x</i><sub>n</sub>, and an initial interval is obtained; otherwise, since <i>x</i><sub>c</sub> is kept as the point that has lowest function value, an interchange between <i>x</i><sub>n</sub> and <i>x</i><sub>c</sub> is performed. The secant method is then used to get a new point:</p>
+        <p>
+            <img src="images/IMSL_FMIN-16.jpg" />
+        </p>
+        <p>Let <i>x</i><sub>n</sub> &lt;− <i>x</i><sub>s</sub>. Repeat this process until an interval containing a minimum is found or one of the following convergence criteria is satisfied:</p>
+        <p><b>Criterion</b> 1: | <i>x</i><sub>c</sub> – <i>x</i><sub>n</sub> | ≤ ε<sub>c</sub></p>
+        <p><b>Criterion 2</b>: | <i>g</i><sub>c</sub> | ≤ ε<sub>g</sub></p>
+        <p>where ε<sub>c</sub> = max {1.0, | <i>x</i><sub>c</sub> |} * ε, ε is a relative error tolerance and ε<sub>g</sub> is a gradient tolerance.</p>
+        <p>When convergence is not achieved, a cubic interpolation is performed to obtain a new point. The function and derivative are then evaluated at that point; accordingly, a smaller interval that contains a minimum point is chosen. A safeguarded method is used to ensure that the interval be reduced by at least a fraction of the previous interval. Another cubic interpolation is then performed, and this function is repeated until one of the stopping criteria is met.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example finds a minimum point of <i>f</i>(<i>x</i>) = <i>e</i><sup>x</sup> – 5<i>x</i>. The results are shown in the plot below.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">; Define the function to be used. </p>
+        <p class="Code">FUNCTION f, x</p>
+        <p class="Code">&#160;&#160;RETURN, EXP(x) - 5 * x</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_FMIN to compute the minimum.</p>
+        <p class="Code">xmin = IMSL_FMIN('f', -100, 100)</p>
+        <p class="Code">PM, xmin</p>
+        <p>IDL prints:</p>
+        <p class="Code">1.60943</p>
+        <p>Continue:</p>
+        <p class="Code">x = 10 * FINDGEN(100)/99 - 5</p>
+        <p class="Code">!P.Font = 0</p>
+        <p class="Code">PLOT, x, f(x), Title = '!8f(x) = e!Ex!N-5x!3', XTitle = 'x', $ </p>
+        <p class="Code">&#160;&#160;YTitle = 'f(x)'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Plot results.</p>
+        <p class="Code">OPLOT, [xmin], [f(xmin)], Psym = 6</p>
+        <p class="Code">str = '(' + STRCOMPRESS(xmin) + ',' + STRCOMPRESS(f(xmin)) + ')'</p>
+        <p class="Code">OPLOT, [xmin],[f(xmin)], Psym = 6</p>
+        <p class="Code">XYOUTS, -5, 80, 'Minimum point:!C' + str, Charsize = 1.2</p>
+        <p>
+            <img src="images/optimize01.gif" />
+        </p>
+        <h3>Example 2</h3>
+        <p>&#160;</p>
+        <p>This example supplies the <i>Grad</i> argument and finds a minimum point of <i>f</i>(<i>x</i>) = <i>x</i>(<i>x</i>3 – 1 ) + 10 with an initial guess <i>x</i><sub>0</sub> = 3. The results are shown in the plot below.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION f, x</p>
+        <p class="Code">&#160;&#160;RETURN, x * (x^3 - 1) + 10</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">FUNCTION grad, x</p>
+        <p class="Code">&#160;&#160;RETURN, 4 * x^3 - 1</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">xmin = IMSL_FMIN('f', -10, 10, 'grad')</p>
+        <p class="Code">x = 4 * FINDGEN(100)/99 - 2</p>
+        <p class="Code">PLOT, x, f(x), Title = '!8f(x) = x(x!E3!N-1)+10!3', $ </p>
+        <p class="Code">&#160;&#160;XTitle ='x', YTitle = 'f(x)'</p>
+        <p class="Code">OPLOT, [xmin], [f(xmin)], Psym = 6</p>
+        <p class="Code">str = '(' + STRCOMPRESS(xmin) + ',' + STRCOMPRESS(f(xmin)) + ')'</p>
+        <p class="Code">XYOUTS, -1.5, 25, 'Minimum point:'+str, Charsize = 1.2</p>
+        <p>
+            <img src="images/optimize02.gif" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>MATH_MIN_AT_LOWERBOUND: Final value of <i>x</i> is at the lower bound.</p>
+        <p>MATH_MIN_AT_UPPERBOUND: Final value of <i>x</i> is at the upper bound.</p>
+        <p>MATH_MIN_AT_BOUND: Final value of <i>x</i> is at a bound.</p>
+        <p>MATH_NO_MORE_PROGRESS: Computer rounding errors prevent further refinement of <i>x</i>.</p>
+        <p>MATH_TOO_MANY_FCN_EVAL: Maximum number of function evaluations exceeded.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_FMIN(<i>f</i>, <i>a</i>, <i>b</i> [, <i>Grad</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#ERR_ABS" class="selected">ERR_ABS</a>=<i>value</i>] [, <a href="#ERR_REL" class="selected">ERR_REL</a>=<i>value</i>] [, <a href="#FVALUE" class="selected">FVALUE</a>=<i>value</i>] [, <a href="#GVALUE" class="selected">GVALUE</a>=<i>value</i>] [, <a href="#MAX_EVALS" class="selected">MAX_EVALS</a>=<i>value</i>] [, <a href="#STEP" class="selected">STEP</a>=<i>value</i>] [, <a href="#TOL_GRAD" class="selected">TOL_GRAD</a>=<i>value</i>] [, <a href="#XGUESS" class="selected">XGUESS</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The point at which a minimum value of <i>f</i> is found. If no value can be computed, then NaN (Not a Number) is returned.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">f</h3>
+        <p>Scalar string specifying a user-supplied function to compute the value of the function to be minimized. Function <i>f</i> accepts the point at which the function is to be evaluated and returns the computed function value at this point.</p>
+        <h3 class="Argument">a</h3>
+        <p>Lower endpoint of the interval in which the minimum point of <i>f</i> is to be located.</p>
+        <h3 class="Argument">b</h3>
+        <p>Upper endpoint of the interval in which the minimum point of <i>f</i> is to be located.</p>
+        <h3 class="Argument">Grad</h3>
+        <p>Scalar string specifying a user-supplied function to compute the first derivative of the function. The grad function accepts the point at which the derivative is to be evaluated and returns the computed derivative at this point.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="ERR_ABS"></a>ERR_ABS (optional)</h3>
+        <p>Required absolute accuracy in the final value of  <i>x</i>. On a normal return, there are points on either side of <i>x</i> within a distance ERR_ABS at which f is no less than <i>f</i> at <i>x</i>. The keyword ERR_ABS cannot be used if the optional argument grad is supplied. The default value is 0.0001.</p>
+        <h3 class="Keyword"><a name="ERR_REL"></a>ERR_REL (optional)</h3>
+        <p>Required relative accuracy in the final value of <i>x</i>. This is the first stopping criterion. On a normal return, the solution <i>x</i> is in an interval that contains a local minimum and is less than or equal to max (1.0, | <i>x</i> |) * ERR_REL. When the given ERR_REL is less than zero, SQRT(ε) is used as ERR_REL, where ε is the machine precision. The keyword ERR_REL can only be used if the optional argument grad is supplied. The default value is SQRT(ε).</p>
+        <h3 class="Keyword"><a name="FVALUE"></a>FVALUE (optional)</h3>
+        <p>Function value at point <i>x</i>. The keyword FVALUE can only be used if the optional argument grad is supplied.</p>
+        <h3 class="Keyword"><a name="GVALUE"></a>GVALUE (optional)</h3>
+        <p>Derivative value at point <i>x</i>. The keyword GVALUE can only be used if the optional argument grad is supplied.</p>
+        <h3 class="Keyword"><a name="MAX_EVALS"></a>MAX_EVALS (optional)</h3>
+        <p>Maximum number of function evaluations allowed. The default value is 1000.</p>
+        <h3 class="Keyword"><a name="STEP"></a>STEP (optional)</h3>
+        <p>Order of magnitude estimate of the required change in <i>x</i>. The keyword STEP cannot be used if the optional argument grad is supplied. The default value is 1.0.</p>
+        <h3 class="Keyword"><a name="TOL_GRAD"></a>TOL_GRAD (optional)</h3>
+        <p>Derivative tolerance used to decide if the current point is a local minimum. This is the second stopping criterion. Parameter <i>x</i> is returned as a solution when grad is less than or equal to TOL_GRAD. The keyword TOL_GRAD should be nonnegative; otherwise, zero is used. The keyword TOL_GRAD can only be used if the optional argument grad is supplied. Default: SQRT(ε), where ε is the machine precision.</p>
+        <h3 class="Keyword"><a name="XGUESS"></a>XGUESS (optional)</h3>
+        <p>Initial guess of the minimum point of <i>f</i>. Default: XGUESS = (a + b)/2</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

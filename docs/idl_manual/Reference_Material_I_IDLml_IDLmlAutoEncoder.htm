@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IDLml Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLmlAutoEncoder</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IDLml Routines.htm">IDLml Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLmlAutoEncoder</span>
+        </div>
+        <h1 class="ObjClass">IDLmlAutoEncoder</h1>
+        <p>The IDLmlAutoEncoder class implements an autoencoder model that can be used for clustering purposes.</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">; Read image dataset</p>
+        <p class="Code">File = filepath('rose.jpg', subdirectory=['examples', 'data'])</p>
+        <p class="Code">imgData = read_image(file)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Reform our image into a 3 by n-pixels array</p>
+        <p class="Code">Data = reform(imgData, 3, (imgData.dim)[1]*(imgData.dim)[2])</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Normalize data</p>
+        <p class="Code">Normalizer = IDLmlVarianceNormalizer(data)</p>
+        <p class="Code">Normalizer.Normalize, data</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define autoencoder. It contains 3 attributes (pixel RGB values) and we</p>
+        <p class="Code">; want to separate it into 5 different classes, so the inner layer is 5.</p>
+        <p class="Code">Classifier = IDLmlAutoEncoder([3, 5, 3], $</p>
+        <p class="Code_Indented">ACTIVATION_FUNCTIONS=[IDLmlafLogistic(), IDLmlafArcTan()])</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Train the classifier</p>
+        <p class="Code">Optimizer = IDLmloptGradientDescent(0.001)</p>
+        <p class="Code">For i=0, 200 do loss=Classifier.Train(data, OPTIMIZER=optimizer)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Classify our image</p>
+        <p class="Code">Result = Classifier.Classify(data)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Display result</p>
+        <p class="Code">!null = Image(imgData, title='Original Image', layout=[2,1,1])</p>
+        <p class="Code">!null = Image(reform(result, (imgData.dim)[1], (imgData.dim)[2]), $</p>
+        <p class="Code_Indented">rgb_table=25, title='Clustered Image', layout=[2,1,2], /current)</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLmlAutoEncoder(<i>LayerSizes</i> [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">LayerSizes</h3>
+        <p>Specify a 1D array of layer sizes that define the autoencoder. The first element of the array must be equal to the number of attributes. The last element must also be equal to the number of attributes.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">ACTIVATION_FUNCTIONS (optional)</h3>
+        <p>Set this keyword to the activation function objects (IDLmlac*) for each layer. If specified, the number of elements of this 1D array must be equal to the number of layers defined by the <i>LayerSizes</i> array, minus one. The default value is to always use <a href="IDLmlafLogistic.htm">IDLmlafLogistic</a> activation functions.</p>
+        <h3 class="Keyword">LAMBDA (optional)</h3>
+        <p>     Specify the contribution of L2 regularization in the loss function. By      default, this is 0. Increasing this argument may help with model      overfitting issues.</p>
+        <h3 class="Keyword">LOSS_FUNCTION (optional)</h3>
+        <p>Specify the loss function object (IDLmllf*) for the model. This function determines what is the function that must be minimized during training. The default value is to always use <a href="IDLmllfMeanSquaredError.htm">IDLmllfMeanSquaredError</a>.</p>
+        <h3 class="Keyword">OUTPUT_LAYER (optional)</h3>
+        <p>Set this keyword to the index of the layer to use as output of the neural network. By default, the last layer will be used as output.</p>
+        <h3 class="Keyword">SEED (optional)</h3>
+        <p>If repeatability is desired (such as for testing), set this keyword to the seed variable used to randomly initialize the weights.</p>
+        <h2 class="API">Properties</h2>
+        <h3 class="Property">ACTIVATION_FUNCTIONS</h3>
+        <p>An array of activation functions that define the neural network.</p>
+        <h3 class="Property">CLASS_MAP</h3>
+        <p>A hash that maps internal classification values to desired labels, if the model was defined using custom labels.</p>
+        <h3>LAYER_SIZES</h3>
+        <p>An array of layer sizes that define the neural network.</p>
+        <h3 class="Property">NATTRIBUTES</h3>
+        <p>The number of input attributes the model requires.</p>
+        <h3 class="Property">NLAYERS</h3>
+        <p>The number of layers of the neural network.</p>
+        <h3 class="Property">NOUTPUTS</h3>
+        <p>The number of possible outputs.</p>
+        <h3 class="Property">OUTPUT_LAYER</h3>
+        <p>The index of the layer used as output layer.</p>
+        <h3 class="Property">OUTPUTS</h3>
+        <p>An array of possible outputs.</p>
+        <h3 class="Property">WEIGHTS</h3>
+        <p>The current weight values that make up the neural network. Weights represent the strength of connection between the network units. Initially, they are a set of random numbers, but as the model is trained the weights will change reflecting a model that is better trained.</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1"><a href="#Classify" class="selected">IDLmlAutoEncoder::Classify</a>
+            </li>
+            <li value="2"><a href="#Restore" class="selected">IDLmlAutoEncoder::Restore</a>
+            </li>
+            <li value="3"><a href="#Save" class="selected">IDLmlAutoEncoder::Save</a>
+            </li>
+            <li value="4"><a href="#Train" class="selected">IDLmlAutoEncoder::Train</a>
+            </li>
+        </ul>
+        <h1 class="ObjMethod"><a name="Classify"></a>IDLmlAutoEncoder::Classify</h1>
+        <p>The IDLmlAutoEncoder::Classify method assigns each example to an output class, returning an array of label results.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = Obj-&gt;[<i>IDLmlAutoEncoder::</i>]Classify(<i>Features</i>  [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The method returns an array of class values that correspond to the data provided.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Features</h3>
+        <p>Specify an array of features of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">LOSS (optional)</h3>
+        <p>Set this keyword to a variable that will contain the loss result, which is a unitless number that indicates how closely the model fits the training data. Loss is defined as the total error computed by the loss function specified in the LOSS_FUNCTION parameter when creating the model, which defaults to Mean Squared Error if not specified.</p>
+        <h1 class="ObjMethod"><a name="Restore"></a>IDLmlAutoEncoder::Restore</h1>
+        <p>The IDLmlAutoEncoder::Restore static method restores the model from a file.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = <i>IDLmlAutoEncoder</i>.Restore(<i>Filename</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>A reference to the object instance restored from the file.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Filename</h3>
+        <p>Specify the name of file to restore.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Save"></a>IDLmlAutoEncoder::Save</h1>
+        <p>The IDLmlAutoEncoder::Save method saves the model to a file.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">Obj-&gt;[<i>IDLmlAutoEncoder::</i>]Save, <i>Filename</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Keyword">Filename</h3>
+        <p>Specify the name of the file to save.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Train"></a>IDLmlAutoEncoder::Train</h1>
+        <p>The IDLmlAutoEncoder::Train method performs training on the model and the loss, which is a unitless number that indicates how closely the model fits the training data. Training is an iterative process and it can take tens or hundreds of calls to the Train method until the model becomes fully trained. Check the loss returned by this method on each iteration. Once it converges to a low and stable value, you will know that the model has been trained.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = Obj-&gt;[<i>IDLmlAutoEncoder::</i>]Train(<i>Features</i> [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>This method returns the loss, which is a unitless number that indicates how closely the model fits the training data. Loss is defined as the total error computed by the loss function specified in the LOSS_FUNCTION parameter when creating the model, which defaults to Mean Squared Error if not specified.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Features</h3>
+        <p>Specify an array of features of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">CALLBACK_FUNCTION (optional)</h3>
+        <p>An optional string with the name of an IDL function to be called on each training iteration. The callback function must accept two arguments: loss and state. The callback function must return 1 (!true) if the training should perform another iteration, or 0 (!false) if it should stop training.</p>
+        <h3 class="Keyword">OPTIMIZER (optional)</h3>
+        <p>Specify the optimizer object (IDLmlopt*) used in training. The optimizer will adjust the learning process to try to converge to a solution.</p>
+        <h3 class="Keyword">TRAIN_STATE (optional)</h3>
+        <p>Specify optional user data to provide for the callback function.</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLmlFeedForwardNeuralNetwork.htm">IDLmlFeedForwardNeuralNetwork</a>, <a href="IDLmlKMeans.htm">IDLmlKMeans</a>, <a href="IDLmlSoftmax.htm">IDLmlSoftmax</a>, <a href="IDLmlSupportVectorMachineClassification.htm">IDLmlSupportVectorMachineClassification</a>, <a href="IDLmlSupportVectorMachineRegression.htm">IDLmlSupportVectorMachineRegression</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

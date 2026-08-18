@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Object Classes|File Format Object Classes|IDLffShape">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLffShape::Open</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../ObjectClasses.htm">Object Classes</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="objects_ff.htm">File Format Object Classes</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLffShape::Open</span>
+        </div>
+        <h1 class="ObjMethod"><a name="kanchor3486"></a>IDLffShape::Open</h1>
+        <p>The <a name="kanchor3487"></a>IDLffShape::Open <a name="kanchor3488"></a><a name="kanchor3489"></a>function method opens a specified Shapefile.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = <i>Obj-&gt;</i>[<a href="IDLffShape.htm">IDLffShape</a>::]Open( <i>‘Filename’</i> [,&#160;/<a href="#objects_ff_3755668711_1008149" class="selected">DBF_ONLY</a>] [,&#160;<a href="#objects_ff_3755668711_1008154" class="selected">ENTITY_TYPE</a>=<i>’value’</i>] [,&#160;/<a href="#objects_ff_3755668711_1054733" class="selected">UPDATE</a>] )</p>
+        <h2 class="API">Return Value</h2>
+        <p>Returns 1 if the file can be read successfully. If not able to open the file, it returns 0.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Filename</h3>
+        <p>A scalar string containing the full path and filename of a Shapefile (<code>.shp</code>) to open. Note that the <code>.shp</code>, <code>.shx</code>, and <code>.dbx</code> files must exist in the same directory for you to be able to open and access the file unless the UPDATE keyword is set.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="objects_ff_3755668711_1008149"></a><a name="objects_ff_3755668711_1008149_Keywords_IDLffShape"></a>DBF_ONLY</h3>
+        <p>If this keyword is set to a positive value, only the underlying dBASE table (.<code>dbf</code>) component of the shapefile is opened. All entity related files are left closed. Two values to this keyword are accepted: 1 - Open an existing .<code>dbf</code> file, &gt; 1 - Create a new .<code>dbf</code> file</p>
+        <p>The UPDATE keyword is required to open the .<code>dbf</code> file for updating.</p>
+        <h3 class="Keyword"><a name="objects_ff_3755668711_1008154"></a><a name="objects_ff_3755668711_1008154_Keywords_IDLffShape"></a>ENTITY_TYPE</h3>
+        <p>Set this keyword to the entity type of a new Shapefile. Use this keyword only when creating a new Shapefile. For more information on entity types, see <a href="IDLffShape.htm#objects_ff_3755668711_1007085">Entities</a>.</p>
+        <h3 class="Keyword"><a name="objects_ff_3755668711_1054733"></a><a name="objects_ff_3755668711_1008152_Keywords_IDLffShape"></a>UPDATE</h3>
+        <p>Set this keyword to have the file opened for writing. The default is read-only.</p>
+        <h2 class="API">Examples</h2>
+        <p>In the following example, the file <code>examples/data/states.shp</code> is opened for reading and writing:</p>
+        <p class="Code">status = myShape-&gt;Open(FILEPATH('states.shp', $</p>
+        <p class="Code">   &#160;&#160;&#160;SUBDIR=['examples', 'data']), /UPDATE)</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>5.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IDLml Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IDLmlSupportVectorMachineClassification</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IDLml Routines.htm">IDLml Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IDLmlSupportVectorMachineClassification</span>
+        </div>
+        <h1 class="ObjClass">IDLmlSupportVectorMachineClassification</h1>
+        <p>The IDLmlSupportVectorMachineClassification class implements an SVM model that can be used for classification purposes. The following steps are described here.</p>
+        <p>For a detailed example of how to use the IDL Machine Learning Framework to train a model that learns to recognize hand-written digits, compile and run <code>classify_digits.pro</code>, which is located in the <code>examples/machine_learning</code> directory of your IDL installation.</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">; Read data</p>
+        <p class="Code">read_seeds_example_data, data, labels, $</p>
+        <p class="Code_Indented">N_ATTRIBUTES=nAttributes, N_EXAMPLES=nExamples, $</p>
+        <p class="Code_Indented">N_LABELS=nLabels, UNIQUE_LABELS=uniqueLabels</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Shuffle data</p>
+        <p class="Code">IDLmlShuffle, data, labels</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Normalize data</p>
+        <p class="Code">Normalizer = IDLmlVarianceNormalizer(data)</p>
+        <p class="Code">Normalizer.Normalize, data</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Partition data</p>
+        <p class="Code">Part = IDLmlPartition({train:80, test:20}, data, labels)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the model</p>
+        <p class="Code">Classifier = IDLmlSupportVectorMachineClassification(nAttributes, uniqueLabels)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; This model does not need multiple training iterations, </p>
+        <p class="Code">; we can call it just once.</p>
+        <p class="Code">Loss = Classifier.Train(part.train['data'], LABELS=part.train['labels'])</p>
+        <p class="Code">confMatrix= IDLmlTestClassifier(Classifier, part.test['data'], $</p>
+        <p class="Code_Indented">part.test['labels'], ACCURACY=accuracy)</p>
+        <p class="Code">Print, 'Model accuracy:', accuracy</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Classify the first example</p>
+        <p class="Code">Print, Classifier.Classify(data[*,0])</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IDLmlSupportVectorMachineClassification(<i>Nattributes</i>, <i>Outputs</i> [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Nattributes</h3>
+        <p>Specify the number of attributes that the input data will be required to have.</p>
+        <h3 class="Argument">Outputs</h3>
+        <p>Specify the array of possible outputs. It can be an array of numbers or strings. Outputs can also be a scalar number; in that case, the possible output values will be all integer numbers from 0 to 'outputs' minus one.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">KERNEL (optional)</h3>
+        <p>Set this keyword to a valid kernel object (IDLmlSVM*Kernel) that encapsulates several SVM parameters. Valid options include <a href="IDLmlSVMLinearKernel.htm">IDLmlSVMLinearKernel</a>, <a href="IDLmlSVMPolynomialKernel.htm">IDLmlSVMPolynomialKernel</a>, <a href="IDLmlSVMRadialKernel.htm">IDLmlSVMRadialKernel</a> (default), and <a href="IDLmlSVMSigmoidKernel.htm">IDLmlSVMSigmoidKernel</a>.</p>
+        <h3 class="Keyword">PENALTY (optional)</h3>
+        <p>Set this keyword to a value indicating the penalty parameter. The default value is 100.0. The optimal value for any particular model is highly variable and will most likely need to be adjusted. You should perform a grid search for parameter selection as described in Hsu, Chang, and Lin (2010).</p>
+        <p><b>References</b>
+        </p>
+        <p>Chih-Chung Chang and Chih-Jen Lin, LIBSVM: a library for support vector machines. ACM Transactions on Intelligent Systems and Technology, 2:27:1--27:27, 2011. Software available at <a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm" target="_blank">http://www.csie.ntu.edu.tw/~cjlin/libsvm</a>.</p>
+        <p>Hsu, C.-W., C.-C. Chang, and C.-J. Lin. (2010). A practical guide to support vector classification. National Taiwan University. <a href="http://ntu.csie.org/~cjlin/papers/guide/guide.pdf" target="_blank">http://ntu.csie.org/~cjlin/papers/guide/guide.pdf</a>.</p>
+        <p>Wu, T.-F., C.-J. Lin, and R. C. Weng. (2004). Probability estimates for multi-class classification by pairwise coupling. Journal of Machine Learning Research, 5:975-1005, <a href="http://www.csie.ntu.edu.tw/~cjlin/papers/svmprob/svmprob.pdf" target="_blank">http://www.csie.ntu.edu.tw/~cjlin/papers/svmprob/svmprob.pdf</a>.</p>
+        <h3 class="Keyword">PROBABILITY (optional)</h3>
+        <p>Set this keyword to train the model for probability estimates. The default is 1 for classification problems.</p>
+        <h3 class="Keyword">SHRINK (optional)</h3>
+        <p>Set this keyword to ask the model to use the shrinking heuristics. The default is 1.</p>
+        <h2 class="API">Properties</h2>
+        <h3 class="Property">CLASS_MAP</h3>
+        <p>A hash that maps internal classification values to desired labels, if the model was defined using custom labels.</p>
+        <h3 class="Property">KERNEL</h3>
+        <p>The kernel object used to define the model.</p>
+        <h3 class="Property">NATTRIBUTES</h3>
+        <p>The number of input attributes the model requires.</p>
+        <h3 class="Property">NOUTPUTS</h3>
+        <p>The number of possible outputs.</p>
+        <h3 class="Keyword">OUTPUTS</h3>
+        <p>An array of possible outputs.</p>
+        <h3 class="Property">PENALTY</h3>
+        <p>The penalty parameter used in the model.</p>
+        <h2 class="API">Methods</h2>
+        <ul>
+            <li value="1"><a href="#Classify" class="selected">IDLmlSupportVectorMachineClassification::Classify</a>
+            </li>
+            <li value="2"><a href="#Classify" class="selected">IDLmlSupportVectorMachineClassification::Evaluate</a>
+            </li>
+            <li value="3"><a href="#Restore" class="selected">IDLmlSupportVectorMachineClassification::Restore</a>
+            </li>
+            <li value="4"><a href="#Save" class="selected">IDLmlSupportVectorMachineClassification::Save</a>
+            </li>
+            <li value="5"><a href="#Train" class="selected">IDLmlSupportVectorMachineClassification::Train</a>
+            </li>
+        </ul>
+        <h1 class="ObjMethod"><a name="Classify"></a>IDLmlSupportVectorMachineClassification::Classify</h1>
+        <p>The IDLmlSupportVectorMachineClassification::Classify method assigns each example to an output class, returning an array of label results.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = Obj-&gt;[<i>IDLmlSupportVectorMachineClassification::</i>]Classify(<i>Features</i>  [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The method returns an array of class values that correspond to the data provided.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Features</h3>
+        <p>Specify an array of features of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">LOSS (optional)</h3>
+        <p>Set this keyword to a variable that will contain the loss result, which is a unitless number that indicates how closely the model fits the training data.</p>
+        <h3 class="Keyword">SCORES (optional)</h3>
+        <p>Set this keyword to an array of size <i>m</i>, where <i>m</i> is the number of examples containing the actual scores associated with the features. Use this keyword to pass in the actual scores associated with the features if you want to calculate the loss.</p>
+        <h3 class="Keyword">UNMAPPED_CLASSES (optional)</h3>
+        <p>Set this keyword to a variable that will contain the actual internal class values for the classification results.</p>
+        <h1 class="ObjMethod"><a name="Evaluate"></a>IDLmlSupportVectorMachineClassification::Evaluate</h1>
+        <p>The IDLmlSupportVectorMachineClassification::Evaluate method evaluates a number of features and returns an array of scores that represent how closely each feature matches each output.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = Obj-&gt;[<i>IDLmlSupportVectorMachineClassification::</i>]Evaluate(<i>Features</i>  [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>This method returns the scores associated with the features. Scores represent the actual numerical outputs obtained by the model in response to a number of inputs.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Features</h3>
+        <p>Specify an array of features of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">LOSS (optional)</h3>
+        <p>Set this keyword to a variable that will contain the loss result, which is a unitless number that indicates how closely the model fits the training data. </p>
+        <h3 class="Keyword">SCORES (optional)</h3>
+        <p>Set this keyword to an array of size <i>m</i>, where <i>m</i> is the number of examples containing the actual scores associated with the features. Use this keyword to pass in the actual scores associated with the features if you want to calculate the loss.</p>
+        <h1 class="ObjMethod"><a name="Restore"></a>IDLmlSupportVectorMachineClassification::Restore</h1>
+        <p>The IDLmlSupportVectorMachineClassification::Restore static method restores the classifier from a file.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = <i>IDLmlSupportVectorMachineClassification</i>.Restore(<i>Filename</i>)</p>
+        <h2 class="API">Return Value</h2>
+        <p>A reference to the object instance restored from the file.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Filename</h3>
+        <p>Specify the name of the file to restore.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Save"></a>IDLmlSupportVectorMachineClassification::Save</h1>
+        <p>The IDLmlSupportVectorMachineClassification::Save method saves the classifier to a file.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">Obj-&gt;[<i>IDLmlSupportVectorMachineClassification::</i>]Save, <i>Filename</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Keyword">Filename</h3>
+        <p>Specify the name of the file to save.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None</p>
+        <h1 class="ObjMethod"><a name="Train"></a>IDLmlSupportVectorMachineClassification::Train</h1>
+        <p>The IDLmlSupportVectorMachineClassification::Train method performs training on the model and the loss, which is a unitless number that indicates how closely the model fits the training data.  Unlike all other models, IDLmlSupportVectorMachineClassification only needs to be trained once. Calling this method multiple times will not result in a better trained model.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = Obj-&gt;[<i>IDLmlSupportVectorMachineClassification::</i>]Train(<i>Features</i> [, Keywords=<i>Value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>This method returns the loss, which is a unitless number that indicates how closely the model fits the training data.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Features</h3>
+        <p>Specify an array of features of size <i>n</i> x <i>m</i>, where <i>n</i> is the number of attributes and <i>m</i> is the number of examples.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">CALLBACK_FUNCTION (optional)</h3>
+        <p>An optional string with the name of an IDL function to be called on each training iteration. The callback function must accept two arguments: loss and state. The callback function must return 1 (!true) if the training should perform another iteration, or 0 (!false) if it should stop training.</p>
+        <h3 class="Keyword">LABELS&#160;(optional)</h3>
+        <p>An array of size <i>m</i>, where <i>m</i> is the number of examples containing the actual labels associated with the features.</p>
+        <h3 class="Keyword">SCORES (optional)</h3>
+        <p>An array of size <i>m</i>, where <i>m</i> is the number of examples containing the actual scores associated with the features.</p>
+        <h3 class="Keyword">TRAIN_STATE (optional)</h3>
+        <p>Specify optional user data to provide for the callback function.</p>
+        <h2 class="API">Version History</h2>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');margin-left: 0;margin-right: auto;" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IDLmlAutoEncoder.htm">IDLmlAutoEncoder</a>, <a href="IDLmlFeedForwardNeuralNetwork.htm">IDLmlFeedForwardNeuralNetwork</a>, <a href="IDLmlKMeans.htm">IDLmlKMeans</a>, <a href="IDLmlSoftmax.htm">IDLmlSoftmax</a>, <a href="IDLmlSupportVectorMachineRegression.htm">IDLmlSupportVectorMachineRegression</a>, <a href="IDLmlTestClassifier.htm">IDLmlTestClassifier</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

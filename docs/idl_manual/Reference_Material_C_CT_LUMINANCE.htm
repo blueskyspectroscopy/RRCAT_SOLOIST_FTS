@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: C">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>CT_LUMINANCE</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="C_list.htm">Routines: C</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">CT_LUMINANCE</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor372"></a><a name="kanchor373"></a>CT_LUMINANCE</h1>
+        <p>The CT_LUMINANCE function calculates the luminance of colors. </p>
+        <p>This routine is written in the IDL language. Its source code can be found in the file <code>ct_luminance.pro</code> in the <code>lib</code> subdirectory of the IDL distribution.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = CT_LUMINANCE( [<i>R</i>, <i>G</i>, <i>B</i>] [,&#160;<a href="#C_854643309_759145" class="selected">BRIGHT</a>=<i>variable</i>] [,&#160;<a href="#C_854643309_759148" class="selected">DARK</a>=<i>variable</i>] [,&#160;/<a href="#C_854643309_759151" class="selected">READ_TABLES</a>] )</p>
+        <h2 class="API">Return Value </h2>
+        <p>The function returns an array containing the luminance values of the specified colors. If the <i>R</i>, <i>G</i>, and <i>B</i> parameters are not specified, or if <i>R</i> is of integer, byte or long type, the result is a longword array with the same number of elements as the input arguments. Otherwise, the result is a floating-point array with the same number of elements as the input arguments.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">R</h3>
+        <p>An array representing the red color table. If omitted, the color values from either the COLORS common block, or the current color table are used. </p>
+        <h3 class="Argument">G</h3>
+        <p>An array representing the green color table. This parameter is optional. </p>
+        <h3 class="Argument">B</h3>
+        <p>An array representing the blue color table. This parameter is optional.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="C_854643309_759145"></a>BRIGHT</h3>
+        <p>Set this keyword to a named variable in which the array index of the brightest color is returned. </p>
+        <h3 class="Keyword"><a name="C_854643309_759148"></a>DARK</h3>
+        <p>Set this keyword to a named variable in which the array index of the darkest color is returned. </p>
+        <h3 class="Keyword"><a name="C_854643309_759151"></a>READ_TABLES</h3>
+        <p>Set this keyword, and don’t specify the <i>R, G</i>, and <i>B</i> arguments, to read colors directly from the current colortable (using TVLCT, /GET) instead of using the COLORS common block.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>Pre 4.0</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../G/GAMMA_CT.htm">GAMMA_CT</a>, <a href="../S/STRETCH.htm">STRETCH</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

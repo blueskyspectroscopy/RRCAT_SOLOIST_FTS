@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_SIGNTEST</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_SIGNTEST</span>
+        </div>
+        <h1 class="Routine">IMSL_SIGNTEST</h1>
+        <p>The IMSL_SIGNTEST function performs a sign test.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_SIGNTEST function tests hypotheses about the proportion <i>p</i> of a population that lies below a value <i>q</i>, where <i>p</i> corresponds to keyword <i>Percentage</i> and <i>q</i> corresponds to keyword <i>Percentile</i>. In continuous distributions, this can be a test that <i>q</i> is the 100 <i>p</i>-th percentile of the population from which <i>x</i> was obtained. To carry out testing, IMSL_SIGNTEST tallies the number of values above <i>q</i> in <i>N_Pos_Dev</i>. The binomial probability of <i>N_Pos_Dev</i> or more values above <i>q</i> is then computed using the proportion <i>p</i> and the sample size N_ELEMENTS (<i>x</i>) (adjusted for the missing observations and ties).
+		</p>
+        <p>Hypothesis testing is performed as follows for the usual null and alternative hypotheses:</p>
+        <ul>
+            <li value="1"><i>H</i><sub>0</sub>: <i>Pr</i>(<i>X </i> ≤ <i> q</i>) ≥ <i>p</i> (the <i>p</i>-th quantile is at least <i>q</i>) <br /><i>H</i><sub>1</sub>: <i>Pr</i>(<i>X</i> &lt; <i>q</i>) &lt; <i>p <br /></i>Reject <i>H</i><sub>0</sub> if <i>probability</i> is less than or equal to the significance level.</li>
+            <li value="2"><i>H</i><sub>0</sub>: <i>Pr</i>(<i>X </i> ≤ <i> q</i>) ≤ <i>p</i> (the <i>p</i>-th quantile is at least <i>q</i>) <br /><i>H</i><sub>1</sub>: <i>Pr</i>(<i>X</i> &lt; <i>q</i>) &gt; <i>p</i> <br />Reject <i>H</i><sub>0 </sub>if <i>probability</i> is greater than or equal to 1 minus the significance level.</li>
+            <li value="3"><i>H</i><sub>0</sub>: <i>Pr</i>(<i>X</i> = <i>q</i>) = <i>p </i>(the <i>p</i>-th quantile is <i>q</i>) <br /><i>H</i><sub>1</sub>: <i>Pr</i>((<i>X</i> &lt; <i>q</i>) &lt; <i>p </i>or <i>Pr</i>((<i>X</i> &lt; <i>q</i>) &gt; <i>p</i> <br />Reject <i>H</i><sub>0 </sub>if <i>probability</i> is less than or equal to half the significance level or greater than or equal to 1 minus half the significance level.</li>
+        </ul>
+        <p>The assumptions are as follows:</p>
+        <ol>
+            <li value="1">  The X<sub>i</sub>’s form a random sample; i.e., they are independent and identically distributed.</li>
+            <li value="2">Measurement scale is at least ordinal; i.e., an ordering less than, greater than, and equal to exists in the observations.</li>
+        </ol>
+        <p>Many uses for the sign test are possible with various values of <i>p</i> and <i>q</i>. For example, to perform a matched sample test that the difference of the medians of <i>Y</i> and <i>Z</i> is 0.0, let <i>p</i> = 0.5, <i>q</i> = 0.0, and X<sub>i</sub> = Y<sub>i</sub> – Z<sub>i</sub> in matched observations <i>Y</i> and <i>Z</i>. To test that the median difference is <i>c</i>, let <i>q</i> = <i>c</i>.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example tests the hypothesis that at least 50 percent of a population is negative. Because 0.18 &lt; 0.95, the null hypothesis at the 5-percent level of significance is not rejected.</p>
+        <p class="Code">x =[92, 139, -6, 10, 81, -11, 45, -25, -4, $</p>
+        <p class="Code_Indented">22, 2, 41, 13, 8, 33, 45, -33, -45, -12]</p>
+        <p class="Code">PRINT, 'Probability = ', IMSL_SIGNTEST(x)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Probability =	0.179642</p>
+        <h3>Example 2</h3>
+        <p>This example tests the null hypothesis that at least 75 percent of a population is negative. Because 0.923 &lt; 0.95, the null hypothesis at the 5-percent level of significance is rejected.</p>
+        <p class="Code">x =[92, 139, -6, 10, 81, -11, 45, -25, -4, $</p>
+        <p class="Code_Indented">22, 2, 41, 13, 8, 33, 45, -33, -45, -12]</p>
+        <p class="Code">probability = IMSL_SIGNTEST(x, Percentage = 0.75, $</p>
+        <p class="Code_Indented">Percentile = 0, N_Pos_Dev	= np, N_Zero_Dev = nz)</p>
+        <p class="Code">PM, probability, Title = 'Probability'</p>
+        <p class="Code">PM, np, Title = 'Number of Positive Deviations'</p>
+        <p class="Code">PM, nz, Title = 'Number of Ties'</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">Probability</p>
+        <p class="Code_Indented">0.922543</p>
+        <p class="Code">Number of Positive Deviations</p>
+        <p class="Code_Indented">12</p>
+        <p class="Code">Number of Ties</p>
+        <p class="Code_Indented">0</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_SIGNTEST(x [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#N_POS_DEV" class="selected">N_POS_DEV</a>=<i>value</i>] [, <a href="#N_ZERO_DEV" class="selected">N_ZERO_DEV</a>=<i>value</i>] [, <a href="#PERCENTAGE" class="selected">PERCENTAGE</a>=<i>value</i>] [, <a href="#PERCENTILE" class="selected">PERCENTILE</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>Binomial probability of N_Pos_Dev or more positive differences in N_ELEMENTS(x) – N_Zero_Dev trials. Call this value probability. If no option is chosen, the null hypothesis is that the median equals 0.0.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the input data.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="BETA"></a>BETA</h3>
+        <p>Named variable into which the constant used to ensure that the estimated covariance matrix has unbiased expectation (for a given mean vector) for a multivariate normal density is stored.</p>
+        <h3 class="Keyword"><a name="COV_EST"></a>COV_EST</h3>
+        <p>Two-dimensional array of size n_variables by n_variables containing the estimate of the covariance matrix. Keywords Mean_Est and Cov_Est must be used together.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="N_POS_DEV"></a>N_POS_DEV (optional)</h3>
+        <p>Number of positive differences <i>x</i>(<i>j</i> – 1) – Percentile, for <i>j</i> = 1, 2, ..., N_ELEMENTS(x).</p>
+        <h3 class="Keyword"><a name="N_ZERO_DEV"></a>N_ZERO_DEV (optional)</h3>
+        <p>Number of zero differences (ties) <i>x</i>(<i>j</i> – 1) – Percentile, for <i>j</i> = 1, 2, ..., N_ELEMENTS(x).</p>
+        <h3 class="Keyword"><a name="PERCENTAGE"></a>PERCENTAGE (optional)</h3>
+        <p>Scalar value in the range (0,1). Keyword Percentage is the 100 x Percentage percentile of the population. Default: 0.5</p>
+        <h3 class="Keyword"><a name="PERCENTILE"></a>PERCENTILE (optional)</h3>
+        <p>Hypothesized percentile of the population from which x was drawn. Default: Percentile = 0.0</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

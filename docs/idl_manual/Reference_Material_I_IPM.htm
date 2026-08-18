@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IPM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IPM</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor1760"></a>IPM</h1>
+        <p>IPM (IDL Package Manager) allows you to create, install, update, and remove IDL packages that are a collection of files and/or folders compressed into a ZIP file. The package can contain any combination of IDL pro code, IDL save files, and/or IDL DLMs. It also contains an <code>idlpackage.json</code> file that describes the package.  </p>
+        <p>Packages are installed to the directory defined by the new <a href="../../Creating IDL Programs/Appendices/prefs_directory.htm#PACKPATH">IDL_PACKAGE_PATH</a> preference, and the IDL path is automatically updated to include the new files.</p>
+        <h2 class="API">Actions</h2>
+        <p>For details on the actions you can do with IPM, click on a link below to see the syntax, and a description of each action.</p>
+        <p><a href="#CREATE" class="selected">IPM, /CREATE</a>
+        </p>
+        <p class="Syntax"><a href="#GET" class="selected">IPM, /GET</a>
+        </p>
+        <p class="Syntax"><a href="#INSTALL" class="selected">IPM, /INSTALL</a>
+        </p>
+        <p class="Syntax"><a href="#LIST" class="selected">IPM, /LIST</a>
+        </p>
+        <p><a href="#QUERY" class="selected">IPM, /QUERY</a>
+        </p>
+        <p class="Syntax"><a href="#REMOVE" class="selected">IPM, /REMOVE</a>
+        </p>
+        <p><a href="#UPDATE" class="selected">IPM, /UPDATE</a>
+        </p>
+        <h2 class="API">The Package File</h2>
+        <p>A valid IDL&#160;package must contain an <code>idlpackage.json</code> file at the top level inside the <code>.zip</code> file. <i>Do not rename the .json file.</i> The structure of the file must be valid JSON and should have a structure similar to the following:</p>
+        <p class="Code">{</p>
+        <p class="Code_Indented">"Name": "IDLMathLib",</p>
+        <p class="Code_Indented">"Version": "1.9.13",</p>
+        <p class="Code_Indented">"Author": "Natasha Fatale",</p>
+        <p class="Code_Indented">"Date": "Sep 2017",</p>
+        <p class="Code_Indented">"Dependencies": [</p>
+        <p class="Code_Indented2">{</p>
+        <p class="Code_Indented3">"Name": "IDL",</p>
+        <p class="Code_Indented3">"Version": "^8.6"</p>
+        <p class="Code_Indented2">},</p>
+        <p class="Code_Indented2">{</p>
+        <p class="Code_Indented3">"Name": "Squirrel",</p>
+        <p class="Code_Indented3">"Version": "&gt;5.10",</p>
+        <p class="Code_Indented3">"URL": "http://github.com/Fatale/Squirrel"</p>
+        <p class="Code_Indented2">}</p>
+        <p class="Code_Indented">]</p>
+        <p class="Code">}</p>
+        <p>The only field that is required is the "Name" field; all others are optional. If the package is hosted on GitHub, the "Version" listed in the <code>idlpackage.json</code> file should match the version tag in the GitHub repository. Also, when hosting the package on GitHub, you need to create a GitHub "release," which is described in the GitHub Help at <a href="https://help.github.com/articles/creating-releases/" target="_blank">https://help.github.com/articles/creating-releases/</a>.</p>
+        <p>If more than one dependency is needed, they need to be in a JSON list or array; a single dependency can be in a single JSON&#160;object. It is recommended that you use semantic versioning when you specify a version for a dependency. The URL value in a dependency must be a fully qualified location.</p>
+        <h2 class="API"><a name="Semantic_Versioning"></a>Semantic Versioning</h2>
+        <h3>Basic Ranges</h3>
+        <p>A basic range has the form &gt;1.2.3. This tells IDL&#160;to use the latest version that is after version 1.2.3.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>No spaces are allowed between the operator and the version number. Also, no spaces are allowed in the version string itself.</p>
+        <p>IPM supports the following operators:</p>
+        <p>= : equal (this is the default when no operator is supplied)</p>
+        <p>&gt; : greater than</p>
+        <p>&lt; : less than</p>
+        <p>&gt;= : greater than or equal to</p>
+        <p>&lt;= : less than or equal to</p>
+        <h3>Combined Ranges</h3>
+        <p>A space between two basic ranges means both ranges must be satisfied. To use range 1 OR&#160;range 2, use " || " between two ranges.</p>
+        <p>"&gt;=1.2 &lt;1.6" means any version greater than or equal to 1.2 but also less than 1.6.</p>
+        <p>"&gt;=1.5 || 1.3" means any version greater than or equal to 1.5, but also allow version 1.3</p>
+        <h3>Major Ranges</h3>
+        <p>The caret (^) comparison operator is for major level changes, i.e., the major version must be the same. This is useful when comparisons of versions as a major change is breaking.</p>
+        <p>^1.2.3 means any version greater than or equal to 1.2.3, but less than 2.0.0 (&gt;=1.2.3 &lt;2.0.0)</p>
+        <h3>Minor Ranges</h3>
+        <p>The tilde (~) comparison operator is for patch level ranges, i.e., both the major and minor versions must be the same.</p>
+        <p>~1.2.3 means any version greater than or equal to 1.2.3, but less than 1.3.0 (&gt;=1.2.3 &lt;1.3.0)</p>
+        <h1 class="RoutineClassObject"><a name="CREATE"></a>IPM CREATE</h1>
+        <p>CREATE allows you to create or update a <code>.zip</code> file that can be distributed as an IDL&#160;package.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>You must supply a NAME to be able to create a valid IDL&#160;package. You can specify it with the NAME keyword, or by supplying a valid <code>idlpackage.json</code> file within the folder being zipped.</p>
+        <h2 class="API">Examples</h2>
+        <p>The following creates a new ZIP file that includes all the files in the <code>MyMathLib</code> folder. The resulting ZIP file will be found at: <code>C:\MyIDL\ehMathLib.zip</code>.</p>
+        <p class="Code">IPM, /CREATE, 'C:\MyIDL\MyMathLib', NAME='ehMathLib', VERSION='1.0'</p>
+        <p>The following assumes there is a valid idlpackage.json file residing in the <code>MyStatsLib</code> folder. The VERSION&#160;within the json file will be updated to 1.2.</p>
+        <p class="Code">IPM, /CREATE, 'C:\MyIDL\MyStatsLib', VERSION='1.2'</p>
+        <h2 class="API">Syntax</h2>
+        <p>IPM, /CREATE, <i>Folder</i> [, Keywords=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Folder</h3>
+        <p>Set this argument to a scalar string giving the full path to a local folder. The entire contents of this folder will be copied into a  ZIP file. If an <code>idlpackage.json</code> file does not currently exist in the folder and the NAME keyword is specified, IPM will create one. If an <code>idlpackage.json</code> file does exist in the folder, keywords can be used to update the <code>idlpackage.json</code> file.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">AUTHOR</h3>
+        <p>Set this to the name of the package's author. This value will be stored in the <code>idlpackage.json</code> file; it will overwrite any current author value in the file if one exists.</p>
+        <h3 class="Keyword">DATE</h3>
+        <p>Set this to a string denoting the date of creation of the current version of the package. This value will be stored in the <code>idlpackage.json</code>; it will overwrite any current date value in the file if one exists.</p>
+        <h3 class="Keyword">DEPENDENCIES</h3>
+        <p>Set this keyword to a hash containing the json that describes any dependencies your package requires.</p>
+        <h3 class="Keyword">NAME</h3>
+        <p>Set this to the name of the package to create. If an <code>idlpackage.json</code> file exists in the folder where you are creating the package, the NAME specified in the json file will be used. </p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If an <code>idlpackage.json</code> file does not currently exist, then NAME must be specified.</p>
+        <h3 class="Keyword">OUTPUT</h3>
+        <p>Set this keyword to an IDL variable that will contain a string containing any informational or error messages that are printed to the console during execution. This is useful when a program wants to be able to parse the output of the IPM operation.</p>
+        <h3 class="Keyword">PACKAGE_INFO</h3>
+        <p>If set to a hash or an ordered hash, all the key/value pairs contained will be added to the <code>idlpackage.json</code> file during package creation.</p>
+        <h3 class="Keyword">QUIET</h3>
+        <p>If set, does not print any messages to the console. The default is to print messages to the console.</p>
+        <h3 class="Keyword">URL</h3>
+        <p>Set this to the full URL that can be used to find this package. For example, <code>https://github.com/envi-idl/mgunit.zip</code>. This value will be stored in the <code>idlpackage.json</code> file and will overwrite any current value in the file, if one exists.</p>
+        <h3 class="Keyword">VERSION</h3>
+        <p>Set this to a string denoting the current version of the package. This value will be stored in the <code>idlpackage.json</code>; it will overwrite any current date value in the file if one exists.</p>
+        <h3 class="Keyword">ZIP_FILE</h3>
+        <p>Set this to the full path and name of the ZIP file in which to create the new IPM package. If not specified, the name of the package will be the name either from the NAME&#160;keyword or the NAME&#160;supplied in the <code>idlpackage.json</code>. The ZIP file will be located one level above the specified folder.</p>
+        <h1 class="RoutineClassObject"><a name="GET"></a>IPM GET</h1>
+        <p>GET allows you to download the ZIP files for a package, but does not unzip or install them. This can be useful if you know you only want a small subset of a given package and will manually unzip the files you desire.</p>
+        <h2 class="API">Example</h2>
+        <p>The following will download the ZIP files for mgunit.zip along with any ZIP files for dependency packages, but will not unzip any of them. The variable <code>files</code> will then contain the full path to all the downloaded zip files.</p>
+        <p class="Code">IPM, /GET, 'http://github.com/envi-idl/mgunit.zip', FILE=files</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IPM, /GET, <i>Package</i> [, Keywords=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Package</h3>
+        <p>Set this argument to a scalar string giving the location and name of an IDL package. This can be a complete URL to a location on the local file system, a URL to a location on the web, or sufficient package information to find the package on a repository such at GitHub.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">FILE</h3>
+        <p>If this is set to an IDL variable, it will return an array that contains the full path to all the downloaded ZIP files, including those of any dependency packages.</p>
+        <h3 class="Keyword">OUTPUT</h3>
+        <p>Set this keyword to an IDL variable that will contain a string containing any informational or error messages that are printed to the console during execution. This is useful when a program wants to be able to parse the output of the IPM operation.</p>
+        <h3 class="Keyword">PACKAGE_FOLDER</h3>
+        <p>By default, IPM installs new packages in the !PACKAGE_PATH directory. If PACKAGE_FOLDER is set to the full path of an existing folder, the package will be placed in this folder instead.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If PACKAGE_FOLDER is specified, IDL's path is not automatically updated to include the new directories, this must be done manually.</p>
+        <h3 class="Keyword">QUIET</h3>
+        <p>If set, does not print any messages to the console. The default is to print messages to the console.</p>
+        <h3 class="Keyword">SKIP_DEPENDENCIES</h3>
+        <p>Set this keyword to <code>1</code> to ignore, and to not download, any dependencies listed in the given package. The default is to download any dependencies listed in the package.</p>
+        <h3 class="Keyword">TYPE</h3>
+        <p>Set this keyword to the type of package being installed. If not set, IPM will attempt to determine the type by examining the contents of the package URL. The choices are:</p>
+        <ul>
+            <li value="1"><code>localfile</code>
+            </li>
+            <li value="2"><code>remotefile</code>
+            </li>
+            <li value="3"><code>github</code>
+            </li>
+        </ul>
+        <h3 class="Keyword">VERSION</h3>
+        <p>Set this keyword to the version to obtain. Some semantic versioning is accepted. See <a href="#Semantic_Versioning" class="selected">Semantic Versioning</a> for details on the versioning used by the IDL Package Manager.</p>
+        <h1 class="RoutineClassObject"><a name="INSTALL"></a>IPM INSTALL</h1>
+        <p>INSTALL allows you to download and install an IDL package. The packages will be unzipped into a folder underneath the !PACKAGE_PATH&#160;directory. The new directory name will be taken from the name of the package being installed. By default, any package dependencies will also be downloaded and installed. The IDL&#160;path will be updated to include the new installed files.</p>
+        <h2 class="API">Example</h2>
+        <p>The following will download and install the zip files for mgunit.zip, along with any zip files for dependency packages. The IDL path will then be updated.</p>
+        <p class="Code">IPM, /INSTALL, 'http://packages.idldev.com/mgunit.zip'</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IPM, /INSTALL, <i>Package</i> [, Keywords=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Package</h3>
+        <p>Set this argument to a scalar string giving the location and name of an IDL package. This can be a complete URL to a location on the local file system, a URL to a location on the web, or sufficient package information to find the package on a repository such at GitHub.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">FILE</h3>
+        <p>If this is set to an IDL variable, it will return an array that contains the full path to all the downloaded ZIP files, including those of any dependency packages.</p>
+        <h3 class="Keyword">KEEP_ZIP</h3>
+        <p>Set this keyword to keep the ZIP file after installing the package. By default, any downloaded ZIP file will be deleted after it is unpacked and installed.</p>
+        <h3 class="Keyword">OUTPUT</h3>
+        <p>Set this keyword to an IDL variable that will contain a string containing any informational or error messages that are printed to the console during execution. This is useful when a program wants to be able to parse the output of the IPM operation.</p>
+        <h3 class="Keyword">PACKAGE_FOLDER</h3>
+        <p>By default, IPM installs new packages in the !PACKAGE_PATH directory. If PACKAGE_FOLDER is set to the full path of an existing folder, the package will be placed in this folder instead.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>If PACKAGE_FOLDER is specified, IDL's path is not automatically updated to include the new directories, this must be done manually.</p>
+        <h3 class="Keyword">QUIET</h3>
+        <p>If set, does not print any messages to the console. The default is to print messages to the console.</p>
+        <h3 class="Keyword">SKIP_DEPENDENCIES</h3>
+        <p>Set this keyword to <code>1</code> to ignore, and to not download, any dependencies listed in the given package. The default is to download and install any dependencies listed in the package.</p>
+        <h3 class="Keyword">TYPE</h3>
+        <p>Set this keyword to the type of package being installed. If not set, IPM will attempt to determine the type by examining the contents of the package URL. The choices are:</p>
+        <ul>
+            <li value="1"><code>localfile</code>
+            </li>
+            <li value="2"><code>remotefile</code>
+            </li>
+            <li value="3"><code>github</code>
+            </li>
+        </ul>
+        <h3 class="Keyword">VERSION</h3>
+        <p>Set this keyword to the version to obtain. Some semantic versioning is accepted. See <a href="#Semantic_Versioning" class="selected">Semantic Versioning</a> for details on the versioning used by the IDL Package Manager.</p>
+        <h1 class="RoutineClassObject"><a name="LIST"></a>IPM LIST</h1>
+        <p>LIST allows you to get a basic list of the packages currently installed. If NAME is not supplied, LIST&#160;will list all the currently installed packages. If NAME&#160;is supplied, LIST&#160;will list only the information for the specified package.</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">IPM, /LIST</p>
+        <p>IDL&#160;prints:</p>
+        <p class="Code">Number of installed packages: 2</p>
+        <p class="Code">Name: MyMathLib, Version: 3.14</p>
+        <p class="Code">Name: MyStatsLib, Version: 5.10</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IPM, /LIST, <i>Name</i> [, Keywords=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Name</h3>
+        <p>Set this argument to a scalar string giving the name of the installed package.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">OUTPUT</h3>
+        <p>Set this keyword to an IDL variable that will contain a string containing any informational or error messages that are printed to the console during execution. This is useful when a program wants to be able to parse the output of the IPM operation.</p>
+        <h3 class="Keyword">QUIET</h3>
+        <p>If set, does not print any messages to the console. The default is to print messages to the console.</p>
+        <h1 class="RoutineClassObject"><a name="QUERY"></a>IPM QUERY</h1>
+        <p>QUERY allows you to see all the details of a given package.</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">IPM, /QUERY, 'MyMathLib'</p>
+        <p>IDL prints:</p>
+        <p class="Code">{</p>
+        <p class="Code_Indented">"Name": "MyMathLib",</p>
+        <p class="Code_Indented">"Version": "3.14",</p>
+        <p class="Code_Indented">"Author": "Boris",</p>
+        <p class="Code_Indented">"Dependencies": [</p>
+        <p class="Code_Indented2">{</p>
+        <p class="Code_Indented3">"Name": "IDL",</p>
+        <p class="Code_Indented3">"Version": "^8.7"</p>
+        <p class="Code_Indented2">}</p>
+        <p class="Code_Indented">]</p>
+        <p class="Code">}</p>
+        <h2 class="API">Syntax</h2>
+        <p>IPM, /QUERY, <i>Name</i> [, Keywords=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Name</h3>
+        <p>Set this argument to a scalar string giving the name of the installed package.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">INFO</h3>
+        <p>If set to an IDL variable, this keyword will return an ordered hash containing all the information known about the package.</p>
+        <h3 class="Keyword">OUTPUT</h3>
+        <p>Set this keyword to an IDL variable that will contain a string containing any informational or error messages that are printed to the console during execution. This is useful when a program wants to be able to parse the output of the IPM operation.</p>
+        <h3 class="Keyword">QUIET</h3>
+        <p>If set, does not print any messages to the console. The default is to print messages to the console.</p>
+        <h1 class="RoutineClassObject"><a name="REMOVE"></a>IPM REMOVE</h1>
+        <p>REMOVE allows you to remove packages. Removing a package deletes the folder in which the package resides and updates the IDL path to no longer look in that folder.</p>
+        <h2 class="API">Example</h2>
+        <p>The following will delete the folders containing the two packages and updates the IDL path.</p>
+        <p class="Code">IPM, /REMOVE, ['MyMathLib', 'MyStatsLib']</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">IPM, /REMOVE, <i>Name</i> [, Keywords=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Name</h3>
+        <p>Set this to a String or String array denoting the name(s) of the packages you wish to remove.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">OUTPUT</h3>
+        <p>Set this keyword to an IDL variable that will contain a string containing any informational or error messages that are printed to the console during execution. This is useful when a program wants to be able to parse the output of the IPM operation.</p>
+        <h3 class="Keyword">QUIET</h3>
+        <p>If set, does not print any messages to the console. The default is to print messages to the console.</p>
+        <h1 class="RoutineClassObject"><a name="UPDATE"></a>IPM UPDATE</h1>
+        <p>UPDATE allows you to update the contents of a given package. If a suitable update is found, the current package will be removed and the new package will then be installed. When UPDATE&#160;is called, the dependency tree is searched. If a conflict is found, a message will be printed and no update will occur. In this case, you must manually update each dependent library as needed. If version information cannot be found for a given package, a message will be printed and no update will occur.</p>
+        <h2 class="API">Examples</h2>
+        <p>The following will attempt to update MyMathLib from the current version to version 3.2</p>
+        <p class="Code">IPM, /UPDATE, 'MyMathLib', VERSION='3.2'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Package "MyMathLib" was removed</p>
+        <p class="Code">Package: MyMathLib, Version: 3.2 installed</p>
+        <p>&#160;</p>
+        <p>The following will attempt to update MyStatsLib to the latest version. But in this case a dependency conflict occurs.</p>
+        <p class="Code">IPM, /UPDATE, 'MyStatsLib'</p>
+        <p>IDL prints:</p>
+        <p class="Code">Cannot update. Conflicts exist with dependencies:</p>
+        <p class="Code">Conflict in package "StatsHelper", Version: 1.2 is currently installed but "MyStatsLib" requires version: ^1.4.1</p>
+        <p>It is now up to you to decide whether or not it is safe to update StatsHelper to the needed version.</p>
+        <h2 class="API">Syntax</h2>
+        <p>IPM, /UPDATE, <i>Name</i> [, Keywords=<i>value</i>]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Name</h3>
+        <p>Set this argument to a scalar string giving the name of the installed package.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">OUTPUT</h3>
+        <p>Set this keyword to an IDL variable that will contain a string containing any informational or error messages that are printed to the console during execution. This is useful when a program wants to be able to parse the output of the IPM operation.</p>
+        <h3 class="Keyword">QUIET</h3>
+        <p>If set, does not print any messages to the console. The default is to print messages to the console.</p>
+        <h3 class="Keyword">VERSION</h3>
+        <p>Set this keyword to the version to obtain. If no version is specified, IDL&#160;will attempt to update to the lastest version found. Some semantic versioning is accepted. See <a href="#Semantic_Versioning" class="selected">Semantic Versioning</a> for details on the versioning used by the IDL Package Manager.</p>
+        <h2 class="API">Version History</h2>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="../../Creating IDL Programs/Appendices/prefs_directory.htm#PACKPATH">IDL_PACKAGE_PATH</a>, <a href="../../Creating IDL Programs/Appendices/IDL_Environment_System_V.htm#!PACKAGEPATH">!PACKAGE_PATH</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: S">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SOBOLSEQUENCE</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="S_list.htm">Routines: S</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">SOBOLSEQUENCE</span>
+        </div>
+        <h1 class="Routine"><a name="kanchor2615"></a>SOBOLSEQUENCE</h1>
+        <p>The SOBOLSEQUENCE function generates numbers from the Sobol sequence. A Sobol sequence is a low discrepancy quasi-random sequence. Sobol sequences were designed to fill space in a more uniform manner than completely random sampling.</p>
+        <p>The figures below show the differences between a Sobol sequence and sampling uniformly at random.</p>
+        <p>
+            <img src="../../images/SobelSobel_426x336.jpg" style="width: 426;height: 336;" />
+        </p>
+        <p>250 points sampled in 2D with a Sobol sequence.</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../images/SobelRandom_424x337.jpg" style="width: 424;height: 337;" />
+        </p>
+        <p>250 points sampled uniformly in 2D at random.</p>
+        <h2 class="API">Example</h2>
+        <h3>Basic Functionality</h3>
+        <p class="Code">print, SobolSequence(2, 4)</p>
+        <p>IDL&#160;prints:</p>
+        <p class="Code">0.50000000      0.50000000</p>
+        <p class="Code">0.25000000      0.75000000</p>
+        <p class="Code">0.75000000      0.25000000</p>
+        <p class="Code">0.37500000      0.62500000</p>
+        <h3>Using STATE</h3>
+        <p class="Code">state = 3</p>
+        <p class="Code">print, SobolSequence(state, 2)</p>
+        <p>IDL&#160;prints:</p>
+        <p class="Code">0.50000000      0.50000000      0.50000000</p>
+        <p class="Code">0.25000000      0.75000000      0.25000000</p>
+        <p>Print the next two sets of values by using STATE:</p>
+        <p class="Code">print, SobolSequence(state, 2)</p>
+        <p>IDL prints:</p>
+        <p class="Code">0.75000000      0.25000000      0.75000000</p>
+        <p class="Code">0.37500000      0.62500000      0.12500000</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = SOBOLSEQUENCE(<i><a href="#STATE" class="selected">STATE</a></i> [, <i><a href="#COUNT" class="selected">COUNT</a></i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>SOBOLSEQUENCE returns an array containing the point(s) in normalized space.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument"><a name="STATE"></a>STATE</h3>
+        <p>A scalar denoting the number of dimensions to use while initializing the state of the Sobol sequence. This value must be in the range of [1, 6].</p>
+        <p>If STATE is:</p>
+        <ul>
+            <li value="1">A constant or expression containing a scalar long integer: The value is used to initialize the state of the Sobol sequence.</li>
+        </ul>
+        <ul>
+            <li value="1">A named variable containing a scalar long integer: The value is used to start a new sequence and the resulting state object is returned in STATE.</li>
+        </ul>
+        <ul>
+            <li value="1">A named variable that contains the state from a previous call: It is used to continue the quasi-random sequence, and the resulting state is returned in STATE.</li>
+        </ul>
+        <h3><a name="COUNT"></a>COUNT</h3>
+        <p>The number of points to return. If omitted, the default is a single n-dimensional point.</p>
+        <h2 class="API">Keywords</h2>
+        <p>None.</p>
+        <h2 class="API">References</h2>
+        <p>SOBOLSEQUENCE is based on the routine sobseq described in section 7.7 of <i>Numerical Recipes in C: The Art of Scientific Computing</i> (Third Edition), published by Cambridge University Press, and is used by permission.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.7.3</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

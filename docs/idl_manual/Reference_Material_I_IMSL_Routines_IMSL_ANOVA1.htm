@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_ANOVA1</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_ANOVA1</span>
+        </div>
+        <h1 class="Routine">IMSL_ANOVA1</h1>
+        <p>The IMSL_ANOVA1 function analyzes a one-way classification model.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_ANOVA1 function performs an analysis of variance of responses from a one-way classification design. The model is:</p>
+        <p><i>y<sub>ij</sub></i> = μ<sub>i</sub> + <span style="font-family: Symbol; font-style: normal" class="cSymbol">e</span><i><sub>ij</sub>i</i> = 1, 2, ..., <i>k</i>; &#160; <i>j</i> = 1, 2, ..., <i>n<sub>i</sub></i></p>
+        <p>where the observed value <i>y<sub>ij</sub></i> constitutes the <i>j</i>-th response in the <i>i</i>-th group, μ<sub>i </sub>denotes the population mean for the <i>i</i>-th group, and the <span style="font-family: Symbol; font-style: normal" class="cSymbol">e</span><sub style="font-style: italic">ij </sub>arguments are errors that are identically and independently distributed normal with mean 0 and variance σ<sup>2</sup>. The IMSL_ANOVA1 function requires the <i>y<sub>ij</sub></i> observed responses as input into a single vector <i>y</i> with responses in each group occupying contiguous locations. The analysis of variance table is computed along with the group sample means and standard deviations. A discussion of formulas and interpretations for the one-way analysis of variance problem appears in most statistics texts, e.g., Snedecor and Cochran (1967, Chapter 10).
+		</p>
+        <p>The IMSL_ANOVA1 function computes simultaneous confidence intervals on all:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-06.gif" />
+        </p>
+        <p>pairwise comparisons of <i>k</i> means μ<sub>1</sub>, μ<sub>2</sub>, ..., μ<sub style="font-style: italic">k </sub>in the one-way analysis of variance model. Any of several methods can be chosen. A good review of these methods is given by Stoline (1981). The methods also are discussed in many statistics texts, e.g., Kirk (1982, pp. 114–127).</p>
+        <p>Let <i>s</i><sup>2</sup> be the estimated variance of a single observation. Let <span style="font-family: Symbol" class="cSymbol">n </span>be the degrees of freedom associated with <i>s</i><sup>2</sup>. Let:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-07.gif" />
+        </p>
+        <p>The methods are summarized as follows:</p>
+        <p><b>Tukey Method:</b> The Tukey method gives the narrowest simultaneous confidence intervals for all pairwise differences of means mi – mj in balanced</p>
+        <p>(<i>n</i><sub>1</sub> = <i>n</i><sub>2</sub> = ... <i>n</i><sub>k</sub> = <i>n</i>) one-way designs. The method is exact and uses the Studentized range distribution. The formula for the difference μ <sub style="font-style: italic">i</sub> – μ<sub>j</sub> is given by the following:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-08.gif" />
+        </p>
+        <p>where <img src="images/IMSL_ANOVA1-09.gif" /> is the (1 – <span style="font-family: Symbol" class="cSymbol">a</span> ) 100 percentage point of the Studentized range distribution with parameters <i>k</i> and <span style="font-family: Symbol" class="cSymbol">n</span>.
+		</p>
+        <p><b>Tukey-Kramer Method:</b> The Tukey-Kramer method is an approximate extension of the Tukey method for the unbalanced case. (The method simplifies to the Tukey method for the balanced case.) The method always produces confidence intervals narrower than the Dunn-Sidak and Bonferroni methods. Hayter (1984) proved that the method is conservative, i.e., the method guarantees a confidence (1 – <span style="font-family: Symbol" class="cSymbol">a</span>) 100. Hayter's proof gave further support to earlier recommendations for its use (Stoline 1981). (Methods that are currently better are restricted to special cases and only offer improvement in severely unbalanced cases; see, for example, Spurrier and Isham 1985.) The formula for the difference μ<sub style="font-style: italic">i</sub> – μ<sub>j </sub>is given by the following:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-10.gif" />
+        </p>
+        <p><b>Dunn-Sidák Method:</b> The Dunn-Sidak method is a conservative method. The method gives wider intervals than the Tukey-Kramer method. (For large <span style="font-family: Symbol" class="cSymbol">n </span>and small <span style="font-family: Symbol" class="cSymbol">a </span>and <i>k</i>, the difference is only slight.) The method is slightly better than the Bonferroni method and is based on an improved Bonferroni (multiplicative) inequality (Miller 1980, pp. 101, 254–255). The method uses the <i>t </i>distribution (see IMSL_TCDF. The formula for the difference μ<sub style="font-style: italic">i</sub> – μ<sub>j </sub>is given by the following:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-11.gif" />
+        </p>
+        <p>where <i>t<sub>f;v</sub></i> is the 100<i>f</i> percentage point of the <i>t</i> distribution with <span style="font-family: Symbol" class="cSymbol">n</span> degrees of freedom.
+		</p>
+        <p><b>Bonferroni Method:</b> The Bonferroni method is a conservative method based on the Bonferroni (additive) inequality (Miller, p.&#160;8). The method uses the <i>t </i>distribution. The formula for the difference μ<sub style="font-style: italic">i</sub> – μ<sub>j </sub>is given by the following:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-12.gif" />
+        </p>
+        <p><b>Scheffé Method:</b> The Scheffé method is an overly conservative method for simultaneous confidence intervals on pairwise difference of means. The method is applicable for simultaneous confidence intervals on all contrasts, i.e., all linear combinations:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-13.gif" />
+        </p>
+        <p>where the following is true:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-14.gif" />
+        </p>
+        <p>This method can be recommended here only if a large number of confidence intervals on contrasts, in addition to the pairwise differences of means, are to be constructed. The method uses the <i>F </i>distribution (see IMSL_FCDF. The formula for the difference μ<sub style="font-style: italic">i</sub> – μ<sub>j </sub>is given by the following:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-15.gif" />
+        </p>
+        <p>where:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-16.gif" /> </p>
+        <p>is the (1 – <span style="font-family: Symbol" class="cSymbol">a</span>) 100 percentage point of the <i>F</i> distribution with <i>k</i> – 1 and <span style="font-family: Symbol" class="cSymbol">n </span>degrees of freedom. 
+		</p>
+        <p><b>One-at-a-Time t Method (Fisher's LSD):</b> The One-at-a-Time <i>t</i> method is appropriate for constructing a single confidence interval. The confidence percentage input is appropriate for one interval at a time. The method has been used widely in conjunction with the overall test of the null hypothesis μ<sub>1</sub> = μ<sub>2</sub> = ... = μ<sub style="font-style: italic">k </sub>by the use of the <i>F</i> statistic. Fisher's LSD (least significant difference) test is a two-stage test that proceeds to make pairwise comparisons of means only if the overall <i>F </i>test is significant. Milliken&#160;and&#160;Johnson (1984, p. 31) recommend LSD comparisons after a significant <i>F </i>only if the number of comparisons is small and the comparisons were planned prior to the analysis. If many unplanned comparisons are made, they recommend Scheffé's method. If the <i>F </i>test is insignificant, a few planned comparisons for differences in means can still be performed by using either Tukey, Tukey-Kramer, Dunn-Sidak or Bonferroni methods. Because the <i>F </i>test is insignificant, Scheffé's method does not yield any significant differences. The formula for the difference μ<sub>i</sub> – μ<sub style="font-style: italic">j </sub>is given by the following:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-17.gif" />
+        </p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example computes a one-way analysis of variance for data discussed by Searle (1971, Table 5.1, pp. 165–179). The responses are plant weights for six plants of three different types shown in the following table: three normal, two off-types, and one aberrant.</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Normal</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Off-Type</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Aberrant</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>101</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>84</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>32</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>105</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>88</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>  <![CDATA[ ]]></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>94</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColSep">
+                        <p>  <![CDATA[ ]]></p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowEnd_ColEnd">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="Code">n = [3,2,1]</p>
+        <p class="Code">y = [101.0, 105.0, 94.0, 84.0, 88.0, 32.0]</p>
+        <p class="Code">PRINT,';p-value = ', IMSL_ANOVA1(n, y)</p>
+        <p>IDL prints:</p>
+        <p class="Code">p-value = 0.00276887</p>
+        <h3>Example 2: Multiple Comparisons</h3>
+        <p>Simultaneous confidence intervals are generated for the measurements of cold-cranking power for five models of automobile batteries shown in the table below. Nelson (1989, pp. 232–241) provided the data and approach.</p>
+        <table class="TableStyle_Description" style="mc-table-style: url('../../../Resources/TableStyles/Description.css');margin-left: 0;margin-right: auto;" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Model 1</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Model 2</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Model 3</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Model 4</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Model 5</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>41</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>42</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>27</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>48</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>28</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>43</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>43</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>26</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>45</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>32</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>42</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>46</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>28</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>51</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>37</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>46</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>38</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>27</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>46</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>25</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The Tukey method is chosen for the analysis of pairwise comparisons, with a confidence level of 99 percent. The means and their confidence limits are output. First, a procedure to print out the results is defined.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, anova_table, diff_means</p>
+        <p class="Code_Indented">anova_labels = [';df for among groups', $</p>
+        <p class="Code_Indented2">';df for within groups', 'total (corrected) df', $</p>
+        <p class="Code_Indented2">';ss for among groups', 'ss for within groups', $</p>
+        <p class="Code_Indented2">';total (corrected) ss', 'mean square among groups', $</p>
+        <p class="Code_Indented2">';mean square within groups', 'F-statistic', $</p>
+        <p class="Code_Indented2">';P-value', 'R-squared (in percent)', $</p>
+        <p class="Code_Indented2">';adjusted R-squared (in percent)', $</p>
+        <p class="Code_Indented2">';est. std of within group error', 'overall mean of y', $</p>
+        <p class="Code_Indented2">';coef. of variation (in percent)']</p>
+        <p class="Code_Indented">PRINT, '; * *Analysis of Variance * *'</p>
+        <p class="Code_Indented">FOR i = 0, 14 DO PM, anova_labels(i), $</p>
+        <p class="Code_Indented2">anova_table(i), FORMAT = ';(a40,f20.2)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">; Print the analysis of variance table.</p>
+        <p class="Code_Indented">PRINT, '; * *Differences of Means * *'</p>
+        <p class="Code_Indented">PRINT, ';groups', 'difference', 'lower limit', 'upper limit'</p>
+        <p class="Code_Indented">PM, diff_means, FORMAT = ';(2i3, x, f9.2, 4x, f9.2, 5x, f9.2)'</p>
+        <p class="Code_Indented">; Print the differences of means.</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">n = [4, 4, 4, 4, 4]</p>
+        <p class="Code">y = [41, 43, 42, 46, 42, 43, 46, 38, 27, 26, 28, 27, $</p>
+        <p class="Code_Indented">48, 45, 51, 46, 28, 32, 37, 25]</p>
+        <p class="Code">p_value = IMSL_ANOVA1(n, y, Confidence = 99.0, $</p>
+        <p class="Code_Indented">Anova_Table = anova_table, Tukey = diff_means)</p>
+        <p class="Code">; Call IMSL_ANOVA1.</p>
+        <p class="Code">print_results, anova_table, diff_means</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Output the results.</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">* *Analysis of Variance * *</p>
+        <p class="Code_Indented">df for among groups                    4.00</p>
+        <p class="Code_Indented">df for within groups                  15.00</p>
+        <p class="Code_Indented">total (corrected) df                  19.00</p>
+        <p class="Code_Indented">ss for among groups                 1242.20</p>
+        <p class="Code_Indented">ss for within groups                 150.75</p>
+        <p class="Code_Indented">total (corrected) ss                1392.95</p>
+        <p class="Code_Indented">mean square among groups             310.55</p>
+        <p class="Code_Indented">mean square within groups             10.05</p>
+        <p class="Code_Indented">F-statistic                           30.90</p>
+        <p class="Code_Indented">P-value                                0.00</p>
+        <p class="Code_Indented">R-squared (in percent)                89.18</p>
+        <p class="Code_Indented">adjusted R-squared (in percent)       86.29</p>
+        <p class="Code_Indented">est. std of within group error         3.17</p>
+        <p class="Code_Indented">overall mean of y                     38.05</p>
+        <p class="Code_Indented">coef. of variation (in percent)        8.33</p>
+        <p class="Code">* *Differences of Means * *</p>
+        <p class="Code">groups   difference   lower limit   upper limit</p>
+        <p class="Code_Indented">1  2&#160;&#160;&#160;&#160;&#160;&#160;0.75&#160;&#160;&#160;&#160;&#160;&#160;-8.05&#160;&#160;&#160;&#160;&#160;&#160;&#160;9.55</p>
+        <p class="Code_Indented">1  3&#160;&#160;&#160;&#160;&#160;16.00&#160;&#160;&#160;&#160;&#160;&#160;&#160;7.20&#160;&#160;&#160;&#160;&#160;&#160;24.80</p>
+        <p class="Code_Indented">1  4&#160;&#160;&#160;&#160;&#160;-4.50&#160;&#160;&#160;&#160;&#160;-13.30&#160;&#160;&#160;&#160;&#160;&#160;&#160;4.30</p>
+        <p class="Code_Indented">1  5&#160;&#160;&#160;&#160;&#160;12.50&#160;&#160;&#160;&#160;&#160;&#160;&#160;3.70&#160;&#160;&#160;&#160;&#160;&#160;21.30</p>
+        <p class="Code_Indented">2  3&#160;&#160;&#160;&#160;&#160;15.25&#160;&#160;&#160;&#160;&#160;&#160;&#160;6.45&#160;&#160;&#160;&#160;&#160;&#160;24.05</p>
+        <p class="Code_Indented">2  4&#160;&#160;&#160;&#160;&#160;-5.25&#160;&#160;&#160;&#160;&#160;-14.05&#160;&#160;&#160;&#160;&#160;&#160;&#160;3.55</p>
+        <p class="Code_Indented">2  5&#160;&#160;&#160;&#160;&#160;11.75&#160;&#160;&#160;&#160;&#160;&#160;&#160;2.95&#160;&#160;&#160;&#160;&#160;&#160;20.55</p>
+        <p class="Code_Indented">3  4&#160;&#160;&#160;&#160;-20.50&#160;&#160;&#160;&#160;&#160;-29.30&#160;&#160;&#160;&#160;&#160;-11.70</p>
+        <p class="Code_Indented">3  5&#160;&#160;&#160;&#160;&#160;-3.50&#160;&#160;&#160;&#160;&#160;-12.30&#160;&#160;&#160;&#160;&#160;&#160;&#160;5.30</p>
+        <p class="Code_Indented">4  5&#160;&#160;&#160;&#160;&#160;17.00&#160;&#160;&#160;&#160;&#160;&#160;&#160;8.20&#160;&#160;&#160;&#160;&#160;&#160;25.80</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_ANOVA1(<i>N, Y</i>[, <a href="#ANOVA_TABLE" class="selected">ANOVA_TABLE</a>=<i>variable</i>] [, <a href="#BONFERRONI" class="selected">BONFERRONI</a>=<i>variable</i>] [, <a href="#CONFIDENCE" class="selected">CONFIDENCE</a>=<i>value</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#DUNN_SIDAK" class="selected">DUNN_SIDAK</a>=<i>variable</i>] [, <a href="#GROUP_COUNTS" class="selected">GROUP_COUNTS</a>=<i>variable</i>] [, <a href="#GROUP_MEANS" class="selected">GROUP_MEANS</a>=<i>variable</i>] [, <a href="#GROUP_STD_DEV" class="selected">GROUP_STD_DEV</a>=<i>variable</i>] [, <a href="#ONE_AT_A_TIME" class="selected">ONE_AT_A_TIME</a>=<i>variable</i>] [, <a href="#SCHEFFE" class="selected">SCHEFFE</a>=<i>variable</i>] [, <a href="#TUKEY" class="selected">TUKEY</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>The <i>p</i>-value for the <i>F</i>-statistic.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N</h3>
+        <p>One-dimensional array containing the number of responses for each group.</p>
+        <h3 class="Argument">Y</h3>
+        <p>One-dimensional array of length:</p>
+        <p>n(0) + n(1) + ...+ n(N_ELEMENTS(n) – 1)</p>
+        <p>containing the responses for each group.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ANOVA_TABLE"></a>ANOVA_TABLE (optional)</h3>
+        <p>Named variable into which the analysis of variance table is stored. The analysis of variance statistics are as follows:</p>
+        <ul>
+            <li value="1">0: Degrees of freedom for the model</li>
+            <li value="2">1: Degrees of freedom for error</li>
+            <li value="3">2: Total (corrected) degrees of freedom</li>
+            <li value="4">3: Sum of squares for the model</li>
+            <li value="5">4: Sum of squares for error</li>
+            <li value="6">5: Total (corrected) sum of squares</li>
+            <li value="7">6: Model mean square</li>
+            <li value="8">7: Error mean square</li>
+            <li value="9">8: Overall <i>F</i>-statistic</li>
+            <li value="10">9: <i>p</i>-value</li>
+            <li value="11">10: R<sup>2</sup> (in percent)</li>
+            <li value="12">11: Adjusted R<sup>2</sup> (in percent)</li>
+            <li value="13">12: Estimate of the standard deviation</li>
+            <li value="14">13: Overall mean of <i>y</i></li>
+            <li value="15">14: Coefficient of variation (in percent)</li>
+        </ul>
+        <h3 class="Keyword"><a name="BONFERRONI"></a>BONFERRONI (optional)</h3>
+        <p>Named variable into which the array containing the statistics relating to the difference of means is stored. On return, the named variable contains an array of size:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-01.gif" />
+        </p>
+        <p>where ngroups = N_ELEMENTS (n).</p>
+        <ul>
+            <li value="1">0: Group number for the <i>i</i>-th mean</li>
+            <li value="2">1: Group number for the <i>j</i>-th mean</li>
+            <li value="3">2: Difference of means (<i>i</i>-th mean) - (<i>j</i>-th mean)</li>
+            <li value="4">3: Lower confidence limit for the difference</li>
+            <li value="5">4: Upper confidence limit for the difference</li>
+        </ul>
+        <p>The IMSL_ANOVA1 function computes confidence intervals on all pairwise differences of means using one of six methods: Tukey, Tukey-Kramer, Dunn-Sidák, Bonferroni, Scheffé, or Fisher's LSD (One-at-a-Time). If Tukey is specified, Tukey confidence intervals are calculated if the group sizes are equal; otherwise, the Tukey-Kramer confidence intervals are calculated.</p>
+        <h3 class="Keyword"><a name="CONFIDENCE"></a>CONFIDENCE (optional)</h3>
+        <p>Confidence level for the simultaneous interval estimation. If Tukey is specified, Confidence must be in the range [90.0, 99.0); otherwise, Confidence is in the range [0.0, 100.0). Default: 95.0</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="DUNN_SIDAK"></a>DUNN_SIDAK (optional)</h3>
+        <p>Named variable into which the array containing the statistics relating to the difference of means is stored. On return, the named variable contains an array of size:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-01.gif" />
+        </p>
+        <p>where ngroups = N_ELEMENTS (n).</p>
+        <ul>
+            <li value="1">0: group number for the <i>i</i>-th mean</li>
+            <li value="2">1: group number for the <i>j</i>-th mean</li>
+            <li value="3">2: difference of means (<i>i</i>-th mean) - (<i>j</i>-th mean)</li>
+            <li value="4">3: lower confidence limit for the difference</li>
+            <li value="5">4: upper confidence limit for the difference</li>
+        </ul>
+        <p>The IMSL_ANOVA1 function computes confidence intervals on all pairwise differences of means using one of six methods: Tukey, Tukey-Kramer, Dunn-Sidák, Bonferroni, Scheffé, or Fisher's LSD (One-at-a-Time). If Tukey is specified, Tukey confidence intervals are calculated if the group sizes are equal; otherwise, the Tukey-Kramer confidence intervals are calculated.</p>
+        <h3 class="Keyword"><a name="GROUP_COUNTS"></a>GROUP_COUNTS (optional)</h3>
+        <p>Named variable into which the array containing the number of nonmissing observations for the groups is stored.</p>
+        <h3 class="Keyword"><a name="GROUP_MEANS"></a>GROUP_MEANS (optional)</h3>
+        <p>Named variable into which the array containing the group means is stored.</p>
+        <h3 class="Keyword"><a name="GROUP_STD_DEV"></a>GROUP_STD_DEV (optional)</h3>
+        <p>Named variable into which the array containing the group standard deviations is stored.</p>
+        <h3 class="Keyword"><a name="ONE_AT_A_TIME"></a>ONE_AT_A_TIME (optional)</h3>
+        <p>Named variable into which the array containing the statistics relating to the difference of means is stored. On return, the named variable contains an array of size:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-01.gif" />
+        </p>
+        <p>where ngroups = N_ELEMENTS (n).</p>
+        <ul>
+            <li value="1">0: group number for the <i>i</i>-th mean</li>
+            <li value="2">1: group number for the <i>j</i>-th mean</li>
+            <li value="3">2: difference of means (<i>i</i>-th mean) - (<i>j</i>-th mean)</li>
+            <li value="4">3: lower confidence limit for the difference</li>
+            <li value="5">4: upper confidence limit for the difference</li>
+        </ul>
+        <p>The IMSL_ANOVA1 function computes confidence intervals on all pairwise differences of means using one of six methods: Tukey, Tukey-Kramer, Dunn-Sidák, Bonferroni, Scheffé, or Fisher's LSD (One-at-a-Time). If Tukey is specified, Tukey confidence intervals are calculated if the group sizes are equal; otherwise, the Tukey-Kramer confidence intervals are calculated.</p>
+        <h3 class="Keyword"><a name="SCHEFFE"></a>SCHEFFE (optional)</h3>
+        <p>Named variable into which the array containing the statistics relating to the difference of means is stored. On return, the named variable contains an array of size:</p>
+        <p><![CDATA[  ]]><img src="images/IMSL_ANOVA1-01.gif" /></p>
+        <p>where ngroups = N_ELEMENTS (n).</p>
+        <ul>
+            <li value="1">0: group number for the <i>i</i>-th mean</li>
+            <li value="2">1: group number for the <i>j</i>-th mean</li>
+            <li value="3">2: difference of means (<i>i</i>-th mean) - (<i>j</i>-th mean)</li>
+            <li value="4">3: lower confidence limit for the difference</li>
+            <li value="5">4: upper confidence limit for the difference</li>
+        </ul>
+        <p>The IMSL_ANOVA1 function computes confidence intervals on all pairwise differences of means using one of six methods: Tukey, Tukey-Kramer, Dunn-Sidák, Bonferroni, Scheffé, or Fisher's LSD (One-at-a-Time). If Tukey is specified, Tukey confidence intervals are calculated if the group sizes are equal; otherwise, the Tukey-Kramer confidence intervals are calculated.</p>
+        <h3 class="Keyword"><a name="TUKEY"></a>TUKEY (optional)</h3>
+        <p>Named variable into which the array containing the statistics relating to the difference of means is stored. On return, the named variable contains an array of size:</p>
+        <p>
+            <img src="images/IMSL_ANOVA1-01.gif" />
+        </p>
+        <p>where ngroups = N_ELEMENTS (n).</p>
+        <ul>
+            <li value="1">0: Group number for the <i>i</i>-th mean</li>
+            <li value="2">1: Group number for the <i>j</i>-th mean</li>
+            <li value="3">2: Difference of means (<i>i</i>-th mean) - (<i>j</i>-th mean)</li>
+            <li value="4">3: Lower confidence limit for the difference</li>
+            <li value="5">4: Upper confidence limit for the difference</li>
+        </ul>
+        <p>The IMSL_ANOVA1 function computes confidence intervals on all pairwise differences of means using one of six methods: Tukey, Tukey-Kramer, Dunn-Sidák, Bonferroni, Scheffé, or Fisher's LSD (One-at-a-Time). If Tukey is specified, Tukey confidence intervals are calculated if the group sizes are equal; otherwise, the Tukey-Kramer confidence intervals are calculated.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>H5T_SET_CSET </title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <h1 class="Routine">H5T_SET_CSET </h1>
+        <p>The H5T_SET_CSET<a name="kanchor6050"></a> procedure sets the encoding type of a string datatype for a dataset or attribute. The <a href="H5T_GET_CSET.htm">H5T_GET_CSET</a> function can be used to retrieve the encoding type.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>The default encoding type for strings is ASCII. Call H5T_SET_CSET only for UTF-8 encoding.</p>
+        <p class="Note" data-mc-autonum="&lt;b&gt;Note: &lt;/b&gt;"><span class="autonumber"><span><b>Note: </b></span></span>Call H5T_SET_CSET before you create the dataset or attribute.</p>
+        <h2 class="API">Example</h2>
+        <p class="Code">fid = H5F_CREATE("myfile.h5")</p>
+        <p class="Code">datatype_id = H5T_IDL_CREATE("very long string")</p>
+        <p class="Code">H5T_SET_CSET, datatype_id, /UTF8</p>
+        <p class="Code">dataspace_id = H5S_CREATE_SIMPLE([1])</p>
+        <p class="Code">dataset_id = H5D_CREATE(fid, 'dataset', $</p>
+        <p class="Code_Indented">datatype_id, dataspace_id)</p>
+        <p class="Code">H5D_WRITE, dataset_id, "my data string"</p>
+        <p class="Code">H5F_CLOSE, fid</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">fid = H5F_OPEN("myfile.h5")</p>
+        <p class="Code">dataset_id = H5D_OPEN(fid, 'dataset')</p>
+        <p class="Code">datatype_id = H5D_GET_TYPE(dataset_id)</p>
+        <p class="Code">PRINT, H5T_GET_CSET(datatype_id)</p>
+        <p class="Code">H5F_CLOSE, fid</p>
+        <p>IDL prints:</p>
+        <p class="Code">UTF8</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">H5T_SET_CSET, <i>Datatype_id</i> [, /ASCII] [, /UTF8]</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Datatype_id</h3>
+        <p>An integer representing the datatype's identifier to be queried.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword">ASCII</h3>
+        <p>Set this keyword to force the encoding type to US ASCII. This is the default behavior if no keywords are set.</p>
+        <h3 class="Keyword">UTF8</h3>
+        <p>Set this keyword to force the encoding type to UTF-8.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 47px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>8.6.1</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="H5T_GET_CSET.htm">H5T_GET_CSET</a>, <a href="H5T_IDL_CREATE.htm">H5T_IDL_CREATE</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

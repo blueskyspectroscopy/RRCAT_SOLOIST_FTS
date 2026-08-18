@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Language">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Variable Functions and Attributes</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../IDL Programming.htm">Language</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using Variable Functions and Attributes</span>
+        </div>
+        <h1><a name="kanchor5130"></a>Using Variable Functions and Attributes</h1>
+        <p>This document describes how to use variable functions and attributes. Also see:</p>
+        <ul>
+            <li value="1"><a href="Variable_Functions.htm">Creating Variable Functions</a>
+            </li>
+            <li value="2"><a href="../../Reference Material/Functional List of IDL Routines/Variable_Functions_List.htm"><a href="../../Reference Material/Functional List of IDL Routines/Variable_Functions_List.htm">List of Variable Functions  and Attributes</a></a>
+            </li>
+        </ul>
+        <h3>Using Variable Attributes</h3>
+        <p>All IDL variables can use the dot "." operator to access various attributes that describe the variable.</p>
+        <p>All variables have special attributes that return information about the variable. These attributes are equivalent to calling the <a href="../../Reference Material/N/N_ELEMENTS.htm">N_ELEMENTS</a>, <a href="../../Reference Material/S/SIZE.htm">SIZE</a>, or <a href="../../Reference Material/T/TYPENAME.htm">TYPENAME</a> functions.</p>
+        <p>For example:</p>
+        <p class="Code">IDL&gt; arr = FLTARR(200, 100)</p>
+        <p class="Code">IDL&gt; arr.LENGTH, arr.NDIM, arr.DIM, arr.TNAME</p>
+        <p>IDL prints:</p>
+        <p class="Code">20000</p>
+        <p class="Code">2</p>
+        <p class="Code">200         100</p>
+        <p class="Code">FLOAT</p>
+        <p>See <a href="../../Reference Material/Static Methods/Variable Attributes.htm">Variable Attributes</a> for the list of available attributes.</p>
+        <h3>Using Variable Functions</h3>
+        <p>All IDL variables (except structures and objects) have access to  function methods on "static classes," where the variable's data type determines the class. For example, an IDL variable of type BYTE has a built-in static class named <i>IDL_Byte</i>. The static classes have the following inheritance structure:</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Reference Material/images/idl_variable.png" />
+        </p>
+        <p>&#160;</p>
+        <p>Note that all of IDL's integer types are a subclass of <a href="../../Reference Material/Static Methods/IDL_Integer.htm">IDL_Integer</a>, which is a subclass of <a href="../../Reference Material/Static Methods/IDL_Number.htm">IDL_Number</a>, which in turn is a subclass of <a href="../../Reference Material/Static Methods/IDL_Variable.htm">IDL_Variable</a>. This means that all integer variables will have access to any of the functions on IDL_Integer, IDL_Number, and IDL_Variable. Similarly, all floating-point variables will have access to the functions on IDL_Number and IDL_Variable.</p>
+        <p>When a variable function is called, the IDL variable is passed into the function as the first argument. The "self" argument (normally used for object class methods) is undefined. The function can return a variable of any IDL type as the result of the call.</p>
+        <p>For example, we will use the IDL_Integer::BitShift function to divide a byte array by 2, use the IDL_Variable::Uniq function to find the unique elements, and then convert the array to a string:</p>
+        <p class="Code">IDL&gt; arr = BYTE([146,146,146,136,136,152,152,152,66,66,66,66])</p>
+        <p class="Code">IDL&gt; arr = arr.BitShift(-1)</p>
+        <p class="Code">IDL&gt; HELP, arr</p>
+        <p class="Code">IDL&gt; newarr = arr.Uniq(/NO_SORT)</p>
+        <p class="Code">IDL&gt; HELP, newarr</p>
+        <p class="Code">IDL&gt; print, newarr.ToASCII()</p>
+        <p>IDL prints:</p>
+        <p class="Code">ARR&#160;&#160;&#160;&#160;&#160;BYTE      = Array[12]</p>
+        <p class="Code">NEWARR&#160;&#160;BYTE      = Array[4]</p>
+        <p class="Code">IDL!</p>
+        <h2 class="API">See Also</h2>
+        <ul>
+            <li value="1"><a href="Variable_Functions.htm">Creating Variable Functions</a>
+            </li>
+            <li value="2"><a href="../../Reference Material/Functional List of IDL Routines/Variable_Functions_List.htm"><a href="../../Reference Material/Functional List of IDL Routines/Variable_Functions_List.htm">List of Variable Functions  and Attributes</a></a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

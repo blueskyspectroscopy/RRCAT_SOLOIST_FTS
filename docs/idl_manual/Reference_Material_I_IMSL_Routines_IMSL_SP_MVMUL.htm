@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_SP_MVMUL</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_SP_MVMUL</span>
+        </div>
+        <h1>IMSL_SP_MVMUL</h1>
+        <p>The IMSL_SP_MVMUL function computes a matrix-vector product involving sparse matrix and a dense vector.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_SP_MVMUL function computes a matrix-vector product involving a sparse matrix and a dense vector. </p>
+        <p>If <i>A</i> is stored in coordinate format, then the arguments <i>N_Rows, N_Cols, A</i>, and <i>x</i> should be used. If the keyword SYMMETRIC is set, then <i>Ax + A</i><sup style="font-style: italic;">T</sup><i>x – diag(A)</i> is returned.</p>
+        <p>If <i>A</i> is a banded, then the arguments <i>N_Rows, N_Cols, N_Lca, N_Uca, A,</i> and <i>X</i> should be used. If the keyword SYMMETRIC is set, then <i>A</i> must be in band symmetric storage mode, and the number of codiagonals should be used for both <i>N_Lca</i> and <i>N_Uca</i>.</p>
+        <h2 class="API">Examples</h2>
+        <h3>Example 1</h3>
+        <p>This example computes <i>Ax</i>, where <i>A</i> is stored in coordinate format.</p>
+        <p>
+            <img src="images/IMSL_SP_MVMUL_Ex1.png" />
+        </p>
+        <p>Let <i>x</i><sup style="font-style: italic;">T</sup> = (1, 2, 3, 4, 5, 6)</p>
+        <p class="Code">A = replicate(imsl_f_sp_elem, 15)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the sparse matrix A using coordinate storage format.</p>
+        <p class="Code">a(*).row = [0, 1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5]</p>
+        <p class="Code">a(*).col = [0, 1, 2, 3, 2, 0, 3, 4, 0, 3, 4, 5, 0, 1, 5]</p>
+        <p class="Code">a(*).val = [10, 10, -3, -1, 15, -2, 10, -1, -1, -5, $</p>
+        <p class="Code">1, -3, -1, -2, 6]</p>
+        <p class="Code">x = [1, 2, 3, 4, 5, 6]</p>
+        <p class="Code">ax = IMSL_SP_MVMUL(6, 6, a, x)</p>
+        <p class="Code">PM, ax</p>
+        <p class="Code_Indented">10.000000</p>
+        <p class="Code_Indented">7.0000000</p>
+        <p class="Code_Indented">45.000000</p>
+        <p class="Code_Indented">33.000000</p>
+        <p class="Code_Indented">-34.000000</p>
+        <p class="Code_Indented">31.000000</p>
+        <h3>Example 2</h3>
+        <p>This example computes <i>Ax</i>, where <i>A</i> is stored in band mode. Consider the 1000 x 1000 banded matrix below:</p>
+        <p>
+            <img src="images/IMSL_SP_MVMUL_Ex2.png" />
+        </p>
+        <p>Let <i>x</i>(*) = 2.</p>
+        <p class="Code">n_rows = 1000L</p>
+        <p class="Code">nlca = 1L</p>
+        <p class="Code">nuca = 1L</p>
+        <p class="Code">a = DBLARR(n_rows*(nlca+nuca+1))</p>
+        <p class="Code">a(1:n_rows-1) = 4</p>
+        <p class="Code">a(n_rows:2*n_rows-1) = -1</p>
+        <p class="Code">a(2*n_rows:*) = 4</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Fill A with the values of the bands.</p>
+        <p class="Code">x = DBLARR(n_rows)</p>
+        <p class="Code">x(*) = 2</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Fill up x.</p>
+        <p class="Code">expected = DBLARR(n_rows)</p>
+        <p class="Code">expected(*) = 14</p>
+        <p class="Code">expected(0) = 6</p>
+        <p class="Code">expected(n_rows-1) = 6</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Define the expected result.</p>
+        <p class="Code">ax = IMSL_SP_MVMUL(n_rows, n_rows, nlca, nuca, a, x)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Compute the product, then output the difference between the</p>
+        <p class="Code">; computed result and the expected result.</p>
+        <p class="Code">PRINT, TOTAL(ABS(ax-expected))</p>
+        <p class="Code_Indented">0.0000000</p>
+        <h3>Example 3</h3>
+        <p>This example computes <i>Ax</i>, where <i>A</i> is stored in band symmetric mode. Let </p>
+        <p>
+            <img src="images/IMSL_SP_MVMUL_Ex3.png" />
+        </p>
+        <p class="Code">n = 4L</p>
+        <p class="Code">ncoda = 2L</p>
+        <p class="Code">a = DBLARR((ncoda+1)*n)</p>
+        <p class="Code">a(0:n-1) = [0, 0, -1, 1]</p>
+        <p class="Code">a(n:2L*n-1) = [0, 0, 2, -1]</p>
+        <p class="Code">a(2L*n:*) = [2, 4, 7, 3]</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Fill up contents of A.</p>
+        <p class="Code">x = [4, -6, 2, 9]</p>
+        <p class="Code">ax = IMSL_SP_MVMUL(n, n, ncoda, ncoda, a, x, /Symmetric)</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">; Call IMSL_SP_MVMUL with the keyword Symmetric set.</p>
+        <p class="Code">PM, ax</p>
+        <p class="Code_Indented">&#160;&#160;6.0000000</p>
+        <p class="Code_Indented">-11.000000</p>
+        <p class="Code_Indented">-11.000000</p>
+        <p class="Code_Indented">&#160;19.000000</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax">Matrix stored in coordinate format:</p>
+        <p><i>Result</i> = IMSL_SP_MVMUL(<i>N_Rows, N_Cols, A, X</i> [, <a href="#SYMMETRIC" class="selected">SYMMETRIC</a>=<i>value</i>])</p>
+        <p>Matrix stored in band format:</p>
+        <p><i>Result</i> = IMSL_SP_MVMUL(<i>N_Rows, N_Cols, N_Lca, N_Uca, A, X</i> [, <a href="#SYMMETRIC" class="selected">SYMMETRIC</a>=<i>value</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>A one-dimensional array containing the product <i>Ax = b</i>.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">N_Rows</h3>
+        <p>Number of rows in the matrix <i>a</i>.</p>
+        <h3 class="Argument">N_Cols</h3>
+        <p>Number of columns in the matrix <i>a</i>.</p>
+        <h3 class="Argument">N_Lca</h3>
+        <p>Number of lower codiagonals in <i>a</i>. <i>nuca</i> should be used if <i>a</i> is stored in band format.</p>
+        <h3 class="Argument">N_Uca</h3>
+        <p>Number of upper codiagonals in <i>a</i>. <i>nlca</i> should be used if a is stored in band format.</p>
+        <h3 class="Argument">A</h3>
+        <p>If in coordinate format, a sparse matrix stored as an array of structures. If banded, an array of size (<i>N_Lca</i> + <i>N_Uca</i> + 1) x nrows containing the nrows x ncols banded coefficient matrix in band storage mode. If banded, and the keyword SYMMETRIC is set, an array of size (<i>N_Lca</i> + 1) x nrows containing the nrows x ncols banded coefficient matrix in band symmetric storage mode <i>A(i,j)</i>. See Band Storage Format for a description of band storage mode.</p>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional matrix containing the vector to be multiplied by <i>A</i>.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="SYMMETRIC"></a>SYMMETRIC (optional)</h3>
+        <p>If present and nonzero, then a is stored in symmetric mode. If A is in coordinate format, then <i>Ax + A<sup>T</sup>x – diag(A)</i> is returned. If A is banded, then it must be in band symmetric storage mode. See  Band Storage Format for a description of band storage modes.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="API">See Also</h2>
+        <p><a href="IMSL_SP_BDPDFAC.htm">IMSL_SP_BDPDFAC</a>, <a href="IMSL_SP_BDPDSOL.htm">IMSL_SP_BDPDSOL</a>, <a href="IMSL_SP_BDSOL.htm">IMSL_SP_BDSOL</a>, <a href="IMSL_SP_CG.htm">IMSL_SP_CG</a>, <a href="IMSL_SP_GMRES.htm">IMSL_SP_GMRES</a>, <a href="IMSL_LUFAC.htm">IMSL_SP_LUFAC</a>, <a href="IMSL_SP_LUSOL.htm">IMSL_SP_LUSOL</a>, <a href="IMSL_SP_PDFAC.htm">IMSL_SP_PDFAC</a>, <a href="IMSL_SP_PDSOL.htm">IMSL_SP_PDSOL</a></p>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

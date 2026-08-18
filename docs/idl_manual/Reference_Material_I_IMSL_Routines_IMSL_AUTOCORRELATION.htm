@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_AUTOCORRELATION</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_AUTOCORRELATION</span>
+        </div>
+        <h1 class="Routine">IMSL_AUTOCORRELATION</h1>
+        <p>The IMSL_AUTOCORRELATION function computes the sample autocorrelation function of a stationary time series.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_AUTOCORRELATION function estimates the autocorrelation function of a stationary time series given a sample of <i>n</i> = N_ELEMENTS(X observations {<i>X</i><sub>t</sub>} for <i>t</i> = 1, 2, ..., <i>n</i>.</p>
+        <p>Let:</p>
+        <p>
+            <img src="images/IMSL_AUTOCORRELATION-076.jpg" />
+        </p>
+        <p>be the estimate of the mean μ of the time series {<i>X</i><sub>t</sub>} where:</p>
+        <p>
+            <img src="images/IMSL_AUTOCORRELATION-077.jpg" />
+        </p>
+        <p>The autocovariance function σ(k) is estimated by:</p>
+        <p>
+            <img src="images/IMSL_AUTOCORRELATION-078.jpg" />
+        </p>
+        <p>where <i>K</i> = <i>lagmax</i>. Note that:</p>
+        <p>σ(0)</p>
+        <p>is an estimate of the sample variance. The autocorrelation function σ(k) is estimated by:</p>
+        <p>
+            <img src="images/IMSL_AUTOCORRELATION-080.jpg" />
+        </p>
+        <p>Note that:</p>
+        <p>ρ(0) = 1</p>
+        <p>by definition.</p>
+        <p>The standard errors of the sample auto-correlations may be optionally computed according to the keyword Se_Option for the output keyword Seac. One method (Bartlett 1946) is based on a general asymptotic expression for the variance of the sample autocorrelation coefficient of a stationary time series with independent, identically distributed normal errors. The theoretical formula is:</p>
+        <p>
+            <img src="images/IMSL_AUTOCORRELATION-082.jpg" />
+        </p>
+        <p>where:</p>
+        <p>ρ(k)</p>
+        <p>assumes m is unknown. For computational purposes, the auto-correlations ρ(k) are replaced by their estimates:</p>
+        <p>ρ(k)</p>
+        <p>for |k| ≤ K, and the limits of summation are bounded because of the assumption that ρ(k) = 0 for all k such that |k| &gt; K.</p>
+        <p>A second method (Moran 1947) utilizes an exact formula for the variance of the sample autocorrelation coefficient of a random process with independent, identically distributed normal errors. The theoretical formula is:</p>
+        <p>
+            <img src="images/IMSL_AUTOCORRELATION-085.jpg" />
+        </p>
+        <p>where μ is assumed to be equal to zero. Note that this formula does not depend on the autocorrelation function.</p>
+        <h2 class="API">Example</h2>
+        <p>Consider the Wolfer Sunspot Data (Anderson 1971, page 660) consisting of the number of sunspots observed each year from 1749 through 1924. The data set for this example consists of the number of sunspots observed from 1770 through 1869. The IMSL_AUTOCORRELATION function computes the estimated auto-covariances, estimated auto-correlations, and estimated standard errors of the auto-correlations.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, xm, acv, result, seac</p>
+        <p class="Code_Indented">PRINT, ';Mean =', xm</p>
+        <p class="Code_Indented">PRINT, ';Variance =', acv(0)</p>
+        <p class="Code_Indented">PRINT, ';      Lag       ACV          AC         SEAC'</p>
+        <p class="Code_Indented">PRINT, ';       0', acv(0), result(0)</p>
+        <p class="Code_Indented">FOR j  =  1, 20 DO $</p>
+        <p class="Code_Indented2">PRINT, j, acv(j), result(j), seac(j - 1)</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">lagmax = 20</p>
+        <p class="Code">data = IMSL_STATDATA(2)</p>
+        <p class="Code">x = data(21:120,1)</p>
+        <p class="Code">result = IMSL_AUTOCORRELATION(x, lagmax, ACV = acv, $</p>
+        <p class="Code_Indented">SE_OPTION = 1, SEAC = seac, XMEAN_OUT = xm)</p>
+        <p class="Code">print_results, xm, acv, result, seac</p>
+        <p>IDL prints:</p>
+        <p class="Code">Mean =      46.9760</p>
+        <p class="Code">Variance =      1382.91</p>
+        <p class="Code">Lag&#160;&#160;&#160;&#160;&#160;&#160;ACV&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;AC&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SEAC</p>
+        <p class="Code">0&#160;&#160;&#160;&#160;&#160;&#160;1382.91&#160;&#160;&#160;&#160;&#160;&#160;1.00000</p>
+        <p class="Code">1&#160;&#160;&#160;&#160;&#160;&#160;1115.03&#160;&#160;&#160;&#160;&#160;0.806293&#160;&#160;&#160;0.0347834</p>
+        <p class="Code">20&#160;&#160;&#160;&#160;&#160;592.004&#160;&#160;&#160;&#160;&#160;0.428087&#160;&#160;&#160;0.0962420</p>
+        <p class="Code">30&#160;&#160;&#160;&#160;&#160;95.2974&#160;&#160;&#160;&#160;0.0689109&#160;&#160;&#160;&#160;0.156783</p>
+        <p class="Code">40&#160;&#160;&#160;&#160;-235.952&#160;&#160;&#160;&#160;-0.170620&#160;&#160;&#160;&#160;0.205767</p>
+        <p class="Code">50&#160;&#160;&#160;&#160;-370.011&#160;&#160;&#160;&#160;-0.267560&#160;&#160;&#160;&#160;0.230956</p>
+        <p class="Code">60&#160;&#160;&#160;&#160;-294.255&#160;&#160;&#160;&#160;-0.212780&#160;&#160;&#160;&#160;0.228995</p>
+        <p class="Code">70&#160;&#160;&#160;&#160;-60.4423&#160;&#160;&#160;-0.0437067&#160;&#160;&#160;&#160;0.208622</p>
+        <p class="Code">80&#160;&#160;&#160;&#160;&#160;227.633&#160;&#160;&#160;&#160;&#160;0.164604&#160;&#160;&#160;&#160;0.178476</p>
+        <p class="Code">90&#160;&#160;&#160;&#160;&#160;458.381&#160;&#160;&#160;&#160;&#160;0.331462&#160;&#160;&#160;&#160;0.145727</p>
+        <p class="Code">100&#160;&#160;&#160;&#160;567.841&#160;&#160;&#160;&#160;&#160;0.410613&#160;&#160;&#160;&#160;0.134406</p>
+        <p class="Code">110&#160;&#160;&#160;&#160;546.122&#160;&#160;&#160;&#160;&#160;0.394908&#160;&#160;&#160;&#160;0.150676</p>
+        <p class="Code">120&#160;&#160;&#160;&#160;398.937&#160;&#160;&#160;&#160;&#160;0.288477&#160;&#160;&#160;&#160;0.174348</p>
+        <p class="Code">130&#160;&#160;&#160;&#160;197.757&#160;&#160;&#160;&#160;&#160;0.143001&#160;&#160;&#160;&#160;0.190619</p>
+        <p class="Code">140&#160;&#160;&#160;&#160;26.8911&#160;&#160;&#160;&#160;0.0194453&#160;&#160;&#160;&#160;0.195490</p>
+        <p class="Code">150&#160;&#160;&#160;-77.2807&#160;&#160;&#160;-0.0558828&#160;&#160;&#160;&#160;0.195893</p>
+        <p class="Code">160&#160;&#160;&#160;-143.733&#160;&#160;&#160;&#160;-0.103935&#160;&#160;&#160;&#160;0.196285</p>
+        <p class="Code">170&#160;&#160;&#160;&#160;202.048&#160;&#160;&#160;&#160;-0.146104&#160;&#160;&#160;&#160;0.196021</p>
+        <p class="Code">180&#160;&#160;&#160;-245.372&#160;&#160;&#160;&#160;-0.177432&#160;&#160;&#160;&#160;0.198716</p>
+        <p class="Code">190&#160;&#160;&#160;-230.816&#160;&#160;&#160;&#160;-0.166906&#160;&#160;&#160; 0.205359</p>
+        <p class="Code">200&#160;&#160;&#160;-142.879&#160;&#160;&#160;&#160;-0.103318&#160;&#160;&#160;&#160;0.209387</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = IMSL_AUTOCORRELATION(x, lagmax [, <a href="#ACV" class="selected">ACV</a>=<i>variable</i>] [, <a href="#DOUBLE" class="selected">/DOUBLE</a>] [, <a href="#SE_OPTION" class="selected">SE_OPTION</a>=<i>value</i>] [, <a href="#SEAC" class="selected">SEAC</a>=<i>variable</i>] [, <a href="#XMEAN_IN" class="selected">XMEAN_IN</a>=<i>value</i>] [, <a href="#XMEAN_OUT" class="selected">XMEAN_OUT</a>=<i>variable</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>One-dimensional array of length <i>Lagmax</i> + 1 containing the auto-correlations of the time series <i>X</i>. The <i>0</i>-th element of this array is 1. The <i>k</i>-th element of this array contains the autocorrelation of lag <i>k</i> where <i>k</i> = 1, ..., <i>Lagmax</i></p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Lagmax</h3>
+        <p>Scalar integer containing the maximum lag of autocovariance, auto-correlations, and standard errors of auto-correlations to be computed. <i>Lagmax</i> must be greater than or equal to 1 and less than N_ELEMENTS(<i>X</i>.</p>
+        <h3 class="Argument">X</h3>
+        <p>One-dimensional array containing the time series. N_ELEMENTS(<i>X</i> must be greater than or equal to 2.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="ACV"></a>ACV (optional)</h3>
+        <p>Named variable into which an array of length <i>Lagmax</i> + 1 containing the variance and auto-covariances of the time series <i>X</i> is stored. The <i>0</i>-th element of this array is the variance of the time series <i>X</i>. The <i>k</i>-th element contains the autocovariance of lag <i>k</i> where <i>k</i> = 1, ..., <i>Lagmax</i>.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, then double precision is used.</p>
+        <h3 class="Keyword"><a name="SE_OPTION"></a>SE_OPTION (optional)</h3>
+        <p>Method of computation for standard errors of the auto-correlations. The keywords SE_OPTION and SEAC must be used together.</p>
+        <ul>
+            <li value="1">1: Compute the standard errors of autocorrelation using Barlett's formula.</li>
+            <li value="2">2: Compute the standard errors of autocorrelation using Moran's formula.</li>
+        </ul>
+        <h3 class="Keyword"><a name="SEAC"></a>SEAC (optional)</h3>
+        <p>Named variable into which an array of length <i>Lagmax</i> containing the standard errors of the auto-correlations of the time series <i>X</i> is stored. The keywords SE_OPTION and SEAC must be used together.</p>
+        <h3 class="Keyword"><a name="XMEAN_IN"></a>XMEAN_IN (optional)</h3>
+        <p>The estimate of the mean of the time series <i>X</i>.</p>
+        <h3 class="Keyword"><a name="XMEAN_OUT"></a>XMEAN_OUT (optional)</h3>
+        <p>Named variable into which the estimate of the mean of the time series <i>X</i> is stored.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>

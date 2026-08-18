@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-US" xml:lang="en-US" data-mc-search-type="Stem" data-mc-help-system-file-name="idl.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Routines (alphabetical)|Routines: I|IMSL Advanced Math and Statistics Routines">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IMSL_CAT_GLM</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/Stylesheets/Doc_Style.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Description.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/VersionTable.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">IDL &gt; </span><a class="MCBreadcrumbsLink" href="../../../images/ref_part1.htm">Routines (alphabetical)</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../I_list.htm">Routines: I</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="IMSLRoutines.htm">IMSL Advanced Math and Statistics Routines</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">IMSL_CAT_GLM</span>
+        </div>
+        <h1>IMSL_CAT_GLM</h1>
+        <p>The IMSL_CAT_GLM function analyzes categorical data using logistic, Probit, Poisson, and other generalized linear models.</p>
+        <p class="HighlightText">This routine requires an IDL Advanced Math and Stats license. For more information, contact your sales or technical support representative.</p>
+        <p>The IMSL_CAT_GLM function uses iteratively reweighted least squares to compute (extended) maximum likelihood estimates in some generalized linear models involving categorized data. One of several models, including the probit, logistic, Poisson, logarithmic, and negative binomial models, may be fit.</p>
+        <p>Note that each row vector in the data matrix can represent a single observation; or, through the use of keyword <a href="#IFREQ" class="selected">IFREQ</a>, each row can represent several observations. Also note that classification variables and their products are easily incorporated into the models via the usual regression-type specifications. The models available in IMSL_CAT_GLM are listed in the following table.</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <col style="width: 18px;" />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Model</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>PDF of the Response Variable</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Parameterization</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>f(y) = (λ<sub>y</sub>exp(-λ)) / y</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>λ = <i>N</i> x exp(ω + η)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-01.jpg" />
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-02.jpg" />
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-03.jpg" />
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-04.jpg" />
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-05.jpg" />
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-06.jpg" />
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-07.jpg" />
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>θ = Φ (ω + η)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>
+                            <img src="images/IMSL_CAT_GLM-08.jpg" />
+                        </p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>θ = 1 − exp (−exp (ω + η) )</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Here, Φ denotes the cumulative normal distribution. <i>N</i> and <i>S</i> are known distribution parameters specified for each observation via the keyword <a href="#IPAR" class="selected">IPAR</a>.  ω is an optional fixed parameter of the linear response, γ<sub style="font-style: italic;">i</sub>, specified for each observation. (If the keyword <a href="#IFIX" class="selected">IFIX</a> is not used, then ω is taken to be 0.) Since the log-log model (<i>Model</i> = 5) probabilities are not symmetric with respect to 0.5, quantitatively, as well as qualitatively, different models result when the definitions of "success" and "failure" are interchanged in this distribution. In this model and all other models involving θ, θ is taken to be the probability of a "success".</p>
+        <h3>Computational Details</h3>
+        <p>The computations proceed as follows:</p>
+        <ol>
+            <li value="1">  The input parameters are checked for consistency and validity.</li>
+            <li value="2">Estimates of the means of the "independent" or design variables are computed. The frequency or the observation in all but binomial distribution models is taken from vector frequencies. In binomial distribution models, the frequency is taken as the product of <i>n</i> = parameter (<i>i</i>) and frequencies (<i>i</i>). Means are computed as:
+        
+        <p class="indent"><img src="images/IMSL_CAT_GLM-30.jpg" /></p></li>
+            <li value="3">By default, unless the keyword <a href="#INIT_EST" class="selected">INIT_EST</a> is used, initial estimates of the coefficients are obtained (based upon the observation intervals) as multiple regression estimates relating transformed observation probabilities to the observation design vector. For example, in the binomial distribution models, θ may be estimated as:
+        <p class="indent"><img src="images/IMSL_CAT_GLM-31.jpg" /></p><p>and, when <i>Model</i>=3, the linear relationship is given by:</p><p class="indent"><img src="images/IMSL_CAT_GLM-32.jpg" /></p><p>while, if <i>Model</i> = 4, Φ<sup>-1</sup> (θ) = Xβ. When computing initial estimates, standard modifications are made to prevent illegal operations such as division by zero. Regression estimates are obtained at this point, as well as later, by use of IMSL_MULTIREGRESS.</p></li>
+            <li value="4">Newton-Raphson iteration for the maximum likelihood estimates is implemented via iteratively reweighted least squares. Let:
+				
+		<p class="indent"><img src="images/IMSL_CAT_GLM-33.jpg" /></p><p>denote the log of the probability of the <i>i</i>-th observation for coefficients β. In the least-squares model, the weight of the <i>i</i>-th observation is taken as the absolute value of the second derivative of:</p><p class="indent"><img src="images/IMSL_CAT_GLM-34.jpg" /></p><p>with respect to:</p><p class="indent"><img src="images/IMSL_CAT_GLM-35.jpg" /></p><p>(times the frequency of the observation). The dependent variable is taken as the first derivative Ψ with respect to γ<sub>i</sub>, divided by the square root of the weight times the frequency. The Newton step is given by:</p><p class="indent"><img src="images/IMSL_CAT_GLM-36.jpg" /></p><p>where all derivatives are evaluated at the current estimate of γ and βn+1 = β – ∆β. This step is computed as the estimated regression coefficients in the least-squares model. Step halving is used when necessary to ensure a decrease in the criterion.</p></li>
+            <li value="5">Convergence is assumed when the maximum relative change in any coefficient update from one iteration to the next is less than <a href="#EPS" class="selected">EPS</a> or when the relative change in the log-likelihood from one iteration to the next is less than EPS/100. Convergence is also assumed after <a href="#ITMAX" class="selected">ITMAX</a> iterations or when step halving leads to a step size of less than 0.0001 with no increase in the log-likelihood.</li>
+            <li value="6">Residuals are computed according to methods discussed by Pregibon (1981). Let <i>l<sub>i</sub></i> (<i>γ<sub>i</sub></i>) denote the log-likelihood of the <i>i</i>-th observation evaluated at <i>γ<sub>i</sub></i>. Then, the standardized residual is computed as:
+        <p class="indent"><img src="images/IMSL_CAT_GLM-37.jpg" /></p><p>where:</p><p class="indent"><img src="images/IMSL_CAT_GLM-38.jpg" /></p><p>is the value of <i>γ<sub>i</sub></i> when evaluated at the optimal:</p><p class="indent"><img src="images/IMSL_CAT_GLM-39.jpg" /></p><p>The denominator of this expression is used as the "standard error of the residual" while the numerator is the "raw" residual. Following Cook and Weisberg (1982), the influence of the <i>i</i>-th observation is assumed to be:</p><p class="indent"><img src="images/IMSL_CAT_GLM-40.jpg" /></p><p>This is a one-step approximation to the change in estimates when the <i>i</i>-th observation is deleted. Here, the partial derivatives are with respect to β.</p></li>
+        </ol>
+        <h3>Programming Notes</h3>
+        <ul>
+            <li value="1">  Indicator (dummy) variables are created for the classification variables using <a href="IMSL_REGRESSORS.htm">IMSL_REGRESSORS</a> with the DUMMY_METHOD keyword set to 1.</li>
+            <li value="2">  To enhance precision, "centering" of covariates is performed if the model has an intercept and <i>N_observations</i> − <i>N_missing</i> &gt; 1. In doing so, the sample means of the design variables are subtracted from each observation prior to its inclusion in the model. On convergence, the intercept, its variance, and its covariance with the remaining estimates are transformed to the uncentered estimate values.</li>
+            <li value="3">  Two methods for specifying a binomial distribution model are possible. In the first method, <a href="#IFREQ" class="selected">IFREQ</a> contains the frequency of the observation while <i>x</i>(<i>i</i>, <i>irt</i>-1) is 0 or 1 depending upon whether the observation is a success or failure. In this case, x(<i>i</i>, <i>n_Class</i> +  <i>n_ Continuous</i>) is always 1. The model is treated as repeated Bernoulli trials, and interval observations are not possible. A second method for specifying binomial models is to use to represent the number of successes in parameter (<i>i</i>) trials. In this case, frequencies will usually be 1.</li>
+        </ul>
+        <h2 class="API">Example</h2>
+        <p>This example is from Prentice (1976) and involves mortality of beetles after five hours of exposure to eight different concentrations of carbon disulphide. The table below lists the number of beetles exposed (<i>N</i>) to each concentration level of carbon disulphide (<i>x</i>, given as log dosage) and the number of deaths which result (<i>y</i>). The following table shows the data:</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Log Dosage</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Number of Beetles Exposed</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>Number of Deaths</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>1.690</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>59</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>6</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="text-align: center;">
+                        <p>1.724</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="text-align: center;">
+                        <p>60</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>13</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>1.755</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>62</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>18</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="text-align: center;">
+                        <p>1.784</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="text-align: center;">
+                        <p>56</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>28</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>1.811</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>63</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>52</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="text-align: center;">
+                        <p>1.836</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep" style="text-align: center;">
+                        <p>59</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>53</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>1.861</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep" style="text-align: center;">
+                        <p>62</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd" style="text-align: center;">
+                        <p>61</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep" style="text-align: center;">
+                        <p>1.883</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep" style="text-align: center;">
+                        <p>60</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd" style="text-align: center;">
+                        <p>60</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The number of deaths at each concentration level are fitted as a binomial response using the following models:&#160;logit (<i>Model</i> = 3), probit (<i>Model</i> = 4), and log-log (<i>Model</i> = 5). Note that the log-log model yields a smaller absolute log likelihood (14.81) than the logit model (18.78) or the probit model (18.23). This is to be expected since the response curve of the log-log model has an asymmetric appearance, but both the logit and probit models are symmetric about θ = 0.5.</p>
+        <p class="Code">.RUN</p>
+        <p class="Code">PRO print_results, cs, means, ca, crit, ls, cov</p>
+        <p class="Code_Indented">PRINT, '; Coefficient Statistics'</p>
+        <p class="Code_Indented">PRINT, ';                  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Standard   Asymptotic   &#160;&#160;', $</p>
+        <p class="Code_Indented">';Asymptotic'</p>
+        <p class="Code_Indented">PRINT, ';  &#160;Coefficient&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Error&#160;&#160;Z-statistic&#160;&#160;&#160;&#160;&#160;&#160;', $</p>
+        <p class="Code_Indented">';P-value'</p>
+        <p class="Code_Indented">PM, cs, FORMAT = ';(4F13.2)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, ';Covariate Means = ', means, FORMAT = '(A18, F6.3)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, ';&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Case Analysis'</p>
+        <p class="Code_Indented">PRINT, ';&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Residual&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;', $</p>
+        <p class="Code_Indented">';Standardized'</p>
+        <p class="Code_Indented">PRINT, ';&#160;&#160;&#160;Predicted&#160;&#160;&#160;&#160;Residual&#160;&#160;Std.&#160;Error&#160;&#160;&#160;&#160;Leverage', $</p>
+        <p class="Code_Indented">';&#160;&#160;&#160;&#160;Residual'</p>
+        <p class="Code_Indented">PM, ca, FORMAT = ';(5F12.3)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, ';Log-Likelihood = ', crit, FORMAT = '(A18, F9.5)'</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, ';&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Last Step'</p>
+        <p class="Code_Indented">PRINT, ls</p>
+        <p class="Code_Indented">PRINT</p>
+        <p class="Code_Indented">PRINT, ';Asymptotic Coefficient Covariance'</p>
+        <p class="Code_Indented">PM, cov, FORMAT = ';(2F12.4)'</p>
+        <p class="Code">END</p>
+        <p class="Code">&#160;</p>
+        <p class="Code">model	 =		3</p>
+        <p class="Code">nobs	=	8</p>
+        <p class="Code">x	=	([[1.690, 1.724, 1.755, 1.784, 1.811, 1.836, 1.861, 1.883],$</p>
+        <p class="Code">&#160;&#160;[6, 13, 18, 28, 52, 53, 61, 60], $</p>
+        <p class="Code">&#160;&#160;[59, 60, 62, 56, 63, 59, 62, 60]])</p>
+        <p class="Code">ncoef	=	IMSL_CAT_GLM(0, 1,	model,	x, Ipar = 2, Eps = 1.0e-3, $</p>
+        <p class="Code">&#160;&#160;Coef_Stat = cs, Covariances = cov, $</p>
+        <p class="Code">&#160;&#160;Criterion = crit, Means = means, $</p>
+        <p class="Code">&#160;&#160;Case_Analysis = ca, Last_Step = ls, Obs_Status = os)</p>
+        <p class="Code">print_results, cs, means, ca, crit, ls, cov</p>
+        <p>IDL prints:</p>
+        <p>
+            <img src="images/IMSL_CAT_GLM-41.jpg" />
+        </p>
+        <h2 class="API">Errors</h2>
+        <h3>Warning Errors</h3>
+        <p>STAT_TOO_MANY_HALVINGS: Too many step halvings. Convergence is assumed.</p>
+        <p>STAT_TOO_MANY_ITERATIONS: Too many iterations. Convergence is assumed.</p>
+        <h3>Fatal Errors</h3>
+        <p>STAT_TOO_FEW_COEF: <a href="#INIT_EST" class="selected">INIT_EST</a> is used and <i>N_coef_input</i> = #. The model specified requires # coefficients.</p>
+        <p>STAT_MAX_CLASS_TOO_SMALL: The number of distinct values of the classification variables exceeds <a href="#MAX_CLASS" class="selected">MAX_CLASS</a> = #.</p>
+        <p>STAT_INVALID_DATA_8: <a href="#N_CLASS_VALS" class="selected">N_CLASS_VALS</a>(#) = #. The number of distinct values for each classification variable must be greater than one.</p>
+        <p>STAT_NMAX_EXCEEDED: The number of observations to be deleted has exceeded Lp_Max = #. Rerun with a different model or increase the workspace.</p>
+        <h2 class="API">Syntax</h2>
+        <p class="Syntax"><i>Result</i> = CAT_GLM(<i>N_class</i>, <i>N_continuous</i>, <i>Model</i>, <i>X</i> [, <a href="#CASE_ANALYSIS" class="selected">CASE_ANALYSIS</a>=<i>variable</i>] [, <a href="#CLASS_VALS" class="selected">CLASS_VALS</a>=<i>variable</i>] [, <a href="#COVARIANCES" class="selected">COVARIANCES</a>=<i>variable</i>] [, <a href="#COEF_STAT" class="selected">COEF_STAT</a>=<i>variable</i>] [, <a href="#CRITERION" class="selected">CRITERION</a>=<i>variable</i>] [, /<a href="#DOUBLE" class="selected">DOUBLE</a>] [, <a href="#EPS" class="selected">EPS</a>=<i>value</i>] [, <a href="#IFIX" class="selected">IFIX</a>=<i>value</i>] [, <a href="#IFREQ" class="selected">IFREQ</a>=<i>value</i>] [, <a href="#INDICES_EFFECTS" class="selected">INDICES_EFFECTS</a>=<i>array</i>] [, <a href="#INIT_EST" class="selected">INIT_EST</a>=<i>array</i>] [, <a href="#IPAR" class="selected">IPAR</a>=<i>value</i>] [, <a href="#ITMAX" class="selected">ITMAX</a>=<i>value</i>] [, <a href="#LAST_STEP" class="selected">LAST_STEP</a>=<i>variable</i>] [, <a href="#MAX_CLASS" class="selected">MAX_CLASS</a>=<i>value</i>] [, <a href="#MEANS" class="selected">MEANS</a>=<i>variable</i>] [, <a href="#N_CLASS_VALS" class="selected">N_CLASS_VALS</a>=<i>variable</i>] [, /<a href="#NO_INTERCEPT" class="selected">NO_INTERCEPT</a>] [, <a href="#OBS_STATUS" class="selected">OBS_STATUS</a>=<i>variable</i>] [, <a href="#VAR_EFFECTS" class="selected">VAR_EFFECTS</a>=<i>array</i>])</p>
+        <h2 class="API">Return Value</h2>
+        <p>An integer value indicating the number of estimated coefficients in the model.</p>
+        <h2 class="API">Arguments</h2>
+        <h3 class="Argument">Model</h3>
+        <p>The model used to analyze the data. The following table contains the models. The Relationship column refers to the relationship between the parameter, θ or λ, and a linear model of the explanatory variables, Xβ.</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col />
+            <col style="width: 111px;" />
+            <col />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Model</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Relationship</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">
+                        <p>PDF&#160;of Response Variable</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>0</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Exponential</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Poisson</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Logistic</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Negative Binomial</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Logistic</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Logarithmic</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">
+                        <p>Logistic</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">
+                        <p>Binomial</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">
+                        <p>Probit</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>Binomial</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">
+                        <p>Log-log</p>
+                    </td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">
+                        <p>Binomial</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The lower bound of the response variable is 1 for <i>Model</i> = 3, and it is 0 for all other models. See the description at the beginning of this topic for more information about these models.</p>
+        <h3 class="Argument">N_class</h3>
+        <p>Number of classification variables.</p>
+        <h3 class="Argument">N_continuous</h3>
+        <p>Number of continuous variables.</p>
+        <h3 class="Argument">X</h3>
+        <p>Two-dimensional array of size <i>N_observations</i> by (<i>N_class</i> + <i>N_continuous</i>) + <i>m</i> containing data for the independent variables, dependent variable, and optional parameters.</p>
+        <p>The columns must be ordered such that the first <i>N_class</i> columns contain data for the class variables, the next <i>N_continuous</i> columns contain data for the continuous variables, and the next column contains the response variable. The final (and optional) <i>m</i> – 1 columns contain optional parameters. See the keywords <a href="#IFREQ" class="selected">IFREQ</a>, <a href="#IFIX" class="selected">IFIX</a>, and <a href="#IPAR" class="selected">IPAR</a>.</p>
+        <h2 class="API">Keywords</h2>
+        <h3 class="Keyword"><a name="CASE_ANALYSIS"></a>CASE_ANALYSIS (optional)</h3>
+        <p>Named variable containing a two-dimensional array of the case analysis. The array size is [<i>N_observations</i>, 5].</p>
+        <ul>
+            <li value="1">0: Predicted mean for the observation if <i>Model</i> = 0. Otherwise, contains the probability of success on a single trial.</li>
+            <li value="2">1: The residual.</li>
+            <li value="3">2: The estimated standard error of the residual.</li>
+            <li value="4">3: The estimated influence of the observation.</li>
+            <li value="5">4: The standardized residual.</li>
+        </ul>
+        <p>Case statistics are computed for all observations except where missing values prevent their computation.</p>
+        <h3 class="Keyword"><a name="CLASS_VALS"></a>CLASS_VALS (optional)</h3>
+        <p>Named variable into which a one-dimensional array of length:</p>
+        <p class="indent">
+            <img src="images/IMSL_CAT_GLM-29.jpg" />
+        </p>
+        <p>containing the distinct values of the classification variables in ascending order is stored. The first <a href="#N_CLASS_VALS" class="selected">N_CLASS_VALS</a>(0) elements of CLASS_VALS contain the values for the first classification variables. The next N_CLASS_VALS(1) elements contain the values for the second classification variable, etc.</p>
+        <h3 class="Keyword"><a name="COVARIANCES"></a>COVARIANCES (optional)</h3>
+        <p>Named variable into which a two-dimensional array of size [<i>N_coefficients</i>, <i>N_coefficients</i>] containing the estimated asymptotic covariance matrix of the coefficients is stored. For <a href="#ITMAX" class="selected">ITMAX</a> = 0, this is the Hessian computed at the initial parameter estimates.</p>
+        <h3 class="Keyword"><a name="COEF_STAT"></a>COEF_STAT (optional)</h3>
+        <p>Named variable into which a two-dimensional array of size [<i>N_coefficients</i>, 4] containing the parameter estimates and associated statistics is stored.</p>
+        <ul>
+            <li value="1">0: Coefficient Estimate.</li>
+            <li value="2">1: Estimated standard deviation of the estimated coefficient.</li>
+            <li value="3">2: Asymptotic normal score for testing that the coefficient is zero.</li>
+            <li value="4">3: The p-value associated with the normal score in column 2.</li>
+        </ul>
+        <h3 class="Keyword"><a name="CRITERION"></a>CRITERION (optional)</h3>
+        <p>Named variable into which the optimized criterion is stored. The criterion to be maximized is a constant plus the log-likelihood.</p>
+        <h3 class="Keyword"><a name="DOUBLE"></a>DOUBLE (optional)</h3>
+        <p>If present and nonzero, double precision is used.</p>
+        <h3 class="Keyword"><a name="EPS"></a>EPS (optional)</h3>
+        <p>Convergence criterion. Convergence is assumed when the maximum relative change in any coefficient estimate is less than EPS from one iteration to the next or when the relative change in the log-likelihood, criterion, from one iteration to the next is less than EPS/100.0. The default value is 0.001.</p>
+        <h3 class="Keyword"><a name="IFIX"></a>IFIX (optional)</h3>
+        <p>Column number <i>Ifix</i> in <i>X</i> containing a fixed parameter for each observation that is added to the linear response prior to computing the model parameter. The <code>fixed</code> parameter allows one to test a hypothesis about the parameters via the log-likelihoods.</p>
+        <h3 class="Keyword"><a name="IFREQ"></a>IFREQ (optional)</h3>
+        <p>Column number <i>Ifreq</i> in <i>X</i> containing the frequency of response for each observation.</p>
+        <h3 class="Keyword"><a name="INDICES_EFFECTS"></a>INDICES_EFFECTS (optional)</h3>
+        <p>One-dimensional index array with the following length:</p>
+        <p> VAR_EFFECTS(0) + VAR_EFFECTS(1) + ... + VAR_EFFECTS(<i>N_effects</i> - 1) </p>
+        <p>The first VAR_EFFECTS (0) elements give the column numbers of <i>X</i> for each variable in the first effect. The next elements give the column numbers for each variable in the second effect. The last  elements give the column numbers for each variable in the last effect. The keywords INDICES_EFFECTS and VAR_EFFECTS must be used together.</p>
+        <h3 class="Keyword"><a name="INIT_EST"></a>INIT_EST (optional)</h3>
+        <p>One-dimensional array of length <i>N_coef_input</i> containing initial estimates of parameters. <i>N_coef_input</i> can be completed by <a href="IMSL_REGRESSORS.htm">IMSL_REGRESSORS</a>. By default, unweighted linear regression is used to obtain initial estimates.</p>
+        <h3 class="Keyword"><a name="IPAR"></a>IPAR (optional)</h3>
+        <p>Column number IPAR in <i>X</i> containing the value of the known distribution parameter for each observation, where <i>X</i>(<i>i</i>, IPAR) is the known distribution parameter associated with the <i>i</i>-th observation. The meaning of the distributional parameter depends upon the model used, as shown in the following table:</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Description.css');" class="TableStyle_Description" cellspacing="0">
+            <col style="width: 16px;" />
+            <col />
+            <col style="width: 269px;" />
+            <thead>
+                <tr>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Model</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColSep">
+                        <p>Parameter</p>
+                    </th>
+                    <th class="TableStyle_Description_Head_0_0_RowSep_ColEnd">Meaning of parameter (i, IPAR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">0</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">E</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">
+                        <p>ln(E) is a fixed intercept to be included in the linear predictor (i.e., the offset).</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">1</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColSep">S</td>
+                    <td class="TableStyle_Description_Body_1_0_RowSep_ColEnd">Number of successes required for the negative binomial distribution</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">2</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColSep">-</td>
+                    <td class="TableStyle_Description_Body_0_0_RowSep_ColEnd">Not used for this model</td>
+                </tr>
+                <tr>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">3-5</td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColSep">N</td>
+                    <td class="TableStyle_Description_Body_1_0_RowEnd_ColEnd">Number of trials required for the binomial distribution</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The default behavior is that, when <i>Model</i> ≠ 2, each observation is assumed to have a parameter value of 1. When <i>Model</i> = 2, this parameter is not referenced.</p>
+        <h3 class="Keyword"><a name="ITMAX"></a>ITMAX (optional)</h3>
+        <p>Maximum number of iterations. Use a value of 0 to compute Hessian (stored in <a href="#COVARIANCES" class="selected">COVARIANCES</a>), and the Newton step (stored in <a href="#LAST_STEP" class="selected">LAST_STEP</a>) at the initial estimates. Use the keyword <a href="#INIT_EST" class="selected">INIT_EST</a> to get the initial estimates. The default value is 30.</p>
+        <h3 class="Keyword"><a name="LAST_STEP"></a>LAST_STEP (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length <i>N_coefficients</i> containing the last parameter updates (excluding step halvings). When ITMAX&#160;is set to 0, LAST_STEP contains the inverse of the Hessian times the gradient vector, all computed at the initial parameter estimates.</p>
+        <h3 class="Keyword"><a name="MAX_CLASS"></a>MAX_CLASS (optional)</h3>
+        <p>An upper bound on the sum of the number of distinct values taken on by each classification variable. The default value is <i>N_observations</i> by <i>N_class</i>.</p>
+        <h3 class="Keyword"><a name="MEANS"></a>MEANS (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array containing the means of the design variables. The array is of length <i>N_coefficients</i> if the keyword <a href="#NO_INTERCEPT" class="selected">NO_INTERCEPT</a> is used, and <i>N_Coefficients</i> − 1 otherwise.</p>
+        <h3 class="Keyword"><a name="N_CLASS_VALS"></a>N_CLASS_VALS (optional)</h3>
+        <p>Named variable in the form of a one-dimensional array of length <i>N_class</i> containing the number of values taken by each classification variable. The <i>i</i>-th classification variable has N_CLASS_VALS (<i>i</i>) distinct values.</p>
+        <h3 class="Keyword"><a name="NO_INTERCEPT"></a>NO_INTERCEPT (optional)</h3>
+        <p>If present and nonzero, there is no intercept in the model. By default, the intercept is automatically included in the model.</p>
+        <h3 class="Keyword"><a name="OBS_STATUS"></a>OBS_STATUS (optional)</h3>
+        <p>Named variable into which an one-dimensional array of length <i>N_observations</i> indicating which observations are included in the extended likelihood is stored.</p>
+        <ul>
+            <li value="1">0: Observation <i>i</i> is in the likelihood</li>
+            <li value="2">1: Observation <i>i</i> cannot be in the likelihood because it contains at least one missing value in <i>X</i>.</li>
+            <li value="3">2: Observation <i>i</i> is not in the likelihood. Its estimated parameter is infinite.</li>
+        </ul>
+        <p>Notes</p>
+        <ul>
+            <li value="1">  Dummy variables are generated for the classification variables as follows: An ascending list of all distinct values of each classification variable is obtained and stored in CLASS_VALS. Dummy variables are then generated for each but the last of these distinct values. Each dummy variable is zero unless the classification variable equals the list value corresponding to the dummy variable, in which case the dummy variable is one. See the input keyword DUMMY_METHOD = 1 in <a href="IMSL_REGRESSORS.htm">IMSL_REGRESSORS</a>.</li>
+            <li value="2">	The "product" of a classification variable with a covariate will yield dummy variables equal to the product of the covariate, with each of the dummy variables associated with the classification variable.</li>
+            <li value="3">  The "product" of two classification variables will yield dummy variables in the usual manner. Each dummy variable associated with the first classification variable multiplies each dummy variable associated with the second classification variable. The resulting dummy variables are such that the index of the second classification variable varies fastest.</li>
+        </ul>
+        <h3 class="Keyword"><a name="VAR_EFFECTS"></a>VAR_EFFECTS (optional)</h3>
+        <p>One-dimensional array of length <i>N_effects</i> containing the number of variables associated with each effect in the model, where <i>N_effects</i> is the number of effects (source of variation) in the model. Keywords VAR_EFFECTS and INDICES_EFFECTS must be used together.</p>
+        <h2 class="API">Version History</h2>
+        <table style="caption-side: top;mc-table-style: url('../../../Resources/TableStyles/VersionTable.css');" cellspacing="0" class="TableStyle_VersionTable">
+            <col style="width: 40px;" />
+            <col />
+            <tbody>
+                <tr>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColSep">
+                        <p>6.4</p>
+                    </td>
+                    <td class="TableStyle_VersionTable_Body_0_0_RowEnd_ColEnd">
+                        <p>Introduced</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mp_footer">© 1988-<span class="DocumentTitleCopyrightYear">2020</span>&#160;<span class="DocumentTitleCopyrightCompanyName">Harris Geospatial Solutions, Inc.</span> All Rights Reserved.<br />This information is not subject to the controls of the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR).</div>
+    </body>
+</html>
